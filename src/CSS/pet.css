@@ -1,0 +1,187 @@
+.PetRegistration-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 24px 16px;
+    box-sizing: border-box;
+    color: black;
+}
+
+.PetRegistration-container2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    padding: 32px 16px;
+    box-sizing: border-box;
+    color: #EB944D;
+    font-size: 16px;
+    font-weight: 400;
+    width: 375px;
+    height: 168px;
+}
+
+.PetRegistration-container2 p {
+    font-size: 20px;
+    font-weight: 400;
+    color: #EB944D;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+
+}
+
+.textbox {
+    width: 343px;
+    height: 48px;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #EB944D;
+    color: #EB944D;
+    border-radius: 12px;
+    font-size: 16px;
+    display: flex;
+    text-align: center; 
+    outline: none; /* 포커스 시 보더 제거 */
+}
+
+.textbox:focus {
+    outline: none; /* 포커스 시 보더 제거 */
+}
+
+.textbox::placeholder {
+    color: #EB944D; /* 원하는 색상으로 변경 */
+}
+
+.textbox-gray {
+    width: 340px;
+    height: 48px;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #7b7b7b;
+    color: #7b7b7b;
+    border-radius: 12px;
+    font-size: 16px;
+    display: flex;
+    text-align: center; 
+    outline: none; /* 포커스 시 보더 제거 */
+    justify-content: center;
+    align-items: center;
+}
+
+.search-box {
+    width: 100%;
+    height: 48px;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #7b7b7b;
+    color: #7b7b7b;
+    font-size: 16px;
+    display: flex;
+    text-align: center; 
+    outline: none; /* 포커스 시 보더 제거 */
+}
+
+.textbox-gray:focus {
+    outline: none; /* 포커스 시 보더 제거 */
+}
+
+.textbox-gray::placeholder {
+    color: #7b7b7b; /* 원하는 색상으로 변경 */
+}
+
+.textbox-gray2 {
+    width: 340px;
+    height: 118px;
+    padding: 8px 16px;
+    box-sizing: border-box;
+    border: 1px solid #7b7b7b;
+    color: #7b7b7b;
+    border-radius: 12px;
+    font-size: 16px;
+    display: flex;
+    text-align: center; 
+    outline: none; /* 포커스 시 보더 제거 */
+}
+
+.textbox-gray2:focus {
+    outline: none; /* 포커스 시 보더 제거 */
+}
+
+.textbox-gray2::placeholder {
+    color: #7b7b7b; /* 원하는 색상으로 변경 */
+}
+
+.PetRegistration-img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 8px;
+    width: 375px;
+    height: 252px;
+    box-sizing: border-box;
+}
+
+.PetRegistration-content {
+    position: relative;
+    display: flex;
+    width: 152px;
+    height: 152px;
+    padding-right: 8px;
+}
+
+.photo {
+    position: absolute; /* 위치 절대 지정 */
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0; /* 하단에 배치 */
+    right: 0; /* 우측에 배치 */
+}
+
+.PetRegistration-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 340px;
+    height: 48px;
+    box-sizing: border-box;
+}
+
+.PetRegistration-button {
+    width: 163px;
+    height: 48px;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #7b7b7b;
+    background-color: #ffffff;
+    color: #7b7b7b;
+    border-radius: 12px;
+    font-size: 16px;
+    display: flex;
+    text-align: center; 
+    justify-content: center;
+    align-items: center;
+    outline: none; /* 포커스 시 보더 제거 */
+}
+
+.PetRegistration-button.selected {
+    border: 1px solid #EB944D;
+    color: #EB944D;
+}
+
+.upload-img img {
+    width: 152px;
+    height: 152px;
+    border-radius: 50%;
+    object-fit: cover; /* 이미지가 원형 안에서 잘리지 않게 조정 */
+    overflow: hidden; /* 원형 안에서 넘치는 부분 숨김 */
+}

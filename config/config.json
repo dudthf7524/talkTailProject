@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "talkTail",
+    "password": "zmfladhvm",
+    "database": "talkTail",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "talkTail",
+    "password": "zmfladhvm",
+    "database": "talkTail",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "talkTail",
+    "password": "zmfladhvm",
+    "database": "talkTail",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

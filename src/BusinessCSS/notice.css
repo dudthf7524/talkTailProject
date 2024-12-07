@@ -1,0 +1,163 @@
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.page-container2 {
+    flex: 1; 
+    overflow-y: auto;
+    padding-bottom: 70px;
+    scrollbar-width: none;
+}
+
+.pet-title {
+    display: flex;
+    padding: 10px;
+    margin-top: 70px;
+    width: 100%;
+    height: 50px;
+    background-color: #FDF3E2;
+    align-items: center;
+}
+
+.pet-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 25px;
+    margin-top: 8px;
+}
+
+.pet-information {
+    font-size: 16px;
+    color: gray;
+    margin-left: 50%;
+}
+
+.notice-row {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    align-items: center; 
+    text-align: center;
+    background-color: white;
+    min-height: 9vh;
+}
+
+.notice-row2 {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    align-items: center; 
+    text-align: center;
+    background-color: white;
+    min-height: 5vh;
+    padding-bottom: 15px;
+}
+
+.notice-title {
+    font-size: 12px;
+    color: #F0663F;
+    text-align: center;
+}
+.notice-title2 {
+    font-size: 12px;
+    color: #F0663F;
+    text-align: left;
+    margin-left: 30px;
+}
+
+.notice-textbox {
+    height: 30px;
+    font-size: 16px;
+    width: 300px;
+}
+
+.notice-textbox2 {
+    font-size: 16px;
+    margin-left: 30px;
+    margin-top: 10px;
+    margin-bottom: 100px;
+    padding: 10px;
+    width: 370px;
+    height: 300px;
+    resize: both !important;
+    box-sizing: border-box;
+}
+
+.notice-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: start;
+    gap: 30px;
+    color: #C4C4C4;
+}
+
+/* 기본 체크박스 숨기기 */
+input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #c4c4c4; /* 체크 전 회색 테두리 */
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+    background-color: transparent;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* 체크박스가 체크되었을 때의 스타일 */
+  input[type="checkbox"]:checked {
+    background-color: #f0663f; /* 체크 후 배경색 */
+    border: 2px solid #f0663f; /* 체크 후 테두리 제거 */
+    border-radius: 2px;
+  }
+  
+  input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    width: 6px;
+    height: 10px;
+    border: solid transparent;
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  
+  input[type="checkbox"]:checked::before {
+    border-color: #ffffff; /* 체크 표시 색상 */
+  }
+  
+  /* 체크박스가 포커스되었을 때의 스타일 */
+  input[type="checkbox"]:focus {
+    outline: none;
+  }
+
+/* 체크된 상태의 텍스트 색상 */
+.checked {
+    color: #262626 !important; /* 체크된 상태에서 텍스트 색상을 변경 */
+  }
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 430px;
+    height: 70px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.send-btn {
+    background-color: #F0663F;
+    color: #ffffff;
+    width: 400px;
+    height: 40px;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+}

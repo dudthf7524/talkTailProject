@@ -1,0 +1,738 @@
+.navigation {
+    position: absolute; /* 상단 바를 고정시킴 */
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 72px; /* 상단 바의 높이 조정 */
+    background-color: #ffffff; /* 상단 바의 배경색 설정 */
+    color: #EB944D; /* 상단 바의 텍스트 색상 설정 */
+    text-align: center; /* 텍스트를 가운데 정렬 */
+    z-index: 999; /* 다른 요소 위에 표시되도록 설정 */
+    border-bottom: #EB944D 1px solid; /* 상단 바의 아래쪽에 1px 두께의 테두리를 설정 */
+    line-height: 72px; /* 상단 바의 높이와 같은 값으로 설정 */
+    font-weight: 400;
+    font-size: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    padding: 0 16px;
+    user-select: none;
+  }
+
+  .navigation button {
+    background: none; /* 기본 버튼 배경 제거 */
+    border: none; /* 기본 버튼 테두리 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    cursor: pointer; /* 커서 변경 */
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .navigation > div {
+    min-width: 50px;
+    min-height: 50px;
+}
+
+  .note {
+    background: none; /* 기본 버튼 배경 제거 */
+    border: none; /* 기본 버튼 테두리 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    cursor: pointer; /* 커서 변경 */
+  }
+
+  .navi-second-b {
+    position: relative;
+    transform: translateY(-50%); /* 세로 중앙 정렬을 위한 변형 */
+    right: 16px; /* 왼쪽 여백 설정 */
+    background: none; /* 기본 버튼 배경 제거 */
+    border: none; /* 기본 버튼 테두리 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    cursor: pointer; /* 커서 변경 */
+  }
+
+  .header {
+    position: absolute;
+    top: 72px;
+    right: 0;
+    left: 0;
+    display: flex; /* Flexbox 사용 */
+    flex-direction: column; /* Flex 방향을 세로로 지정 */
+    justify-content: space-between; /* 요소들을 상하로 나눠 배치 */
+}
+
+a {
+    color: inherit; /* 부모 요소의 색상을 상속 */
+    text-decoration: none; /* 밑줄 제거 */
+    margin-top: 8px;
+  }
+
+.header-nickname {
+    height: 72px;
+    text-align: left;
+    align-items: right;
+    font-size: 24px;
+    font-weight: 700;
+    border-bottom: #f5f5f5 1px solid;
+    box-sizing: border-box;
+    padding: 16px 16px 8px 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-nickname-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+    padding: 0 16px;
+    width: 144px;
+    height: 48px;
+}
+
+.header-nickname-button {
+    background: none; /* 기본 버튼 배경 제거 */
+    border: none; /* 기본 버튼 테두리 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    cursor: pointer; /* 커서 변경 */
+  }
+
+.header-nickname-button img {
+    width: auto; /* 필요에 따라 이미지 크기 조정 */
+    height: auto;
+}
+
+.header-bar {
+    display: flex;
+    align-items: center;
+    height: 94px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    border-bottom: #f5f5f5 12px solid;
+    overflow-x: auto;
+    white-space: nowrap; /* 내부 요소들이 줄 바꿈되지 않도록 설정 */
+    padding: 0 16px;
+}
+
+.header-bar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera에서 네이티브 스크롤바 숨기기 */
+}
+
+.header-bar-item {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+    flex-shrink: 0; /* 내부 요소가 컨테이너를 넘어서도 스크롤이 생성될 수 있도록 함 */
+    border-radius: 8px; /* 모서리가 둥근 네모 */
+    margin-right: 24px; /* 태그 간격 설정 */
+    display: flex; /* 자식 요소들을 가로로 나열 */
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    padding: 4px 8px; /* 좌우 여백 설정 */
+    min-width: 29px;
+    min-height: 26px;
+    text-align: center; /* 텍스트 정렬 설정 */
+    border: #f5f5f5 1px solid;
+    user-select: none; /* 텍스트 선택 비활성화 */
+}
+
+.navigation-bar {
+    display: flex; /* 요소들을 가로로 나열 */
+    justify-content: space-between; /* 요소들을 좌우로 정렬 */
+    align-items: center; /* 요소들을 수직 가운데 정렬 */
+    padding: 0 20px; /* 상단 바의 좌우 여백을 설정 */
+    height: 56px; /* 높이를 56px로 설정 */
+    position: absolute; /* 부모 요소를 기준으로 절대 위치 */
+    bottom: 0; /* 부모 요소의 맨 아래에 위치 */
+    left: 0; /* 좌측에 위치 */
+    right: 0; /* 우측에 위치 */
+    background-color: #fff; /* 배경색 설정 (필요시) */
+    justify-content: space-between;
+    overflow: hidden;
+}
+.floating-button {
+    position: absolute;
+    bottom: 70px; /* 네비게이션 바 위에 위치하도록 설정 */
+    right: 16px; /* 오른쪽 여백 설정 */
+    background: none; /* 기본 버튼 배경 제거 */
+    border: none; /* 기본 버튼 테두리 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    cursor: pointer; /* 커서 변경 */
+    z-index: 1000; /* 다른 요소보다 위에 표시되도록 설정 */
+}
+
+.floating-button img {
+    width: 48px; /* 필요에 따라 이미지 크기 조정 */
+    height: 48px; /* 필요에 따라 이미지 크기 조정 */
+}
+
+.list {
+    position: absolute;
+    top: 238px;
+    left: 0;
+    right: 0;
+    height: calc(100% - 294px);
+    align-items: center;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.list::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera에서 네이티브 스크롤바 숨기기 */
+}
+
+.list-header {
+  position: absolute;
+  top: 72px;
+  right: 0;
+  left: 0;
+  height: 48px;
+  text-align: center;
+  display: flex; /* Flexbox 사용 */
+  flex-direction: row; /* Flex 방향을 가로로 지정 */
+  align-items: center; /* 세로로 중앙 정렬 */
+  background-color: #FDF3E2;
+  padding: 0 16px;
+  align-items: center;
+}
+
+.list-header.open {
+  height: 300px; /* Height 자동 조정 */
+  border-radius: 30px; /* 둥근 모서리 */
+  background-color: #FDF3E2;
+  padding-bottom: 10px; /* Dropdown 메뉴가 보일 때 추가 여백 */
+  z-index: 998;
+  flex-direction: column;
+}
+
+.list-header-i {
+  display: flex; /* Flexbox 사용 */
+  flex-direction: row; /* Flex 방향을 가로로 지정 */
+  justify-content: space-between; /* 요소들을 좌우로 나눠 배치 */
+  width: 100%;
+}
+
+.list-header-item {
+  font-size: 12px;
+  font-weight: 400;
+  text-align: center;
+  display: flex; /* Flexbox 사용 */
+  flex-direction: row; /* Flex 방향을 가로로 지정 */
+  align-items: center; /* 세로로 중앙 정렬 */
+}
+
+.list-header-item.active {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.dropdown-item {
+  cursor: pointer;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 24px;
+}
+
+
+  .list-header button {
+    background: none; /* 기본 버튼 배경 제거 */
+    border: none; /* 기본 버튼 테두리 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    cursor: pointer; /* 커서 변경 */
+    width: 48px;
+    height: 48px;
+  }
+
+  .list-map-mid {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 316px;
+    width: 100%; /* 너비를 고정 */
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .list-map-mid.active {
+    flex: 2;
+    height: 500px;
+  }
+
+  .list-map-mid-mid {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%; /* 너비를 고정 */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+    top: 56px;
+    background-color: #ffffff;
+  }
+
+  .list-map-mid-mid.active {
+    flex: 3;
+  }
+
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+    width: 100%;
+    background-color: #f0663f;
+    color: #ffffff;
+}
+
+.home-header button {
+    background: none; /* 기본 버튼 배경 제거 */
+    border: none; /* 기본 버튼 테두리 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    cursor: pointer; /* 커서 변경 */
+    width: 48px;
+    height: 48px;
+}
+
+.list-mid {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%; /* 너비를 고정 */
+    left: 0;
+    right: 0;
+    top: 0;
+    /*overflow-y: auto; /* 세로 스크롤 활성화 */
+}
+
+.list-mid-h {
+  position: absolute;
+  top: 120px;
+  left: 0;
+  right: 0;
+  height: calc(100vh - 176px);
+  overflow-y: auto;
+}
+
+.list-mid-h::-webkit-scrollbar {
+  display: none;
+}
+
+.list-map-mid-mid::-webkit-scrollbar {
+  display: none;
+}
+
+.list-map {
+  position: absolute;
+  top: 72px;
+  left: 0;
+  right: 0;
+  height: 500px;
+  overflow-y: auto;
+}
+
+.list-map.active {
+  flex: 2;
+  height: 500px; /* Increase height */
+}
+
+.list-map, .list-map-mid {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.list-map::-webkit-scrollbar {
+  display: none;
+}
+
+
+.mid {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: calc(100vh - 56px);
+    width: 100%; /* 너비를 고정 */
+    left: 0;
+    right: 0;
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+}
+
+.mid::-webkit-scrollbar {
+    display: none;
+}
+
+.r-mid {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  width: 100%; /* 너비를 고정 */
+  left: 0;
+  right: 0;
+  overflow-y: auto; /* 세로 스크롤 활성화 */
+}
+
+.r-mid::-webkit-scrollbar {
+  display: none;
+}
+
+.home-location {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 56px;
+    background-color: #f0663f;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 400;
+    justify-content: space-between;
+    margin-left: 16px;
+}
+
+.button img {
+    width: 100%; /* 이미지를 버튼의 너비에 맞춤 */
+    height: 100%; /* 이미지를 버튼의 높이에 맞춤 */
+    background-color: none;
+}
+
+ .home-header button {
+    background: none; /* 기본 버튼 배경 제거 */
+    border: none; /* 기본 버튼 테두리 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    cursor: pointer; /* 커서 변경 */
+    width: 48px;
+    height: 48px;
+  }
+  
+  .home-container1 {
+    display: flex;
+    flex-direction: column;
+    height: 242px;
+    width: 100%;
+    background-color: #c4c4c4;
+    flex-shrink: 0;
+  }
+
+  .home-container2 {
+    display: flex;
+    flex-direction: column;
+    height: 160px;
+    width: 398px;
+    border-radius: 16px;
+    background-color: #f5f5f5;
+    margin: 24px 16px;
+    flex-shrink: 0;
+  }
+
+  .home-container3 {
+        position: relative;
+        display: flex;
+        flex-direction: row; /* 가로 방향으로 배치 */
+        width: 100%;
+        flex-shrink: 0;
+        overflow-y: auto;
+        overflow-x: none;
+        margin-bottom: 16px;
+        scroll-snap-type: x mandatory; /* 스크롤 스냅 활성화 */
+        -webkit-overflow-scrolling: touch; /* 부드러운 스크롤 */
+    }
+
+    .home-container3::-webkit-scrollbar {
+        display: none;
+    }
+
+    .home-container3-img {
+        width: 398px;
+        height: 398px;
+        background-color: #c4c4c4;
+        border-radius: 16px;
+        flex-shrink: 0;
+        margin-right: 8px;
+        position: relative; /* 자식 요소의 absolute 위치를 기준으로 함 */
+    }
+
+    .home-container4 {
+        position: relative;
+        display: flex;
+        flex-direction: row; /* 가로 방향으로 배치 */
+        width: 100%;
+        flex-shrink: 0;
+        overflow-y: auto;
+        overflow-x: none;
+        margin-bottom: 16px;
+
+        scroll-snap-type: x mandatory; /* 스크롤 스냅 활성화 */
+        -webkit-overflow-scrolling: touch; /* 부드러운 스크롤 */
+    }
+
+    .home-container4-img {
+        width: 375px;
+        height: 152px;
+        background-color: #c4c4c4;
+        border-radius: 16px;
+        flex-shrink: 0;
+        margin: 32px 8px 32px 0px;
+        position: relative; /* 자식 요소의 absolute 위치를 기준으로 함 */
+    }
+
+    .home-container4::-webkit-scrollbar {
+        display: none;
+    }
+
+    .margin {
+        width: 16px;
+        flex-shrink: 0;
+    }
+    
+    .img-number {
+        position: absolute;
+        width: 48px;
+        height: 19px;
+        bottom: 16px;
+        right: 16px;
+        background-color: #7b7b7b;
+        border-radius: 16px;
+        font-size: 12px;
+        font-weight: 400;
+        color: #ffffff;
+        padding: 4px 8px; /* 필요에 따라 조정 */
+        pointer-events: none; /* 클릭 불가 */
+        user-select: none; /* 텍스트 선택 비활성화 */
+    }
+ 
+  .trailing {
+    margin-right: 16px;
+  }
+
+  .category {
+    font-size: 24px;
+    font-weight: 700;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 64px;
+    flex-wrap: wrap;
+    width: 100%;
+    position: relative;
+  }
+
+  .category .text {
+    padding-left: 16px;
+  }
+
+    .category::before,
+    .category::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 16px; /* 보더 두께 */
+        background-color: #f5f5f5; /* 회색 */
+    }
+
+    .category::before {
+        top: 0;
+    }
+
+    .category::after {
+        bottom: 0;
+    }
+  
+  .button-grid {
+    position: relative;
+    flex-direction: column;
+    margin-top: 24px;
+    margin-bottom: 56px;
+    display: flex;
+    width: 100%;
+    height: 276px;
+    flex-shrink: 0;
+    justify-content: space-between;
+    align-items: flex-start; /* 세로 정렬을 위해 추가 */
+    overflow-y: hidden; /* 가로 스크롤 활성화 */
+    overflow-x: auto; /* 세로 스크롤 비활성화 */
+  }
+  
+
+  .button-grid::-webkit-scrollbar {
+    display: none;
+}
+
+  .button-grid-con {
+    display: flex;
+    flex-shrink: 0;
+    height: 126px;
+    margin-left: 16px;
+  }
+  
+  .button-item {
+    width: 126px;
+    height: 126px;
+    position: relative;
+    border-radius: 16px;
+    box-sizing: border-box;
+    margin-right: 10px;
+  }
+  
+  .button-item img {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    object-fit: cover;
+  }
+
+  .tail-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: #f5f5f5;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 400;
+    justify-content: space-between;
+    padding: 25px 0;
+  }
+
+  .tail-item { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 87.2%;
+    color: #c4c4c4;
+    font-size: 9px;
+    font-weight: 400;
+    justify-content: space-between;
+    padding-top: 11.16%;
+    padding-bottom: 5.58%;
+  }
+
+  .tail-text {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    color: #262626;
+    font-size: 12px;
+    font-weight: 400;
+    margin: 3.72% 0;
+    cursor: default;
+  }
+
+  .tail-number {
+    display: inline-flex; /* Use inline-flex to size the element based on its content */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #262626;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: default;
+    width: 160px;
+    height: 34px;
+    border: 1px solid #262626; /* Adds a border with the color #262626 */
+    border-radius: 16px; /* Adjust the radius value as needed */
+}
+
+.tail-a {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #262626;
+    font-size: 10px;
+    font-weight: 400;
+    cursor: pointer;
+    margin: 1.86% 0;
+}
+
+.tail-accordion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  color: #262626;
+  font-size: 12px;
+  font-weight: 400;
+  margin: 1.86% 0;
+  cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+}
+
+.tail-accordion img {
+  margin-left: 10px; /* Adjust the margin as needed for spacing */
+  transition: transform 0.3s ease; /* Smooth transition for flipping */
+}
+
+.tail-accordion.open img {
+  transform: rotate(180deg); /* Flip the image when .open class is added */
+}
+
+.hidden-content {
+  max-height: 0; /* Initially hide the content */
+  overflow: hidden;
+  transition: max-height 0.3s ease; /* Smooth transition for showing content */
+  color: #7b7b7b;
+  font-size: 10px;
+  font-weight: 400;
+  text-align: left; /* 텍스트를 왼쪽 정렬 */
+  display: flex; /* Flexbox 설정 */
+  flex-direction: row; /* 자식 요소들을 가로로 배치 */
+  width: 260px;
+}
+
+.hidden-item {
+  margin: 1.86% 0;
+  margin-right: 7.44%; /* 간격을 적절히 조정하세요 */
+}
+
+.hidden-item2 {
+  margin: 1.86% 0;
+}
+
+.hidden-item2 > div {
+  margin-top: 5px; /* 간격을 적절히 조정하세요 */
+  white-space: nowrap; /* 텍스트 줄바꿈 금지 */
+}
+
+.hidden-item > div {
+  margin-top: 5px; /* 간격을 적절히 조정하세요 */
+  white-space: nowrap; /* 텍스트 줄바꿈 금지 */
+}
+
+.hidden-content.open {
+  max-height: 1000px; /* 콘텐츠가 펼쳐질 최대 높이 */
+}
+
+.tail-co {
+  margin-top: 1.86%;
+}
+
+.blank {
+  width: 100%;
+  height: 20px;
+  flex-shrink: 0;
+}

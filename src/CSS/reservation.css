@@ -1,0 +1,558 @@
+.reservation-head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 84px;
+    background-color: #f0663f;
+    box-sizing: border-box;
+    width: 100%;
+    flex-direction: row;
+    flex-shrink: 0;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.reservation-mid {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%; /* 너비를 고정 */
+    left: 0;
+    right: 0;
+    top: 72px;
+    height: calc(100% - 128px); /* 높이를 계산하여 설정 */
+    overflow: auto;
+}
+
+.reservation-mid::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera에서 네이티브 스크롤바 숨기기 */
+}
+
+.payment-container {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 129px;
+    padding: 32px 16px;
+    box-sizing: border-box;
+    border-top: 4px solid #f5f5f5; 
+    background-color: #ffffff;
+}
+
+.payment {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.row h1 {
+    font-size: 24px;
+    font-weight: 400;
+    color: #262626;
+    margin: 0;
+    padding: 0;
+}
+
+.payment h2 {
+    font-size: 20px;
+    font-weight: 400;
+    color: #262626;
+    margin: 0;
+    padding: 0;
+}
+
+.payment p {
+    font-size: 12px;
+    font-weight: 400;
+    color: #262626;
+    margin: 0;
+    padding: 0;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.confirm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 15%;
+}
+
+.confirm h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #f0663f;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 37px;
+}
+
+.confirm p {
+    font-size: 20px;
+    font-weight: 400;
+    color: #262626;
+    margin: 0;
+    padding: 0;
+    width: 66%;
+    margin-top: 37px;
+}
+
+.reservation-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    height: 154px;
+    box-sizing: border-box;
+    padding: 16px;
+    border-bottom: #c4c4c4 solid 1px;
+}
+
+.reservation-content h1 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #262626;
+    margin: 0;
+    padding: 0;
+}
+
+.reservation-content p {
+    font-size: 12px;
+    font-weight: 400;
+    color: #7b7b7b;
+    margin: 0;
+    padding: 0;
+}
+
+.reservation-content > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 24px;
+}
+
+.cancel-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65.13px;
+    height: 24px;
+    background-color: #ffffff;
+    color: #7b7b7b;
+    border-radius: 20px;
+    border: #7b7b7b solid 1px;
+    font-size: 12px;
+    font-weight: 400;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+.cancle-info {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    height: 121px;
+    box-sizing: border-box;
+    padding: 16px;
+    bottom: 0;
+    border-top: #c4c4c4 solid 1px;
+}
+
+.cancle-info h1 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #262626;
+    margin: 0;
+    padding: 0;
+}
+
+.cancle-info p {
+    font-size: 12px;
+    font-weight: 400;
+    color: #7b7b7b;
+    margin: 0;
+    padding: 0;
+}
+
+.schedule-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 69.53%;
+    box-sizing: border-box;
+    padding-top: 7.44%;
+}
+
+.schedule-contents {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 376px;
+    height: 72px;
+    box-sizing: border-box;
+    padding: 1.86%;
+    margin-bottom: 6.28%;
+}
+
+.schedule2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 360px;
+    height: 56px;
+    box-sizing: border-box;
+    border: #f0663f solid 3px;
+    color: #262626;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.schedule {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 360px;
+    height: 56px;
+    box-sizing: border-box;
+    border: #f0663f solid 3px;
+    padding-left: 16px;
+    color: #262626;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.schedule button {
+    display: flex;
+    width: 48px;
+    height: 47px;
+    background-color: #f5f5f5;
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    border: none;
+    border-radius: 50%;
+    user-select: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.schedule2 > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    box-sizing: border-box;
+    padding: 0 32px;
+}
+
+
+.schedule-text {
+    position: absolute;
+    width: 33px;
+    height: 16px;
+    padding: 0 4px;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    color: #f0663f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 5%;
+    font-size: 12px;
+    font-weight: 400;
+    z-index: 80;
+}
+
+/* review.css */
+.schedule {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 360px;
+    height: 56px;
+    box-sizing: border-box;
+    border: #f0663f solid 3px;
+    padding-left: 16px;
+    position: relative;
+}
+
+.react-datepicker {
+    background-color: #fdf3e2 !important;
+    position:  relative !important;
+    top: 60px !important; /* 캘린더가 버튼 아래에 나타나도록 조정 */
+    left: 0 !important;
+    z-index: 1000 !important;
+    border: none !important;
+    width: 376px !important; /* 캘린더의 너비 조정 */
+    height: 400px !important; /* 캘린더의 높이 조정 */
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    border-radius: 20px !important;
+    top: 40px !important;
+}
+
+.react-datepicker__header {
+    background-color: #fdf3e2 !important;
+    border-bottom: 1px solid #ccc !important;
+    border: none !important;
+    padding: 0 !important;
+    margin-top: 20px;
+    border-radius: 20px !important;
+}
+
+.custom-calendar .outside-month {
+    color: #7b7b7b;
+}
+
+.custom-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 0.5rem !important;
+    background-color: #fdf3e2 !important;
+    border-bottom: 1px solid #ccc !important;
+    border: none !important;
+    border-radius: 20px !important;
+}
+
+.custom-header button {
+    background: none !important;
+    border: none !important;
+    font-size: 1rem !important;
+    cursor: pointer !important;
+}
+
+.custom-header select {
+    background: none !important;
+    border: none !important;
+    font-size: 1rem !important;
+    cursor: pointer !important;
+}
+
+.react-datepicker__day:hover {
+    background-color: #f0e2cc !important; /* 날짜에 커서를 올렸을 때 배경색 */
+}
+
+.react-datepicker__day--selected {
+    background-color: #f0663f !important;
+    color: white !important; /* 날짜에 커서를 올렸을 때 텍스트 색 */
+    z-index: 80 !important;
+}
+
+.react-datepicker__month {
+    width: 100% !important;
+    height: calc(100% - 40px) !important; /* 헤더를 제외한 높이 계산 */
+}
+
+.react-datepicker__week {
+    display: flex !important;
+    justify-content: space-around !important;
+    font-size: 16px !important;
+}
+
+.react-datepicker__day {
+    width: 40px !important; /* 날짜 셀 너비 */
+    height: 40px !important; /* 날짜 셀 높이 */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 100% !important;
+    margin-right: 10px !important; /* 날짜 셀 오른쪽 마진 추가 */
+}
+
+.react-datepicker__day-name {
+    width: calc(100% / 7) !important; /* 요일 너비 조정 */
+    text-align: center !important;
+    margin: 20px 0 !important;
+    padding: 0% !important;
+}
+
+.schedule-calendar-container {
+    display: flex;
+    width: 100%;
+    height: 600px;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.calendar-buttons {
+    background-color: #fdf3e2;
+    z-index: 888;
+    height: 56px;
+    margin-top: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 16px;
+}
+
+.schedule-calendar-button {
+    margin: 5px;
+    padding: 8px 12px;
+    border: none;
+    color: #f0663f;
+    background-color: none;
+    cursor: pointer;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.schedule-calendar-button-container {
+    display: flex;
+    width: 40%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    max-width: 90%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.modal-body {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-button {
+    background: #f0663f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.modal-button:hover {
+    background: #f0663f;
+}
+
+.payment-method {
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 60px;
+    height: 60px;
+    font-size: 12px;
+}
+
+.payment-method img {
+    width: 100%;
+    height: 100%;
+}

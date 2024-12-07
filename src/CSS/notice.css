@@ -1,0 +1,752 @@
+.notice-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 112px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    border-bottom: #f5f5f5 12px solid;
+    overflow-x: auto;
+    white-space: nowrap; /* 내부 요소들이 줄 바꿈되지 않도록 설정 */
+    padding: 0 16px;
+}
+
+.notice-header-bar img {
+    position: absolute;
+    right: 30px;
+}
+
+.notice-header {
+    height: 48px;
+    text-align: center;
+    display: flex; /* Flexbox 사용 */
+    flex-direction: column;
+    align-items: center; /* 세로로 중앙 정렬 */
+    background-color: #FDF3E2;
+    padding: 0 16px;
+    align-items: center;
+}
+
+.notice-header.open {
+    height: 95px;
+    border-bottom-left-radius: 20px; /* 아코디언이 열릴 때 둥근 모서리 설정 */
+    border-bottom-right-radius: 20px;
+}
+
+.notice-header button {
+    background: none; /* 기본 버튼 배경 제거 */
+    border: none; /* 기본 버튼 테두리 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    cursor: pointer; /* 커서 변경 */
+    width: 48px;
+    height: 48px;
+}
+
+.notice-header-search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 398px;
+    height: 56px;
+    box-sizing: border-box;
+    border-radius: 50px;
+    padding: 20px;
+    font-size: 16px;
+    font-weight: 400;
+    border: #f0663f solid 1px;
+    outline: none; /* 클릭 시 포커스 스타일 제거 */
+}
+
+.notice-mid {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%; /* 너비를 고정 */
+    left: 0;
+    right: 0;
+    top: 232px;
+    height: calc(100% - 288px); /* 높이를 계산하여 설정 */
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+}
+
+.notice-mid.open {
+    top: 280px;
+    height: calc(100% - 336px); /* 높이를 계산하여 설정 */
+}
+
+.notice-mid::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera에서 네이티브 스크롤바 숨기기 */
+}
+
+.notice-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    height: 87px;
+    width: 100%;
+    padding: 16px;
+    border-bottom: 1px solid #c4c4c4;
+    justify-content: space-between;
+}
+
+.notice-content {
+    font-size: 12px;
+    font-weight: 400;
+    color: #7b7b7b;
+    height: 26px;
+}
+
+.notice-button {
+    position: absolute;
+    right: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    background-color: #f0663f;
+    color: #ffffff;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: 65px;
+    cursor: pointer;
+    border: none;
+}
+
+.notice-header-i {
+    display: flex; /* Flexbox 사용 */
+    flex-direction: row; /* Flex 방향을 가로로 지정 */
+    justify-content: space-between; /* 요소들을 좌우로 나눠 배치 */
+    width: 100%;
+}
+
+.notice-header-i2 {
+    display: flex; /* Flexbox 사용 */
+    flex-direction: row; /* Flex 방향을 가로로 지정 */
+    justify-content: space-between; /* 요소들을 좌우로 나눠 배치 */
+    width: 100%;
+    margin-top: 16px;
+}
+
+.notice-header-item {
+    font-size: 12px;
+    font-weight: 400;
+    text-align: center;
+    display: flex; /* Flexbox 사용 */
+    flex-direction: row; /* Flex 방향을 가로로 지정 */
+    align-items: center; /* 세로로 중앙 정렬 */
+}
+
+.review-mid {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%; /* 너비를 고정 */
+    left: 0;
+    right: 0;
+    top: 72px;
+    height: calc(100% - 128px); /* 높이를 계산하여 설정 */
+}
+
+.edit-mid {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%; /* 너비를 고정 */
+    left: 0;
+    right: 0;
+    top: 72px;
+    box-sizing: border-box;
+    padding: 56px 16px;
+    height: calc(100% - 128px); /* 높이를 계산하여 설정 */
+}
+
+.edit-textbox {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    box-sizing: border-box;
+    color: #7b7b7b;
+    font-size: 16px;
+    font-weight: 400;
+    height: 20px;
+    cursor: default;
+}
+
+.edit-text {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    color: #7b7b7b;
+    font-size: 16px;
+    font-weight: 400;
+    height: 20px;
+}
+
+.edit-text p {
+    font-size: 16px;
+    font-weight: 400;
+    color: #7b7b7b;
+    margin-right: 24px;
+    min-width: 92px;
+    text-align: left;
+    max-width: 200px;
+}
+
+.edit-text input {
+    font-size: 16px;
+    font-weight: 400;
+    color: #7b7b7b;
+    margin-right: 24px;
+    min-width: 92px;
+    text-align: left;
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+}
+
+button.not-verified {
+    background: none; /* 기본 버튼 배경 제거 */
+    border: none; /* 기본 버튼 테두리 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    cursor: pointer; /* 커서 변경 */
+    border-radius: 20px;
+    border: #7b7b7b solid 1px;
+    color: #7b7b7b;
+    width: 68px;
+    height: 20px;
+    font-size: 12px;
+}
+
+
+button.verified {
+    background: none; /* 기본 버튼 배경 제거 */
+    border: none; /* 기본 버튼 테두리 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    cursor: pointer; /* 커서 변경 */
+    border-radius: 20px;
+    border: #eb944d solid 1px;
+    color: #eb944d;
+    width: 68px;
+    height: 20px;
+    font-size: 12px;
+}
+
+.edit-textbox2 {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    box-sizing: border-box;
+    color: #7b7b7b;
+    font-size: 16px;
+    font-weight: 400;
+    height: 20px;
+    width: 100%;
+    cursor: default;
+}
+
+.edit-textbox2 p {
+    font-size: 16px;
+    font-weight: 400;
+    color: #7b7b7b;
+    text-overflow: ellipsis;
+    margin-right: 24px;
+    min-width: 92px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.edit-textbox2 button {
+    background: none; /* 기본 버튼 배경 제거 */
+    border: none; /* 기본 버튼 테두리 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    cursor: pointer; /* 커서 변경 */
+    border-radius: 20px;
+    border: #eb944d solid 1px;
+    color: #eb944d;
+    width: 46px;
+    height: 20px;
+    font-size: 12px;
+}
+
+.re-mid {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%; /* 너비를 고정 */
+    left: 0;
+    right: 0;
+    top: 72px;
+    height: calc(100% - 72px); /* 높이를 계산하여 설정 */
+}
+
+.review-text {
+    font-size: 16px;
+    font-weight: 400;
+    color: #262626;
+    margin-bottom: 21px;
+    width: 100%;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: #c4c4c4 solid 1px;
+}
+
+.review-text h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #262626;
+    text-overflow: ellipsis;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.review-text p {
+    font-size: 16px;
+    font-weight: 400;
+    color: #262626;
+    text-overflow: ellipsis;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.review-star-container {
+    display: flex;
+    width: 100%;
+    height: 152px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.review-star-box {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.review-star {
+    width: 56px;
+    height: 56px;
+}
+
+.review-nickname {
+    display: flex;
+    height: 32px;
+    padding: 16px 20px 8px 20px;
+    width: calc(100% - 40px);
+    flex-shrink: 0;
+    color: #262626;
+    font-size: 20px;
+}
+
+.review-textbox {
+    display: flex;
+    height: 32px;
+    width: calc(100% - 40px);
+    flex-shrink: 0;
+    color: #262626;
+    font-size: 20px;
+    background-color: #f5f5f5;
+}
+
+.review-input {
+    width: calc(100% - 40px); /* 부모 요소의 너비 계산 */
+    background-color: #f0f0f0; /* 배경색 회색 */
+    border: none; /* 테두리 없음 */
+    padding: 30px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #262626;
+    min-height: 220px;
+    resize: none; /* 사용자가 크기를 조절할 수 없도록 */
+    line-height: 1.5;
+    box-sizing: border-box; /* 패딩 포함하여 크기 계산 */
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.review-input:focus {
+    outline: none; /* 포커스 시 보더 색 변경 없음 */
+}
+
+.view-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 84px;
+    background-color: #f0663f;
+    box-sizing: border-box;
+    white-space: nowrap; /* 내부 요소들이 줄 바꿈되지 않도록 설정 */
+    padding: 8px 24px;
+    width: 100%;
+    flex-direction: row;
+    flex-shrink: 0;
+    color: #ffffff;
+}
+
+.view-head-textbox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 85px;
+    height: 100%;
+}
+
+.view-head-textbox h1 {
+    display: flex;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0; /* 마진 제거 */
+    padding: 0; /* 패딩 제거 */
+    color: #ffffff;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.view-head-textbox p {
+    display: flex;
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0; /* 마진 제거 */
+    padding: 0; /* 패딩 제거 */
+    color: #ffffff;
+    height: 26px;
+    align-items: center;
+}
+
+.view-head-name {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    width: 115px;
+    height: 100%;
+    color: #ffffff;
+    font-size: 12px;
+}
+
+.view-head-name p {
+    display: flex;
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0; /* 마진 제거 */
+    padding: 0; /* 패딩 제거 */
+    color: #ffffff;
+    height: 26px;
+    align-items: center;
+}
+
+.view-pet {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    background-color: #fdf3e2;
+    box-sizing: border-box;
+    white-space: nowrap; /* 내부 요소들이 줄 바꿈되지 않도록 설정 */
+    padding: 16px 16px;
+    width: 100%;
+    flex-direction: row;
+    flex-shrink: 0;
+    color: #262626;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.view-pet p {
+    color: #7b7b7b;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.view-contents-style {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    padding: 32px 24px 16px 24px;
+    box-sizing: border-box;
+    color: #262626;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.view-contents-style h1 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #eb944d;
+    padding: 0;
+    margin: 0;
+    width: 80px;
+    margin-right: 24px;
+}
+
+.view-contents-style p {
+    font-size: 16px;
+    font-weight: 400;
+    color: #262626;
+    padding: 0;
+    margin: 0;
+}
+
+.view-contents {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start; /* 텍스트 왼쪽 정렬 */
+    width: 100%;
+    padding: 16px 20px;
+    box-sizing: border-box;
+    color: #262626;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.view-contents h1 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #eb944d;
+    padding: 0;
+    margin: 0;
+    width: 80px;
+    margin-right: 24px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.reservation-contents {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start; /* 텍스트 왼쪽 정렬 */
+    width: 100%;
+    padding: 16px 0 16px 20px;
+    box-sizing: border-box;
+    color: #262626;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+
+.reservation-contents h1 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #eb944d;
+    padding: 0;
+    margin: 0;
+    width: 150px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.view-contents p {
+    font-size: 16px;
+    font-weight: 400;
+    color: #262626;
+    padding: 0;
+    margin: 0;
+}
+
+.view-contents-checkbox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 240px;
+    color: #c4c4c4;
+    font-size: 16px;
+    font-weight: 400;
+    flex-wrap: wrap;
+}
+
+.reservation-contents-checkbox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 600px;
+    color: #c4c4c4;
+    font-size: 16px;
+    font-weight: 400;
+    flex-wrap: wrap;
+    margin-left: 40px;
+}
+
+.reservation-contents-text {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 300px;
+    color: #c4c4c4;
+    font-size: 16px;
+    font-weight: 400;
+    flex-wrap: wrap;
+    padding-right: 80px;
+    padding-bottom: 120px;
+    
+}
+
+.reservation-contents-text textarea {
+    width: 100%;
+    min-height: 20px;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    border: none;
+    color: #262626;
+    flex-shrink: 0;
+    border: none;
+    height: auto;
+    resize: vertical; /* 수직으로만 늘어날 수 있도록 설정 */
+    overflow: hidden;
+    resize: none; /* 사용자가 크기 조절할 수 없도록 설정 */
+}
+
+.reservation-contents-text textarea:focus {
+    outline: none; /* 포커스 시 보더 제거 */
+}
+
+.reservation-contents-text textarea::placeholder {
+    color: #c4c4c4;
+}
+
+.reservation-contents-text p {
+    color: #c4c4c4;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    text-align: left;
+}
+
+.view-contents-check {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #c4c4c4;
+    font-size: 16px;
+    font-weight: 400;
+    height: 26px;
+    margin-right: 16px;
+    margin-bottom: 12px;
+}
+
+.view-contents-check p {
+    color: #c4c4c4;
+    margin: 0 0 0 4px;
+    padding: 0 0 0 0;
+}
+
+.reservation-contents-check {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #c4c4c4;
+    font-size: 16px;
+    font-weight: 400;
+    height: 26px;
+    margin-right: 19px;
+    margin-bottom: 20px;
+}
+
+.reservation-contents-check p {
+    color: #c4c4c4;
+    margin: 0 0 0 4px;
+    padding: 0 0 0 0;
+}
+
+/* 기본 체크박스 숨기기 */
+input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #c4c4c4; /* 체크 전 회색 테두리 */
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+    background-color: transparent;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* 체크박스가 체크되었을 때의 스타일 */
+  input[type="checkbox"]:checked {
+    background-color: #f0663f; /* 체크 후 배경색 */
+    border: 2px solid #f0663f; /* 체크 후 테두리 제거 */
+    border-radius: 2px;
+  }
+  
+  input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    width: 6px;
+    height: 10px;
+    border: solid transparent;
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  
+  input[type="checkbox"]:checked::before {
+    border-color: #ffffff; /* 체크 표시 색상 */
+  }
+  
+  /* 체크박스가 포커스되었을 때의 스타일 */
+  input[type="checkbox"]:focus {
+    outline: none;
+  }
+
+/* 체크된 상태의 텍스트 색상 */
+.checked {
+    color: #262626 !important; /* 체크된 상태에서 텍스트 색상을 변경 */
+  }
+
+  .view-contents-etc {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 16px 20px 32px 20px;
+    box-sizing: border-box;
+    color: #262626;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.view-contents-etc h1 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #eb944d;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 24px;
+}
+
+.view-contents-etc p {
+    font-size: 16px;
+    font-weight: 400;
+    color: #262626;
+    padding: 0;
+    margin: 0;
+}

@@ -1,0 +1,299 @@
+.event-img {
+  width: 100%;
+  height: 468px;
+  object-fit: cover;
+  background-color: rgb(179, 179, 179);
+}
+
+.event-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #262626;
+  display: flex;
+  width: calc(100% - 32px);
+  justify-content: space-between; /* 자식 요소들 사이의 간격 최대화 */
+  margin: 14.88% 0 5.58% 0;
+}
+
+.event-title-button {
+  background-color: #f0663f; /* 기본 색상 */
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 400;
+  width: 92px;
+  height: 32px;
+  display: flex;
+  user-select: none;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+}
+
+.event-title-button.clicked {
+  background-color: #ffffff; /* 클릭 시 색상 */
+  color: #262626;
+  border: #262626 solid 1px;
+  box-sizing: border-box;
+}
+
+.event-address {
+  font-size: 16px;
+  font-weight: 400;
+  color: #262626;
+  margin-bottom: 24px;
+  width: calc(100% - 32px);
+  padding: 0 16px 7.44% 16px;
+  text-align: left; /* 텍스트를 왼쪽 정렬 */
+  border-bottom: #c4c4c4 solid 1px;
+}
+
+.event-address span {
+  display: block; /* span 요소를 블록 요소로 만들어 너비를 지정 */
+  width: 250px; /* 원하는 너비 지정 */
+  word-wrap: break-word; /* 긴 단어가 있을 때 줄 바꿈 적용 */
+  word-break: break-word; /* 단어가 박스를 넘지 않도록 줄 바꿈 */
+  overflow-wrap: break-word; /* 단어가 컨테이너를 넘지 않도록 줄 바꿈 */
+}
+
+.event-tag-container {
+  display: flex; /* 자식 요소들을 가로로 나열 */
+  flex-wrap: wrap; /* 필요한 경우 줄 바꿈 */
+  height: 23px;
+  margin: 5.58% 0;
+}
+
+.event-address p {
+  color: #7b7b7b;
+  margin: 5px 0;
+}
+
+.event-button-container {
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  justify-content: space-between;
+  width: 290px;
+  margin: 5.58% 0;
+  height: 91px;
+  flex-shrink: 0;
+}
+
+.event-button button {
+  background: none; /* 기본 버튼 배경 제거 */
+  border: none; /* 기본 버튼 테두리 제거 */
+  padding: 0; /* 기본 패딩 제거 */
+  cursor: pointer; /* 커서 변경 */
+  width: 56px;
+  height: 56px;
+}
+
+.event-button {
+  color: #262626;
+  font-size: 12px;
+  font-weight: 400;
+  display: flex;
+  height: 100%;
+  flex-direction: column; /* 자식 요소들을 세로로 배치 */
+  justify-content: space-between; /* 간격을 최대로 설정 */
+}
+
+.event-button-text {
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  height: 35px;
+}
+
+.event-text-box {
+  width: 92.33%;
+  min-height: 90px;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #262626;
+  font-size: 16px;
+  font-weight: 400;
+  background-color: #f5f5f5;
+  flex-shrink: 0;
+  border-radius: 12px;
+}
+
+.album-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: calc(100% - 32px);
+  color: #262626;
+  font-size: 20px;
+  font-weight: 400;
+  margin-top: 56px;
+}
+
+.information-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: calc(100% - 32px);
+  color: #262626;
+  font-size: 20px;
+  font-weight: 400;
+  margin-top: 64px;
+  margin-bottom: 16px;
+}
+
+.album-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #262626;
+  font-size: 12px;
+  font-weight: 400;
+  margin: 12px 8px;
+  user-select: none;
+}
+
+.album {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  height: 430px;
+}
+
+.grid-container {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3개의 열, 각 열의 너비는 동일 */
+  flex-shrink: 0;
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(430 / 3px); /* 각 그리드 아이템의 너비 */
+  height: calc(430 / 3px); /* 각 그리드 아이템의 높이 */
+  overflow: hidden; /* 이미지를 그리드 아이템 안에 맞게 자르기 */
+}
+
+.grid-item img {
+  width: 100%; /* 이미지를 그리드 아이템에 맞게 너비 최대화 */
+  height: 100%; /* 이미지를 그리드 아이템에 맞게 높이 최대화 */
+  object-fit: cover; /* 이미지 비율 유지하면서 그리드 아이템에 맞게 자동 조정 */
+  transition: transform 0.3s ease; /* 변형 전환 효과를 위한 CSS 속성 설정 */
+}
+
+.event-accordion {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  color: #262626;
+  font-size: 12px;
+  font-weight: 400;
+  margin: 12px 8px;
+  width: calc(100% - 32px);
+  user-select: none;
+}
+
+.border {
+  border-bottom: #7b7b7b solid 1px;
+  width: 100%;
+}
+
+.accordion-hidden-div {
+  display: flex;
+  width: 100%;
+  flex-shrink: 0;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  scroll-snap-type: x mandatory; /* 스크롤 스냅 활성화 */
+  -webkit-overflow-scrolling: touch; /* 부드러운 스크롤 */
+  flex-shrink: 0;
+}
+
+.accordion-hidden-div:active {
+  cursor: grabbing; /* 클릭 시 커서를 손 모양으로 설정 */
+}
+
+.table-container {
+  width: 100%; /* 부모 요소에 맞게 전체 너비 설정 */
+  overflow-x: auto; /* 가로 스크롤 추가 */
+}
+
+.table-container::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-table {
+  margin-left: 16px;
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 700px; /* 스크롤 유도를 위한 최소 너비 설정 */
+  border: 1px solid #ccc; /* 테두리 설정 */
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.custom-table td,
+.custom-table th {
+  border: 1px solid #ccc; /* 셀 테두리 설정 */
+  padding: 8px 0;
+  text-align: center;
+  min-width: 40px; /* 각 셀의 최소 너비 설정 */
+  max-width: 40px;
+}
+
+.custom-table .gray-row {
+  background-color: #f0f0f0; /* 첫 번째 행의 배경색 */
+}
+
+.writing-div {
+  height: 169px;
+  width: 100%;
+  margin-top: 16px;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #262626;
+  font-size: 16px;
+  font-weight: 400;
+  flex-shrink: 0;
+  margin-bottom: 160px;
+}
+
+.writing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 330px;
+  height: 153px;
+  color: #262626;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 12px;
+  border: #fae0b7 solid 1px;
+}
+
+.pet-list-mid {
+  position: absolute;
+  top: 58px;
+  left: 0;
+  right: 0;
+  height: calc(100% - 114px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: #262626;
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 16px;
+}

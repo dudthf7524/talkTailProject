@@ -1,0 +1,50 @@
+/* 한글 폰트 */
+@font-face {
+    font-family: 'AppleSDGothicNeo';
+    src: url('./ios_systemFont_ko/AppleSDGothicNeoR.ttf') format('truetype'); /* 한글 Regular 폰트 경로와 형식(ttf) */
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'AppleSDGothicNeo';
+    src: url('./ios_systemFont_ko/AppleSDGothicNeoB.ttf') format('truetype'); /* 한글 Bold 폰트 경로와 형식(ttf) */
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  /* 영어 폰트 */
+  @font-face {
+    font-family: 'SF Pro Display';
+    src: url('./ios_systemFont_en/SF-Mono-Regular.otf') format('opentype'); /* 영어 Regular 폰트 경로와 형식(otf) */
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'SF Pro Display';
+    src: url('./ios_systemFont_en/SF-Mono-Bold.otf') format('opentype'); /* 영어 Bold 폰트 경로와 형식(otf) */
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  /* 전체 body에 폰트 적용 */
+  body {
+    font-family: 'AppleSDGothicNeo', sans-serif; /* 한글 기본 폰트 설정 */
+  }
+  
+  /* 한글에만 폰트 적용 */
+  body *:lang(ko) {
+    font-family: 'AppleSDGothicNeo', sans-serif; /* 한글 폰트 적용 */
+  }
+  
+  /* 영어에만 폰트 적용 */
+  body *:lang(en) {
+    font-family: 'SF Pro Display', sans-serif; /* 영어 폰트 적용 */
+  }
+  
+    /* 볼드 텍스트에 대한 스타일 */
+    .bold {
+      font-weight: 700;
+    }
+    

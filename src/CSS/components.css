@@ -1,0 +1,341 @@
+.list-container {
+    display: flex;
+    flex-wrap: wrap;
+    height: 126px;
+    padding: 24px 16px;
+    border-bottom: 1px solid #c4c4c4;
+    justify-content: space-between;
+}
+
+.list-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    height: 107px;
+    width: 100%;
+    padding: 24px 16px;
+    border-bottom: 1px solid #c4c4c4;
+    justify-content: space-between;
+}
+
+.image-container {
+    width: 126px;
+    height: 126px;
+    background-color: #d9d9d9;
+    border-radius: 8%;
+}
+
+.list-image-container {
+    width: 107px;
+    height: 107px;
+    background-color: #d9d9d9;
+    border-radius: 8%;
+    margin-left: 16px;
+    overflow: hidden;
+    display: flex;
+}
+
+.list-image-container img {
+    width: 100%;
+    height: 100%;
+}
+
+.text-container {
+    position: static;
+    height: 126px;
+    width: 60%;
+    flex-direction: column;
+    flex-grow: 1; /* 부모 요소를 꽉 채우도록 설정 */
+    flex-shrink: 1; /* 유연한 크기 조정을 허용 */
+    flex-basis: auto; /* 초기 크기를 자동으로 설정 */
+    align-items: left;
+    text-align: left;
+    margin-left: 16px;
+}
+
+.tag-container {
+    display: flex; /* 자식 요소들을 가로로 나열 */
+    flex-wrap: wrap; /* 필요한 경우 줄 바꿈 */
+    height: 23px;
+}
+
+.list-tag-container {
+    display: flex; /* 자식 요소들을 가로로 나열 */
+    flex-wrap: wrap; /* 필요한 경우 줄 바꿈 */
+    height: 23px;
+    margin-bottom: 9px;
+}
+
+.list-tag {
+    font-size: 12px;
+    font-weight: 400;
+    color: #69645c;
+    border: 1px solid #69645c;
+    border-radius: 100px; /* 모서리가 둥근 네모 */
+    margin-right: 8px; /* 태그 간격 설정 */
+    display: flex; /* 자식 요소들을 가로로 나열 */
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    padding: 2px 8px; /* 좌우 여백 설정 */
+    min-width: 30px;
+    text-align: center; /* 텍스트 정렬 설정 */
+    box-sizing: border-box; /* border를 요소의 크기에 포함 */
+}
+
+.tag {
+    font-size: 12px;
+    font-weight: 400;
+    color: #000000;
+    background-color: #fdf3e2;
+    border-radius: 8px; /* 모서리가 둥근 네모 */
+    margin-right: 8px; /* 태그 간격 설정 */
+    display: flex; /* 자식 요소들을 가로로 나열 */
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    padding: 0px 8px; /* 좌우 여백 설정 */
+    min-width: 30px;
+    text-align: center; /* 텍스트 정렬 설정 */
+}
+
+.popular-tag {
+    background-color: #f5b75c; /* 인기 태그의 배경색 설정 */
+    color: #000000; /* 인기 태그의 글자색 설정 */
+}
+
+.title-container {
+    display: flex;
+    flex-direction: column;
+    height: 89px;
+    width: 100%;
+}
+
+.list-title-container {
+    display: flex;
+    flex-direction: column;
+    height: 107px;
+    width: 100%;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 400;
+    color: #262626;
+    margin-top: 8px;
+    white-space: nowrap; /* 텍스트가 넘칠 경우 줄바꿈 방지 */
+    overflow: hidden; /* 넘친 텍스트 숨김 */
+}
+
+.list-title {
+    font-size: 16px;
+    font-weight: 400;
+    color: #262626;
+    width: 263px;
+    height: 32px;
+    margin-top: 8px;
+    white-space: nowrap; /* 텍스트가 넘칠 경우 줄바꿈 방지 */
+    overflow: hidden; /* 넘친 텍스트 숨김 */
+}
+
+.info {
+    display: flex; /* 자식 요소들을 가로로 나열 */
+    justify-content: flex-end; /* 부모 요소의 오른쪽으로 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    font-size: 12px;
+    font-weight: 400;
+    color: #7b7b7b;
+}
+
+.content {
+    font-size: 16px;
+    font-weight: 400;
+    color: #7b7b7b;
+    width: 263px;
+    height: 26px;
+    white-space: nowrap; /* 텍스트가 넘칠 경우 줄바꿈 방지 */
+    overflow: hidden; /* 넘친 텍스트 숨김 */
+    text-overflow: ellipsis;
+}
+
+.list-content {
+    font-size: 12px;
+    font-weight: 400;
+    color: #7b7b7b;
+    width: 263px;
+    height: 26px;
+    text-overflow: ellipsis;
+}
+
+.Nbutton {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 56px;
+    background-color: #f0663f;
+    font-size: 20px;
+    font-weight: 400;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: #ffffff;
+    user-select: none;
+}
+
+.Nbutton3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 56px;
+    width: 100%;
+    background-color: #f0663f;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ffffff;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.Nbutton2 {
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 56px !important;
+    font-size: 20px !important;
+    font-weight: 400 !important;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: #ffffff;
+    flex-direction: row;
+    user-select: none;
+}
+
+.Nbutton2-1 {
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100%;
+    width: 50%;
+    font-size: 20px;
+    font-weight: 400;
+    color: #f0663f;
+    user-select: none;
+    box-sizing: border-box;
+    border: #f0663f solid 1px;
+}
+
+.Nbutton2-2 {
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100%;
+    width: 50%;
+    background-color: #f0663f;
+    font-size: 20px;
+    font-weight: 400;
+    color: #ffffff;
+    user-select: none;
+}
+
+/* 모달의 전체 배경 */
+.modal1 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+/* 모달 내용 컨테이너 */
+.modal-content {
+    background-color: #fff;
+    padding: 28px;
+    border-radius: 12px;
+    width: 343px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    flex-direction: column;
+}
+
+/* 닫기 버튼 */
+.close-button {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* 모달 본문 */
+.modal-body {
+    margin-bottom: 12px;
+}
+
+/* 모달 텍스트 스타일 */
+.modal-body h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    padding-bottom: 12px;
+}
+
+/* 모달 하단 버튼 영역 */
+.modal-footer {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+/* 버튼 공통 스타일 */
+.modal-footer button {
+    display: flex;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 16px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    font-size: 16px;
+    margin: 0 6px;
+}
+
+/* 취소 버튼 스타일 */
+.modal-cancel-button {
+    background-color: #fff;
+    color: #888;
+    border: 1px solid #888 !important;
+}
+
+/* 확인 버튼 기본 스타일 */
+.modal-confirm-button {
+    color: #fff;
+    border: none;
+}
+
+/* 확인 버튼이 경고창일 때 스타일 */
+.modal-confirm-button.w {
+    background-color: #EA4335; /* 경고창 빨간색 */
+}
+
+/* 확인 버튼이 일반 모달일 때 스타일 */
+.modal-confirm-button.n {
+    background-color: #eb944d; /* 주황색 */
+}
+
+.modal-text.w {
+    color: #EA4335;
+}
+
+.modal-text.n {
+    color: black;
+}
+
+.modal-footer p {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+}
