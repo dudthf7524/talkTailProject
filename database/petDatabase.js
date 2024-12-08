@@ -19,7 +19,7 @@ const registerPet = async (petData) => {
         if (petData.image) {
             petImg = await imgNaverCloud.uploadPetImage(petData.image, petId, 'pet');
         }
-        console.log(petImg)
+       
         // 펫 기본 정보 저장
         const pet = await Pet.create({
             platform_id: petData.platform_id,
@@ -33,10 +33,12 @@ const registerPet = async (petData) => {
             pet_neuter: petData.neuter,
             pet_gender: petData.gender,
             pet_etc: petData.etc,
-        }); 
+        });
+
+        // const petId = pet.pet_id;
+        
         return { pet, petImg};
     } catch (error) {
-        console.log(error)
         throw new Error(`Failed to register pet: ${error.message}`);
     }
 };
