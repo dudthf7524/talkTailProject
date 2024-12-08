@@ -20,6 +20,11 @@ import EditUserPage from './Page/User/EditUserPage';
 import HomePage from './Page/Home/HomePage';
 import ListPage from './Page/List/ListPage';
 import BusinessDetailPage from './Page/List/BusinessDetailPage';
+import RegisterDesinger from './BusinessPage/RegisterDesinger';
+import PetDesigner from './Page/List/PetDesigner';
+import SelectDatePage2 from './Page/Reservation/SelectDatePage2';
+import PetRegistrationPage from './Page/Pet/PetRegistrationPage';
+
 function App() {
   const [imageFiles, setImageFiles] = useState({
     main: [],
@@ -62,6 +67,10 @@ function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/list/:id" element={<ListPage />} />
             <Route path="/business/detail/:id" element={<BusinessDetailPage />} />
+            <Route path="/designer/list/:id" element={<PetDesigner />} />
+            <Route path="/select/date/:id" element={<SelectDatePage2 />} />
+            <Route path="/pet/registration" element={<PetRegistrationPage />} />
+
             {/* <Route path="/admin" element={<>
               <Link to="/register">회원가입</Link>
               {user ? `관리자 ${user.business_owner_name}님 환영합니다!` : 'Log-In'}
@@ -75,6 +84,7 @@ function App() {
               <Route path="register" element={<Register />} />
               <Route path="register/information" element={<RegisterInformation />} />
               <Route path="imgupload/:imageType" element={<ImgUpload setImageFiles={handleSetImageFiles} />} />
+              <Route path="register/desinger" element={<RegisterDesinger/>} />
             </Route>
           </Routes>
         </ImageProvider>

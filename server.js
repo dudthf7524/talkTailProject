@@ -7,7 +7,9 @@ const businessRoutes = require('./routes/businessRoutes');
 const authRoutes = require('./routes/authRoutes');
 const passport = require('passport');
 const session = require('express-session');
-const passportConfig = require('./passport'); 
+const passportConfig = require('./passport');
+const designerRoutes = require('./routes/designerRoutes');
+const petRoutes = require('./routes/petRoutes');
 // 프론트엔드에서 데이터 가져올때 
 app.use(express.json());
 // 데이터베이스 연결
@@ -55,6 +57,9 @@ app.get('/', (req, res) => {
 })
 
 app.get('/user/auth', (req, res) => {
+  console.log('로그인된 정보')
+  console.log(req.user)
+  console.log('로그인된 정보')
   res.json(req.user)
 });
 
@@ -62,3 +67,5 @@ app.get('/user/auth', (req, res) => {
 
 app.use('/api', businessRoutes)
 app.use('/api', authRoutes)
+app.use('/api', designerRoutes)
+app.use('/api', petRoutes)

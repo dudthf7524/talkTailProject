@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import NButtonContainer from '../Components/NavigatorBar/NButtonContainer';
-import List from './List';
 import { useNavigate, useParams } from 'react-router-dom';
-import useFetchBusinesses from './useFetchBusinesses';
+import api from '../../Api';
 
 const PetDesigner = () => {
   const navigate = useNavigate();
   const { id } = useParams(); // URL에서 id 매개변수 가져오기
+  console.log(id)
 
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
-  const arrowButtonUrl = `${process.env.PUBLIC_URL}/images/list/arrow_left.svg`;
-  const arrowUrl = `${process.env.PUBLIC_URL}/images/list/arrow_fill_down.svg`;
-  const mapUrl = `${process.env.PUBLIC_URL}/images/list/map.svg`;
+  const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
+  const arrowUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_fill_down.svg`;
+  const mapUrl = `${process.env.PUBLIC_URL}/PageImage/list/map.svg`;
 
   // 드롭다운 토글
   const toggleDropdown = () => {
@@ -27,13 +27,38 @@ const PetDesigner = () => {
     navigate(`/list-map/${id}`);
   };
 
+  const [designers, setDesigners] = useState({})
   
-
+  useEffect(() => {
+    const fetchBusiness = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('No token found.');
+        }
+        const response = await api.get(`/api/designer/list/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+        setDesigners(response.data);
+        console.log('Business fetched:', response.data);
+      } catch (error) {
+        console.error('Error fetching business:', error);
+      }
+    };
+    fetchBusiness();
+  }, [id]);
+  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+  console.log(designers)
+  const handleClick = (id) => {
+    navigate(`/select/date/${id}`);
+  };
   return (
     <div lang='ko'>
       <div className='navigation'>
         <button>
-          <img src={arrowButtonUrl} alt='' onClick={goBack}/>
+          <img src={arrowButtonUrl} alt='' onClick={goBack} />
         </button>
         디자이너 선택
         <div></div>
@@ -43,11 +68,11 @@ const PetDesigner = () => {
           <div className='list-header-item' onClick={toggleDropdown}>
             거리 순
             <button>
-              <img src={arrowUrl} alt='arrow'/>
+              <img src={arrowUrl} alt='arrow' />
             </button>
           </div>
           <button>
-            <img src={mapUrl} alt='map' onClick={() => handleItemClick(id)}/>
+            <img src={mapUrl} alt='map' onClick={() => handleItemClick(id)} />
           </button>
         </div>
         {isDropdownOpen && (
@@ -62,8 +87,19 @@ const PetDesigner = () => {
         )}
       </div>
       <div className="list-mid-h">
-        sssss
-       
+        {
+          Array.isArray(designers) && designers.map((designer, index) => (
+            <div
+              key={index} 
+              className='list-list-container'
+              onClick={()=> handleClick(designer.business_desinger_id)}
+              style={{ cursor: 'pointer' }}>
+              <div className='list-title'>{designer.business_desinger_name}</div>
+              <div className='list-content'>{designer.business_desinger_introduce}</div>
+            </div>
+          ))
+        }
+
       </div>
       <NButtonContainer />
     </div>

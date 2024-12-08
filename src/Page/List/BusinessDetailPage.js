@@ -92,7 +92,7 @@ const EventDetailPage = () => {
     };
 
     const handleItemClick = (id) => {
-        navigate(`/pet-select/${id}`);
+        navigate(`/designer/list/${id}`);
     };
 
     useEffect(() => {
@@ -213,7 +213,7 @@ const EventDetailPage = () => {
                     </div>
                 </div>
             </div>
-            <div className='Nbutton' onClick={() => handleItemClick(id)}>예약하기</div>
+            <div className='Nbutton' onClick={() => handleItemClick(business.business_registration_number)}>예약하기</div>
         </div>
     );
 };

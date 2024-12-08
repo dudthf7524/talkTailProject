@@ -3,6 +3,7 @@
 const Business = require('../models/Business');
 const bcrypt = require('bcrypt');
 const BusinessInformation = require('../models/BusinessInformation');
+const BusinessDesinger = require('../models/BusinessDesinger');
 
 const createBusiness = async (businessInfo) => {
     console.log('데이터베이스 저장 코드')
@@ -63,6 +64,24 @@ const createBusinessInformation = async (businessInformationInfo) => {
     } catch (error) {
         console.log(error)
         throw new Error('Failed to create businessInformation', error.message);
+    }
+};
+
+const createBusinessDesinger = async (businessInfo) => {
+    console.log('데이터베이스 저장 코드')
+    console.log(businessInfo)
+    try {
+        const business = await BusinessDesinger.create({
+            business_registration_number: businessInfo.business_registration_number,
+            business_desinger_introduce: businessInfo.business_desinger_introduce,
+            business_desinger_name: businessInfo.business_desinger_name,
+            created_at: new Date(),
+            updated_at: new Date(),
+        });
+
+        return business;
+    } catch (error) {
+        throw new Error('Failed to create business', error.message);
     }
 };
 
@@ -130,10 +149,13 @@ const getBusinessDetailsById = async (id) => {
         throw new Error('Failed to fetch business details');
     }
 };
+
+
 module.exports = {
     createBusiness,
     businessLogin,
     createBusinessInformation,
     getBusinesses,
     getBusinessDetailsById,
+    createBusinessDesinger,
 };

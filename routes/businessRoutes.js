@@ -141,4 +141,25 @@ router.get('/business/detail/:id', authMiddleware, async (req, res) => {
   }
 })
 
+router.post('/business/register/desinger', async (req, res) => {
+
+  try {
+    
+    console.log(req.body)
+    console.log(req.user.business_registration_number)
+    const RegisterDesinger = req.body
+
+    RegisterDesinger.business_registration_number = req.user.business_registration_number;
+
+    console.log(RegisterDesinger)
+    const businessRegisterDesinger = await businessDatabase.createBusinessDesinger(RegisterDesinger);
+
+    res.status(201).json({ businessRegisterDesinger });
+  } catch (error) {
+    console.error('Error creating business with images:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+
+});
+
 module.exports = router;

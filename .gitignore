@@ -10,7 +10,8 @@
 
 # production
 /build
-
+.env
+aws/
 # misc
 .DS_Store
 .env.local
