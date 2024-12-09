@@ -29,6 +29,27 @@ const PetEditPage = () => {
     }, [dispatch, id]);
     
     console.log(petData)
+    const [formData, setFormData] = useState({});
+    useEffect(() => {
+        if (petData) {
+            setFormData({
+                name: petData.pet_name || '',
+                species: petData.pet_species || '',
+                breed: petData.pet_breed || '',
+                birthDate: petData.pet_birthDate || '',
+                weight: petData.pet_weight || '',
+                gender: petData.pet_gender || '',
+                additionalInfo: petData.pet_additionalInfo || '',
+                etc: petData.etc || '',
+                neuter: petData.neuter || '',
+            });
+            setPetImgUrl(petData.imageUrl || defaultPetImgUrl); // 기존 이미지 URL 설정
+        }
+    }, [petData]);
+
+    console.log(formData)
+
+
      // 현재 선택된 종의 데이터 가져오기
     const currentSpeciesData = speciesData[selectedSpecies];
     const { topOptions, otherOptions } = currentSpeciesData;
@@ -69,19 +90,7 @@ const PetEditPage = () => {
     const [petImgUrl, setPetImgUrl] = useState(defaultPetImgUrl); // 이미지 URL 상태
     const [selectedImageFile, setSelectedImageFile] = useState(null); // 선택된 이미지 파일
 
-    const [formData, setFormData] = useState({
-        name: '',
-        species: '',
-        speciesId: '',
-        breed: '',
-        breedId: '',
-        birthDate: '',
-        weight: '',
-        gender: '',
-        additionalInfo: '',
-        etc: '',
-        neuter:''
-    });
+    
     formData.species = selectedSpecies;
     formData.breed = selectedOption;
 
@@ -184,7 +193,7 @@ const PetEditPage = () => {
                             className="textbox"
                             placeholder="이름이 무엇인가요?"
                             name="name"
-                            value={petData?.pet_name || ''}
+                            value={formData.name}
                             onChange={handleInputChange}
                         />
                     </div>
