@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import Checkbox from './CheckboxGroup.js';
-import '../styles/reservation.css';
-
+import '../../CSS/reservation.css';
+import '../../CSS/notice.css';
+import Payments from './Payments';
 const ReservationRequestPage = () => {
     const { id } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
     const { selectedPet } = location.state || {};
+    console.log(selectedPet)
     const [reviewText, setReviewText] = useState(""); // 리뷰 텍스트 상태 관리
     const textareaRef = useRef(null); // textarea 참조를 위한 ref
 
@@ -116,11 +119,23 @@ const ReservationRequestPage = () => {
         return age;
     };
 
+    const openPaymentModal = () => {
+        setShowPaymentModal(true);
+    };
+    const closePaymentModal = () => {
+        setShowPaymentModal(false);
+    };
+
+    const confirmPayment = () => {
+        setShowPaymentModal(false);
+        navigate('/reservation-confirm');
+    };
+
     return (
         <div lang='ko'>
             <div className='navigation'>
                 <button onClick={goBack}>
-                    <img src={`${process.env.PUBLIC_URL}/images/list/arrow_left.svg`} alt='뒤로가기' />
+                    <img src={`${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`} alt='뒤로가기' />
                 </button>
                 예약신청서
                 <div></div>
@@ -131,7 +146,7 @@ const ReservationRequestPage = () => {
                 </div>
                 <div className='view-pet'>
                     {selectedPet.pet_name}
-                    <p>{selectedPet.breedName}/{selectedPet.pet_weight}kg/{selectedPet.pet_gender ? '남' : '여'}/{calculateAge(selectedPet.pet_birth)}살</p>
+                    <p>{selectedPet.pet_breed}/{selectedPet.pet_weight}kg/{selectedPet.pet_gender ? '남' : '여'}/{calculateAge(selectedPet.pet_birth)}살 중성화 {selectedPet.pet_neuter}</p>
                 </div>
                 <div className='blank'></div>
                 <Checkbox groupName="스타일" checkboxes={initialCheckboxes} checkboxState={checkboxState} onChange={handleCheckboxChange} />
@@ -163,7 +178,10 @@ const ReservationRequestPage = () => {
                     <p>5,000 원</p>
                 </div>
             </div>
-            <div className='Nbutton' onClick={() => navigate('/select-date')}>예약일 선택하기</div>
+            <div className='Nbutton' onClick={openPaymentModal}>예약하기</div>
+            {showPaymentModal && (
+                <Payments closePaymentModal={closePaymentModal} confirmPayment={confirmPayment} />
+            )}
         </div>
     );
 };

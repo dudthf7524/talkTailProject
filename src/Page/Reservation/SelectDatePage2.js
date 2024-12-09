@@ -138,7 +138,7 @@ function SelectDatePage2() {
     };
     //=====================================================================================================================================================
     const handleItemClick = (id) => {
-        navigate(`/pet/list`);
+        navigate(`/pet-select/1`);
     };
 
 
@@ -151,7 +151,7 @@ function SelectDatePage2() {
                     <button>
                         <img src={arrowButtonUrl} alt='' onClick={goBack} />
                     </button>
-                    회원가입
+                    예약 신청서
                     <div></div>
                 </div>
                 <div className='main-mid'>

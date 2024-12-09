@@ -24,7 +24,13 @@ import RegisterDesinger from './BusinessPage/RegisterDesinger';
 import PetDesigner from './Page/List/PetDesigner';
 import SelectDatePage2 from './Page/Reservation/SelectDatePage2';
 import PetRegistrationPage from './Page/Pet/PetRegistrationPage';
-
+import MyPage from "./Page/MyPage/MyPage";
+import PetListPage from "./Page/Pet/PetListPage";
+import PetSelectPage from "./Page/Pet/PetSelectPage";
+import ReservationRequestPage from "./Page/Reservation/ReservationRequestPage";
+import ReservatinConfirm from "./Page/Reservation/ReservationConfirmPage";
+import PetDetailPage from "./Page/Pet/PetDetailPage";
+import PetEditPage from "./Page/Pet/PetEditPage";
 function App() {
   const [imageFiles, setImageFiles] = useState({
     main: [],
@@ -59,7 +65,6 @@ function App() {
 
         <ImageProvider>
           <Routes>
-
             <Route path="/" element={<LoginPage />} />
             <Route path="/auth/*" element={<Redirection />} />
             <Route path="/login-success" element={<KoginSuccess />} />
@@ -70,13 +75,13 @@ function App() {
             <Route path="/designer/list/:id" element={<PetDesigner />} />
             <Route path="/select/date/:id" element={<SelectDatePage2 />} />
             <Route path="/pet/registration" element={<PetRegistrationPage />} />
-
-            {/* <Route path="/admin" element={<>
-              <Link to="/register">회원가입</Link>
-              {user ? `관리자 ${user.business_owner_name}님 환영합니다!` : 'Log-In'}
-              <Link to="/login">로그인</Link>
-              <Link to="/admin-menu">관리자</Link>
-            </>} /> */}
+            <Route path="/my-page" element={<MyPage />} />
+            <Route path="/pet/list" element={<PetListPage />} />
+            <Route path="/pet-select/:id" element={<PetSelectPage />} />
+            <Route path="/reservation-request/:id" element={<ReservationRequestPage />}/>
+            <Route path="/reservation-confirm" element={<ReservatinConfirm />}/>
+            <Route path="/pet/detail/:id" element={<PetDetailPage/>} />
+            <Route path="/pet-edit/:id" element={<PetEditPage/>} />
 
             <Route path="/business">
               <Route path="login" element={<Login />} />

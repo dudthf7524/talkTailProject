@@ -4,8 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 const Confirm = () => {
     const navigate = useNavigate();
     const { id } = useParams(); // URL에서 이벤트 ID 가져오기
-    const arrowButtonUrl = `${process.env.PUBLIC_URL}/images/list/arrow_left.svg`;
-    const petImgUrl = `${process.env.PUBLIC_URL}/images/pet/pet_img2.png`;
+    const arrowButtonUrl = `${process.env.PUBLIC_URL}/pageImage/list/arrow_left.svg`;
+    const petImgUrl = `${process.env.PUBLIC_URL}/pageImage/pet/pet_img2.png`;
 
     // 상태 변수 추가
     const [status, setStatus] = useState('success'); // 'success' 또는 'failure'로 설정

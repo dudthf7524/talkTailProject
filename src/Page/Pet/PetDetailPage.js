@@ -1,46 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import RadioButton from './RadioButton';
-import api from '../Api';
+import api from '../../Api';
+import PetEditPage from './PetEditPage';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPetData } from '../../redux/petSlice';
 
 const PetDetail = () => {
     const navigate = useNavigate();
     const { id } = useParams(); // URL에서 펫 ID 가져오기
-    const arrowButtonUrl = `${process.env.PUBLIC_URL}/images/list/arrow_left.svg`;
-    const defaultPetImgUrl = `${process.env.PUBLIC_URL}/images/pet/pet_img_L.png`;
-    const noteUrl = `${process.env.PUBLIC_URL}/images/list/note_ic.svg`;
-    const photoUrl = `${process.env.PUBLIC_URL}/images/pet/photo.svg`;
-    const [petData, setPetData] = useState(null);
+    const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
+    const defaultPetImgUrl = `${process.env.PUBLIC_URL}/PageImage/pet/pet_img_L.png`;
+    const noteUrl = `${process.env.PUBLIC_URL}/PageImage/list/note_ic.svg`;
+    const photoUrl = `${process.env.PUBLIC_URL}/PageImage/pet/photo.svg`;
+    // const [petData, setPetData] = useState(null);
 
     const [formData, setFormData] = useState({
         gender: '', // 초기값 설정
     });
+   
+    const dispatch = useDispatch();
 
+    const { petData, loading, error } = useSelector((state) => state.pets);
+  
     useEffect(() => {
-        const fetchPetData = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    throw new Error('No token found.');
-                }
-                const response = await api.get(`/api/pet/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('token')}`,
-                    },
-                });
-                setPetData(response.data);
-                // 성별 데이터 초기화
-                setFormData({
-                    ...formData,
-                    gender: response.data.pet_gender === 1 ? '남자' : '여자',
-                });
-                console.log('펫 데이터:', response.data);
-            } catch (error) {
-                console.error('펫 데이터 가져오기 에러:', error);
-            }
-        };
-        fetchPetData();
-    }, [id]);
+      dispatch(fetchPetData(id));
+    }, [dispatch, id]);
+
+
+
+
+
+
+    // useEffect(() => {
+    //     const fetchPetData = async () => {
+    //         try {
+    //             const token = localStorage.getItem('token');
+    //             if (!token) {
+    //                 throw new Error('No token found.');
+    //             }
+    //             const response = await api.get(`/api/pet/detail/${id}`, {
+    //                 headers: {
+    //                     Authorization: `Bearer ${localStorage.getItem('token')}`,
+    //                 },
+    //             });
+    //             setPetData(response.data);
+    //             // 성별 데이터 초기화
+    //             setFormData({
+    //                 ...formData,
+    //                 gender: response.data.pet_gender === 1 ? '남자' : '여자',
+    //             });
+    //             console.log('펫 데이터:', response.data);
+    //         } catch (error) {
+    //             console.error('펫 데이터 가져오기 에러:', error);
+    //         }
+    //     };
+    //     fetchPetData();
+    // }, [id]);
 
     const goBack = () => {
         navigate(-1);
@@ -53,7 +69,7 @@ const PetDetail = () => {
     if (!petData) {
         return <div>Loading...</div>;
     }
-
+  
     return (
         <div lang='ko'>
             <div className='r-mid'>
@@ -80,7 +96,7 @@ const PetDetail = () => {
                     <div className='PetRegistration-img-container'>
                         <div className='PetRegistration-content'>
                             <div className='upload-img'>
-                                <img src={petData.image || defaultPetImgUrl} alt='펫 이미지' />
+                                <img src={petData.petimage || defaultPetImgUrl} alt='펫 이미지' />
                             </div>
                             <div className='photo'>
                                 <label htmlFor="imageUpload">
@@ -95,7 +111,7 @@ const PetDetail = () => {
                             <input
                                 type="text"
                                 className="textbox-gray"
-                                value={petData.species || ''}
+                                value={petData.pet_species || ''}
                                 readOnly
                             />
                         </div>
@@ -106,7 +122,7 @@ const PetDetail = () => {
                         <input
                             type="text"
                             className="textbox-gray"
-                            value={petData.breed || ''}
+                            value={petData.pet_breed || ''}
                             readOnly
                         />
                         </div>
@@ -145,17 +161,19 @@ const PetDetail = () => {
                             disabled // 비활성화하여 선택된 값 고정
                         />
                     </div>
-                    {petData.details && petData.details.map((detail, index) => (
-                        <div key={index} className='PetRegistration-container2'>
-                            <p>{detail.option}</p>
-                            <input
-                                type="text"
-                                className="textbox-gray"
-                                value={detail.value ? '예' : '아니오'}
-                                readOnly
-                            />
-                        </div>
-                    ))}
+                    <div className='PetRegistration-container2'>
+                        <p>중성화 여부</p>
+                        <RadioButton
+                            options={[
+                                { label: 'O', value: 'O' },
+                                { label: 'X', value: 'X' },
+                            ]}
+                            selectedOption={petData.pet_neuter}
+                            onSelect={() => {}} // 선택 불가능하도록 콜백 제거
+                            disabled // 비활성화하여 선택된 값 고정
+                        />
+                    </div>
+                
                     <div className='PetRegistration-container2'>
                         <p>기타 추가 사항이</p>
                         <input
@@ -170,5 +188,4 @@ const PetDetail = () => {
         </div>
     );
 };
-
 export default PetDetail;

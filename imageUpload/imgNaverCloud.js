@@ -113,21 +113,14 @@ const uploadMultipleImages = async (files, businessId) => {
 };
 
 // 단일 펫 이미지 업로드
-const uploadPetImage = async (file, id, folder) => {
+const uploadPetImage = async (file, folder) => {
     const objectName = `${folder}/${generateUniqueFileName(file.originalname)}`;
     const url = await uploadImageToBucket(file.buffer, objectName);
     console.log('Uploaded:', url);
-
     // 이미지 공개로 설정
     await setPublicAcl(objectName);
-
-    // DB에 이미지 정보 저장
-    const petImage = await PetImage.create({
-        pet_id: id,
-        endpoint: url
-    });
-
-    return { url, imageId: petImage.id };
+    
+    return url;
 };
 
 // 펫 이미지 가져오기

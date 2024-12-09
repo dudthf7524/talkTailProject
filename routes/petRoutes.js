@@ -10,9 +10,7 @@ const petDatabase = require('../database/petDatabase');
 router.post('/pet/register', upload.single('image'), authMiddleware, async (req, res) => {
     const { id, platform } = req.user;
     const petData = req.body;
-    console.log(id)
-    console.log(platform)
-    console.log(petData)
+    
     if (req.file) {
         console.log('Uploaded file info:', req.file); // 업로드된 파일의 정보 출력
         petData.image = {
@@ -35,6 +33,32 @@ router.post('/pet/register', upload.single('image'), authMiddleware, async (req,
     } catch (error) {
         console.error('Failed to register pet error: ', error);
         res.status(500).json({ message: 'Failed to register pet.' });
+    }
+});
+
+router.get('/pet/my-pets', authMiddleware, async(req, res) =>{  
+    const { id, platform } = req.user;
+    console.log("여기까지=================================")
+    console.log(id)
+   
+    try {
+        const pets = await petDatabase.getMyPets(id, platform);
+        res.json(pets);
+    } catch (error) {
+        console.error('Failed to fetch my pets error: ', error);
+        res.status(500).json({ message: 'Failed to fetch my pets.' });
+    }
+});
+
+router.get('/pet/detail/:id', authMiddleware, async(req, res) => {
+    const petId = req.params.id;
+
+    try {
+        const pet = await petDatabase.getPetDetails(petId);
+        res.json(pet);
+    } catch (error) {
+        console.error('Failed to fetch pet details error: ', error);
+        res.status(500).json({ message: 'Failed to fetch pet details.' });
     }
 });
 

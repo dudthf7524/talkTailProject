@@ -170,9 +170,6 @@ const PetRegistration = () => {
                         
                     </div>
                     <div className='PetRegistration-container'>
-                        
-                    </div>
-                    <div className='PetRegistration-container'>
                         <input
                             type="text"
                             className="textbox"

@@ -7,7 +7,7 @@ const PetSelectPage = () => {
     const navigate = useNavigate();
     const [selectedPet, setSelectedPet] = useState(null);
     const [showWarning, setShowWarning] = useState(false);
-    const arrowButtonUrl = `${process.env.PUBLIC_URL}/images/list/arrow_left.svg`;
+    const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
 
     const goBack = () => {
         navigate(-1);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // useNavigate 훅을 임포트합니다.
-import api from '../Api';
+import api from '../../Api';
 
 const PetListSection = ({ isSelectable, onSelectPet }) => {
     
@@ -74,7 +74,7 @@ const PetListSection = ({ isSelectable, onSelectPet }) => {
             onSelectPet(pet);
         } else {
             // 펫이 선택된 경우 해당 펫의 상세 페이지로 이동합니다.
-            navigate(`/pet-detail/${pet.pet_id}`); // 해당 펫의 ID로 상세 페이지로 이동
+            navigate(`/pet/detail/${pet.pet_id}`); // 해당 펫의 ID로 상세 페이지로 이동
         }
     };
 
@@ -93,11 +93,16 @@ const PetListSection = ({ isSelectable, onSelectPet }) => {
                             onClick={() => handlePetSelect(pet)}
                         >
                             <div className='pet-contents-img'>
-                                <img src={pet.image || petUrl} alt='' />
+                                <img src={pet.petimage || petUrl} alt='' />
                             </div>
                             <div className='pet-contents-info'>
                                 <h1>{pet.pet_name}</h1>
-                                <p>{`${pet.breedName}/${pet.pet_weight}kg/${pet.pet_gender ? '남' : '여'}/${calculateAge(pet.pet_birth)}살`}</p>
+                            </div>
+                            <div className='pet-contents-info'>
+                                <p>{`${pet.pet_breed}/${pet.pet_weight}kg/${pet.pet_gender ? '남' : '여'}/${calculateAge(pet.pet_birth)}살`}</p>
+                            </div>
+                            <div className='pet-contents-info'>
+                                <p>중성화 {pet.pet_neuter} </p>
                             </div>
                         </div>
                     ))}

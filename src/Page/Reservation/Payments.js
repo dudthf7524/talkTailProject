@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-
+import '../../CSS/reservation.css';
 function Payments({ closePaymentModal, confirmPayment }) {
-    const tossUrl = `${process.env.PUBLIC_URL}/images/logo/toss.png`;
-    const kakaoUrl = `${process.env.PUBLIC_URL}/images/auth/KAKAO logo.svg`;
-    const naverUrl = `${process.env.PUBLIC_URL}/images/auth/Naver logo.svg`;
-    const KGUrl = `${process.env.PUBLIC_URL}/images/logo/KG.png`;
+    const tossUrl = `${process.env.PUBLIC_URL}/PageImage/logo/toss.png`;
+    const kakaoUrl = `${process.env.PUBLIC_URL}/PageImage/auth/KAKAO logo.svg`;
+    const naverUrl = `${process.env.PUBLIC_URL}/PageImage/auth/Naver logo.svg`;
+    const KGUrl = `${process.env.PUBLIC_URL}/PageImage/logo/KG.png`;
 
     useEffect(() => {
         if (window.IMP) {
@@ -13,7 +13,7 @@ function Payments({ closePaymentModal, confirmPayment }) {
             console.error('IMP 객체를 초기화할 수 없습니다. 포트원 SDK가 제대로 로드되지 않았습니다.');
         }
     }, []);
-
+    
     var today = new Date();
     var hours = today.getHours();
     var minutes = today.getMinutes();
@@ -23,10 +23,15 @@ function Payments({ closePaymentModal, confirmPayment }) {
 
     const handlePaymentResponse = (rsp) => {
         if (rsp.success) {
+            console.log("여기까지 =======================================================")
             console.log(rsp);
+            console.log("여기까지 =======================================================")
+
             window.location.href = 'http://localhost:3000/reservation-confirm';
         } else {
+            console.log("여기까지 =======================================================")
             console.log(rsp);
+            console.log("여기까지 =======================================================")
             alert('결제에 실패하였습니다. 다시 시도해주세요.');
         }
     };
