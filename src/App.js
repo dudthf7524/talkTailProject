@@ -45,19 +45,19 @@ function App() {
       [imageType]: files,
     }));
   };
-  const [user, setUser] = useState(null);
-  useEffect(() => {
-    axios
-      .get('http://localhost:8383/user/auth')
-      .then((response) => {
-        console.log(response.data)
-        setUser(response.data); // Set the users state with the response data
-      })
-      .catch((error) => {
-        console.error("Error fetching users:", error); // Handle errors
-      })
-  }, []);
-  console.log(user)
+  // const [user, setUser] = useState(null);
+  // useEffect(() => {
+  //   axios
+  //     .get('http://localhost:8383/user/auth')
+  //     .then((response) => {
+  //       console.log(response.data)
+  //       setUser(response.data); // Set the users state with the response data
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching users:", error); // Handle errors
+  //     })
+  // }, []);
+  // console.log(user)
 
   return (
     <div className="App">

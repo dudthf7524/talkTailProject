@@ -61,5 +61,9 @@ router.get('/pet/detail/:id', authMiddleware, async(req, res) => {
         res.status(500).json({ message: 'Failed to fetch pet details.' });
     }
 });
+router.post('/pet/edit/:id',upload.single('image'), authMiddleware, async(req, res) => {
+    console.log(req.body);
+    console.log("aaaaaa")
+});
 
 module.exports = router;

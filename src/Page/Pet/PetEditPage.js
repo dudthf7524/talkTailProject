@@ -10,48 +10,60 @@ import { fetchPetData } from '../../redux/petSlice';
 
 
 const PetEditPage = () => {
+
+    const dispatch = useDispatch();
+
+    const { petData, loading, error } = useSelector((state) => state.pets);
+
+
     // 새로추가한내용
     const { id } = useParams(); // URL에서 펫 ID 가져오기
     const [selectedSpecies, setSelectedSpecies] = useState('dog'); // 기본 선택: 개
     const [isDropdownVisible, setIsDropdownVisible] = useState(false); // 드롭다운 표시 여부
     const [searchQuery, setSearchQuery] = useState(''); // 검색 입력값
     const [selectedOption, setSelectedOption] = useState(''); // 선택된 옵션
-    console.log("bbb")
     
-    console.log(selectedSpecies)
-    
-    const dispatch = useDispatch();
-
-    const { petData, loading, error } = useSelector((state) => state.pets);
-
+    const [formData, setFormData] = useState({
+        name: '',
+        species: '',
+        breed: '',
+        birthDate: '',
+        weight: '',
+        gender: '', // or you can use '남자' as default
+        etc: '',
+        neuter: '',
+    });
     useEffect(() => {
       dispatch(fetchPetData(id));
     }, [dispatch, id]);
     
-    console.log(petData)
-    const [formData, setFormData] = useState({});
+  
     useEffect(() => {
         if (petData) {
             setFormData({
                 name: petData.pet_name || '',
                 species: petData.pet_species || '',
                 breed: petData.pet_breed || '',
-                birthDate: petData.pet_birthDate || '',
+                birthDate: petData.pet_birth || '',
                 weight: petData.pet_weight || '',
-                gender: petData.pet_gender || '',
-                additionalInfo: petData.pet_additionalInfo || '',
-                etc: petData.etc || '',
-                neuter: petData.neuter || '',
+                gender: petData.pet_gender ? "남자" : "여자", 
+                etc: petData.pet_etc || '',
+                neuter: petData.pet_neuter || '',
+                
             });
-            setPetImgUrl(petData.imageUrl || defaultPetImgUrl); // 기존 이미지 URL 설정
+            console.log(petData)
+            console.log(petData.pet_breed)
+            setPetImgUrl(petData.petimage || defaultPetImgUrl); // 기존 이미지 URL 설정
+            setSelectedSpecies(petData.pet_species)
+            setSelectedOption(petData.pet_breed);  // breed 값 반영
+
         }
     }, [petData]);
 
-    console.log(formData)
-
-
+    console.log(formData.breed)
      // 현재 선택된 종의 데이터 가져오기
     const currentSpeciesData = speciesData[selectedSpecies];
+
     const { topOptions, otherOptions } = currentSpeciesData;
 
       // 검색된 옵션 필터링
@@ -62,19 +74,21 @@ const PetEditPage = () => {
     const filteredOtherOptions = otherOptions.filter(option =>
         option.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    
-    const handleOptionSelect = (option) => {
-        setSelectedOption(option);
-        console.log(option)
-        setIsDropdownVisible(false);
-        setSearchQuery('');
-    };
 
     const handleSpeciesChange = (e) => {
         setSelectedSpecies(e.target.value);
         setSelectedOption(''); // 종 변경 시 선택 초기화
         setSearchQuery(''); // 검색 초기화
     };
+
+    const handleOptionSelect = (option) => {
+        setSelectedOption(option); // selectedOption 업데이트
+       
+        setIsDropdownVisible(false);
+        setSearchQuery(''); // 검색어 초기화
+    };
+
+    
 
 // 새로추가한내용
 
@@ -89,11 +103,12 @@ const PetEditPage = () => {
     const photoUrl = `${process.env.PUBLIC_URL}/PageImage/pet/photo.svg`;
     const [petImgUrl, setPetImgUrl] = useState(defaultPetImgUrl); // 이미지 URL 상태
     const [selectedImageFile, setSelectedImageFile] = useState(null); // 선택된 이미지 파일
-
-    
+    console.log("searchQuery")
+    console.log(searchQuery)
     formData.species = selectedSpecies;
     formData.breed = selectedOption;
-
+    
+    // searchQuery = formData.breed;
     const [speciesDetails, setSpeciesDetails] = useState([]);
    
 
@@ -129,29 +144,33 @@ const PetEditPage = () => {
         }
     };
 
-    const handleSubmit = async () => {
-        const petData = new FormData();
-        petData.append('name', formData.name);
-        petData.append('species', formData.species);
-        petData.append('breed', formData.breed);
-        petData.append('birthDate', formData.birthDate);
-        petData.append('weight', formData.weight);
-        petData.append('gender', formData.gender === '남자' ? 1 : 0);
-        petData.append('etc', formData.additionalInfo === 'true' ? formData.etc : '');
-        petData.append('neuter', formData.neuter);
-        console.log(petData)
+    const handleUpdate = async () => {
+        console.log("==================================")
+        console.log(formData.breed)
+        console.log("==================================")
+        const petUpdateData = new FormData();
+        petUpdateData.append('name', formData.name);
+        petUpdateData.append('species', selectedSpecies);
+        petUpdateData.append('breed', formData.breed);
+        petUpdateData.append('birthDate', formData.birthDate);
+        petUpdateData.append('weight', formData.weight);
+        petUpdateData.append('gender', formData.gender === '남자' ? 1 : 0);
+        petUpdateData.append('etc', formData.etc);
+        petUpdateData.append('neuter', formData.neuter);
+        console.log("petUpdateData")
+        console.log(petUpdateData)
 
         if (selectedImageFile) {
-            petData.append('image', selectedImageFile); // 이미지 파일 추가
+            petUpdateData.append('image', selectedImageFile); // 이미지 파일 추가
         }
     
         speciesDetails.forEach((detail, index) => {
-            petData.append(`details[${index}][id]`, detail.optionId);
-            petData.append(`details[${index}][value]`, formData[detail.option] === 'true' ? 1 : 0);
+            petUpdateData.append(`details[${index}][id]`, detail.optionId);
+            petUpdateData.append(`details[${index}][value]`, formData[detail.option] === 'true' ? 1 : 0);
         });
     
         // FormData 내용 확인
-        for (let pair of petData.entries()) {
+        for (let pair of petUpdateData.entries()) {
             console.log(`${pair[0]}: ${pair[1]}`);
         }
     
@@ -160,7 +179,7 @@ const PetEditPage = () => {
             if (!token) {
                 throw new Error('No token found.');
             }
-            const response = await api.post('/api/pet/register', petData, {
+            const response = await api.post(`/api/pet/edit/${id}`, petUpdateData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data', // multipart/form-data 형식으로 전송
@@ -239,7 +258,7 @@ const PetEditPage = () => {
                             
                             onClick={() => setIsDropdownVisible(!isDropdownVisible)}
                         >
-                            {selectedOption || <div>품종을 선택해주세요</div>}
+                            {selectedOption || searchQuery}
                         </div>
 
                         {/* 드롭다운 */}
@@ -427,7 +446,7 @@ const PetEditPage = () => {
                                 />
                             </div>
                         ))}
-                        <div className='PetRegistration-container2'>
+                        {/* <div className='PetRegistration-container2'>
                             <p>기타 추가 사항이</p>
                             <RadioButton
                                 options={[
@@ -437,7 +456,7 @@ const PetEditPage = () => {
                                 selectedOption={formData.additionalInfo}
                                 onSelect={(value) => handleRadioSelect('additionalInfo', value)}
                             />
-                        </div>
+                        </div> */}
                         <div className='PetRegistration-container2'>
                             <input
                                 type="text"
@@ -449,7 +468,7 @@ const PetEditPage = () => {
                             />
                         </div>
                     </div>
-                    <div className='Nbutton3' style={{cursor : 'pointer'}} onClick={handleSubmit}>등록하기</div>
+                    <div className='Nbutton3' style={{cursor : 'pointer'}} onClick={handleUpdate}>수정하기</div>
                 </div>
             </div>
         </div>
