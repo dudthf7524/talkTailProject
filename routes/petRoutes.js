@@ -63,7 +63,45 @@ router.get('/pet/detail/:id', authMiddleware, async(req, res) => {
 });
 router.post('/pet/edit/:id',upload.single('image'), authMiddleware, async(req, res) => {
     console.log(req.body);
-    console.log("aaaaaa")
+    console.log(req.file);
+    const petId = req.params.id;
+    const petData = req.body;
+    if(req.file){
+        console.log("존재한다")
+        try{
+            if (req.file) {
+                console.log(petData.image)
+                
+                console.log('Uploaded file info:', req.file); // 업로드된 파일의 정보 출력
+                petData.imageUpdate = {
+                    buffer: req.file.buffer, // 이미지 데이터
+                    originalname: req.file.originalname, // 업로드된 파일의 이름
+                    folder: 'pet_images' // 이미지 저장할 폴더 이름
+                };
+                
+                const pet = await petDatabase.updatePetUpdateYesFile(petId, petData)
+                res.json(pet)
+                
+
+                console.log(petData.imageUpdate)
+            } else {
+                console.log('No file uploaded');
+            }
+            
+        } catch(error){
+            console.error('Failed to fetch pet updateNoFile error: ', error);
+            res.status(500).json({ message: 'Failed to fetch pet updateNoFile.' });
+        }
+    }else{
+        console.log("존재하지 않는다")
+        try{
+            const pet = await petDatabase.updatePetUpdateNoFile(petId, petData)
+            res.json(pet)
+        } catch(error){
+            console.error('Failed to fetch pet updateNoFile error: ', error);
+            res.status(500).json({ message: 'Failed to fetch pet updateNoFile.' });
+        }
+    }
 });
 
 module.exports = router;

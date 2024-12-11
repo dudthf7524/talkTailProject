@@ -145,7 +145,11 @@ const MainPage = () => {
             <img src={b1Url} alt=""/>
           </div>
           <div className="button-item" onClick={() => handleItemClick(2)}>
-            <img src={b2Url} alt=""/>
+            <br></br>
+            유치원
+            {/* <img src={b2Url} alt=""/> */}
+            <br></br>
+            준비중
           </div>
           <div className="button-item" onClick={() => handleItemClick(3)}>
             <img src={b3Url} alt=""/>

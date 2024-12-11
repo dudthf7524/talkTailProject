@@ -15,9 +15,7 @@ const PetDetail = () => {
     const photoUrl = `${process.env.PUBLIC_URL}/PageImage/pet/photo.svg`;
     // const [petData, setPetData] = useState(null);
 
-    const [formData, setFormData] = useState({
-        gender: '', // 초기값 설정
-    });
+   
    
     const dispatch = useDispatch();
 
@@ -27,9 +25,22 @@ const PetDetail = () => {
       dispatch(fetchPetData(id));
     }, [dispatch, id]);
 
+    const [formData, setFormData] = useState({
+        // 초기값 설정
+    });
+    useEffect(() => {
+        if (petData) {
+            console.log(petData)
+            setFormData({
+                gender: petData.pet_gender ? "남자" : "여자", 
+            });
+         
 
+        }
+    }, [petData]);
+    
 
-
+    
 
 
     // useEffect(() => {
@@ -57,7 +68,7 @@ const PetDetail = () => {
     //     };
     //     fetchPetData();
     // }, [id]);
-
+  
     const goBack = () => {
         navigate(-1);
     };

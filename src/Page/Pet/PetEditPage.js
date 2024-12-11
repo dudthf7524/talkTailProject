@@ -37,9 +37,10 @@ const PetEditPage = () => {
       dispatch(fetchPetData(id));
     }, [dispatch, id]);
     
-  
+    
     useEffect(() => {
         if (petData) {
+            console.log(petData)
             setFormData({
                 name: petData.pet_name || '',
                 species: petData.pet_species || '',
@@ -49,10 +50,11 @@ const PetEditPage = () => {
                 gender: petData.pet_gender ? "남자" : "여자", 
                 etc: petData.pet_etc || '',
                 neuter: petData.pet_neuter || '',
-                
+                image : petData.petimage || '',
             });
             console.log(petData)
             console.log(petData.pet_breed)
+            console.log(petData.petimage)
             setPetImgUrl(petData.petimage || defaultPetImgUrl); // 기존 이미지 URL 설정
             setSelectedSpecies(petData.pet_species)
             setSelectedOption(petData.pet_breed);  // breed 값 반영
@@ -157,6 +159,7 @@ const PetEditPage = () => {
         petUpdateData.append('gender', formData.gender === '남자' ? 1 : 0);
         petUpdateData.append('etc', formData.etc);
         petUpdateData.append('neuter', formData.neuter);
+        petUpdateData.append('image', formData.image);
         console.log("petUpdateData")
         console.log(petUpdateData)
 
@@ -186,7 +189,7 @@ const PetEditPage = () => {
                 },
             });
             console.log('Upload successful', response.data);
-            navigate('/pet-list');
+            navigate(`/pet/detail/${id}`);
         } catch (error) {
             console.error('펫 정보 저장 에러: ', error);
         }

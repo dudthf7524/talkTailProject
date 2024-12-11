@@ -38,7 +38,7 @@ const registerPet = async (petData) => {
 
         // const petId = pet.pet_id;
         
-        return { pet, petImg};
+        return {pet, petImg};
     } catch (error) {
         throw new Error(`Failed to register pet: ${error.message}`);
     }
@@ -68,9 +68,76 @@ const getPetDetails = async (petId) => {
         throw new Error(`Failed to fetch pet details: ${error.message}`);
     }
 };
+
+const updatePetUpdateYesFile = async (petId, petData) => {
+    console.log("==============database==============")
+   
+    let petUpdateImage = null;
+    console.log(petData.image)
+    
+    if (petData.image) {
+        await imgNaverCloud.deleteImage(petData.image);
+    }
+    if (petData.imageUpdate){
+        petUpdateImage = await imgNaverCloud.uploadPetImage(petData.imageUpdate, 'pet');
+    }
+    try{
+        const pet = await Pet.update(
+            {
+                petimage : petUpdateImage,
+                pet_species: petData.species,
+                pet_breed : petData.breed,
+                pet_name : petData.name,
+                pet_birth : petData.birthDate,
+                pet_weight : petData.weight,
+                pet_gender : petData.gender,
+                pet_neuter : petData.neuter,
+                pet_etc : petData.etc,
+            },
+            {
+                where:{
+                    pet_id : petId
+                }
+            }
+        )
+        return pet;
+    }catch(error){
+        throw new Error(`Failed to fetch pet updateNoFile: ${error.message}`);
+
+    }
+}
+
+const updatePetUpdateNoFile = async (petId, petData) => {
+    try{
+        const pet = await Pet.update(
+            {
+                pet_species: petData.species,
+                pet_breed : petData.breed,
+                pet_name : petData.name,
+                pet_birth : petData.birthDate,
+                pet_weight : petData.weight,
+                pet_gender : petData.gender,
+                pet_neuter : petData.neuter,
+                pet_etc : petData.etc,
+            },
+            {
+                where:{
+                    pet_id : petId
+                }
+            }
+
+        )
+        return pet;
+    }catch(error){
+        throw new Error(`Failed to fetch pet updateNoFile: ${error.message}`);
+
+    }
+}
 module.exports = {
     registerPet,
     getMyPets,
-    getPetDetails
-  
+    getPetDetails,
+    updatePetUpdateYesFile,
+    updatePetUpdateNoFile,
+    
 };

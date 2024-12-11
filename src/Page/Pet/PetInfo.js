@@ -77,6 +77,9 @@ const PetListSection = ({ isSelectable, onSelectPet }) => {
             navigate(`/pet/detail/${pet.pet_id}`); // 해당 펫의 ID로 상세 페이지로 이동
         }
     };
+    const petDeleteButton = () => {
+        alert('aaa')
+    }
 
     return (
         <div className='pet-list-mid'>
@@ -85,6 +88,7 @@ const PetListSection = ({ isSelectable, onSelectPet }) => {
             </div>
             <div className='border'></div>
             {accordionState.dog && (
+                <>
                 <div className='pet-accordion-content'>
                     {dogPets.map((pet) => (
                         <div
@@ -107,7 +111,14 @@ const PetListSection = ({ isSelectable, onSelectPet }) => {
                         </div>
                     ))}
                 </div>
+                <div className='pet-accordion-content'>
+                    <button className='petDeleteButton' onClick={()=>{
+                        petDeleteButton()
+                    }}>펫 삭제하기</button>
+                </div>
+                </>
             )}
+
             <div className='event-accordion' onClick={() => toggleAccordion('cat')}>
                 고양이 {accordionState.cat ? '∧' : '∨'}
             </div>

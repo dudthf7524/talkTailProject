@@ -288,3 +288,19 @@
     color: #ffffff !important;
     border: #f0663f solid 1px !important;
 }
+
+.petDeleteButton{
+    color: red;
+    width: 100%;
+    background-color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+.petDeleteButton:hover{
+    color: white;
+    width: 100%;
+    background-color: red;
+    padding: 10px;
+    border: none;
+}

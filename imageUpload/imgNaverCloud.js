@@ -7,6 +7,32 @@ const Image = require('../models/Image'); // Sequelize 모델 임포트
 const PetImage = require('../models/PetImage'); // Sequelize 모델 임포트
 const mime = require('mime-types');
 
+const AWS = require('aws-sdk');
+const dotenv = require('dotenv');
+dotenv.config();
+
+// AWS SDK를 네이버 클라우드 플랫폼(NCP) 객체 스토리지와 호환되도록 설정
+// const s3 = new AWS.S3({
+//   accessKeyId: process.env.AWS_ACCESS_KEY,  // NCP 액세스 키 ID
+//   secretAccessKey: process.env.AWS_SECRET_KEY,  // NCP 비밀 액세스 키
+//   endpoint: 'https://kr.object.ncloudstorage.com',  // NCP 객체 스토리지 엔드포인트
+//   region: 'kr',  // NCP 리전
+//   s3ForcePathStyle: true,  // NCP 객체 스토리지에 맞게 경로 스타일 강제 설정
+//   signatureVersion: 'v4'  // NCP는 AWS V4 서명을 사용
+// });
+
+
+const s3 = new AWS.S3({
+    endpoint: 'kr.object.ncloudstorage.com',
+    region: 'kr',
+    credentials: {
+        accessKeyId : process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_KEY
+    }
+});
+// NCP S3 endpoint
+
+
 // AWS4 인증을 위한 함수들
 const sign = (key, msg) => crypto.createHmac('sha256', key).update(msg, 'utf8').digest();
 const getSignatureKey = (key, dateStamp, regionName, serviceName) => {
@@ -55,6 +81,14 @@ const setPublicAcl = async (objectName) => {
         throw error;
     }
 };
+
+// const s3 = new AWS.S3({
+//     accessKeyId: 'your-access-key-id', // NCP Access Key
+//     secretAccessKey: 'your-secret-access-key', // NCP Secret Key
+//     endpoint: endpoint,  // NCP's endpoint
+//     region: 'kr-standard', // NCP's region
+//     s3ForcePathStyle: true, // Required for compatibility with NCP Object Storage
+//   });
 
 // 이미지 업로드 함수
 const uploadImageToBucket = async (fileBuffer, objectName, mimeType) => {
@@ -141,6 +175,42 @@ const getPetImages = async (petIds) => {
     return imageMap; // 객체 반환
 };
 
+const deleteImage = async (url) => {
+    const fileName = url.replace('https://kr.object.ncloudstorage.com/talktailbucket/', '');
+    console.log("이미지 수정 네이버 클라우드")
+    console.log(fileName);
+    console.log(process.env.AWS_ACCESS_KEY);
+    console.log(process.env.AWS_SECRET_KEY);
+   
+   
+    try {
+        // 기존 파일을 'pet/' 폴더 내에서 삭제
+        // const deleteParams = {
+        //     Bucket: 'talktailbucket',  // 버킷 이름
+        //     Key: `${fileName}`,  // 'pet/' 폴더 안에서 파일 삭제
+        // };
+        // console.log(deleteParams)
+        // const data = await s3.deleteObject(deleteParams);
+        // console.log('파일 삭제 성공:'); // 실제 응답 출력
+        
+        const data = await s3.deleteObject({
+            Bucket: 'talktailbucket',  // 버킷 이름
+            Key: `${fileName}`,  // 'pet/' 폴더 안에서 파일 삭제
+        }).promise();
+
+        console.log('파일 삭제 성공:'); 
+
+       
+        if (data) {
+            console.log("삭제가 완료되었습니다.", data.DeleteMarker);
+        } else {
+            console.log("파일 삭제가 실패했거나 파일이 존재하지 않습니다.");
+        }
+    } catch (error) {
+        console.error('파일 삭제 실패:', error);
+    }
+};
+
 // 이미지 ID로 조회
 const LookupImageById = async (id) => {
     const image = await Image.findByPk(id);
@@ -158,5 +228,6 @@ module.exports = {
     LookupImageById,
     uploadPetImage,
     getPetImages,
-    LookupPetImageById
+    LookupPetImageById,
+    deleteImage
 };
