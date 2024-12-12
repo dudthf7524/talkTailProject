@@ -113,7 +113,7 @@ const businessLogin = async (login_id, login_password) => {
     }
 };
 
-const getBusinesses = async (category) => {
+const getBusinesses = async () => {
     try {
         // 비즈니스 데이터 가져오기
         const businessesInformation = await BusinessInformation.findAll({

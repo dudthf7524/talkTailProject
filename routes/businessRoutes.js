@@ -116,20 +116,19 @@ router.post('/business/login', async (req, res, next) => {
 })
 
 router.get('/businesses/information', authMiddleware, async (req, res) => {
-  console.log('aaaa')
-  console.log(req.query.category)
+  console.log('검색할 때마다 데이터베이스를 조회한다')
   try {
-    console.log('aaa')
     const { category } = req.query;
-    console.log('bbb')
-    const businessesInformation = await businessDatabase.getBusinesses(category);
-    console.log('businessesInformation:', businessesInformation);
+    const businessesInformation = await businessDatabase.getBusinesses();
     res.json(businessesInformation);
   } catch (error) {
     console.error('Error fetching businesses:', error.message);
     res.status(500).json({ error: error.message });
   }
 })
+
+
+
 
 router.get('/business/detail/:id', authMiddleware, async (req, res) => {
   const { id } = req.params;
@@ -161,5 +160,6 @@ router.post('/business/register/desinger', async (req, res) => {
   }
 
 });
+
 
 module.exports = router;

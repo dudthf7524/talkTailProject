@@ -2,10 +2,14 @@ import React from 'react';
 import EventTags from './EventTags';
 import { useNavigate } from 'react-router-dom';
 
-const Event = ({ event }) => {
+const Event = ({ event, searchTerm }) => {
     console.log(event)
     const navigate = useNavigate();
-
+    console.log(searchTerm)
+    const aaa = () => {
+        alert('aaa')
+    }
+    
     const handleClick = () => {
         navigate(`/business/detail/${event.business_information_id}`);
     };
@@ -34,7 +38,13 @@ const Event = ({ event }) => {
                     <EventTags tags={['소형견', '대형견', 'CCTV']} />
                     <div className='list-content'>{event.address_road} {event.address_detail}</div>
                 </div>
+                <div className='list-title-container'>
+                   <button onClick={()=>{
+                    aaa()
+                   }}>권한요청</button>
+                </div>
             </div>
+            
         </div>
     );
 };

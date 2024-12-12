@@ -27,7 +27,7 @@ app.listen(8383, () => {
 })
 app.use(cors({
     origin: 'http://localhost:3000',  // 리액트 앱의 URL
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'], // 허용할 헤더
     credentials: true,
 }));

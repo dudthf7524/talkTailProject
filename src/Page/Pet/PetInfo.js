@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom'; // useNavigate 훅을 임포트�
 import api from '../../Api';
 
 const PetListSection = ({ isSelectable, onSelectPet }) => {
-    
+
     const petUrl = `${process.env.PUBLIC_URL}/images/pet/pet_img.png`;
-    
+
     const [myPet, setMyPet] = useState([]);
     console.log('aaa')
     console.log('bbb')
@@ -46,7 +46,7 @@ const PetListSection = ({ isSelectable, onSelectPet }) => {
 
         return age;
     };
-    
+
 
     // const dogPets = myPet.filter(pet => pet.pet_species === 1);
     // const catPets = myPet.filter(pet => pet.pet_species === 2);
@@ -77,10 +77,28 @@ const PetListSection = ({ isSelectable, onSelectPet }) => {
             navigate(`/pet/detail/${pet.pet_id}`); // 해당 펫의 ID로 상세 페이지로 이동
         }
     };
-    const petDeleteButton = () => {
-        alert('aaa')
-    }
 
+    const petDeleteButton = async (id, image) => {
+
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error('No token found.');
+            }
+
+            const encodedImage = encodeURIComponent(image);
+            const response = await api.delete(`/api/pet/delete/${id}/${encodedImage}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            console.log('petDelete successful', response.data);
+            navigate(`/pet/list/`);
+        } catch (error) {
+            console.error('데이터 가져오기 에러:', error);
+        }
+    }
+   
     return (
         <div className='pet-list-mid'>
             <div className='event-accordion' onClick={() => toggleAccordion('dog')}>
@@ -89,33 +107,34 @@ const PetListSection = ({ isSelectable, onSelectPet }) => {
             <div className='border'></div>
             {accordionState.dog && (
                 <>
-                <div className='pet-accordion-content'>
-                    {dogPets.map((pet) => (
-                        <div
-                            className={`pet-contents ${selectedPetId === pet.pet_id ? 'selected' : ''}`}
-                            key={pet.pet_id}
-                            onClick={() => handlePetSelect(pet)}
-                        >
-                            <div className='pet-contents-img'>
-                                <img src={pet.petimage || petUrl} alt='' />
+                    <div className='pet-accordion-content'>
+                        {dogPets.map((pet) => (
+                            <div
+                                className={`pet-contents ${selectedPetId === pet.pet_id ? 'selected' : ''}`}
+                                key={pet.pet_id}
+                               
+                            >
+                                <div className='pet-contents-img'>
+                                    <img src={pet.petimage || petUrl} alt='' />
+                                </div>
+                                <div className='pet-contents-info'  onClick={() => handlePetSelect(pet)}>
+                                    <h1>{pet.pet_name}</h1>
+                                </div>
+                                <div className='pet-contents-info'>
+                                    <p>{`${pet.pet_breed}/${pet.pet_weight}kg/${pet.pet_gender ? '남' : '여'}/${calculateAge(pet.pet_birth)}살`}</p>
+                                </div>
+                                <div className='pet-contents-info'>
+                                    <p>중성화 {pet.pet_neuter} </p>
+                                </div>
+                                <div className='pet-accordion-content'>
+                                    <button className='petDeleteButton' onClick={() => {
+                                        petDeleteButton(pet.pet_id, pet.petimage)
+                                    }}>펫 삭제하기</button>
+                                </div>
                             </div>
-                            <div className='pet-contents-info'>
-                                <h1>{pet.pet_name}</h1>
-                            </div>
-                            <div className='pet-contents-info'>
-                                <p>{`${pet.pet_breed}/${pet.pet_weight}kg/${pet.pet_gender ? '남' : '여'}/${calculateAge(pet.pet_birth)}살`}</p>
-                            </div>
-                            <div className='pet-contents-info'>
-                                <p>중성화 {pet.pet_neuter} </p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-                <div className='pet-accordion-content'>
-                    <button className='petDeleteButton' onClick={()=>{
-                        petDeleteButton()
-                    }}>펫 삭제하기</button>
-                </div>
+                        ))}
+                    </div>
+
                 </>
             )}
 

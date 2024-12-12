@@ -104,4 +104,21 @@ router.post('/pet/edit/:id',upload.single('image'), authMiddleware, async(req, r
     }
 });
 
+router.delete('/pet/delete/:id/:image', authMiddleware, async(req, res) => {
+    const petId = req.params.id;
+    const petImage = req.params.image;
+    console.log(petId)
+    console.log(petImage)
+    console.log('펫 삭제 데이터')
+
+    try {
+        const pet = await petDatabase.deletePet(petId, petImage);
+        res.json(pet);
+    } catch (error) {
+        console.error('Failed to fetch pet details error: ', error);
+        res.status(500).json({ message: 'Failed to fetch pet details.' });
+    }
+
+});
+
 module.exports = router;

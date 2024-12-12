@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import EventTags from './EventTags';
-import axios from 'axios';
 import '../../CSS/listPage.css';
-import Table from './EventDetailTable';
 import api from '../../Api';
 
 

@@ -6,7 +6,7 @@ const registerPet = async (petData) => {
     console.log('bbbb')
     console.log('cccc')
     console.log(petData)
-    
+
     try {
         // 생일 파싱 - YY/MM/DD 형식으로 가정
         const [year, month, day] = petData.birthDate.split('/');
@@ -20,7 +20,7 @@ const registerPet = async (petData) => {
         if (petData.image) {
             petImg = await imgNaverCloud.uploadPetImage(petData.image, 'pet');
         }
-       
+
         // 펫 기본 정보 저장
         const pet = await Pet.create({
             platform_id: petData.platform_id,
@@ -37,8 +37,8 @@ const registerPet = async (petData) => {
         });
 
         // const petId = pet.pet_id;
-        
-        return {pet, petImg};
+
+        return { pet, petImg };
     } catch (error) {
         throw new Error(`Failed to register pet: ${error.message}`);
     }
@@ -63,7 +63,7 @@ const getPetDetails = async (petId) => {
             where: { pet_id: petId },
         });
         // 결과 리턴
-    return pet;
+        return pet;
     } catch (error) {
         throw new Error(`Failed to fetch pet details: ${error.message}`);
     }
@@ -71,66 +71,88 @@ const getPetDetails = async (petId) => {
 
 const updatePetUpdateYesFile = async (petId, petData) => {
     console.log("==============database==============")
-   
+
     let petUpdateImage = null;
     console.log(petData.image)
-    
+
     if (petData.image) {
         await imgNaverCloud.deleteImage(petData.image);
     }
-    if (petData.imageUpdate){
+    if (petData.imageUpdate) {
         petUpdateImage = await imgNaverCloud.uploadPetImage(petData.imageUpdate, 'pet');
     }
-    try{
+    try {
         const pet = await Pet.update(
             {
-                petimage : petUpdateImage,
+                petimage: petUpdateImage,
                 pet_species: petData.species,
-                pet_breed : petData.breed,
-                pet_name : petData.name,
-                pet_birth : petData.birthDate,
-                pet_weight : petData.weight,
-                pet_gender : petData.gender,
-                pet_neuter : petData.neuter,
-                pet_etc : petData.etc,
+                pet_breed: petData.breed,
+                pet_name: petData.name,
+                pet_birth: petData.birthDate,
+                pet_weight: petData.weight,
+                pet_gender: petData.gender,
+                pet_neuter: petData.neuter,
+                pet_etc: petData.etc,
             },
             {
-                where:{
-                    pet_id : petId
+                where: {
+                    pet_id: petId
                 }
             }
         )
         return pet;
-    }catch(error){
+    } catch (error) {
         throw new Error(`Failed to fetch pet updateNoFile: ${error.message}`);
 
     }
 }
 
 const updatePetUpdateNoFile = async (petId, petData) => {
-    try{
+    try {
         const pet = await Pet.update(
             {
                 pet_species: petData.species,
-                pet_breed : petData.breed,
-                pet_name : petData.name,
-                pet_birth : petData.birthDate,
-                pet_weight : petData.weight,
-                pet_gender : petData.gender,
-                pet_neuter : petData.neuter,
-                pet_etc : petData.etc,
+                pet_breed: petData.breed,
+                pet_name: petData.name,
+                pet_birth: petData.birthDate,
+                pet_weight: petData.weight,
+                pet_gender: petData.gender,
+                pet_neuter: petData.neuter,
+                pet_etc: petData.etc,
             },
             {
-                where:{
-                    pet_id : petId
+                where: {
+                    pet_id: petId
                 }
             }
 
         )
         return pet;
-    }catch(error){
+    } catch (error) {
         throw new Error(`Failed to fetch pet updateNoFile: ${error.message}`);
 
+    }
+}
+
+const deletePet = async (petId, petImage) => {
+    console.log("petId")
+    console.log(petId)
+    console.log(petImage)
+    if (petImage) {
+        await imgNaverCloud.deleteImage(petImage);
+    }
+
+    try {
+        const pet = await Pet.destroy(
+            {
+                where: {
+                    pet_id: petId
+                }
+            },
+        )
+        return pet;
+    } catch (error) {
+        throw new Error(`Failed to fetch pet delete :  ${error.message}`)
     }
 }
 module.exports = {
@@ -139,5 +161,6 @@ module.exports = {
     getPetDetails,
     updatePetUpdateYesFile,
     updatePetUpdateNoFile,
-    
+    deletePet,
+
 };
