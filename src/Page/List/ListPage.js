@@ -6,6 +6,8 @@ import useFetchBusinesses from './useFetchBusinesses';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBeautyList } from '../../redux/beautyList';
+import axios from 'axios';
+import api from '../../Api';
 
 const ListPage = () => {
   const navigate = useNavigate();
@@ -16,7 +18,25 @@ const ListPage = () => {
   const mapUrl = `${process.env.PUBLIC_URL}/PageImage/list/map.svg`;
   const trailingUrl = `${process.env.PUBLIC_URL}/PageImage/home/trailing.svg`;
   const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태 추가
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      axios.get('http://localhost:8383/user/auth', {
+        headers: {
+          Authorization: `Bearer ${token}`,  // Authorization 헤더에 토큰 추가
+        }
+      })
+        .then(response => {
+          console.log(response.data);  // 서버에서 전달하는 사용자 정보 출력
+          setUser(response.data)
+        })
+        .catch(error => {
+          console.error('에러 발생:', error);
+        });
+    }
 
+  }, []);
   // 뒤로 가기
   const goBack = () => {
     navigate(-1);
@@ -32,7 +52,7 @@ const ListPage = () => {
     // 검색어가 바뀔 때마다 콘솔에 출력
   };
 
-  const filteredEvents = listData.filter((list) =>
+  const filterListData = listData.filter((list) =>
     list.business_name.toLowerCase().includes(searchTerm.toLowerCase()) // 대소문자 구분 없이 검색
   );
 
@@ -44,7 +64,6 @@ const ListPage = () => {
     dispatch(fetchBeautyList());
   }, [dispatch]);
 
-
   useEffect(() => {
     if (beautyListData) {
       setListData(beautyListData)
@@ -53,12 +72,28 @@ const ListPage = () => {
 
   if (loading) return <div>로딩 중...</div>;
   if (error) return <div>에러 발생: {error}</div>;
+
   
-  const aaa = () => {
-    alert('aaa')
-    navigate(`/`);
+
+  const userAuthorityRequestButton  =  async (business_registration_number) => {
+    console.log(business_registration_number);
+    console.log(user.id);
+    const platform_id = user.id;
+   
+    try {
+      const response = await api.post('/api/user/authority/request', {
+        business_registration_number,
+        platform_id,
+            });
+            console.log('Upload successful', response.data);
+            // navigate(`/`);
+    } catch (error) {
+      console.error('Error occurred:', error);
+    }
+
+    
   }
-  
+
   return (
     <div lang='ko'>
       <div className='navigation'>
@@ -88,19 +123,19 @@ const ListPage = () => {
       <div className="list-mid-h">
         <div className='list-mid'>
           {/* beautyListData 배열을 순회하여 렌더링 */}
-          {filteredEvents && filteredEvents.map((event) => (
-            <div className="list-list-container" key={event.business_information_id}>
+          {filterListData && filterListData.map((list) => (
+            <div className="list-list-container" key={list.business_information_id}>
               <div className="list-image-container">
                 {/* 이미지가 있는 경우에만 렌더링 */}
-                {event.business_main_image ? (
-                  <img src={event.business_main_image} alt={event.business_name} style={{ cursor: 'pointer' }} onClick={() => handleItemClick(event.business_information_id)} />
+                {list.business_main_image ? (
+                  <img src={list.business_main_image} alt={list.business_name} style={{ cursor: 'pointer' }} onClick={() => handleItemClick(list.business_information_id)} />
                 ) : (
                   <div>No Image Available</div> // 이미지가 없으면 대체 텍스트
                 )}
               </div>
               <div className="text-container" >
                 <div className="list-title-container">
-                  <div className="list-title">{event.business_name}</div>
+                  <div className="list-title">{list.business_name}</div>
                   <div className="list-tag-container">
                     <div className='list-tag'>
                       소형견
@@ -112,11 +147,11 @@ const ListPage = () => {
                       CCTV
                     </div>
                   </div>
-                  <div className="list-content">{event.address_road} {event.address_detail}</div>
+                  <div className="list-content">{list.address_road}{list.business_registration_number} {list.address_detail}</div>
                 </div>
                 <div className='list-title-container'>
                   <button onClick={() => {
-                    aaa()
+                    userAuthorityRequestButton(list.business_registration_number)
                   }}>권한요청</button>
                 </div>
               </div>

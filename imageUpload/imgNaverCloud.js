@@ -3,8 +3,7 @@ const axios = require('axios');
 const { PassThrough } = require('stream');
 const { generateUniqueFileName } = require('../utils/fileUtils');
 const { accessKey, secretKey, region, service, endpoint, bucketName } = require('../aws/awsConfig');
-const Image = require('../models/Image'); // Sequelize 모델 임포트
-const PetImage = require('../models/PetImage'); // Sequelize 모델 임포트
+
 const mime = require('mime-types');
 
 const AWS = require('aws-sdk');

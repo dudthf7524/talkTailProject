@@ -18,7 +18,7 @@ const AdminMenu = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get('http://localhost:8383/user/auth', { withCredentials: true });
+        const response = await axios.get('http://localhost:8383/business/auth', { withCredentials: true });
         setUser(response.data);
         console.log(response.data)
       } catch (error) {
@@ -47,9 +47,9 @@ const AdminMenu = () => {
             <img src={customerIcon} alt="customer icon" className='menu-icon'/>
             <span className='menu-text'><br/>고객관리</span>
           </button>
-          <button className='menu-tbt-btn' onClick={()=>navigate('/review-management')}>
+          <button className='menu-tbt-btn' onClick={()=>navigate('/business/authority/management')}>
             <img src={reviewIcon} alt="review icon" className='menu-icon'/>
-            <span className='menu-text'><br/>후기관리</span>
+            <span className='menu-text'><br/>권한관리</span>
           </button>
           <button className='menu-tbt-btn' onClick={()=>navigate('/calculation-management')}>
             <img src={calculateIcon} alt="calculate icon" className='menu-icon'/>

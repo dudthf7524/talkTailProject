@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 const User = require('../models/User'); // User 모델 임포트
-
+const UserInformation = require('../models/UserInformation');
 // 사용자 ID를 기반으로 사용자 정보를 조회하는 함수
 const getUserById = async (platform_id, platform) => {
   try {
@@ -23,7 +23,7 @@ const getUserById = async (platform_id, platform) => {
 const findOrCreateUser = async (userInfo) => {
   console.log(userInfo)
   const [user, created] = await User.findOrCreate({
-    where: { 
+    where: {
       platform_id: userInfo.platform_id,
       platform: userInfo.platform,
     },
@@ -72,9 +72,27 @@ const updateUserProfile = async (id, platform, userInfo) => {
     throw new Error(`Error updating user profile: ${error.message}`);
   }
 };
+const createUserInformation = async (userData) => {
+  const userphone = userData.user_phone1 + "-" + userData.user_phone2 + "-" + userData.user_phone3;
+  
+  try {
+    const userIformation = await UserInformation.create({
+      platform_id: userData.platform_id,
+      user_name: userData.user_name,
+      user_phone: userphone,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+
+    return userIformation;
+  } catch (error) {
+    throw new Error('Failed to create userInformation', error.message);
+  }
+};
 
 module.exports = {
   findOrCreateUser,
   getUserById,
   updateUserProfile,
+  createUserInformation,
 };

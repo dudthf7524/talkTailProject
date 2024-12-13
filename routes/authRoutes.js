@@ -99,7 +99,7 @@ router.get('/auth/kakao', async (req, res) => {
     }
 });
 
-router.get('/auth/naver', async (req, res) => {
+router.get('/auth/naver',  async (req, res) => {
     let code; // 코드 변수를 미리 선언
     console.log("aaa : " + req.query.code)
     console.log("dfdsafedsafeefdsaf")

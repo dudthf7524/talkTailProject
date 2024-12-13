@@ -117,6 +117,7 @@ router.post('/business/login', async (req, res, next) => {
 
 router.get('/businesses/information', authMiddleware, async (req, res) => {
   console.log('검색할 때마다 데이터베이스를 조회한다')
+  
   try {
     const { category } = req.query;
     const businessesInformation = await businessDatabase.getBusinesses();

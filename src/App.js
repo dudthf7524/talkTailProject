@@ -6,7 +6,7 @@ import './BusinessCSS/page.css';
 import './BusinessCSS/main.css';
 import './BusinessFont/font.css';
 import Login from './BusinessPage/LoginPage';
-import AdminMenu from './BusinessPage/MenuPage';
+import BusinessMenu from './BusinessPage/MenuPage';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import LoginPage from './Page/Login/LoginPage';
@@ -31,6 +31,9 @@ import ReservationRequestPage from "./Page/Reservation/ReservationRequestPage";
 import ReservatinConfirm from "./Page/Reservation/ReservationConfirmPage";
 import PetDetailPage from "./Page/Pet/PetDetailPage";
 import PetEditPage from "./Page/Pet/PetEditPage";
+import AuthorityManagement from './BusinessPage/AuthorityManagement';
+import UserInformation from "./Page/User/UserInformation";
+
 function App() {
   const [imageFiles, setImageFiles] = useState({
     main: [],
@@ -82,14 +85,19 @@ function App() {
             <Route path="/reservation-confirm" element={<ReservatinConfirm />}/>
             <Route path="/pet/detail/:id" element={<PetDetailPage/>} />
             <Route path="/pet-edit/:id" element={<PetEditPage/>} />
+            <Route path="/user/information" element={<UserInformation/>} />
+
+
 
             <Route path="/business">
               <Route path="login" element={<Login />} />
-              <Route path="menu" element={<AdminMenu />} />
+              <Route path="menu" element={<BusinessMenu />} />
               <Route path="register" element={<Register />} />
               <Route path="register/information" element={<RegisterInformation />} />
               <Route path="imgupload/:imageType" element={<ImgUpload setImageFiles={handleSetImageFiles} />} />
               <Route path="register/desinger" element={<RegisterDesinger/>} />
+              <Route path="authority/management" element={<AuthorityManagement />} />
+
             </Route>
           </Routes>
         </ImageProvider>

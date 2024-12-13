@@ -26,7 +26,9 @@ const authMiddleware = (req, res, next) => {
     console.error('JWT 검증 오류:', error);
     return res.status(403).json({ message: '접근 권한이 없습니다.' });
   }
+  
 };
+
 
 module.exports = authMiddleware;
 
