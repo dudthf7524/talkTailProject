@@ -1,9 +1,11 @@
 
 // 새로운 업체를 생성하는 함수
-const Business = require('../models/Business');
+
 const bcrypt = require('bcrypt');
-const BusinessInformation = require('../models/BusinessInformation');
-const BusinessDesinger = require('../models/BusinessDesinger');
+
+const { BusinessInformation } = require("../models");
+const { BusinessDesinger } = require("../models");
+const { Business } = require("../models");
 
 const createBusiness = async (businessInfo) => {
     console.log('데이터베이스 저장 코드')

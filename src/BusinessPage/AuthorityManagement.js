@@ -1,59 +1,106 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../BusinessCSS/auth.css'
 import '../BusinessCSS/reservation.css'
+import axios from 'axios';
+import api from '../Api'
 
-function AuthorityManagement(){
+function AuthorityManagement() {
+    const [user, setUser] = useState(null);
+    const [lists, setLists] = useState([]);
 
-  const navigate = useNavigate();
-  const arrowButtonUrl = `${process.env.PUBLIC_URL}/images/button/arrow_left.svg`;
+    useEffect(() => {
+        const fetchAndAuthorizeUser = async () => {
+            console.log('Fetching user...');
+            try {
+                const userResponse = await api.get('/business/auth', { withCredentials: true });
+                const userData = userResponse.data;
+                console.log('Fetched user data:', userData);
 
-  const reservations = [
-    {
-      requestTime: '24-05-10-13:39',
-      desiredTime: '24-05-12-15:00',
-      status: '완료',
-      detailButton: '수락'
-    },
-    {
-        requestTime: '24-05-10-13:39',
-        desiredTime: '24-05-12-15:00',
-        status: '완료',
-        detailButton: '거절'
-      },
-  ];
+                if (!userData) {
+                    navigate('/business/login'); // 로그인 페이지로 리디렉션
+                    return;
+                }
 
-  return (
-    <div className='page-container' lang='ko'>
-        <div className='navigation'>
-            <button>
-                <img src={arrowButtonUrl} alt='' onClick={()=>navigate('/admin-menu')} />
-            </button>
-            예약관리
-            <div> </div>
-        </div>
-        <div className='reservation-title'>
-            <div className='reservation-text'>예약신청시간</div>
-            <div className='reservation-text'>예약희망시간</div>
-            <div className='reservation-text'>상태</div>
-            <div className='reservation-text'>상세</div>
-        </div>
-        <div class="horizontal-line"></div>
-        {reservations.map((reservation, index) => (
-            <div key={index} className='reservation-row'>
-                <div className='reservation-item'>{reservation.requestTime}</div>
-                <div className='reservation-item'>{reservation.desiredTime}</div>
-                <div className='reservation-item'>
-                    <button className='detail-button' onClick={()=>navigate('/reservation-detail')}>{reservation.detailButton}</button>
-                </div>
-                <div className='reservation-item'>
-                    <button className='detail-button' onClick={()=>navigate('/reservation-detail')}>{reservation.detailButton}</button>
-                </div>
+                setUser(userData); // 사용자 상태 업데이트
+
+                if (userData.business_registration_number) {
+                    console.log('Fetching user authority...');
+                    try {
+                        const authorityResponse = await api.get('/api/user/authority', {
+                            headers: {
+                                'Business-Registration-Number': userData.business_registration_number,
+                            },
+                        });
+                        console.log('User authority data:', authorityResponse.data);
+                        setLists(authorityResponse.data);
+                    } catch (authorityError) {
+                        console.error('권한 조회 실패:', authorityError);
+                    }
+                }
+            } catch (authError) {
+                console.error('로그인 인증 실패:', authError);
+                navigate('/business/login'); // 로그인 페이지로 리디렉션
+            }
+        };
+
+        fetchAndAuthorizeUser();
+    }, []);
+    const navigate = useNavigate();
+    const arrowButtonUrl = `${process.env.PUBLIC_URL}/images/button/arrow_left.svg`;
+
+    const reservations = [
+        {
+            requestTime: '24-05-10-13:39',
+            desiredTime: '24-05-12-15:00',
+            status: '완료',
+            detailButton: '수락'
+        },
+        {
+            requestTime: '24-05-10-13:39',
+            desiredTime: '24-05-12-15:00',
+            status: '완료',
+            detailButton: '거절'
+        },
+    ];
+    if (!user) {
+        return <div>로딩 중...</div>;
+    }
+    return (
+        <div className='page-container' lang='ko'>
+            <div className='navigation'>
+                <button>
+                    <img src={arrowButtonUrl} alt='' onClick={() => navigate('/admin-menu')} />
+                </button>
+                권한관리
+                <div> </div>
             </div>
-        ))}
+            <div className='reservation-title'>
+                <div className='reservation-text'>이름</div>
+                <div className='reservation-text'>전화번호</div>
+                <div className='reservation-text'>수락</div>
+                <div className='reservation-text'>거절</div>
+            </div>
+            <div className="horizontal-line"></div>
+            {lists.map((list, index) => (
+                <div key={index} className='reservation-row'>
+                    <div className='reservation-item'>
+                        <p>{list.USER_INFO.user_name}</p> {/* 사용자 이름 */}
+                    </div>
+                    <div className='reservation-item'>
+                        <p>{list.USER_INFO.user_phone}</p> {/* 사용자 전화번호 */}
+                    </div>
+                    <div className='reservation-item'>
+                        <button className='detail-button' onClick={() => navigate('/reservation-detail')}>요청수락</button>
+                    </div>
+                    <div className='reservation-item'>
+                        <button className='refuse-button' onClick={() => navigate('/reservation-detail')}>요청거절</button>
+                    </div>
+                </div>
+            ))}
 
-    </div>
-  );
+        </div>
+    );
 };
 
 export default AuthorityManagement;

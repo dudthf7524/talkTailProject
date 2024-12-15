@@ -1,136 +1,131 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const Business = require('./Business');
-const sequelize = require('.').sequelize;
-
-const BusinessInformation = sequelize.define('TB_BUSINESSES_INFORMATION', {
-    business_information_id: {
+module.exports = (sequelize, DataTypes) => {
+    const BusinessInformation = sequelize.define('TB_BUSINESSES_INFORMATION', {
+      business_information_id: {
         type: DataTypes.INTEGER, // 숫자 타입으로 변경
         allowNull: false,
         primaryKey: true,
         autoIncrement: true, // 자동 증가 설정
-    },
-    business_registration_number: {
-        type: DataTypes.STRING(20),
+      },
+      business_registration_number: {
+        type: DataTypes.STRING(200),
         allowNull: false,
         defaultValue: '',
         references: {
-            model: Business, // Users 테이블을 참조
-            key: 'business_registration_number', // Users 테이블의 user_id와 연결
+          model: 'TB_BUSINESSES', // Business 테이블을 참조
+          key: 'business_registration_number',
         },
         onUpdate: 'CASCADE', // 외래 키 업데이트 정책
         onDelete: 'CASCADE', // 외래 키 삭제 정책
-    },
-    business_name: {
+      },
+      business_name: {
         type: DataTypes.STRING(50),
         allowNull: false,
-    },
-    business_main_image: {
+      },
+      business_main_image: {
         type: DataTypes.STRING,
-        allowNull: false
-    },
-    business_main_image: {
+        allowNull: false,
+      },
+      business_price_image1: {
         type: DataTypes.STRING,
-        allowNull: false
-    },
-    business_price_image1: {
+        allowNull: false,
+      },
+      business_price_image2: {
         type: DataTypes.STRING,
-        allowNull: false
-    },
-    business_price_image2: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    business_price_image3: {
+        allowNull: false,
+      },
+      business_price_image3: {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: '',
-    },
-    address_postcode: {
+      },
+      address_postcode: {
         type: DataTypes.STRING(50),
         allowNull: false,
         defaultValue: '',
-    },
-    address_road: {
+      },
+      address_road: {
         type: DataTypes.STRING(50),
         allowNull: false,
         defaultValue: '',
-    },
-    address_jibun: {
+      },
+      address_jibun: {
         type: DataTypes.STRING(50),
         allowNull: false,
         defaultValue: '',
-    },
-    address_detail: {
+      },
+      address_detail: {
         type: DataTypes.STRING(50),
         allowNull: false,
         defaultValue: '',
-    },
-    weekday_open_time: {
+      },
+      weekday_open_time: {
         type: DataTypes.STRING(20),
         allowNull: false,
         defaultValue: '00:00:00',
-    },
-    weekday_close_time: {
+      },
+      weekday_close_time: {
         type: DataTypes.STRING(20),
         allowNull: false,
         defaultValue: '00:00:00',
-    },
-    weekend_open_time: {
+      },
+      weekend_open_time: {
         type: DataTypes.STRING(20),
         allowNull: false,
         defaultValue: '00:00:00',
-    },
-    weekend_close_time: {
+      },
+      weekend_close_time: {
         type: DataTypes.STRING(20),
         allowNull: false,
         defaultValue: '00:00:00',
-    },
-    dayon: {
+      },
+      dayon: {
         type: DataTypes.STRING(20),
         allowNull: false,
         defaultValue: '',
-    },
-    dayoff: {
+      },
+      dayoff: {
         type: DataTypes.STRING(20),
         allowNull: false,
         defaultValue: '',
-    },
-    business_phone1: {
+      },
+      business_phone1: {
         type: DataTypes.INTEGER,
         allowNull: false,
-    },
-    business_phone2: {
+      },
+      business_phone2: {
         type: DataTypes.INTEGER,
         allowNull: false,
-    },
-    business_phone3: {
+      },
+      business_phone3: {
         type: DataTypes.INTEGER,
         allowNull: false,
-    },
-    business_comment: {
+      },
+      business_comment: {
         type: DataTypes.STRING(100),
         allowNull: false,
         defaultValue: '',
-    },
-
-    business_no_show: {
+      },
+      business_no_show: {
         type: DataTypes.INTEGER,
-
         defaultValue: 0,
-    },
-    created_at: {
+      },
+      created_at: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW,
-    },
-    updated_at: {
+      },
+      updated_at: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW,
-    },
-}, {
-    timestamps: false,
-});
-BusinessInformation.belongsTo(Business, { foreignKey: 'business_registration_number', targetKey: 'business_registration_number' });
-
-module.exports = BusinessInformation;
+      },
+    }, {
+      timestamps: false,
+    });
+  
+    // 관계 설정: Business 모델과 연관
+    BusinessInformation.belongsTo(sequelize.models.TB_BUSINESSES, { foreignKey: 'business_registration_number', targetKey: 'business_registration_number' });
+  
+    return BusinessInformation;
+  };
+  

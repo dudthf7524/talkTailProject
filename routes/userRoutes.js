@@ -16,4 +16,5 @@ router.post('/user/register/information' , async(req, res) => {
 })
 
 
+
 module.exports = router;

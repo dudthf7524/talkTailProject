@@ -1,6 +1,8 @@
 const { Sequelize } = require('sequelize');
-const User = require('../models/User'); // User 모델 임포트
-const UserInformation = require('../models/UserInformation');
+
+
+const { UserInfo } = require('../models');
+const { User } = require('../models');
 // 사용자 ID를 기반으로 사용자 정보를 조회하는 함수
 const getUserById = async (platform_id, platform) => {
   try {
@@ -74,9 +76,10 @@ const updateUserProfile = async (id, platform, userInfo) => {
 };
 const createUserInformation = async (userData) => {
   const userphone = userData.user_phone1 + "-" + userData.user_phone2 + "-" + userData.user_phone3;
-  
+  console.log('데이터베이스')
+  console.log(userData)
   try {
-    const userIformation = await UserInformation.create({
+    const userIformation = await UserInfo.create({
       platform_id: userData.platform_id,
       user_name: userData.user_name,
       user_phone: userphone,

@@ -61,7 +61,27 @@
     border: none;
     cursor: pointer;
 }
-
+.detail-button:hover {
+    padding: 5px 10px;
+    background-color: white;
+    color: #EB944D;
+    border: none;
+    cursor: pointer;
+}
+.refuse-button {
+    padding: 5px 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.refuse-button:hover {
+    padding: 5px 10px;
+    background-color: white;
+    color: red;
+    border: none;
+    cursor: pointer;
+}
 .detail-form1 {
     flex: 1;
     margin-top: 100px;

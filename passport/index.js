@@ -1,7 +1,8 @@
 const passport = require("passport");
 const local = require("./local");
-const businessDatabase = require('../database/businessDatabase');
-const Business = require("../models/Business");
+
+
+const { Business } = require("../models");
 
 module.exports = async () => {
   try {

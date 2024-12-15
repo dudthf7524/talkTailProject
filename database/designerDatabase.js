@@ -1,4 +1,4 @@
-const BusinessDesinger = require('../models/BusinessDesinger');
+const { BusinessDesinger } = require("../models");
 
 const getDesignerById = async (id) => {
     console.log("database desinger")

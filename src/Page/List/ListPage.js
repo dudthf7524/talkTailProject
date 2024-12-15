@@ -19,6 +19,9 @@ const ListPage = () => {
   const trailingUrl = `${process.env.PUBLIC_URL}/PageImage/home/trailing.svg`;
   const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태 추가
   const [user, setUser] = useState(null);
+  const [showModal, setShowModal] = useState(false); // 모달 상태 추가
+  const [modalMessage, setModalMessage] = useState(''); // 모달 메시지
+  const closeModal = () => setShowModal(false);
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -35,7 +38,6 @@ const ListPage = () => {
           console.error('에러 발생:', error);
         });
     }
-
   }, []);
   // 뒤로 가기
   const goBack = () => {
@@ -70,28 +72,69 @@ const ListPage = () => {
     }
   }, [beautyListData]);
 
+  // useEffect(() => {
+  //   const AuthorizeUser = async () => {
+  //     console.log('Fetching user...');
+
+
+  //     try {
+  //       const authorityResponse = await api.get('/api/user/authority', {
+  //         headers: {
+  //           'Business-Registration-Number': userData.business_registration_number,
+  //         },
+  //       });
+  //       console.log('User authority data:', authorityResponse.data);
+  //       setLists(authorityResponse.data);
+  //     } catch (authorityError) {
+  //       console.error('권한 조회 실패:', authorityError);
+  //     }
+  //   }
+  //   AuthorizeUser();
+  // }, []);
+
+
+  const fetchBusinessAuthority = async (business_registration_number) => {
+    console.log('Fetching authority for:', business_registration_number);
+
+    try {
+      const response = await api.get('/api/user/authority', {
+        headers: {
+          'Business-Registration-Number': business_registration_number,
+        },
+      });
+      console.log('User authority data:', response.data);
+      // 데이터 처리 추가
+    } catch (authorityError) {
+      console.error('권한 조회 실패:', authorityError);
+    }
+  };
+
+  const handleImageClick = (business_registration_number) => {
+    fetchBusinessAuthority(business_registration_number); // 클릭된 이미지의 사업자 번호를 사용
+  };
+
   if (loading) return <div>로딩 중...</div>;
   if (error) return <div>에러 발생: {error}</div>;
 
-  
 
-  const userAuthorityRequestButton  =  async (business_registration_number) => {
+
+  const userAuthorityRequestButton = async (business_registration_number) => {
     console.log(business_registration_number);
     console.log(user.id);
     const platform_id = user.id;
-   
+
     try {
       const response = await api.post('/api/user/authority/request', {
         business_registration_number,
         platform_id,
-            });
-            console.log('Upload successful', response.data);
-            // navigate(`/`);
+      });
+      console.log('Upload successful', response.data);
+      // navigate(`/`);
     } catch (error) {
       console.error('Error occurred:', error);
     }
 
-    
+
   }
 
   return (
@@ -128,7 +171,10 @@ const ListPage = () => {
               <div className="list-image-container">
                 {/* 이미지가 있는 경우에만 렌더링 */}
                 {list.business_main_image ? (
-                  <img src={list.business_main_image} alt={list.business_name} style={{ cursor: 'pointer' }} onClick={() => handleItemClick(list.business_information_id)} />
+                  <img src={list.business_main_image} 
+                  alt={list.business_name}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => handleImageClick(list.business_registration_number)} />
                 ) : (
                   <div>No Image Available</div> // 이미지가 없으면 대체 텍스트
                 )}
@@ -159,6 +205,14 @@ const ListPage = () => {
           ))}
         </div>
       </div>
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <p>{modalMessage}</p>
+            <button onClick={closeModal}>닫기</button>
+          </div>
+        </div>
+      )}
       <NButtonContainer />
     </div>
   );

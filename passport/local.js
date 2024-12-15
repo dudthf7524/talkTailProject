@@ -1,6 +1,5 @@
 const passport = require("passport");
 const { Strategy: LocalStrategy } = require("passport-local");
-const bcrypt = require("bcrypt");
 const businessDatabase = require('../database/businessDatabase');
 
 module.exports = () => {
@@ -12,8 +11,7 @@ module.exports = () => {
         passReqToCallback: true,
       },
       async (req, login_id, password, done) => {
-        console.log(login_id)
-        console.log(password)
+       
         try {
         const business = await businessDatabase.businessLogin(login_id, password);
           if (!business) {

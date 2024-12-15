@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../BusinessCSS/menu.css'
+import api from '../Api'
 import axios from 'axios';
 
 const AdminMenu = () => {
@@ -24,7 +25,7 @@ const AdminMenu = () => {
       } catch (error) {
         
         console.error('로그인 인증 실패:', error);
-        navigate('/login'); // 로그인 페이지로 리디렉션
+        navigate('/business/login'); // 로그인 페이지로 리디렉션
       }
     };
     fetchUser();
