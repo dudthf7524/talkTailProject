@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../BusinessCSS/auth.css'
 import '../BusinessCSS/reservation.css'
 import axios from 'axios';
 import api from '../Api'
 
+
 function AuthorityManagement() {
     const [user, setUser] = useState(null);
     const [lists, setLists] = useState([]);
-
+    const location = useLocation();
     useEffect(() => {
         const fetchAndAuthorizeUser = async () => {
             console.log('Fetching user...');
@@ -45,7 +46,21 @@ function AuthorityManagement() {
         };
 
         fetchAndAuthorizeUser();
-    }, []);
+    }, [location.pathname]);
+
+    const authorityAvailableTrue = async (user_authority_request_id) => {
+        const id = user_authority_request_id
+        try {
+            const response = await api.put('/api/user/authority/true', {
+                id
+            });
+            console.log('요청수락 완료');
+            window.location.href = '/business/authority/management';
+        } catch (error) {
+            console.log('요청 수락 에러', error.message)
+        }
+    }
+
     const navigate = useNavigate();
     const arrowButtonUrl = `${process.env.PUBLIC_URL}/images/button/arrow_left.svg`;
 
@@ -90,12 +105,33 @@ function AuthorityManagement() {
                     <div className='reservation-item'>
                         <p>{list.USER_INFO.user_phone}</p> {/* 사용자 전화번호 */}
                     </div>
-                    <div className='reservation-item'>
-                        <button className='detail-button' onClick={() => navigate('/reservation-detail')}>요청수락</button>
-                    </div>
-                    <div className='reservation-item'>
-                        <button className='refuse-button' onClick={() => navigate('/reservation-detail')}>요청거절</button>
-                    </div>
+                    {
+                        list.authority_is_available === true
+                    }
+
+                    {
+                        list.authority_is_available === true ? (
+                            <>
+                                {/* 수락완료, 거절완료 */}
+                                <div className='reservation-item'>
+                                    수락완료
+                                </div>
+                                <div className='reservation-item'>
+                                    수락완료
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                {/* 요청수락, 요청거절 */}
+                                <div className='reservation-item'>
+                                    <button className='detail-button' onClick={() => authorityAvailableTrue(list.user_authority_request_id)}>요청수락</button>
+                                </div>
+                                <div className='reservation-item'>
+                                    <button className='refuse-button' onClick={() => navigate('/reservation-detail')}>요청거절</button>
+                                </div>
+                            </>
+                        )
+                    }
                 </div>
             ))}
 

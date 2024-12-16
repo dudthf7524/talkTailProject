@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
   
     UserInfo.associate = (db) => {
       db.UserInfo.belongsTo(db.User, { foreignKey: 'platform_id', targetKey: 'platform_id' });
-    //   db.UserInfo.hasMany(db.UserAuthorityRequest, { foreignKey: 'platform_id', sourceKey: 'platform_id' });
+      db.UserInfo.hasMany(db.UserAuthorityRequest, { foreignKey: 'platform_id', sourceKey: 'platform_id' });
     };
   
     return UserInfo;

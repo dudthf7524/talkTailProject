@@ -1,6 +1,6 @@
-const Pet = require('../models/Pet');
-const imgNaverCloud = require('../imageUpload/imgNaverCloud');
 
+const { Pet } = require("../models");
+const { imgNaverCloud } = require("../models");
 const registerPet = async (petData) => {
     console.log('aaaa')
     console.log('bbbb')

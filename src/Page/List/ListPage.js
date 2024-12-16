@@ -21,7 +21,32 @@ const ListPage = () => {
   const [user, setUser] = useState(null);
   const [showModal, setShowModal] = useState(false); // 모달 상태 추가
   const [modalMessage, setModalMessage] = useState(''); // 모달 메시지
-  const closeModal = () => setShowModal(false);
+
+  const [authorityData, setAuthorityData] = useState([]);
+
+
+  const [selectedBusiness, setSelectedBusiness] = useState(null); // 선택된 비즈니스 정보
+
+
+
+  const handleAuthorityRequestClick = (business_registration_number) => {
+    setSelectedBusiness(business_registration_number); // 선택된 비즈니스 등록 번호 저장
+    setModalMessage('권한 요청을 하시겠습니까?'); // 모달 메시지 설정
+    setShowModal(true); // 모달 띄우기
+  };
+  const handleConfirmAuthorityRequest = () => {
+    if (selectedBusiness) {
+      userAuthorityRequestButton(selectedBusiness); // 권한 요청 함수 호출
+    }
+    setShowModal(false); // 모달 닫기
+  };
+
+  // 4. 모달 닫기 버튼 클릭 시 모달 닫기
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedBusiness(null); // 선택된 비즈니스 초기화
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -39,6 +64,34 @@ const ListPage = () => {
         });
     }
   }, []);
+
+  useEffect(() => {
+    const AuthorizeUser = async () => {
+      console.log('Fetching user...');
+      console.log('Fetching user...');
+      console.log('Fetching user...');
+      console.log('Fetching user...');
+      console.log('Fetching user...');
+      if (user && user.id) {
+
+
+        try {
+          const response = await api.get('/api/user/authority/available', {
+            headers: {
+              'user-id': user.id,
+            },
+          });
+          console.log('User authority data:', response.data);
+          setAuthorityData(response.data);
+        } catch (authorityError) {
+          console.error('권한 조회 실패:', authorityError);
+        }
+      }
+    }
+    if (user) {
+      AuthorizeUser();
+    }
+  }, [user]);
   // 뒤로 가기
   const goBack = () => {
     navigate(-1);
@@ -72,25 +125,7 @@ const ListPage = () => {
     }
   }, [beautyListData]);
 
-  // useEffect(() => {
-  //   const AuthorizeUser = async () => {
-  //     console.log('Fetching user...');
 
-
-  //     try {
-  //       const authorityResponse = await api.get('/api/user/authority', {
-  //         headers: {
-  //           'Business-Registration-Number': userData.business_registration_number,
-  //         },
-  //       });
-  //       console.log('User authority data:', authorityResponse.data);
-  //       setLists(authorityResponse.data);
-  //     } catch (authorityError) {
-  //       console.error('권한 조회 실패:', authorityError);
-  //     }
-  //   }
-  //   AuthorizeUser();
-  // }, []);
 
 
   const fetchBusinessAuthority = async (business_registration_number) => {
@@ -113,8 +148,6 @@ const ListPage = () => {
     fetchBusinessAuthority(business_registration_number); // 클릭된 이미지의 사업자 번호를 사용
   };
 
-  if (loading) return <div>로딩 중...</div>;
-  if (error) return <div>에러 발생: {error}</div>;
 
 
 
@@ -136,6 +169,13 @@ const ListPage = () => {
 
 
   }
+  const getAuthorityStatus = (business_registration_number) => {
+    const authority = authorityData.find(item => item.business_registration_number === business_registration_number);
+    return authority ? authority.authority_is_available : null;
+  };
+
+  if (loading) return <div>로딩 중...</div>;
+  if (error) return <div>에러 발생: {error}</div>;
 
   return (
     <div lang='ko'>
@@ -171,10 +211,10 @@ const ListPage = () => {
               <div className="list-image-container">
                 {/* 이미지가 있는 경우에만 렌더링 */}
                 {list.business_main_image ? (
-                  <img src={list.business_main_image} 
-                  alt={list.business_name}
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => handleImageClick(list.business_registration_number)} />
+                  <img src={list.business_main_image}
+                    alt={list.business_name}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => handleItemClick(list.business_information_id)} />
                 ) : (
                   <div>No Image Available</div> // 이미지가 없으면 대체 텍스트
                 )}
@@ -196,9 +236,19 @@ const ListPage = () => {
                   <div className="list-content">{list.address_road}{list.business_registration_number} {list.address_detail}</div>
                 </div>
                 <div className='list-title-container'>
-                  <button onClick={() => {
-                    userAuthorityRequestButton(list.business_registration_number)
-                  }}>권한요청</button>
+                  {/* 권한 상태에 따라 버튼 텍스트 변경 */}
+                  {getAuthorityStatus(list.business_registration_number) === true ? (
+                    <button disabled>권한요청이 완료되었습니다.</button>
+                  ) : getAuthorityStatus(list.business_registration_number) === false ? (
+                    <div className='authority available'>
+                      <span style={{ color: "red" }}>권한 요청 중입니다.</span><span> (권한 승인 대기중...)</span>
+                    </div>
+
+                  ) : (
+                    <button onClick={() => handleAuthorityRequestClick(list.business_registration_number)}>
+                      권한요청
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -206,10 +256,11 @@ const ListPage = () => {
         </div>
       </div>
       {showModal && (
-        <div className="modal">
+        <div className="modal" >
           <div className="modal-content">
             <p>{modalMessage}</p>
             <button onClick={closeModal}>닫기</button>
+            <button onClick={handleConfirmAuthorityRequest}>확인</button>
           </div>
         </div>
       )}

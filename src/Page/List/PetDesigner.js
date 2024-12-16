@@ -2,11 +2,17 @@ import React, { useEffect, useState } from 'react';
 import NButtonContainer from '../Components/NavigatorBar/NButtonContainer';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../Api';
+import { setDesignerName } from '../../redux/reservationData';
+import { useDispatch, useSelector } from 'react-redux';
 
 const PetDesigner = () => {
   const navigate = useNavigate();
   const { id } = useParams(); // URL에서 id 매개변수 가져오기
   console.log(id)
+  const dispatch = useDispatch();
+
+  const designerName = useSelector((state) => state.reservationData.designerName); // Redux 상태 가져오기
+  console.log("Selected Designer Name:", designerName); // 리덕스 상태 출력
 
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
@@ -24,6 +30,7 @@ const PetDesigner = () => {
   };
 
   const handleItemClick = (id) => {
+   
     navigate(`/list-map/${id}`);
   };
 
@@ -49,9 +56,12 @@ const PetDesigner = () => {
     };
     fetchBusiness();
   }, [id]);
-  console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+  
   console.log(designers)
-  const handleClick = (id) => {
+  const handleClick = (id, name) => {
+    console.log(id)
+    console.log(name)
+    dispatch(setDesignerName(name));
     navigate(`/select/date/${id}`);
   };
   return (
@@ -92,7 +102,7 @@ const PetDesigner = () => {
             <div
               key={index} 
               className='list-list-container'
-              onClick={()=> handleClick(designer.business_desinger_id)}
+              onClick={()=> handleClick(designer.business_desinger_id, designer.business_desinger_name)}
               style={{ cursor: 'pointer' }}>
               <div className='list-title'>{designer.business_desinger_name}</div>
               <div className='list-content'>{designer.business_desinger_introduce}</div>

@@ -132,6 +132,8 @@ const getBusinesses = async () => {
 
 const getBusinessDetailsById = async (id) => {
     console.log(id)
+    console.log('aaa')
+    
     try {
         const businessInformationById = await BusinessInformation.findOne({
             where: { business_information_id : id },
