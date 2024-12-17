@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import '../../CSS/reservation.css';
+import { useSelector } from 'react-redux';
 function Payments({ closePaymentModal, confirmPayment }) {
     const tossUrl = `${process.env.PUBLIC_URL}/PageImage/logo/toss.png`;
     const kakaoUrl = `${process.env.PUBLIC_URL}/PageImage/auth/KAKAO logo.svg`;
@@ -13,7 +14,10 @@ function Payments({ closePaymentModal, confirmPayment }) {
             console.error('IMP 객체를 초기화할 수 없습니다. 포트원 SDK가 제대로 로드되지 않았습니다.');
         }
     }, []);
-    
+    const businessInfo = useSelector((state) => state.reservationData.businessInfo); // Redux 상태 가져오기
+    console.log("businessInfo.business_name:", businessInfo.business_name); // 리덕스 상태 출력
+    console.log("businessInfo.business_no_show:", businessInfo.business_no_show); // 리덕스 상태 출력
+
     var today = new Date();
     var hours = today.getHours();
     var minutes = today.getMinutes();
@@ -40,8 +44,8 @@ function Payments({ closePaymentModal, confirmPayment }) {
         window.IMP.request_pay({
             pg: 'kakaopay.TC0ONETIME',
             merchant_uid: "IMP" + makeMerchantUid,
-            name: '만두 10kg',
-            amount: 1004,
+            name: businessInfo.business_name,
+            amount: businessInfo.business_no_show,
             buyer_email: 'Iamport@chai.finance',
             buyer_name: '아임포트 기술지원팀',
             buyer_tel: '010-1234-5678',

@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import EventTags from './EventTags';
 import '../../CSS/listPage.css';
 import api from '../../Api';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBusinessInfo } from '../../redux/reservationData';
 
 
 const EventDetailPage = () => {
@@ -26,6 +28,7 @@ const EventDetailPage = () => {
     const [isDragging, setIsDragging] = useState(false);
     const [startX, setStartX] = useState(0);
     const [scrollLeft, setScrollLeft] = useState(0);
+    const dispatch = useDispatch();
 
     const handleButtonClick = () => {
         setIsButtonClicked(!isButtonClicked);
@@ -67,7 +70,7 @@ const EventDetailPage = () => {
             if (!token) {
                 throw new Error('No token found.');
             }
-    
+
             // 서버에 요청을 보낼 때 에러가 발생해도 앱이 멈추지 않도록 처리
             await api.post(`/api/saved`, {
                 business_id: id,
@@ -76,20 +79,30 @@ const EventDetailPage = () => {
                     Authorization: `Bearer ${token}`,
                 }
             });
-    
+
             console.log('Saved:', id);
         } catch (error) {
             console.log('Error occurred during save operation.');
             // 에러가 발생해도 사용자에게 표시하지 않고 로그로만 남김
         }
     };
-
+    const designerName = useSelector((state) => state.reservationData); // Redux 상태 가져오기
+    console.log("Selected Designer Name:", designerName);
     // 뒤로 가기
     const goBack = () => {
         navigate(-1);
     };
 
-    const handleItemClick = (id) => {
+    const handleItemClick = (business) => {
+        
+        console.log(business.business_name)
+        const id = business.business_registration_number;
+        dispatch(setBusinessInfo({
+            business_name: business.business_name,
+            business_registration_number: business.business_registration_number,
+            business_no_show: business.business_no_show,
+        }));
+        
         navigate(`/designer/list/${id}`);
     };
 
@@ -137,12 +150,12 @@ const EventDetailPage = () => {
                     <div></div>
                 </div>
                 <div className='blank'>
-                   
+
                 </div>
                 <div className='blank'>
-                   
+
                 </div>
-            
+
                 <div className='event-img'>
                     {business.business_main_image ? (
                         <img src={business.business_main_image} alt='Main Event' />
@@ -200,13 +213,13 @@ const EventDetailPage = () => {
                     Price information
                 </div>
                 <div className='img'>
-                        <img src={business.business_price_image1}></img>
+                    <img src={business.business_price_image1}></img>
                 </div>
                 <div className='img'>
-                        <img src={business.business_price_image2}></img>
+                    <img src={business.business_price_image2}></img>
                 </div>
                 <div className='img'>
-                        <img src={business.business_price_image3}></img>
+                    <img src={business.business_price_image3}></img>
                 </div>
                 <div className='album-text'>
                     노쇼금액
@@ -218,7 +231,7 @@ const EventDetailPage = () => {
                     </div>
                 </div>
             </div>
-            <div className='Nbutton' onClick={() => handleItemClick(business.business_registration_number)}>예약하기</div>
+            <div className='Nbutton' onClick={() => handleItemClick(business)}>예약하기</div>
         </div>
     );
 };

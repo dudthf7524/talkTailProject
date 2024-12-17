@@ -3,10 +3,15 @@ import '../../CSS/calender.css'
 import { useNavigate } from 'react-router-dom';
 import { setMonthAndDay } from '../../redux/reservationData';
 import { setTime } from '../../redux/reservationData';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 function SelectDatePage2() {
     //=====================================================================================================================================================
     const [selectAfternoon, setSelectAfternoon] = useState('');
+
+    const designerName = useSelector((state) => state.reservationData); // Redux 상태 가져오기
+    console.log("Selected Designer Name:", designerName); // 리덕스 상태 출력
+   
+
     
     useEffect(() => {
         console.log(selectAfternoon)
@@ -142,13 +147,13 @@ function SelectDatePage2() {
         setShowPaymentModal(true);
     };
     //=====================================================================================================================================================
-   
+
     const handleItemClick = (id) => {
         console.log(reservationDate)
         console.log(selectAfternoon)
         dispatch(setMonthAndDay(reservationDate));
         dispatch(setTime(selectAfternoon));
-        //navigate(`/pet-select/1`);
+        navigate(`/pet-select/1`);
     };
 
 

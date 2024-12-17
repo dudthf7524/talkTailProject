@@ -33,7 +33,7 @@ import PetDetailPage from "./Page/Pet/PetDetailPage";
 import PetEditPage from "./Page/Pet/PetEditPage";
 import AuthorityManagement from './BusinessPage/AuthorityManagement';
 import UserInformation from "./Page/User/UserInformation";
-
+import RegisterStyle from './BusinessPage/RegisterStyle';
 function App() {
   const [imageFiles, setImageFiles] = useState({
     main: [],
@@ -86,7 +86,7 @@ function App() {
             <Route path="/pet/detail/:id" element={<PetDetailPage/>} />
             <Route path="/pet-edit/:id" element={<PetEditPage/>} />
             <Route path="/user/information" element={<UserInformation/>} />
-
+    
 
 
             <Route path="/business">
@@ -97,6 +97,7 @@ function App() {
               <Route path="imgupload/:imageType" element={<ImgUpload setImageFiles={handleSetImageFiles} />} />
               <Route path="register/desinger" element={<RegisterDesinger/>} />
               <Route path="authority/management" element={<AuthorityManagement />} />
+              <Route path="register/style" element={<RegisterStyle />} />
 
             </Route>
           </Routes>

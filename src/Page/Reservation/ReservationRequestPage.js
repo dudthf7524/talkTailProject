@@ -4,6 +4,9 @@ import Checkbox from './CheckboxGroup.js';
 import '../../CSS/reservation.css';
 import '../../CSS/notice.css';
 import Payments from './Payments';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+
 const ReservationRequestPage = () => {
     const { id } = useParams();
     const location = useLocation();
@@ -120,6 +123,7 @@ const ReservationRequestPage = () => {
     };
 
     const openPaymentModal = () => {
+        sendKakaoMessage("010-7751-4068", "메시지 보내기 성공")
         setShowPaymentModal(true);
     };
     const closePaymentModal = () => {
@@ -130,7 +134,40 @@ const ReservationRequestPage = () => {
         setShowPaymentModal(false);
         navigate('/reservation-confirm');
     };
+    const formatCurrency = (amount) => {
+        return amount.toLocaleString('ko-KR'); // 한국어 스타일로 포맷
+    };
 
+    const sendKakaoMessage = async (userPhoneNumber, messageTemplate) => {
+        console.log(userPhoneNumber)
+        console.log(messageTemplate)
+        const apiUrl = 'https://kakaoapi.example.com/v1/messages'; // 카카오 메시지 API 엔드포인트
+        const apiToken = '44c334c2957d5bc80dab7c6deb6d1207'; // 카카오 Admin 키
+       
+
+        try {
+            const response = await axios.post(apiUrl, {
+                template_id: 'TEMPLATE_ID', // 승인된 템플릿 ID
+                recipient_number: userPhoneNumber, // 사용자 전화번호
+                variables: {
+                    '#{username}': '홍길동',
+                    '#{message}': messageTemplate,
+                },
+            }, {
+                headers: {
+                    Authorization: `KakaoAK ${apiToken}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            console.log('카카오톡 메시지 전송 성공:', response.data);
+        } catch (error) {
+            console.error('카카오톡 메시지 전송 실패:', error.response?.data || error.message);
+        }
+    };
+
+    const designerName = useSelector((state) => state.reservationData); // Redux 상태 가져오기
+    console.log("Selected Designer Name:", designerName.businessInfo.business_no_show); // 리덕스 상태 출력
     return (
         <div lang='ko'>
             <div className='navigation'>
@@ -166,16 +203,10 @@ const ReservationRequestPage = () => {
                 </div>
             </div>
             <div className='payment-container'>
-                <div className='payment'>
-                    <h2>결제예상금액</h2>
-                    <div className='row'>
-                        <h1>57,000</h1>
-                        <h2>원</h2>
-                    </div>
-                </div>
+               
                 <div className='payment'>
                     <p>노쇼방지비용 포함</p>
-                    <p>5,000 원</p>
+                    <p>{formatCurrency(designerName.businessInfo.business_no_show)} 원</p>
                 </div>
             </div>
             <div className='Nbutton' onClick={openPaymentModal}>예약하기</div>

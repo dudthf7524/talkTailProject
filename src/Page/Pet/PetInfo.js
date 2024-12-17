@@ -7,9 +7,7 @@ const PetListSection = ({ isSelectable, onSelectPet }) => {
     const petUrl = `${process.env.PUBLIC_URL}/images/pet/pet_img.png`;
 
     const [myPet, setMyPet] = useState([]);
-    console.log('aaa')
-    console.log('bbb')
-    console.log('ccc')
+
     console.log(myPet)
     const navigate = useNavigate(); // useNavigate 훅을 사용하여 navigate 함수 생성
 
