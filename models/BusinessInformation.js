@@ -24,14 +24,17 @@ module.exports = (sequelize, DataTypes) => {
       business_main_image: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: '',
       },
       business_price_image1: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: '',
       },
       business_price_image2: {
         type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: '',
       },
       business_price_image3: {
         type: DataTypes.STRING,

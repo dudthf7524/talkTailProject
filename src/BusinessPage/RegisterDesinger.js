@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { ImageContext } from '../Contexts/ImageContext';
+
 
 function RegisterDesinger() {
     // 주소 api

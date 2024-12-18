@@ -3,9 +3,11 @@
 
 const bcrypt = require('bcrypt');
 
-const { BusinessInformation } = require("../models");
+const { BusinessInformation, sequelize } = require("../models");
 const { BusinessDesinger } = require("../models");
 const { Business } = require("../models");
+const { BusinessBeautySignificant } = require("../models");
+
 
 const createBusiness = async (businessInfo) => {
     console.log('데이터베이스 저장 코드')
@@ -36,7 +38,10 @@ const createBusinessInformation = async (businessInformationInfo) => {
     console.log("serverce")
     console.log(businessInformationInfo)
 
+    const t = await sequelize.transaction(); // 트랜잭션 시작
+
     try {
+        // 1. 사업자 정보 저장
         const businessInformation = await BusinessInformation.create({
             business_registration_number: businessInformationInfo.business_registration_number,
             business_main_image: businessInformationInfo.business_main_image,
@@ -61,11 +66,27 @@ const createBusinessInformation = async (businessInformationInfo) => {
             business_no_show: businessInformationInfo.business_no_show,
             created_at: new Date(),
             updated_at: new Date(),
-        });
-        return businessInformation;
+        }, { transaction: t });
+
+        // 2. 사업자 특이사항 저장 (디폴트 값 저장)
+        const beautySignificant = await BusinessBeautySignificant.create({
+            business_registration_number: businessInformationInfo.business_registration_number,
+        }, { transaction: t });
+
+
+        // 커밋하여 모든 작업을 완료
+        await t.commit();
+
+        // 두 개의 데이터를 객체로 묶어서 반환
+        return {
+            businessInformation,
+            beautySignificant
+        };
+
     } catch (error) {
-        console.log(error)
-        throw new Error('Failed to create businessInformation', error.message);
+        // 오류 발생 시 롤백
+        await t.rollback();
+        throw new Error('Failed to create business information and beauty significant.', error.message);
     }
 };
 
@@ -123,7 +144,7 @@ const getBusinesses = async () => {
             //attributes: ['id', 'name', 'location'],
         });
         return businessesInformation;
-        
+
     } catch (error) {
         console.error('Error fetching businesses with details:', error);
         throw new Error('Failed to fetch businesses with details');
@@ -133,24 +154,89 @@ const getBusinesses = async () => {
 const getBusinessDetailsById = async (id) => {
     console.log(id)
     console.log('aaa')
-    
+
     try {
         const businessInformationById = await BusinessInformation.findOne({
-            where: { business_information_id : id },
+            where: { business_information_id: id },
             //attributes: {
-                //exclude: ['business_registration_name', 'business_registration_number', 'business_owner']
+            //exclude: ['business_registration_name', 'business_registration_number', 'business_owner']
             //}
         });
         console.log("상세보기")
         console.log(businessInformationById)
 
-   
 
-      
-        
+
+
+
         return businessInformationById;
     } catch (error) {
         throw new Error('Failed to fetch business details');
+    }
+};
+
+const updateBusinessBeautySignificant = async (RegisterBeautySignificant) => {
+    console.log(RegisterBeautySignificant)
+    console.log("aaaaaaaaaaaaaaaaaazzzzzzzzzzzzzzzzzzzzz")
+    console.log("aaaaaaaaaaaaaaaaaazzzzzzzzzzzzzzzzzzzzz")
+    console.log("aaaaaaaaaaaaaaaaaazzzzzzzzzzzzzzzzzzzzz")
+    console.log("aaaaaaaaaaaaaaaaaazzzzzzzzzzzzzzzzzzzzz")
+    try {
+        const BeautySignificant = await BusinessBeautySignificant.update(
+            {
+                business_beauty_significant1: RegisterBeautySignificant.business_beauty_significant1,
+                business_beauty_significant2: RegisterBeautySignificant.business_beauty_significant2,
+                business_beauty_significant3: RegisterBeautySignificant.business_beauty_significant3,
+                business_beauty_significant4: RegisterBeautySignificant.business_beauty_significant4,
+                business_beauty_significant5: RegisterBeautySignificant.business_beauty_significant5,
+            },
+            {
+                where: { business_registration_number: RegisterBeautySignificant.business_registration_number }
+            }
+
+        );
+        return BeautySignificant;
+    } catch (error) {
+        // 오류를 더욱 상세하게 로깅
+        console.error('Error creating BusinessBeautySignificant:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        throw new Error('Failed to create RegisterBeautySignificant: ' + error.message);
+    }
+};
+
+const significantGet = async (business_registration_number) => {
+    console.log(business_registration_number)
+
+    try {
+        // const significantGetData = await BusinessBeautySignificant.findOne({
+        //     business_registration_number: business_registration_number,
+
+        // });
+        // console.log(significantGetData)
+        // return significantGetData;
+
+        const [results, metadata] = await sequelize.query(
+            "select * from business_beauty_significant where business_registration_number = :business_registration_number",
+
+            {
+                replacements: { business_registration_number: business_registration_number }, // 바인딩 파라미터
+                type: sequelize.QueryTypes.SELECT, // 쿼리 유형
+                logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
+            }
+
+        );
+        console.log(metadata);
+        console.log(results);
+        return results
+
+
+    } catch (error) {
+        // 오류를 더욱 상세하게 로깅
+        console.error('Error creating BusinessBeautySignificant:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        throw new Error('Failed to create RegisterBeautySignificant: ' + error.message);
     }
 };
 
@@ -162,4 +248,6 @@ module.exports = {
     getBusinesses,
     getBusinessDetailsById,
     createBusinessDesinger,
+    updateBusinessBeautySignificant,
+    significantGet,
 };

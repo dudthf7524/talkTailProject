@@ -1,0 +1,118 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
+
+function RegisterStyle() {
+    const apiUrl = process.env.REACT_APP_API_BASE_URL;
+
+    const navigate = useNavigate();
+    const arrowButtonUrl = `${process.env.PUBLIC_URL}/images/button/arrow_left.svg`;
+    const [user, setUser] = useState(null);
+
+
+   
+    const [formData, setFormData] = useState({
+        business_beauty_significant1: "",
+        business_beauty_significant2: "",
+        business_beauty_significant3: "",
+        business_beauty_significant4: "",
+        business_beauty_significant5: "",
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    console.log(formData)
+
+    const handleSave = async () => {
+
+        const dataToSend = {
+            ...formData, 
+            business_registration_number: user.business_registration_number, 
+        };
+
+        try {
+            // 서버로 FormData를 전송
+            const response = await axios.put(`${apiUrl}/api/business/beauty/significant`, dataToSend, 
+            
+            );
+
+            console.log('Upload successful:', response.data);
+
+            // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
+            navigate('/success'); // 성공 페이지로 이동
+        } catch (error) {
+            console.error('Error during upload:', error);
+            // 오류 처리
+        }
+    };
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const response = await axios.get('http://localhost:8383/business/auth', { withCredentials: true });
+                setUser(response.data);
+                console.log(response.data)
+                if(!response.data){
+                    navigate('/business/login'); // 로그인 페이지로 리디렉션
+
+                }
+            } catch (error) {
+                console.error('로그인 인증 실패:', error);
+                navigate('/business/login'); // 로그인 페이지로 리디렉션
+            }
+        };
+        fetchUser();
+    }, []);
+    if (!user) {
+        return <div>로딩 중...</div>;
+    }
+    return (
+        <div className='mid' lang='ko'>
+
+            <div className='navigation'>
+
+                <button>
+                    <img src={arrowButtonUrl} alt='' onClick={() => navigate('/admin-menu')} />
+                </button>
+                특이사항
+                <div onClick={handleSave}>수정</div>
+            </div>
+            <div className='main-mid'>
+
+
+                <div className='input-container'>
+                    <p>특이사항 step1</p>
+                    <input type='text' name='business_beauty_significant1' value={formData.business_beauty_significant1} onChange={handleInputChange} placeholder='사업자 등록명' />
+                </div>
+                <div className='input-container'>
+                    <p>특이사항 step2</p>
+                    <input type='text' name='business_beauty_significant2' value={formData.business_beauty_significant2} onChange={handleInputChange} placeholder='사업자 등록명' />
+                </div>
+
+                <div className='input-container'>
+                    <p>특이사항 step3</p>
+                    <input type='text' name='business_beauty_significant3' value={formData.business_beauty_significant3} onChange={handleInputChange} placeholder='사업자 등록명' />
+                </div>
+
+                <div className='input-container'>
+                    <p>특이사항 step4</p>
+                    <input type='text' name='business_beauty_significant4' value={formData.business_beauty_significant4} onChange={handleInputChange} placeholder='사업자 등록명' />
+                </div>
+
+                <div className='input-container'>
+                    <p>특이사항 step5</p>
+                    <input type='text' name='business_beauty_significant5' value={formData.business_beauty_significant5} onChange={handleInputChange} placeholder='사업자 등록명' />
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default RegisterStyle;

@@ -13,7 +13,7 @@ const AdminMenu = () => {
   const ImageIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/ImageIcon.png`;
   const informationIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/informationIcon.png`;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState('null');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const AdminMenu = () => {
         </div>
         <button className='menu-tbt-btn2' onClick={()=>navigate('/business/register/style')}>
           <img src={informationIcon} alt="information icon" className='menu-icon'/>
-          <span className='menu-text'><br/>스타일 등록</span>
+          <span className='menu-text'><br/>스타일 수정</span>
         </button>
         <button className='menu-tbt-btn2' onClick={()=>navigate('/business/register/information')}>
           <img src={informationIcon} alt="information icon" className='menu-icon'/>

@@ -6,7 +6,7 @@ import '../../CSS/notice.css';
 import Payments from './Payments';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-
+import api from '../../Api';
 const ReservationRequestPage = () => {
     const { id } = useParams();
     const location = useLocation();
@@ -14,13 +14,28 @@ const ReservationRequestPage = () => {
     const [showPaymentModal, setShowPaymentModal] = useState(false);
     const { selectedPet } = location.state || {};
     console.log(selectedPet)
+    const [style, setStyle] = useState('') 
     const [reviewText, setReviewText] = useState(""); // 리뷰 텍스트 상태 관리
     const textareaRef = useRef(null); // textarea 참조를 위한 ref
+    const [lists, setLists] = useState([]);
+
+    const designerName = useSelector((state) => state.reservationData); // Redux 상태 가져오기
+    console.log("Selected Designer Name:", designerName.businessInfo.business_no_show); // 리덕스 상태 출력
+    console.log("Selected 사업자 번호:", designerName.businessInfo); // 리덕스 상태 출력
+
+
+
+   
+    const handleStyle = (e) => {
+        setStyle(e.target.value);
+        adjustTextareaHeight(); // 텍스트가 변경될 때 높이 조정
+    };
 
     const handleCautionsChange = (e) => {
         setReviewText(e.target.value);
         adjustTextareaHeight(); // 텍스트가 변경될 때 높이 조정
     };
+    
 
     const adjustTextareaHeight = () => {
         const textarea = textareaRef.current;
@@ -33,6 +48,28 @@ const ReservationRequestPage = () => {
     useEffect(() => {
         adjustTextareaHeight(); // 컴포넌트가 마운트될 때 초기 높이 조정
     }, [reviewText]);
+
+    useEffect(() => {
+        if (designerName.businessInfo.business_registration_number) {
+            const styleSignificant = async () => {
+                console.log("styleSignificant")
+                try {
+                    const response = await api.get('/api/business/style/significantGet', {
+                        headers: {
+                            'Business-Registration-Number': designerName.businessInfo.business_registration_number,
+                        },
+                    });
+                    console.log('User authority data:', response.data);
+                    setLists(response.data);
+                } catch (error) {
+                    console.error('권한 조회 실패:', error.message);
+                }
+            };
+            styleSignificant();
+        } else {
+            console.log("데이터가 아직 준비되지 않았습니다.");
+        }
+    }, [designerName]);
 
     const initialCheckboxes = [
         { label: '전체미용', name: 'overall beauty' },
@@ -51,11 +88,11 @@ const ReservationRequestPage = () => {
     ];
 
     const thirdCheckboxes = [
-        { label: '피부병', name: 'skin disease' },
-        { label: '심장질환', name: 'heart disease' },
-        { label: '마킹', name: 'marking' },
-        { label: '마운팅', name: 'mounting' },
-        { label: '슬개골 탈구', name: 'patellar dislocation' },
+        { label: lists.business_beauty_significant1, name: 'skin disease' },
+        { label: lists.business_beauty_significant2, name: 'heart disease' },
+        { label: lists.business_beauty_significant3, name: 'marking' },
+        { label: lists.business_beauty_significant4, name: 'mounting' },
+        { label: lists.business_beauty_significant5, name: 'patellar dislocation' },
     ];
 
     const [checkboxState, setCheckboxState] = useState(
@@ -78,8 +115,6 @@ const ReservationRequestPage = () => {
             return acc;
         }, {})
     );
-
-    const [cautions, setCautions] = useState('');
 
     const goBack = () => {
         navigate(-1);
@@ -143,7 +178,7 @@ const ReservationRequestPage = () => {
         console.log(messageTemplate)
         const apiUrl = 'https://kakaoapi.example.com/v1/messages'; // 카카오 메시지 API 엔드포인트
         const apiToken = '44c334c2957d5bc80dab7c6deb6d1207'; // 카카오 Admin 키
-       
+
 
         try {
             const response = await axios.post(apiUrl, {
@@ -159,15 +194,15 @@ const ReservationRequestPage = () => {
                     'Content-Type': 'application/json',
                 },
             });
-    
+
             console.log('카카오톡 메시지 전송 성공:', response.data);
         } catch (error) {
             console.error('카카오톡 메시지 전송 실패:', error.response?.data || error.message);
         }
     };
 
-    const designerName = useSelector((state) => state.reservationData); // Redux 상태 가져오기
-    console.log("Selected Designer Name:", designerName.businessInfo.business_no_show); // 리덕스 상태 출력
+
+
     return (
         <div lang='ko'>
             <div className='navigation'>
@@ -186,8 +221,18 @@ const ReservationRequestPage = () => {
                     <p>{selectedPet.pet_breed}/{selectedPet.pet_weight}kg/{selectedPet.pet_gender ? '남' : '여'}/{calculateAge(selectedPet.pet_birth)}살 중성화 {selectedPet.pet_neuter}</p>
                 </div>
                 <div className='blank'></div>
-                <Checkbox groupName="스타일" checkboxes={initialCheckboxes} checkboxState={checkboxState} onChange={handleCheckboxChange} />
-                <Checkbox groupName="추가 사항" checkboxes={secondCheckboxes} checkboxState={checkboxState2} onChange={handleCheckboxChange2} />
+                <div className='reservation-contents'>
+                    <h1>스타일</h1>
+                    <div className='reservation-contents-text'>
+                        <textarea
+                            ref={textareaRef}
+                            value={style}
+                            className='cautions-textarea'
+                            placeholder='스타일을 입력해 주세요...'
+                            onChange={handleStyle}
+                        />
+                    </div>
+                </div>
                 <Checkbox groupName="특이사항" checkboxes={thirdCheckboxes} checkboxState={checkboxState3} onChange={handleCheckboxChange3} />
                 <div className='reservation-contents'>
                     <h1>주의사항</h1>
@@ -196,17 +241,19 @@ const ReservationRequestPage = () => {
                             ref={textareaRef}
                             value={reviewText}
                             className='cautions-textarea'
-                            placeholder='주의해야 할 사항을 입력하세요...'
+                            placeholder='특이사항 이외의 주의해야 할 사항을 입력해 주세요...'
                             onChange={handleCautionsChange}
                         />
                     </div>
                 </div>
             </div>
             <div className='payment-container'>
-               
                 <div className='payment'>
-                    <p>노쇼방지비용 포함</p>
-                    <p>{formatCurrency(designerName.businessInfo.business_no_show)} 원</p>
+                    <h2>예약금</h2>
+                    <div className='row'>
+                        <h1>{formatCurrency(designerName.businessInfo.business_no_show)} 원</h1>
+                        
+                    </div>
                 </div>
             </div>
             <div className='Nbutton' onClick={openPaymentModal}>예약하기</div>

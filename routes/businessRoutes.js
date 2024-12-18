@@ -8,6 +8,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const imgNaverCloud = require('../imageUpload/imgNaverCloud');
 const authMiddleware = require('../middleware/authMiddleware');
+
 router.post('/businesses', async (req, res) => {
   try {
     console.log('라우터 저장 코드')
@@ -43,7 +44,7 @@ router.post('/business/register/information', upload.fields([
   try {
     const files = req.files; // 업로드된 파일들
     const formData = req.body; // 폼 데이터
-
+    console.log(formData)
 
     if (!files) {
       throw new Error('No files uploaded.');
@@ -59,6 +60,7 @@ router.post('/business/register/information', upload.fields([
       fileArray.push(...files[key]);
     });
     const imageUploadResults = await imgNaverCloud.uploadMultipleImages(fileArray, '00000');
+    //const businessRegisterDesinger = await businessDatabase.createBusinessBeautySignificant(RegisterBeautySignificant);
 
     console.log(imageUploadResults)
     // 비즈니스 데이터 생성
@@ -161,6 +163,38 @@ router.post('/business/register/desinger', async (req, res) => {
   }
 
 });
+
+router.put('/business/beauty/significant', async (req, res) => {
+  
+  try {
+    
+    console.log(req.body)
+   
+    const RegisterBeautySignificant = req.body
+
+    const businessRegisterDesinger = await businessDatabase.updateBusinessBeautySignificant(RegisterBeautySignificant);
+
+    res.status(201).json({ businessRegisterDesinger });
+  } catch (error) {
+    console.error('Error creating business with images:', error);
+    res.status(500).json({ error: error.message });
+  }
+
+});
+router.get('/business/style/significantGet', async(req, res) => {
+  
+    const business_registration_number = req.headers['business-registration-number']; // 헤더에서 사업자 번호를 추출
+    
+    console.log(business_registration_number)
+
+    try{
+        const userGetAuthority = await businessDatabase.significantGet(business_registration_number);
+        res.json(userGetAuthority);
+    }catch(error){
+        console.error('Failed to fetch authority request error: ', error);
+        res.status(500).json({ message: 'Failed to fetch authority request.' });
+    }
+})
 
 
 module.exports = router;

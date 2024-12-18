@@ -9,6 +9,8 @@ function RegisterInformation() {
     const [roadAddress, setRoadAddress] = useState(""); // 도로명 주소
     const [jibunAddress, setJibunAddress] = useState(""); // 지번 주소
     const [isPopupOpen, setIsPopupOpen] = useState(false); // 팝업 열림/닫힘 상태
+        
+    
     const popupRef = useRef(null);
     
     const handleAddressSearch = () => {
@@ -68,10 +70,29 @@ function RegisterInformation() {
     console.log(imageFiles)
     console.log("imageFiles")
     useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const response = await axios.get('http://localhost:8383/business/auth', { withCredentials: true });
+                setUser(response.data);
+                console.log(response.data)
+                if(!response.data){
+                    navigate('/business/login'); // 로그인 페이지로 리디렉션
+
+                }
+            } catch (error) {
+                console.error('로그인 인증 실패:', error);
+                navigate('/business/login'); // 로그인 페이지로 리디렉션
+            }
+        };
+        fetchUser();
+    }, []);
+    useEffect(() => {
         const textarea = document.getElementById('greetingTextarea');
-        const placeholderText = '간단한 인삿말\n30자 이내';
-        textarea.setAttribute('placeholder', placeholderText);
-        textarea.style.whiteSpace = 'pre-line';
+        if (textarea) { // 요소가 존재하는지 확인
+            const placeholderText = '간단한 인삿말\n30자 이내';
+            textarea.setAttribute('placeholder', placeholderText);
+            textarea.style.whiteSpace = 'pre-line';
+        }
     }, []);
 
     
@@ -80,7 +101,7 @@ function RegisterInformation() {
     };
 
     const [formData, setFormData] = useState({
-        business_registration_number: '000-00-0000',
+        business_name: '',
         address_postcode: '',
         address_road: '',
         address_jibun: '',
@@ -136,7 +157,11 @@ function RegisterInformation() {
             });
             console.log('aaa')
             console.log(data)
+            if (user?.business_registration_number) {
+                data.append('business_registration_number', user.business_registration_number);
+            }
             
+            console.log(data)
 
             // FormData에 이미지 파일 추가
             Object.keys(imageFiles).forEach((key) => {
@@ -160,8 +185,11 @@ function RegisterInformation() {
             // 오류 처리
         }
     };
-
-
+    const [user, setUser] = useState(null);
+  
+    if (!user) {
+        return <div>로딩 중...</div>;
+    }
 
     return (
         <div className='mid' lang='ko'>
