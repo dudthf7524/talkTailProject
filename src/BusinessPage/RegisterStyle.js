@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import api from '../Api';
 
 function RegisterStyle() {
     const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -9,16 +9,19 @@ function RegisterStyle() {
     const navigate = useNavigate();
     const arrowButtonUrl = `${process.env.PUBLIC_URL}/images/button/arrow_left.svg`;
     const [user, setUser] = useState(null);
+    const [lists, setLists] = useState([]);
 
 
    
     const [formData, setFormData] = useState({
-        business_beauty_significant1: "",
-        business_beauty_significant2: "",
-        business_beauty_significant3: "",
-        business_beauty_significant4: "",
-        business_beauty_significant5: "",
+        business_beauty_significant1: '',
+        business_beauty_significant2: '',
+        business_beauty_significant3: '',
+        business_beauty_significant4: '',
+        business_beauty_significant5: '',
     });
+
+   
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -46,7 +49,8 @@ function RegisterStyle() {
             console.log('Upload successful:', response.data);
 
             // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
-            navigate('/success'); // 성공 페이지로 이동
+            alert('수정이 완료되었습니다.')
+            navigate('/business/register/style'); // 성공 페이지로 이동
         } catch (error) {
             console.error('Error during upload:', error);
             // 오류 처리
@@ -57,22 +61,50 @@ function RegisterStyle() {
         const fetchUser = async () => {
             try {
                 const response = await axios.get('http://localhost:8383/business/auth', { withCredentials: true });
+                if (!response.data) navigate('/business/login');
                 setUser(response.data);
-                console.log(response.data)
-                if(!response.data){
-                    navigate('/business/login'); // 로그인 페이지로 리디렉션
-
-                }
             } catch (error) {
                 console.error('로그인 인증 실패:', error);
-                navigate('/business/login'); // 로그인 페이지로 리디렉션
+                navigate('/business/login');
             }
         };
         fetchUser();
     }, []);
-    if (!user) {
-        return <div>로딩 중...</div>;
-    }
+
+    useEffect(() => {
+            const fetchStyleSignificant = async () => {
+                try {
+                    const response = await api.get('/api/business/style/significantGet', { withCredentials: true }, );
+                    setLists(response.data);
+                    
+                } catch (error) {
+                    if (error.response && error.response.status === 401) {
+                       
+                        navigate('/business/login');  // 로그인 페이지로 리디렉션
+                    } else {
+                        console.error('권한 조회 실패:', error.message);
+                    }
+                }
+            };
+            fetchStyleSignificant();
+       
+    }, []);
+    
+    useEffect(() => {
+        if (lists) {
+            setFormData({
+                business_beauty_significant1: lists.business_beauty_significant1 || '',
+                business_beauty_significant2: lists.business_beauty_significant2 || '',
+                business_beauty_significant3: lists.business_beauty_significant3 || '',
+                business_beauty_significant4: lists.business_beauty_significant4 || '',
+                business_beauty_significant5: lists.business_beauty_significant5 || '',
+            });
+        }
+    }, [lists]);
+    // if (!user) {
+    //     return <div>로딩 중...</div>;
+    // }
+
     return (
         <div className='mid' lang='ko'>
 

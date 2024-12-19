@@ -8,6 +8,8 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const imgNaverCloud = require('../imageUpload/imgNaverCloud');
 const authMiddleware = require('../middleware/authMiddleware');
+const authMiddlewareSession = require('../middleware/authMiddlewareSession');
+
 
 router.post('/businesses', async (req, res) => {
   try {
@@ -181,12 +183,25 @@ router.put('/business/beauty/significant', async (req, res) => {
   }
 
 });
-router.get('/business/style/significantGet', async(req, res) => {
-  
-    const business_registration_number = req.headers['business-registration-number']; // 헤더에서 사업자 번호를 추출
-    
-    console.log(business_registration_number)
+router.post('/business/style/significantGet' ,async(req, res) => {
+ 
+  const business_registration_number = req.body.business_registration_number;
+  try{
+      const userGetAuthority = await businessDatabase.significantGet(business_registration_number);
+      res.json(userGetAuthority);
+  }catch(error){
+      console.error('Failed to fetch authority request error: ', error);
+      res.status(500).json({ message: 'Failed to fetch authority request.' });
+  }
+})
 
+router.get('/business/style/significantGet', authMiddlewareSession ,async(req, res) => {
+    console.log(req.session)
+    console.log(req.session.user)
+    console.log("req.user")
+    console.log(req.user.business_registration_number)
+    const business_registration_number = req.user.business_registration_number;
+   
     try{
         const userGetAuthority = await businessDatabase.significantGet(business_registration_number);
         res.json(userGetAuthority);

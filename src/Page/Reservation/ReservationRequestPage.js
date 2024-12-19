@@ -14,28 +14,36 @@ const ReservationRequestPage = () => {
     const [showPaymentModal, setShowPaymentModal] = useState(false);
     const { selectedPet } = location.state || {};
     console.log(selectedPet)
-    const [style, setStyle] = useState('') 
+    const [style, setStyle] = useState('')
     const [reviewText, setReviewText] = useState(""); // 리뷰 텍스트 상태 관리
     const textareaRef = useRef(null); // textarea 참조를 위한 ref
     const [lists, setLists] = useState([]);
 
-    const designerName = useSelector((state) => state.reservationData); // Redux 상태 가져오기
-    console.log("Selected Designer Name:", designerName.businessInfo.business_no_show); // 리덕스 상태 출력
-    console.log("Selected 사업자 번호:", designerName.businessInfo); // 리덕스 상태 출력
+    const reservationData = useSelector((state) => state.reservationData); // Redux 상태 가져오기
+    console.log("Selected Designer Name:", reservationData.businessInfo.business_no_show); // 리덕스 상태 출력
+    console.log("Selected 사업자 번호:", reservationData.businessInfo); // 리덕스 상태 출력
+    console.log("Selected 사업자 번호:", reservationData); 
 
 
 
-   
     const handleStyle = (e) => {
         setStyle(e.target.value);
         adjustTextareaHeight(); // 텍스트가 변경될 때 높이 조정
     };
 
     const handleCautionsChange = (e) => {
-        setReviewText(e.target.value);
-        adjustTextareaHeight(); // 텍스트가 변경될 때 높이 조정
+        const { value } = e.target;
+        setReviewText(value);
     };
-    
+
+    const handleCheckboxChange = (name, checked) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            significantIssues: checked
+                ? [...prevState.significantIssues, name]
+                : prevState.significantIssues.filter((item) => item !== name),
+        }));
+    };
 
     const adjustTextareaHeight = () => {
         const textarea = textareaRef.current;
@@ -50,14 +58,12 @@ const ReservationRequestPage = () => {
     }, [reviewText]);
 
     useEffect(() => {
-        if (designerName.businessInfo.business_registration_number) {
+        if (reservationData.businessInfo.business_registration_number) {
             const styleSignificant = async () => {
                 console.log("styleSignificant")
                 try {
-                    const response = await api.get('/api/business/style/significantGet', {
-                        headers: {
-                            'Business-Registration-Number': designerName.businessInfo.business_registration_number,
-                        },
+                    const response = await api.post('/api/business/style/significantGet', {
+                        business_registration_number: reservationData.businessInfo.business_registration_number,
                     });
                     console.log('User authority data:', response.data);
                     setLists(response.data);
@@ -69,7 +75,7 @@ const ReservationRequestPage = () => {
         } else {
             console.log("데이터가 아직 준비되지 않았습니다.");
         }
-    }, [designerName]);
+    }, [reservationData]);
 
     const initialCheckboxes = [
         { label: '전체미용', name: 'overall beauty' },
@@ -88,11 +94,11 @@ const ReservationRequestPage = () => {
     ];
 
     const thirdCheckboxes = [
-        { label: lists.business_beauty_significant1, name: 'skin disease' },
-        { label: lists.business_beauty_significant2, name: 'heart disease' },
-        { label: lists.business_beauty_significant3, name: 'marking' },
-        { label: lists.business_beauty_significant4, name: 'mounting' },
-        { label: lists.business_beauty_significant5, name: 'patellar dislocation' },
+        { label: lists.business_beauty_significant1, name: lists.business_beauty_significant1 },
+        { label: lists.business_beauty_significant2, name: lists.business_beauty_significant2 },
+        { label: lists.business_beauty_significant3, name: lists.business_beauty_significant3 },
+        { label: lists.business_beauty_significant4, name: lists.business_beauty_significant4 },
+        { label: lists.business_beauty_significant5, name: lists.business_beauty_significant5 },
     ];
 
     const [checkboxState, setCheckboxState] = useState(
@@ -121,12 +127,12 @@ const ReservationRequestPage = () => {
     };
 
     // 체크박스 변경 핸들러
-    const handleCheckboxChange = (name, checked) => {
-        setCheckboxState(prevState => ({
-            ...prevState,
-            [name]: checked
-        }));
-    };
+    // const handleCheckboxChange = (name, checked) => {
+    //     setCheckboxState(prevState => ({
+    //         ...prevState,
+    //         [name]: checked
+    //     }));
+    // };
 
     const handleCheckboxChange2 = (name, checked) => {
         setCheckboxState2(prevState => ({
@@ -136,10 +142,16 @@ const ReservationRequestPage = () => {
     };
 
     const handleCheckboxChange3 = (name, checked) => {
-        setCheckboxState3(prevState => ({
-            ...prevState,
-            [name]: checked
-        }));
+        
+        setFormData((prevState) => {
+            const updatedIssues = checked
+                ? [...prevState.significantIssues, name]  // 체크되면 배열에 추가
+                : prevState.significantIssues.filter((item) => item !== name);  // 체크 해제되면 배열에서 제거
+    
+            console.log('Updated significantIssues:', updatedIssues);  // 체크박스 상태를 콘솔에 출력
+    
+            return { ...prevState, significantIssues: updatedIssues };
+        });
     };
 
     // 나이 계산 함수
@@ -201,8 +213,47 @@ const ReservationRequestPage = () => {
         }
     };
 
+    const [formData, setFormData] = useState({
+        style: '',
+        reviewText: '',
+        significantIssues: [],  // 체크된 특이사항을 저장
+        depositAmount: reservationData.businessInfo.business_no_show || 0,
+        business_registration_number : reservationData.businessInfo.business_registration_number || '',
+        designerName : reservationData.designerName || '',
+        petId : reservationData.petId || '',
+        reservationDesiredTime : reservationData.desiredReservationTime || '',
+    });
+    const reservationSave = async () => {
 
+        const dataToSend = {
+            style: style,
+            reviewText: reviewText,
+            significantIssues: formData.significantIssues,
+            depositAmount: formData.depositAmount,
+            business_registration_number: formData.business_registration_number,
+            designerName : formData.designerName || '',
+            petId : formData.petId || '',
+            reservationDesiredTime : formData.reservationDesiredTime || '',
+            
+        };
+        console.log(dataToSend)
 
+        try{
+            const token = localStorage.getItem('token');
+            const response = await api.post('/api/beauty/reservation', dataToSend,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+            );
+            
+
+        }catch(error){
+
+        }
+
+    }
     return (
         <div lang='ko'>
             <div className='navigation'>
@@ -233,7 +284,7 @@ const ReservationRequestPage = () => {
                         />
                     </div>
                 </div>
-                <Checkbox groupName="특이사항" checkboxes={thirdCheckboxes} checkboxState={checkboxState3} onChange={handleCheckboxChange3} />
+                <Checkbox groupName="특이사항" checkboxes={thirdCheckboxes} checkboxState={formData.significantIssues} onChange={handleCheckboxChange3} />
                 <div className='reservation-contents'>
                     <h1>주의사항</h1>
                     <div className='reservation-contents-text'>
@@ -251,12 +302,17 @@ const ReservationRequestPage = () => {
                 <div className='payment'>
                     <h2>예약금</h2>
                     <div className='row'>
-                        <h1>{formatCurrency(designerName.businessInfo.business_no_show)} 원</h1>
-                        
+                        <h1>{formatCurrency(reservationData.businessInfo.business_no_show)} 원</h1>
+
                     </div>
                 </div>
             </div>
-            <div className='Nbutton' onClick={openPaymentModal}>예약하기</div>
+            {
+                reservationData.businessInfo.business_no_show
+                    ? <div className='Nbutton' onClick={openPaymentModal}>예약 및 결제하기</div>
+                    : <div className='Nbutton' onClick={reservationSave}>예약하기</div>
+            }
+
             {showPaymentModal && (
                 <Payments closePaymentModal={closePaymentModal} confirmPayment={confirmPayment} />
             )}

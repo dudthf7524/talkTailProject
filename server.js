@@ -13,7 +13,7 @@ const petRoutes = require('./routes/petRoutes');
 const authMiddleware = require('./middleware/authMiddleware');
 const userAuthorityRequestRoutes = require('./routes/userAuthorityRequestRoutes');
 const userRoutes = require('./routes/userRoutes');
-
+const reservationRoutes = require('./routes/reservationRoutes');
 // 프론트엔드에서 데이터 가져올때 
 app.use(express.json());
 // 데이터베이스 연결
@@ -80,3 +80,5 @@ app.use('/api', designerRoutes)
 app.use('/api', petRoutes)
 app.use('/api', userAuthorityRequestRoutes)
 app.use('/api', userRoutes)
+app.use('/api', reservationRoutes)
+
