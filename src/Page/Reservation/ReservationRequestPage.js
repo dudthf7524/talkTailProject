@@ -22,7 +22,7 @@ const ReservationRequestPage = () => {
     const reservationData = useSelector((state) => state.reservationData); // Redux 상태 가져오기
     console.log("Selected Designer Name:", reservationData.businessInfo.business_no_show); // 리덕스 상태 출력
     console.log("Selected 사업자 번호:", reservationData.businessInfo); // 리덕스 상태 출력
-    console.log("Selected 사업자 번호:", reservationData); 
+    console.log("Selected 사업자 번호:", reservationData);
 
 
 
@@ -76,6 +76,7 @@ const ReservationRequestPage = () => {
             console.log("데이터가 아직 준비되지 않았습니다.");
         }
     }, [reservationData]);
+
 
     const initialCheckboxes = [
         { label: '전체미용', name: 'overall beauty' },
@@ -142,14 +143,14 @@ const ReservationRequestPage = () => {
     };
 
     const handleCheckboxChange3 = (name, checked) => {
-        
+
         setFormData((prevState) => {
             const updatedIssues = checked
                 ? [...prevState.significantIssues, name]  // 체크되면 배열에 추가
                 : prevState.significantIssues.filter((item) => item !== name);  // 체크 해제되면 배열에서 제거
-    
+
             console.log('Updated significantIssues:', updatedIssues);  // 체크박스 상태를 콘솔에 출력
-    
+
             return { ...prevState, significantIssues: updatedIssues };
         });
     };
@@ -218,40 +219,70 @@ const ReservationRequestPage = () => {
         reviewText: '',
         significantIssues: [],  // 체크된 특이사항을 저장
         depositAmount: reservationData.businessInfo.business_no_show || 0,
-        business_registration_number : reservationData.businessInfo.business_registration_number || '',
-        designerName : reservationData.designerName || '',
-        petId : reservationData.petId || '',
-        reservationDesiredTime : reservationData.desiredReservationTime || '',
+        business_registration_number: reservationData.businessInfo.business_registration_number || '',
+        designerName: reservationData.designerName || '',
+        petId: reservationData.petId || '',
+        reservationDesiredTime: reservationData.desiredReservationTime || '',
     });
     const reservationSave = async () => {
 
         const dataToSend = {
             style: style,
             reviewText: reviewText,
-            significantIssues: formData.significantIssues,
+            significantIssues:formData. significantIssues,
             depositAmount: formData.depositAmount,
             business_registration_number: formData.business_registration_number,
-            designerName : formData.designerName || '',
-            petId : formData.petId || '',
-            reservationDesiredTime : formData.reservationDesiredTime || '',
-            
+            designerName: formData.designerName || '',
+            petId: formData.petId || '',
+            reservationDesiredTime: formData.reservationDesiredTime || '',
+            phone: '010-7751-4068',
         };
         console.log(dataToSend)
+        // try {
+        //     const token = localStorage.getItem('token');
+        //     const response = await api.post('/api/beauty/reservation', dataToSend,
+        //         {
+        //             headers: {
+        //                 Authorization: `Bearer ${token}`,
+                        
+        //             }
+        //         }
+        //     );
+        //     console.log(response)
 
-        try{
+        // } catch (error) {
+            
+        // }
+         try{
             const token = localStorage.getItem('token');
-            const response = await api.post('/api/beauty/reservation', dataToSend,
+            const response = await api.post('/api/akv10/alimtalk/send', JSON.stringify(dataToSend),
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
                     }
                 }
             );
-            
+            console.log(response)
 
         }catch(error){
 
         }
+        // try{
+        //     const token = localStorage.getItem('token');
+        //     const response = await api.post('/api/beauty/reservation', JSON.stringify(dataToSend),
+        //         {
+        //             headers: {
+        //                 Authorization: `Bearer ${token}`,
+        //                 'Content-Type': 'application/json',
+        //             }
+        //         }
+        //     );
+        //     console.log(response)
+
+        // }catch(error){
+
+        // }
 
     }
     return (

@@ -3,6 +3,8 @@ const router = express.Router();
 const dayjs = require('dayjs');
 const authMiddleware = require('../middleware/authMiddleware');
 const reservationDatabase = require('../database/reservationDatabase');
+const { alimtalkSend } = require('../aligo_api/kakao');
+const kakao = require('../aligo_api/kakao');
 
 router.post('/beauty/reservation', authMiddleware, async (req, res) => {
     console.log(req.user)
@@ -28,10 +30,10 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
 
     req.body.significantIssues = significantSum
     console.log(req.body)
-
+   
     try {
-        const user = await reservationDatabase.beautyReservation(req.body)
-        res.status(201).json({ user });
+        const result = await reservationDatabase.beautyReservation(req.body)
+        res.status(201).json({ result });
     } catch (error) {
         console.error('Error fetching userIformation:', error.message);
         res.status(500).json({ error: error.message });
