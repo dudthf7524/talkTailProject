@@ -34,6 +34,9 @@ import PetEditPage from "./Page/Pet/PetEditPage";
 import AuthorityManagement from './BusinessPage/AuthorityManagement';
 import UserInformation from "./Page/User/UserInformation";
 import RegisterStyle from './BusinessPage/RegisterStyle';
+import ReservationManagement from './BusinessPage/ReservationManagement';
+import ReservationDetail from './BusinessPage/ReservationDetail';
+
 function App() {
   const [imageFiles, setImageFiles] = useState({
     main: [],
@@ -98,7 +101,8 @@ function App() {
               <Route path="register/desinger" element={<RegisterDesinger/>} />
               <Route path="authority/management" element={<AuthorityManagement />} />
               <Route path="register/style" element={<RegisterStyle />} />
-
+              <Route path="reservation/management" element={<ReservationManagement />} />
+              <Route path="reservation/detail/:id" element={<ReservationDetail />} />
             </Route>
           </Routes>
         </ImageProvider>

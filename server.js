@@ -137,29 +137,29 @@ const alimtalkSend = async (req, res) => {
   // console.log('알림톡 전송 요청받음');
   // console.log(requestData);
   // console.log(AuthData);
-  // aligoapi.templateList(requestData, AuthData)
-  //   .then((r) => {
-  //     console.log('알림톡 전송 성공:', r.list[0]); // 성공한 응답을 콘솔에 출력
-  //     res.send(r)
-  //   })
-  //   .catch((e) => {
-  //     console.error('알림톡 전송 실패:', e); // 에러 메시지를 콘솔에 출력
-  //     res.send(e)
-  //   })
+  aligoapi.templateList(requestData, AuthData)
+    .then((r) => {
+      console.log('알림톡 전송 성공:', r.list[0]); // 성공한 응답을 콘솔에 출력
+      res.send(r)
+    })
+    .catch((e) => {
+      console.error('알림톡 전송 실패:', e); // 에러 메시지를 콘솔에 출력
+      res.send(e)
+    })
   // 알리고 API로 알림톡 발송
-  aligoapi.alimtalkSend(requestData, AuthData, )
-  .then((r) => {
-    console.log('알림톡 전송 성공:', r); // 성공한 응답을 콘솔에 출력
-    res.send(r)
-  })
-  .catch((e) => {
-    // 실패 응답 처리
-    console.error('알림톡 전송 실패:', e); // 에러 메시지를 콘솔에 출력
-    if (e.response) {
-      console.error('응답 내용:', e.response); // 알리고 API에서 반환된 에러 응답도 출력
-    }
-    res.send(e); // 에러 응답을 클라이언트로 전송
-  });
+  // aligoapi.alimtalkSend(requestData, AuthData, )
+  // .then((r) => {
+  //   console.log('알림톡 전송 성공:', r); // 성공한 응답을 콘솔에 출력
+  //   res.send(r)
+  // })
+  // .catch((e) => {
+  //   // 실패 응답 처리
+  //   console.error('알림톡 전송 실패:', e); // 에러 메시지를 콘솔에 출력
+  //   if (e.response) {
+  //     console.error('응답 내용:', e.response); // 알리고 API에서 반환된 에러 응답도 출력
+  //   }
+  //   res.send(e); // 에러 응답을 클라이언트로 전송
+  // });
 };
 
 // /api/beauty/reservation 경로로 POST 요청이 오면 alimtalkSend 함수 실행

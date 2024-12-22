@@ -1,47 +1,80 @@
-const { Sequelize } = require('sequelize');
+
+const { BeautyReservation, sequelize } = require('../models');
 // 사용자 생성 또는 조회 함수
 
 const beautyReservation = async (beautyReservationData) => {
     console.log("미용예약 데이터베이스")
     console.log(beautyReservationData)
-    // try {
-    //        // 생일 파싱 - YY/MM/DD 형식으로 가정
-    //        const [year, month, day] = petData.birthDate.split('/');
-    //        const parsedYear = parseInt(year, 10) < 50 ? `20${year}` : `19${year}`; // 50년 이전은 2000년대, 이후는 1900년대
-    //        const birthDate = new Date(`${parsedYear}-${month}-${day}`);
-    //        console.log('Parsed birth date:', birthDate);
-    //        console.log(petData.image)
-    //        console.log("여기까지")
-    //        // 이미지 처리
-    //        let petImg = null;
-    //        if (petData.image) {
-    //            petImg = await imgNaverCloud.uploadPetImage(petData.image, 'pet');
-    //        }
-   
-    //        // 펫 기본 정보 저장
-    //        const pet = await Pet.create({
-    //            platform_id: petData.platform_id,
-    //            platform: petData.platform,
-    //            petimage: petImg,
-    //            pet_name: petData.name,
-    //            pet_species: petData.species,
-    //            pet_breed: petData.breed,
-    //            pet_birth: birthDate.toISOString().split('T')[0], // 날짜 형식 변환
-    //            pet_weight: petData.weight,
-    //            pet_neuter: petData.neuter,
-    //            pet_gender: petData.gender,
-    //            pet_etc: petData.etc,
-    //        });
-   
-    //        // const petId = pet.pet_id;
-   
-    //        return { pet, petImg };
-    //    } catch (error) {
-    //        throw new Error(`Failed to register pet: ${error.message}`);
-    //    }
+    try {
+        const BeautyReservationData = await BeautyReservation.create({
+            business_registration_number: beautyReservationData.business_registration_number,
+            platform_id: beautyReservationData.platform_id,
+            pet_id: beautyReservationData.pet_id,
+            business_desinger_id: beautyReservationData.business_desinger_id,
+            beauty_style: beautyReservationData.beauty_style,
+            beauty_significant: beautyReservationData.beauty_significant,
+            beauty_caution: beautyReservationData.beauty_caution,
+            depositAmount: beautyReservationData.depositAmount,
+            reservationDesiredTime: beautyReservationData.reservationDesiredTime,
+            reservationApplicationTime: beautyReservationData.reservationApplicationTime,
+        });
+        return BeautyReservationData;
+    } catch (error) {
+        throw new Error(`Failed to register pet: ${error.message}`);
+    }
+};
+
+const beautyReservationGet = async (business_registration_number) => {
+    console.log("미용예약 데이터베이스")
+    console.log(business_registration_number)
+    try {
+        const BeautyReservationData = await BeautyReservation.findAll({
+            business_registration_number: business_registration_number,
+
+        });
+        console.log(BeautyReservationData)
+        return BeautyReservationData;
+        
+    } catch (error) {
+        throw new Error(`Failed to register pet: ${error.message}`);
+    }
+};
+const beautyReservationDetail = async (id) => {
+    try {
+       
+
+        let sql = "";
+        sql+="select business_desinger_name, user_phone, pet_name, pet_species, pet_breed, pet_birth, pet_weight, pet_gender, pet_neuter, beauty_style, beauty_significant, beauty_caution ";
+        sql+="from beauty_reservations br ";
+        sql+="join user_infos ui ";
+        sql+="on br.platform_id = ui.platform_id ";
+        sql+="join tb_pets tp ";
+        sql+="on br.pet_id = tp.pet_id ";
+        sql+="join tb_businesses_desingers tbd ";
+        sql+="on br.business_desinger_id = tbd.business_desinger_id ";
+        sql+="where br.beauty_reservation_id = :id ";
+        console.log(sql)
+         const [results, metadata] = await sequelize.query(
+            sql,
+
+            {
+                replacements: { id: id }, // 바인딩 파라미터
+                type: sequelize.QueryTypes.SELECT, // 쿼리 유형
+                logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
+            }
+
+        );
+        console.log(metadata);
+        console.log(results);
+        return results
+        
+    } catch (error) {
+        throw new Error(`Failed to register pet: ${error.message}`);
+    }
 };
 
 module.exports = {
     beautyReservation,
-
+    beautyReservationGet,
+    beautyReservationDetail,
 };

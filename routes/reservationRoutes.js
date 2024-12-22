@@ -5,6 +5,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 const reservationDatabase = require('../database/reservationDatabase');
 const { alimtalkSend } = require('../aligo_api/kakao');
 const kakao = require('../aligo_api/kakao');
+const authMiddlewareSession = require('../middleware/authMiddlewareSession');
 
 router.post('/beauty/reservation', authMiddleware, async (req, res) => {
     console.log(req.user)
@@ -19,16 +20,16 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
 
     // 특이사항 알고리즘
     let significantSum = "";
-    for (let i = 0; i < req.body.significantIssues.length; i++) {
+    for (let i = 0; i < req.body.beauty_significant.length; i++) {
 
-        significantSum += req.body.significantIssues[i];
-        if (i < req.body.significantIssues.length - 1) {
+        significantSum += req.body.beauty_significant[i];
+        if (i < req.body.beauty_significant.length - 1) {
             significantSum += "/";
         }
     }
     // 특이사항 알고리즘
 
-    req.body.significantIssues = significantSum
+    req.body.beauty_significant = significantSum
     console.log(req.body)
    
     try {
@@ -39,6 +40,32 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 
+})
+
+router.get('/beauty/reservation', async (req, res) => {
+    console.log(req.user.business_registration_number)
+    console.log("req.body")
+    const business_registration_number = req.user.business_registration_number;
+    
+    try {
+        const result = await reservationDatabase.beautyReservationGet(business_registration_number)
+        res.status(201).json(result);
+    } catch (error) {
+        console.error('Error fetching userIformation:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+
+})
+
+router.get('/beauty/reservation/detail/:id', async (req, res) => {
+    const id  = req.params.id;
+    try {
+        const result = await reservationDatabase.beautyReservationDetail(id)
+        res.status(201).json(result);
+    } catch (error) {
+        console.error('Error fetching userIformation:', error.message);
+        res.status(500).json({ error: error.message });
+    }
 })
 
 module.exports = router;

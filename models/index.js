@@ -19,6 +19,8 @@ db.BusinessDesinger = require('./BusinessDesinger')(sequelize, Sequelize);
 db.BusinessInformation = require('./BusinessInformation')(sequelize, Sequelize);
 db.Pet = require('./Pet')(sequelize, Sequelize);
 db.BusinessBeautySignificant = require('./BusinessBeautySignificant')(sequelize, Sequelize);
+db.BeautyReservation = require('./BeautyReservation')(sequelize, Sequelize);
+
 // 관계 설정
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {

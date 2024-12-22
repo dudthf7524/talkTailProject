@@ -227,13 +227,13 @@ const ReservationRequestPage = () => {
     const reservationSave = async () => {
 
         const dataToSend = {
-            style: style,
-            reviewText: reviewText,
-            significantIssues:formData. significantIssues,
+            beauty_style: style,
+            beauty_caution: reviewText,
+            beauty_significant:formData. significantIssues,
             depositAmount: formData.depositAmount,
             business_registration_number: formData.business_registration_number,
-            designerName: formData.designerName || '',
-            petId: formData.petId || '',
+            business_desinger_id: formData.designerName || '',
+            pet_id: formData.petId || '',
             reservationDesiredTime: formData.reservationDesiredTime || '',
             phone: '010-7751-4068',
         };
@@ -253,24 +253,9 @@ const ReservationRequestPage = () => {
         // } catch (error) {
             
         // }
-         try{
-            const token = localStorage.getItem('token');
-            const response = await api.post('/api/akv10/alimtalk/send', JSON.stringify(dataToSend),
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    }
-                }
-            );
-            console.log(response)
-
-        }catch(error){
-
-        }
-        // try{
+        //  try{
         //     const token = localStorage.getItem('token');
-        //     const response = await api.post('/api/beauty/reservation', JSON.stringify(dataToSend),
+        //     const response = await api.post('/api/akv10/alimtalk/send', JSON.stringify(dataToSend),
         //         {
         //             headers: {
         //                 Authorization: `Bearer ${token}`,
@@ -283,6 +268,21 @@ const ReservationRequestPage = () => {
         // }catch(error){
 
         // }
+        try{
+            const token = localStorage.getItem('token');
+            const response = await api.post('/api/beauty/reservation', JSON.stringify(dataToSend),
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    }
+                }
+            );
+            console.log(response)
+
+        }catch(error){
+
+        }
 
     }
     return (

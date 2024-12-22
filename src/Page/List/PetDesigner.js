@@ -61,7 +61,7 @@ const PetDesigner = () => {
   const handleClick = (id, name) => {
     console.log(id)
     console.log(name)
-    dispatch(setDesignerName(name));
+    dispatch(setDesignerName(id));
     navigate(`/select/date/${id}`);
   };
   return (

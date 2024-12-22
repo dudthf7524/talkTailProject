@@ -1,4 +1,5 @@
 const aligoapi = require('aligoapi');
+const { userAuthority } = require('../database/userAuthorityRequestDatabase');
 // 해당 예제는 npm에서도 확인하실 수 있습니다
 // npm i aligoapi
 // https://www.npmjs.com/package/aligoapi
@@ -8,6 +9,7 @@ var AuthData = {
     // 이곳에 발급받으신 api key를 입력하세요
     userid: 'creamoff2021',
     // 이곳에 userid를 입력하세요
+    
 }
 // 인증용 데이터는 모든 API 호출시 필수값입니다.
 
@@ -194,10 +196,53 @@ const templateRequest = (req, res) => {
 const alimtalkSend = (req, res) => {
     console.log('카카오 api 처리코드')
     console.log(req.body)
+    const reservationDesiredTime = req.body.reservationDesiredTime;
     console.log('카카오 api 처리코드')
+    req.body = {}
+    req.body.username = "최영솔"
+    req.body.userphone = "010-7751-4068"
+    req.body.style = "전체미용"
+    req.body.reservationDesiredTime = reservationDesiredTime;
+
+
+
+    req.body.senderkey = '89df6266d96c0663c9263f3ff08986bcde7e4124';
+    req.body.tpl_code = 'TW_9032',
+    req.body.sender = '010-4026-5955',
+    req.body.receiver_1 = '010-7751-4068',
+    req.body.recvname_1 = '최영솔',
+    req.body.message_1 = `새로운 예약이 등록되었습니다.\n\n고객명: ${req.body.username}\n전화번호: ${req.body.userphone}\n스타일: ${req.body.style}\n예약시간: ${req.body.reservationDesiredTime}\n\n`,
+
+
+    // req.body.button_1 =  JSON.stringify( {
+    //     "button": [
+    //         {
+    //             name: "예약 상세 보기",
+    //             linkType: "WL",
+    //             linkTypeName: "웹링크",
+    //             linkMo: 'https://naver.com',
+    //             linkPc: 'https://naver.com',
+    //         }
+    //     ]
+    // });
     
+    // button_1: {
+    //     "button": [{
+    //     "name": “알리고 홈페이지”,
+    //     "linkType": "WL",
+    //     "linkTypeName": "웹링크",
+    //     "linkPc": "https://smartsms.aligo.in/",
+    //     "linkMo" : “https://smartsms.aligo.in/”
+    //     }]
+    //     }
+
+    // req.body.testMode = 'Y';
+ 
+
+    console.log(req.body)
+    console.log(AuthData)
     // 알림톡 전송
-  
+
     // req.body = {
     /*** 필수값입니다 ***/
     // senderkey: 발신프로필 키
@@ -218,9 +263,19 @@ const alimtalkSend = (req, res) => {
     // _로 넘버링된 최대 500개의 receiver, subject, message, button, fsubject, fmessage 값을 보내실 수 있습니다
     // failover값이 Y일때 fsubject와 fmessage값은 필수입니다.
 
+    // aligoapi.templateList(req, AuthData)
+    //     .then((r) => {
+    //         console.log('알림톡 전송 성공:', r.list[0].buttons); // 성공한 응답을 콘솔에 출력
+    //         res.send(r)
+    //     })
+    //     .catch((e) => {
+    //         console.error('알림톡 전송 실패:', e); // 에러 메시지를 콘솔에 출력
+    //         res.send(e)
+    //     })
+
     aligoapi.alimtalkSend(req, AuthData)
         .then((r) => {
-            console.log('알림톡 전송 성공:', r.list[0]); // 성공한 응답을 콘솔에 출력
+            console.log('알림톡 전송 성공:', r); // 성공한 응답을 콘솔에 출력
             res.send(r)
         })
         .catch((e) => {

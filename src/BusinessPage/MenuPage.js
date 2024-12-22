@@ -40,7 +40,7 @@ const AdminMenu = () => {
         <div className='greet-text'>{user.business_owner_name} 님</div>
         <div className='admin-menu-text'>Admin Menu</div>
         <div className='menu-grid'>
-          <button className='menu-tbt-btn' onClick={()=>navigate('/reservation-management')}>
+          <button className='menu-tbt-btn' onClick={()=>navigate('/business/reservation/management')}>
             <img src={reservationIcon} alt="reservation icon" className='menu-icon'/>
             <span className='menu-text'><br/>예약관리</span>
           </button>
