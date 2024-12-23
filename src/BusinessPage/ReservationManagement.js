@@ -6,7 +6,7 @@ import api from '../Api'
 const ReservationManagement = () => {
 
   const navigate = useNavigate();
-  const arrowButtonUrl = `${process.env.PUBLIC_URL}/images/button/arrow_left.svg`;
+  const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
 
   const [reservationManagementList, setReservationManagementList] = useState([]);
 

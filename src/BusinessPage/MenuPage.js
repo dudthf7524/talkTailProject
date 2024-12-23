@@ -44,7 +44,7 @@ const AdminMenu = () => {
             <img src={reservationIcon} alt="reservation icon" className='menu-icon'/>
             <span className='menu-text'><br/>예약관리</span>
           </button>
-          <button className='menu-tbt-btn' onClick={()=>navigate('/customer-management')}>
+          <button className='menu-tbt-btn' onClick={()=>navigate('/business/customer/management')}>
             <img src={customerIcon} alt="customer icon" className='menu-icon'/>
             <span className='menu-text'><br/>고객관리</span>
           </button>

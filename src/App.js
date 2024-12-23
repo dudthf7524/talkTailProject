@@ -36,7 +36,8 @@ import UserInformation from "./Page/User/UserInformation";
 import RegisterStyle from './BusinessPage/RegisterStyle';
 import ReservationManagement from './BusinessPage/ReservationManagement';
 import ReservationDetail from './BusinessPage/ReservationDetail';
-
+import CustomerManagement from './BusinessPage/CustomerManagement';
+import WriteNotice from './BusinessPage/WriteNotice';
 function App() {
   const [imageFiles, setImageFiles] = useState({
     main: [],
@@ -103,6 +104,8 @@ function App() {
               <Route path="register/style" element={<RegisterStyle />} />
               <Route path="reservation/management" element={<ReservationManagement />} />
               <Route path="reservation/detail/:id" element={<ReservationDetail />} />
+              <Route path="customer/management" element={<CustomerManagement />} />
+              <Route path="write/notice/:id" element={<WriteNotice />} />
             </Route>
           </Routes>
         </ImageProvider>

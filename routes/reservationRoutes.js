@@ -43,8 +43,6 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
 })
 
 router.get('/beauty/reservation', async (req, res) => {
-    console.log(req.user.business_registration_number)
-    console.log("req.body")
     const business_registration_number = req.user.business_registration_number;
     
     try {
@@ -61,6 +59,19 @@ router.get('/beauty/reservation/detail/:id', async (req, res) => {
     const id  = req.params.id;
     try {
         const result = await reservationDatabase.beautyReservationDetail(id)
+        res.status(201).json(result);
+    } catch (error) {
+        console.error('Error fetching userIformation:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+})
+
+router.put('/beauty/reservation/setCompleteTime/:id', async (req, res) => {
+    const id  = req.params.id;
+    const reservationCompleteTime = req.body.reservationCompleteTime;
+
+    try {
+        const result = await reservationDatabase.setCompleteTime(id, reservationCompleteTime)
         res.status(201).json(result);
     } catch (error) {
         console.error('Error fetching userIformation:', error.message);

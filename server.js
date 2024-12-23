@@ -16,6 +16,7 @@ const userRoutes = require('./routes/userRoutes');
 const reservationRoutes = require('./routes/reservationRoutes');
 const aligoapi = require('aligoapi');
 const router = express.Router();
+const customerManagementRoutes = require('./routes/customerManagementRoutes');
 
 
 const kakaoApiRoutes = require('./routes/kakaoApiRoutes');
@@ -175,4 +176,5 @@ app.use('/api', petRoutes)
 app.use('/api', userAuthorityRequestRoutes)
 app.use('/api', userRoutes)
 app.use('/api', reservationRoutes)
+app.use('/api', customerManagementRoutes)
 app.use('/api', kakaoApiRoutes)

@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '../CSS/auth.css'
 import '../CSS/reservation.css'
-// import ReservationAcceptModal from '../Modal/ReservationAccept';
-// import ReservationRejectModal from '../Modal/ReservationReject';
-// import ReservationCheckModal from '../Modal/ReservationCheck';
+import ReservationAcceptModal from './Modal/ReservationAccept';
+import ReservationRejectModal from './Modal/ReservationReject';
+import ReservationCheckModal from './Modal/ReservationCheck';
 import '../CSS/reservationModal.css'
 import api from '../Api'
 const ReservationDetail = () => {
 
   const navigate = useNavigate();
-  const arrowButtonUrl = `${process.env.PUBLIC_URL}/images/button/arrow_left.svg`;
+  const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
   const { id } = useParams();
 
   const [isModalOpen, setModalOpen] = useState(false);
@@ -18,6 +18,9 @@ const ReservationDetail = () => {
   const [checkMessage, setCheckMessage] = useState('');
   const [actionType, setActionType] = useState('');
   const [reservationManagementList, setReservationManagementList] = useState([]);
+  const [reservationCompleteTime, setReservationCompleteTime] = useState(''); // 완료 시간 상태 추가
+
+  console.log(reservationCompleteTime)
 
   const reservatioInfo = [
     { title: '보호자 연락처', info: '010-5659-9852' },
@@ -63,11 +66,25 @@ const ReservationDetail = () => {
 
   const closeModal = () => setModalOpen(false);
 
-  const handleConfirm = () => {
-    console.log('수락');
-    setCheckMessage('확정되었습니다.');
-    setModalOpen(false);
-    setCheckModalOpen(true);
+  const handleConfirm = async () => {
+    try {
+      const response = await api.put(`/api/beauty/reservation/setCompleteTime/${id}`, { reservationCompleteTime }, { withCredentials: true });
+      console.log('수락');
+      setCheckMessage('확정되었습니다.');
+      setModalOpen(false);
+      setCheckModalOpen(true);
+
+      console.log(response.data)
+
+
+      setTimeout(() => {
+        navigate('/business/reservation/management');
+      }, 2000); // 2초 후 리다이렉트
+    } catch (error) {
+      console.error('예약 완료 실패:', error);
+    }
+
+
   };
 
   const handleReject = () => {
@@ -81,20 +98,11 @@ const ReservationDetail = () => {
     <div className='page-container2' lang='ko'>
       <div className='navigation'>
         <button>
-          <img src={arrowButtonUrl} alt='' onClick={() => navigate('/reservation-management')} />
+          <img src={arrowButtonUrl} alt='' onClick={() => navigate('/business/reservation/management')} />
         </button>
         상세보기
         <div> </div>
       </div>
-      {/* <div className='detail-form1'>
-        {reservatioInfo.map((item, index) => (
-          <div key={index} className='detail-form2'>
-            <div className='detail-title'>{item.title}</div>
-            <div className='detail-info'>{formatInfo(item.info)}</div>
-          </div>
-        ))}
-      </div> */}
-
 
       <div className='detail-form1'>
         <div className='detail-form2'>
@@ -151,32 +159,57 @@ const ReservationDetail = () => {
         </div>
         <div className='detail-form2'>
           <div className='detail-title'>완료시간</div>
-          <div className='detail-info'><input type='text' /></div>
+          {
+            reservationManagementList.beauty_reservation_is_avaiable
+              ? <div className='detail-info'>
+                {reservationManagementList.reservationCompleteTime}
+              </div>
+              : <div className='detail-info'>
+                <input
+                  type='text'
+                  name='reservationConfirm'
+                  placeholder='미용완료 시간을 입력해주세요.'
+                  value={reservationCompleteTime}
+                  onChange={(e) => setReservationCompleteTime(e.target.value)} // 상태 업데이트
+                />
+              </div>
+          }
+
         </div>
+      </div>
+      {
+        reservationManagementList.beauty_reservation_is_avaiable
+          ?
+          <div className='footer-button'>
+            예약이 완료되었습니다.
+          </div>
+          :
+          <div className='footer-button'>
+            <button className='reject-btn' onClick={() => openModal('reject')}>거절</button>
+            <button className='accept-btn' onClick={() => openModal('accept')}>수락</button>
+          </div>
+      }
 
 
-      </div>
-      <div className='footer-button'>
-        <button className='reject-btn' onClick={() => openModal('reject')}>거절</button>
-        <button className='accept-btn' onClick={() => openModal('accept')}>수락</button>
-      </div>
-      {/* <ReservationAcceptModal 
-            isOpen={isModalOpen && actionType === 'accept'}
-            onClose={() => setModalOpen(false)}
-            onConfirm={handleConfirm}
-            actionType={actionType}
-        />
-        <ReservationRejectModal
-            isOpen={isModalOpen && actionType === 'reject'}
-            onClose={() => setModalOpen(false)}
-            onConfirm={handleReject}
-            actionType={actionType}
-        />
-        <ReservationCheckModal 
-            isOpen={isCheckModalOpen}
-            onClose={() => setCheckModalOpen(false)}
-            message={checkMessage}
-        /> */}
+      <ReservationAcceptModal
+        isOpen={isModalOpen && actionType === 'accept'}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleConfirm}
+        actionType={actionType}
+      />
+
+      <ReservationRejectModal
+        isOpen={isModalOpen && actionType === 'reject'}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleReject}
+        actionType={actionType}
+      />
+
+      <ReservationCheckModal
+        isOpen={isCheckModalOpen}
+        onClose={() => setCheckModalOpen(false)}
+        message={checkMessage}
+      />
     </div>
   );
 };
