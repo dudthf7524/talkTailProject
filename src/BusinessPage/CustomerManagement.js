@@ -74,7 +74,7 @@ const CustomerManagement = () => {
                         <div className='customer-item'>{reservationManagement.pet_name}/{reservationManagement.user_name}</div>
                         <div className='customer-item'>
                             {
-                                reservationManagement.beauty_notice_is_avaiable
+                                reservationManagement.beauty_notice_is_available
                                     ?
                                     <button
                                         className='result-button-complete'

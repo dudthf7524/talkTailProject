@@ -58,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: false,
       },
-      beauty_notice_is_avaiable: {
+      beauty_notice_is_available: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,

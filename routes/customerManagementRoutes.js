@@ -16,12 +16,15 @@ router.get('/customer/management', async (req, res) => {
 })
 
 router.post('/customer/notice/write/:id', async (req, res) => {
-    console.log(req.body)
-    console.log(req.params)
-    const id = req.params;
-    
+    const idData = req.params;
+
+    id = idData.id
+
+
+    const data = req.body;
     try {
         const result = await customerManagementDatabase.customerNoticeWrite(id, data);
+        const result2 = await customerManagementDatabase.customerNoticeTrue(id);
         res.status(201).json(result);
     } catch (error) {
         console.error('Error fetching userIformation:', error.message);
