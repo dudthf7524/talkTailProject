@@ -8,7 +8,7 @@ import './BusinessFont/font.css';
 import Login from './BusinessPage/LoginPage';
 import BusinessMenu from './BusinessPage/MenuPage';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+
 import LoginPage from './Page/Login/LoginPage';
 import RegisterInformation from './BusinessPage/Registerinformation';
 import { ImageProvider } from './Contexts/ImageContext';
@@ -38,6 +38,9 @@ import ReservationManagement from './BusinessPage/ReservationManagement';
 import ReservationDetail from './BusinessPage/ReservationDetail';
 import CustomerManagement from './BusinessPage/CustomerManagement';
 import WriteNotice from './BusinessPage/WriteNotice';
+import SelectedDatePage from "./Page/Reservation/SelectedDatePage";
+
+
 function App() {
   const [imageFiles, setImageFiles] = useState({
     main: [],
@@ -90,7 +93,8 @@ function App() {
             <Route path="/pet/detail/:id" element={<PetDetailPage/>} />
             <Route path="/pet-edit/:id" element={<PetEditPage/>} />
             <Route path="/user/information" element={<UserInformation/>} />
-    
+            <Route path="/selected/date" element={<SelectedDatePage />} />
+ 
 
 
             <Route path="/business">

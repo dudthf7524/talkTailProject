@@ -307,33 +307,6 @@
     padding-left: 16px;
     position: relative;
 }
-
-.react-datepicker {
-    background-color: #fdf3e2 !important;
-    position:  relative !important;
-    top: 60px !important; /* 캘린더가 버튼 아래에 나타나도록 조정 */
-    left: 0 !important;
-    z-index: 1000 !important;
-    border: none !important;
-    width: 376px !important; /* 캘린더의 너비 조정 */
-    height: 400px !important; /* 캘린더의 높이 조정 */
-    margin: 0 !important;
-    padding: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    border-radius: 20px !important;
-    top: 40px !important;
-}
-
-.react-datepicker__header {
-    background-color: #fdf3e2 !important;
-    border-bottom: 1px solid #ccc !important;
-    border: none !important;
-    padding: 0 !important;
-    margin-top: 20px;
-    border-radius: 20px !important;
-}
-
 .custom-calendar .outside-month {
     color: #7b7b7b;
 }
@@ -362,43 +335,7 @@
     cursor: pointer !important;
 }
 
-.react-datepicker__day:hover {
-    background-color: #f0e2cc !important; /* 날짜에 커서를 올렸을 때 배경색 */
-}
 
-.react-datepicker__day--selected {
-    background-color: #f0663f !important;
-    color: white !important; /* 날짜에 커서를 올렸을 때 텍스트 색 */
-    z-index: 80 !important;
-}
-
-.react-datepicker__month {
-    width: 100% !important;
-    height: calc(100% - 40px) !important; /* 헤더를 제외한 높이 계산 */
-}
-
-.react-datepicker__week {
-    display: flex !important;
-    justify-content: space-around !important;
-    font-size: 16px !important;
-}
-
-.react-datepicker__day {
-    width: 40px !important; /* 날짜 셀 너비 */
-    height: 40px !important; /* 날짜 셀 높이 */
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    border-radius: 100% !important;
-    margin-right: 10px !important; /* 날짜 셀 오른쪽 마진 추가 */
-}
-
-.react-datepicker__day-name {
-    width: calc(100% / 7) !important; /* 요일 너비 조정 */
-    text-align: center !important;
-    margin: 20px 0 !important;
-    padding: 0% !important;
-}
 
 .schedule-calendar-container {
     display: flex;
