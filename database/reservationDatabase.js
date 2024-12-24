@@ -30,8 +30,9 @@ const beautyReservationGet = async (business_registration_number) => {
     console.log(business_registration_number)
     try {
         const BeautyReservationData = await BeautyReservation.findAll({
-            business_registration_number: business_registration_number,
-
+            where: {
+                business_registration_number: business_registration_number,
+            },
         });
         console.log(BeautyReservationData)
         return BeautyReservationData;
@@ -94,23 +95,23 @@ const setCompleteTime = async (id, reservationComplete) => {
     console.log(currentDate);
 
     const reservationCompleteTime = currentDate + " " + reservationComplete;
-    
+
     console.log(reservationCompleteTime)
 
-      try {
+    try {
         const setCompleteTimeUpdate = await BeautyReservation.update(
-          { 
-             beauty_reservation_is_avaiable: true,
-             reservationCompleteTime: reservationCompleteTime
-          },
-          {
-             where: { beauty_reservation_id: id }, 
-          }
+            {
+                beauty_reservation_is_avaiable: true,
+                reservationCompleteTime: reservationCompleteTime
+            },
+            {
+                where: { beauty_reservation_id: id },
+            }
         );
-      } catch (error) {
+    } catch (error) {
         console.error('Failed to fetch authority request error: ', error);
         res.status(500).json({ message: 'Failed to fetch authority request.' });
-      }
+    }
 }
 
 module.exports = {
