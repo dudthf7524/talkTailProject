@@ -11,6 +11,22 @@ function createDate(year, month, day) {
 }
 
 const ReservationCalendar = () => {
+  const [selectAfternoon, setSelectAfternoon] = useState('');
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData, setModalData] = useState(null);
+  const morning = ['10:30', '11:00', '11:30'];
+  const afternoon = ['12:00', '12:30', '1:00', '1:30', '2:00', '2:30', '3:00', '3:30', '4:00', '4:30', '5:00', '5:30', '6:00', '6:30', '7:00', '7:30'];
+  const [activeTime, setActiveTime] = useState(null);
+  const handleButtonClick = (time) => {
+    setActiveTime(time);
+    setSelectAfternoon(time);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalData(null);
+  };
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
   const [startDate, setStartDate] = useState(null);
   const navigate = useNavigate();
@@ -33,6 +49,8 @@ const ReservationCalendar = () => {
     if (date) {
       const formattedDate = format(date, 'yyyy-MM-dd');
       console.log("Selected Date:", formattedDate);
+      setModalData({ date: formattedDate });
+      setIsModalOpen(true);
     }
   };
 
@@ -52,37 +70,42 @@ const ReservationCalendar = () => {
       </div>
     );
   };
+  const handleItemClick = () => {
+    // dispatch(setDesiredReservationTime(reservationDate + ' ' + selectAfternoon));
+    // navigate(`/pet-select/1`);
+  };
 
   return (
-    <div className="mid" lang="ko">
-      <div className="navigation">
-        <button>
-          <img src={arrowButtonUrl} alt="" onClick={goBack} />
-        </button>
-        예약 신청서
-        <div></div>
-      </div>
-      <div className="main-mid">
-
-
-        <div>
+    <>
+      <div className="mid" lang="ko">
+        <div className="navigation">
+          <button>
+            <img src={arrowButtonUrl} alt="" onClick={goBack} />
+          </button>
+          예약 신청서
+          <div></div>
+        </div>
+        <div className="main-mid">
 
 
           <div>
-            <DatePicker
-              selected={startDate}
-              onChange={handleDateChange}
-              inline
-              minDate={new Date()}
-              excludeDates={disabledDates}
-              locale={ko}
-              dateFormat="yyyy-MM-dd"
-              maxDate={maxDate}
-              className="large-datepicker"
-              renderDayContents={renderDayContents}
-            />
-            <style>
-              {`
+
+
+            <div>
+              <DatePicker
+                selected={startDate}
+                onChange={handleDateChange}
+                inline
+                minDate={new Date()}
+                excludeDates={disabledDates}
+                locale={ko}
+                dateFormat="yyyy-MM-dd"
+                maxDate={maxDate}
+                className="large-datepicker"
+                renderDayContents={renderDayContents}
+              />
+              <style>
+                {`
           .react-datepicker {
             border: none;
             background: transparent;
@@ -183,12 +206,67 @@ const ReservationCalendar = () => {
             font-weight: bold;
           }
         `}
-            </style>
+              </style>
 
+            </div>
           </div>
+          {isModalOpen && (
+            <div id="modal-body" style={{background : "red"}}>
+              {/* <span className="close" onClick={closeModal}>
+                &times;
+              </span> */}
+              {/* <p>{reservationDate}</p> */}
+              {/* <p>예약시간을 선택해주세요</p> */}
+
+              <p className="b">오전</p>
+              <table style={{background :"green"}}>
+                <thead>
+                  <tr>
+                    {morning.map((time) => (
+                      <th key={time}>
+                        <div
+                          className={`a ${activeTime === time ? 'clicked' : ''}`}
+                          onClick={() => handleButtonClick(time)}
+                        >
+                          {time}
+                        </div>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+              </table>
+              <p className="b">오후</p>
+              <table>
+                <thead>
+                  {afternoon.map((time, index) => {
+                    if (index % 4 === 0) {
+                      return (
+                        <tr key={index}>
+                          {afternoon.slice(index, index + 4).map((t) => (
+                            <th key={t}>
+                              <div
+                                className={`a ${activeTime === t ? 'clicked' : ''}`}
+                                onClick={() => handleButtonClick(t)}
+                              >
+                                {t}
+                              </div>
+                            </th>
+                          ))}
+                        </tr>
+                      );
+                    }
+                    return null;
+                  })}
+                </thead>
+              </table>
+            </div>
+          )}
         </div>
       </div>
-    </div>
+      <div className="Nbutton" onClick={handleItemClick}>
+        예약하기
+      </div>
+    </>
   );
 };
 
