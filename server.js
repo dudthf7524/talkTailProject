@@ -20,6 +20,9 @@ const customerManagementRoutes = require('./routes/customerManagementRoutes');
 
 
 const kakaoApiRoutes = require('./routes/kakaoApiRoutes');
+app.listen(8383, () => {
+  console.log('http://localhost:8383 에서 서버 실행중')
+})
 // 프론트엔드에서 데이터 가져올때 
 app.use(express.json());
 // 데이터베이스 연결
@@ -32,9 +35,7 @@ sequelize.sync({ force: false })
   });
 
 passportConfig();
-app.listen(8383, () => {
-  console.log('http://localhost:8383 에서 서버 실행중')
-})
+
 app.use(cors({
   origin: 'http://localhost:3000',  // 리액트 앱의 URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -178,3 +179,7 @@ app.use('/api', userRoutes)
 app.use('/api', reservationRoutes)
 app.use('/api', customerManagementRoutes)
 app.use('/api', kakaoApiRoutes)
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './build/index.html'));
+});
