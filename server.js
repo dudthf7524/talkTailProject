@@ -26,13 +26,13 @@ app.listen(8383, () => {
 // 프론트엔드에서 데이터 가져올때 
 app.use(express.json());
 // 데이터베이스 연결
-// sequelize.sync({ force: false })
-//   .then(() => {
-//     console.log('데이터베이스 연결 성공');
-//   })
-//   .catch((err) => {
-//     console.error('데이터베이스 연결 실패:', err);
-//   });
+sequelize.sync({ force: false })
+  .then(() => {
+    console.log('데이터베이스 연결 성공');
+  })
+  .catch((err) => {
+    console.error('데이터베이스 연결 실패:', err);
+  });
 
 passportConfig();
 
@@ -63,7 +63,6 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, './build')));
 
 app.get('/', (req, res) => {
-
   res.sendFile(path.join(__dirname, './build/index.html'));
 })
 

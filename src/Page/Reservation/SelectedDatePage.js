@@ -2,23 +2,48 @@ import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from 'date-fns/locale';
-import { format, addMonths, getDay } from 'date-fns';
+import { format, addMonths, getDay, isWithinInterval, parse, addMinutes } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
+import '../../CSS/calender.css';
+
+
 
 // 직관적인 월을 받아서 Date 객체를 생성하는 함수
 function createDate(year, month, day) {
   return new Date(year, month - 1, day);
 }
 
+function generateTimeSlots(startTime, endTime, intervalMinutes) {
+  const start = parse(startTime, 'HH:mm', new Date());
+  const end = parse(endTime, 'HH:mm', new Date());
+
+  const totalIntervals = Math.floor((end - start) / (intervalMinutes * 60 * 1000)); // 총 간격 수 계산
+
+  return Array.from({ length: totalIntervals + 1 }, (_, index) => {
+    const newTime = addMinutes(start, intervalMinutes * index);
+    return format(newTime, 'HH:mm');
+  });
+}
+
 const ReservationCalendar = () => {
+
+  const businessStartTime = '09:00';
+  const businessEndTime = '18:00';
+  const timeSlots = generateTimeSlots(businessStartTime, businessEndTime, 30);
+  console.log(timeSlots)
   const [selectAfternoon, setSelectAfternoon] = useState('');
+  const [startTime, setStartTime] = useState(null); // 시작 시간
+  const [endTime, setEndTime] = useState(null); // 종료 시간
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
-  const morning = ['10:30', '11:00', '11:30'];
-  const afternoon = ['12:00', '12:30', '1:00', '1:30', '2:00', '2:30', '3:00', '3:30', '4:00', '4:30', '5:00', '5:30', '6:00', '6:30', '7:00', '7:30'];
+
+  // const morning = ['10:00', '10:30', '11:00', '11:30'];
+  // const afternoon = ['12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30'];
+  // const afternoon = ['12:00', '12:30', '1:00', '1:30', '2:00', '2:30', '3:00', '3:30', '4:00', '4:30', '5:00', '5:30', '6:00', '6:30', '7:00', '7:30'];
   const [activeTime, setActiveTime] = useState(null);
   const handleButtonClick = (time) => {
+    console.log(time)
     setActiveTime(time);
     setSelectAfternoon(time);
   };
@@ -40,22 +65,45 @@ const ReservationCalendar = () => {
   const dateLabels = {
     "2024-12-25": "크리스마스",
     "2024-12-31": "연말",
-    "2024-01-01": "새해 첫날",
+    "2025-01-01": "새해 첫날",
     "2024-03-14": "화이트데이",
   };
-
-  const handleDateChange = (date) => {
-    setStartDate(date);
-    if (date) {
-      const formattedDate = format(date, 'yyyy-MM-dd');
-      console.log("Selected Date:", formattedDate);
-      setModalData({ date: formattedDate });
-      setIsModalOpen(true);
+  const timeDate = [
+    {
+      date: '2024-12-26',
+      starttime: '13:00',
+      endtime: '15:00'
+      ,
+    },
+    {
+      date: '2024-12-26',
+      starttime: '16:00',
+      endtime: '17:00'
+      ,
+    },
+    {
+      date: '2024-12-27',
+      starttime: '15:00',
+      endtime: '15:30'
     }
-  };
+    ,
+    {
+      date: '2024-12-27',
+      starttime: '11:00',
+      endtime: '12:30'
+    },
+    {
+      date: '2024-12-27',
+      starttime: '9:00',
+      endtime: '10:30'
+    }
+  ];
+
 
   const monthsAhead = 3;
   const maxDate = addMonths(new Date(), monthsAhead);
+
+  
 
   const renderDayContents = (day, date) => {
     const formattedDate = format(date, 'yyyy-MM-dd');
@@ -75,6 +123,60 @@ const ReservationCalendar = () => {
     // navigate(`/pet-select/1`);
   };
 
+
+  const getDisabledTimesByDate = (selectedDate) => {
+    console.log("selectedDate")
+    console.log(selectedDate)
+    if (!selectedDate) return []; // 선택된 날짜가 없으면 빈 배열 반환
+
+    const formattedDate = format(selectedDate, 'yyyy-MM-dd');
+    console.log("timeDate")
+    console.log(timeDate)
+
+    const reservations = timeDate.filter((item) => item.date === formattedDate);
+    console.log("reservations")
+    console.log(reservations)
+    const disabledTimes = [];
+    reservations.forEach(({ starttime, endtime }) => {
+      console.log(starttime)
+      console.log(endtime)
+
+      const start = parse(starttime, 'HH:mm', new Date());
+      console.log('start')
+      console.log(start)
+      const end = parse(endtime, 'HH:mm', new Date());
+      console.log("end")
+      console.log(end)
+      const allTimes = [...timeSlots];
+      console.log("allTimes")
+      console.log(allTimes)
+      allTimes.forEach((time) => {
+        const current = parse(time, 'HH:mm', new Date());
+        console.log("current")
+        console.log(current)
+        if (isWithinInterval(current, { start, end: new Date(end.getTime() - 1) })) {
+          console.log(disabledDates)
+          disabledTimes.push(time);
+        }
+      });
+    });
+
+    return disabledTimes;
+  };
+  const handleDateChange = (date) => {
+    setStartDate(date);
+    if (date) {
+      const disabledTimesForDate = getDisabledTimesByDate(date);
+      console.log(disabledTimesForDate)
+      console.log("Disabled Times:", disabledTimesForDate);
+      setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate });
+      setIsModalOpen(true);
+    }
+  };
+  const disabledTimes = modalData?.disabledTimes || [];
+
+
+
   return (
     <>
       <div className="mid" lang="ko">
@@ -86,11 +188,7 @@ const ReservationCalendar = () => {
           <div></div>
         </div>
         <div className="main-mid">
-
-
           <div>
-
-
             <div>
               <DatePicker
                 selected={startDate}
@@ -121,7 +219,10 @@ const ReservationCalendar = () => {
             border-bottom: none;
             font-size: 50px;
           }
-
+          .react-datepicker__day:hover {
+            background-color: white; /* hover 효과를 제거 */
+           
+          }
           .react-datepicker__current-month {
             font-size: 20px;
             font-weight: bold;
@@ -211,54 +312,32 @@ const ReservationCalendar = () => {
             </div>
           </div>
           {isModalOpen && (
-            <div id="modal-body" style={{background : "red"}}>
-              {/* <span className="close" onClick={closeModal}>
-                &times;
-              </span> */}
-              {/* <p>{reservationDate}</p> */}
-              {/* <p>예약시간을 선택해주세요</p> */}
+            <div id="modal-body">
+              <p className="am">오전</p>
+              <div className="time-selection">
+                {timeSlots.map((time) => (
+                  <div
+                    key={time}
+                    className={`time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
+                    onClick={() => !disabledTimes.includes(time) && handleButtonClick(time)}
+                  >
+                    {time}
+                  </div>
+                ))}
+              </div>
 
-              <p className="b">오전</p>
-              <table style={{background :"green"}}>
-                <thead>
-                  <tr>
-                    {morning.map((time) => (
-                      <th key={time}>
-                        <div
-                          className={`a ${activeTime === time ? 'clicked' : ''}`}
-                          onClick={() => handleButtonClick(time)}
-                        >
-                          {time}
-                        </div>
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-              </table>
-              <p className="b">오후</p>
-              <table>
-                <thead>
-                  {afternoon.map((time, index) => {
-                    if (index % 4 === 0) {
-                      return (
-                        <tr key={index}>
-                          {afternoon.slice(index, index + 4).map((t) => (
-                            <th key={t}>
-                              <div
-                                className={`a ${activeTime === t ? 'clicked' : ''}`}
-                                onClick={() => handleButtonClick(t)}
-                              >
-                                {t}
-                              </div>
-                            </th>
-                          ))}
-                        </tr>
-                      );
-                    }
-                    return null;
-                  })}
-                </thead>
-              </table>
+              <p className="pm">오후</p>
+              {/* <div className="time-selection">
+                {timeSlots.map((time) => (
+                  <div
+                    key={time}
+                    className={`time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
+                    onClick={() => !disabledTimes.includes(time) && handleButtonClick(time)}
+                  >
+                    {time}
+                  </div>
+                ))}
+              </div> */}
             </div>
           )}
         </div>
