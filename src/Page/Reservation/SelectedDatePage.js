@@ -12,7 +12,10 @@ import '../../CSS/calender.css';
 function createDate(year, month, day) {
   return new Date(year, month - 1, day);
 }
-
+const filterDisabledDays = (date) => {
+  const day = getDay(date);
+  return day !== 0 && day !== 6; // 화요일(2)과 수요일(3)을 제외한 날짜만 활성화
+};
 function generateTimeSlots(startTime, endTime, intervalMinutes) {
   const start = parse(startTime, 'HH:mm', new Date());
   const end = parse(endTime, 'HH:mm', new Date());
@@ -196,6 +199,7 @@ const ReservationCalendar = () => {
                 inline
                 minDate={new Date()}
                 excludeDates={disabledDates}
+                filterDate={filterDisabledDays} // 특정 요일 비활성화
                 locale={ko}
                 dateFormat="yyyy-MM-dd"
                 maxDate={maxDate}

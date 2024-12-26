@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ImageContext } from '../Contexts/ImageContext';
-
+import '../BusinessCSS/registerInformation.css'
 function RegisterInformation() {
     // 주소 api
     const [postcode, setPostcode] = useState(""); // 우편번호
@@ -253,10 +253,16 @@ function RegisterInformation() {
                         ></div>
                     </div>
                 )}
+                 <div className='input-container'>
+                <button onClick={handleAddressSearch}>우편번호 찾기</button>
+
+                  
+                </div>
                 <div className='input-container'>
+               
+
                     <p>우편번호</p>
                     <input type="text" name='address_postcode' value={postcode} onChange={(e) => setPostcode(e.target.value)} readOnly placeholder="우편번호" />
-                    <button onClick={handleAddressSearch}>우편번호 찾기</button>
                 </div>
                 <div className='input-container'>
                     <p>도로명 주소</p>
