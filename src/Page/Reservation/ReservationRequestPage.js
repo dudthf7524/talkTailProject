@@ -222,7 +222,8 @@ const ReservationRequestPage = () => {
         business_registration_number: reservationData.businessInfo.business_registration_number || '',
         designerName: reservationData.designerName || '',
         petId: reservationData.petId || '',
-        reservationDesiredTime: reservationData.desiredReservationTime || '',
+        date: reservationData.date || '',
+        startTime: reservationData.startTime || '',
     });
     const reservationSave = async () => {
 
@@ -234,8 +235,8 @@ const ReservationRequestPage = () => {
             business_registration_number: formData.business_registration_number,
             business_desinger_id: formData.designerName || '',
             pet_id: formData.petId || '',
-            reservationDesiredTime: formData.reservationDesiredTime || '',
-            phone: '010-7751-4068',
+            date: formData.date || '',
+            startTime: formData.startTime || '',
         };
         console.log(dataToSend)
         // try {

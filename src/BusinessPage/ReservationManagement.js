@@ -17,6 +17,9 @@ const ReservationManagement = () => {
         const response = await api.get('/api/beauty/reservation', { withCredentials: true });
         setReservationManagementList(response.data);
         console.log(response.data)
+        if(response.data =='common'){
+          navigate('/business/login');
+        }
       } catch (error) {
 
         console.error('로그인 인증 실패:', error);
@@ -56,11 +59,11 @@ const ReservationManagement = () => {
         <div className='reservation-text'>상태</div>
         <div className='reservation-text'>상세</div>
       </div>
-      <div class="horizontal-line"></div>
+      <div className="horizontal-line"></div>
       {reservationManagementList.map((reservationManagement, index) => (
         <div key={index} className='reservation-row'>
-          <div className='reservation-item'>{reservationManagement.reservationApplicationTime}</div>
-          <div className='reservation-item'>{reservationManagement.reservationDesiredTime}</div>
+          <div className='reservation-item'>{reservationManagement.reservation_applicationTime}</div>
+          <div className='reservation-item'>{reservationManagement.date} {reservationManagement.start_time}</div>
           {
             reservationManagement.beauty_reservation_is_avaiable
               ?

@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const customerManagementDatabase = require('../database/customerManagementDatabase');
+const authMiddlewareSession = require('../middleware/authMiddlewareSession');
 
-router.get('/customer/management', async (req, res) => {
+router.get('/customer/management',authMiddlewareSession ,  async (req, res) => {
     const business_registration_number = req.user.business_registration_number;
     console.log(business_registration_number)
     try {

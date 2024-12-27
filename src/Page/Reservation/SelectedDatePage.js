@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from 'date-fns/locale';
 import { format, addMonths, getDay, isWithinInterval, parse, addMinutes } from 'date-fns';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import '../../CSS/calender.css';
-
-
+import { setDate } from '../../redux/reservationData';
+import { setStartTime } from '../../redux/reservationData';
+import { useDispatch } from 'react-redux';
+import api from '../../Api'
 
 // 직관적인 월을 받아서 Date 객체를 생성하는 함수
 function createDate(year, month, day) {
@@ -16,9 +18,9 @@ const filterDisabledDays = (date) => {
   const day = getDay(date);
   return day !== 0 && day !== 6; // 화요일(2)과 수요일(3)을 제외한 날짜만 활성화
 };
-function generateTimeSlots(startTime, endTime, intervalMinutes) {
-  const start = parse(startTime, 'HH:mm', new Date());
-  const end = parse(endTime, 'HH:mm', new Date());
+function generateTimeSlots(start_time, end_time, intervalMinutes) {
+  const start = parse(start_time, 'HH:mm', new Date());
+  const end = parse(end_time, 'HH:mm', new Date());
 
   const totalIntervals = Math.floor((end - start) / (intervalMinutes * 60 * 1000)); // 총 간격 수 계산
 
@@ -28,16 +30,32 @@ function generateTimeSlots(startTime, endTime, intervalMinutes) {
   });
 }
 
-const ReservationCalendar = () => {
+const SelectedDatePage = () => {
 
+  const {id} = useParams();
+  console.log(id)
+  const [reservationDesinger, setReservationDesinger] = useState();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await api.get(`/api/beauty/reservation/desinger/${id}`, { withCredentials: true });
+        setReservationDesinger(response.data);
+      } catch (error) {
+        console.error('예약관리 상세보기 실패', error);
+        // navigate('/'); // 로그인 페이지로 리디렉션
+      }
+    };
+    fetchUser();
+  }, []);
+  if(reservationDesinger){
+    console.log("reservationDesinger")
+    console.log(reservationDesinger)
+  }
   const businessStartTime = '09:00';
   const businessEndTime = '18:00';
   const timeSlots = generateTimeSlots(businessStartTime, businessEndTime, 30);
-  console.log(timeSlots)
-  const [selectAfternoon, setSelectAfternoon] = useState('');
-  const [startTime, setStartTime] = useState(null); // 시작 시간
-  const [endTime, setEndTime] = useState(null); // 종료 시간
-
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
 
@@ -45,10 +63,11 @@ const ReservationCalendar = () => {
   // const afternoon = ['12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30'];
   // const afternoon = ['12:00', '12:30', '1:00', '1:30', '2:00', '2:30', '3:00', '3:30', '4:00', '4:30', '5:00', '5:30', '6:00', '6:30', '7:00', '7:30'];
   const [activeTime, setActiveTime] = useState(null);
+
   const handleButtonClick = (time) => {
-    console.log(time)
+
     setActiveTime(time);
-    setSelectAfternoon(time);
+   
   };
 
   const closeModal = () => {
@@ -56,7 +75,7 @@ const ReservationCalendar = () => {
     setModalData(null);
   };
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
-  const [startDate, setStartDate] = useState(null);
+
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
@@ -74,39 +93,39 @@ const ReservationCalendar = () => {
   const timeDate = [
     {
       date: '2024-12-26',
-      starttime: '13:00',
-      endtime: '15:00'
+      start_time: '13:00',
+      end_time: '15:00'
       ,
     },
     {
       date: '2024-12-26',
-      starttime: '16:00',
-      endtime: '17:00'
+      start_time: '16:00',
+      end_time: '17:00'
       ,
     },
     {
       date: '2024-12-27',
-      starttime: '15:00',
-      endtime: '15:30'
+      start_time: '17:00',
+      end_time: '17:30'
     }
     ,
     {
       date: '2024-12-27',
-      starttime: '11:00',
-      endtime: '12:30'
+      start_time: '11:00',
+      end_time: '12:30'
     },
     {
       date: '2024-12-27',
-      starttime: '9:00',
-      endtime: '10:30'
+      start_time: '9:00',
+      end_time: '10:30'
     }
   ];
 
-
+  console.log(timeDate)
   const monthsAhead = 3;
   const maxDate = addMonths(new Date(), monthsAhead);
 
-  
+
 
   const renderDayContents = (day, date) => {
     const formattedDate = format(date, 'yyyy-MM-dd');
@@ -121,44 +140,24 @@ const ReservationCalendar = () => {
       </div>
     );
   };
-  const handleItemClick = () => {
-    // dispatch(setDesiredReservationTime(reservationDate + ' ' + selectAfternoon));
-    // navigate(`/pet-select/1`);
-  };
+
 
 
   const getDisabledTimesByDate = (selectedDate) => {
-    console.log("selectedDate")
-    console.log(selectedDate)
+
     if (!selectedDate) return []; // 선택된 날짜가 없으면 빈 배열 반환
 
     const formattedDate = format(selectedDate, 'yyyy-MM-dd');
-    console.log("timeDate")
-    console.log(timeDate)
+    const reservations = reservationDesinger.filter((item) => item.date === formattedDate);
 
-    const reservations = timeDate.filter((item) => item.date === formattedDate);
-    console.log("reservations")
-    console.log(reservations)
     const disabledTimes = [];
-    reservations.forEach(({ starttime, endtime }) => {
-      console.log(starttime)
-      console.log(endtime)
-
-      const start = parse(starttime, 'HH:mm', new Date());
-      console.log('start')
-      console.log(start)
-      const end = parse(endtime, 'HH:mm', new Date());
-      console.log("end")
-      console.log(end)
+    reservations.forEach(({ start_time, end_time }) => {
+      const start = parse(start_time, 'HH:mm', new Date());
+      const end = parse(end_time, 'HH:mm', new Date());
       const allTimes = [...timeSlots];
-      console.log("allTimes")
-      console.log(allTimes)
       allTimes.forEach((time) => {
         const current = parse(time, 'HH:mm', new Date());
-        console.log("current")
-        console.log(current)
         if (isWithinInterval(current, { start, end: new Date(end.getTime() - 1) })) {
-          console.log(disabledDates)
           disabledTimes.push(time);
         }
       });
@@ -166,19 +165,64 @@ const ReservationCalendar = () => {
 
     return disabledTimes;
   };
+
+  const [startDate, setStartDate] = useState('');
+  const [selectDate, setSelectDate] = useState('')
+
   const handleDateChange = (date) => {
+
+    const formatDate = format(date, 'yyyy-MM-dd');
     setStartDate(date);
+    setSelectDate(formatDate);
+
     if (date) {
       const disabledTimesForDate = getDisabledTimesByDate(date);
-      console.log(disabledTimesForDate)
-      console.log("Disabled Times:", disabledTimesForDate);
-      setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate });
+
+      // 오늘 날짜라면 현재 시간 이후의 시간만 필터링
+      if (format(date, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd')) {
+        const now = new Date();
+        console.log(now);
+
+        // 현재 시간 이후의 시간만 필터링
+        const filteredTimeSlots = timeSlots.filter((time) => {
+          const timeObj = parse(time, 'HH:mm', new Date());
+          return timeObj >= now; // 현재 시간 이후만 남깁니다
+        });
+
+        // Modal 데이터에 필터링된 시간 추가
+        setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate, filteredTimeSlots });
+
+      } else {
+        // 오늘 날짜가 아니라면 모든 시간대를 그대로 표시
+        setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate, filteredTimeSlots: timeSlots });
+
+      }
+
       setIsModalOpen(true);
     }
   };
+
+  // const handleDateChange = (date) => {
+  //   setStartDate(date);
+  //   if (date) {
+  //     const disabledTimesForDate = getDisabledTimesByDate(date);
+  //     console.log(disabledTimesForDate)
+  //     console.log("Disabled Times:", disabledTimesForDate);
+  //     setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate });
+  //     setIsModalOpen(true);
+  //   }
+  // };
   const disabledTimes = modalData?.disabledTimes || [];
 
+  const dispatch = useDispatch();
 
+  const handleItemClick = () => {
+    console.log(selectDate)
+    console.log(activeTime)
+    dispatch(setDate(selectDate));
+    dispatch(setStartTime(activeTime));
+    navigate(`/pet-select/1`);
+  };
 
   return (
     <>
@@ -317,9 +361,8 @@ const ReservationCalendar = () => {
           </div>
           {isModalOpen && (
             <div id="modal-body">
-              <p className="am">오전</p>
               <div className="time-selection">
-                {timeSlots.map((time) => (
+                {modalData?.filteredTimeSlots?.map((time) => (
                   <div
                     key={time}
                     className={`time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
@@ -329,8 +372,6 @@ const ReservationCalendar = () => {
                   </div>
                 ))}
               </div>
-
-              <p className="pm">오후</p>
               {/* <div className="time-selection">
                 {timeSlots.map((time) => (
                   <div
@@ -353,4 +394,4 @@ const ReservationCalendar = () => {
   );
 };
 
-export default ReservationCalendar;
+export default SelectedDatePage;

@@ -15,7 +15,10 @@ const CustomerManagement = () => {
         const fetchReservationManagement = async () => {
             try {
                 const response = await api.get('/api/customer/management', { withCredentials: true });
+                if(response.data == 'common'){
+                    navigate('/business/login'); // 로그인 페이지로 리디렉션
 
+                }
                 if (response.data[0] == null) {
                     setReservationManagementList(response.data[0]);
                 } else {
@@ -69,8 +72,8 @@ const CustomerManagement = () => {
             {reservationManagementList != null ? (
                 reservationManagementList.map((reservationManagement, index) => (
                     <div key={index} className='customer-row'>
-                        <div className='customer-item'>{reservationManagement.reservationDesiredTime}</div>
-                        <div className='customer-item'>{reservationManagement.reservationCompleteTime}</div>
+                        <div className='customer-item'>{reservationManagement.date} {reservationManagement.start_time}</div>
+                        <div className='customer-item'>{reservationManagement.date} {reservationManagement.end_time}</div>
                         <div className='customer-item'>{reservationManagement.pet_name}/{reservationManagement.user_name}</div>
                         <div className='customer-item'>
                             {

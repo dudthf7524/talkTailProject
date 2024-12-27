@@ -36,19 +36,25 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(30),
         allowNull: false,
       },
-      depositAmount: {
+      deposit_amount: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      reservationDesiredTime: {
+      reservation_applicationTime: {
         type: DataTypes.STRING(30),
         allowNull: false,
       },
-      reservationApplicationTime: {
+      date: {
         type: DataTypes.STRING(30),
         allowNull: false,
+        defaultValue: '',
       },
-      reservationCompleteTime: {
+      start_time: {
+        type: DataTypes.STRING(30),
+        allowNull: false,
+        defaultValue: '',
+      },
+      end_time: {
         type: DataTypes.STRING(30),
         allowNull: false,
         defaultValue: '',

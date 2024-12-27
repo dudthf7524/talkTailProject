@@ -62,7 +62,7 @@ const PetDesigner = () => {
     console.log(id)
     console.log(name)
     dispatch(setDesignerName(id));
-    navigate(`/select/date/${id}`);
+    navigate(`/selected/date/${id}`);
   };
   return (
     <div lang='ko'>

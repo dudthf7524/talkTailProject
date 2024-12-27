@@ -15,9 +15,11 @@ const beautyReservation = async (beautyReservationData) => {
             beauty_style: beautyReservationData.beauty_style,
             beauty_significant: beautyReservationData.beauty_significant,
             beauty_caution: beautyReservationData.beauty_caution,
-            depositAmount: beautyReservationData.depositAmount,
-            reservationDesiredTime: beautyReservationData.reservationDesiredTime,
-            reservationApplicationTime: beautyReservationData.reservationApplicationTime,
+            deposit_amount: beautyReservationData.depositAmount,
+            reservation_applicationTime: beautyReservationData.reservationApplicationTime,
+            date: beautyReservationData.date,
+            start_time: beautyReservationData.startTime,
+            end_time: beautyReservationData.startTime,
         });
         return BeautyReservationData;
     } catch (error) {
@@ -42,9 +44,10 @@ const beautyReservationGet = async (business_registration_number) => {
     }
 };
 const beautyReservationDetail = async (id) => {
+    console.log(id)
     try {
         let sql = "";
-        sql += "select business_desinger_name, user_phone, pet_name, pet_species, pet_breed, pet_birth, pet_weight, pet_gender, pet_neuter, beauty_style, beauty_significant, beauty_caution, reservationCompleteTime, beauty_reservation_is_avaiable ";
+        sql += "select business_desinger_name, user_phone, pet_name, pet_species, pet_breed, pet_birth, pet_weight, pet_gender, pet_neuter, beauty_style, beauty_significant, beauty_caution, end_time, beauty_reservation_is_avaiable ";
         sql += "from beauty_reservations br ";
         sql += "join user_infos ui ";
         sql += "on br.platform_id = ui.platform_id ";
@@ -89,20 +92,14 @@ const beautyReservationDetail = async (id) => {
 
 const setCompleteTime = async (id, reservationComplete) => {
 
-    console.log(id)
+
     console.log(reservationComplete)
-    const currentDate = dayjs().format('YYYY-MM-DD');
-    console.log(currentDate);
-
-    const reservationCompleteTime = currentDate + " " + reservationComplete;
-
-    console.log(reservationCompleteTime)
 
     try {
         const setCompleteTimeUpdate = await BeautyReservation.update(
             {
                 beauty_reservation_is_avaiable: true,
-                reservationCompleteTime: reservationCompleteTime
+                end_time: reservationComplete
             },
             {
                 where: { beauty_reservation_id: id },
@@ -114,9 +111,32 @@ const setCompleteTime = async (id, reservationComplete) => {
     }
 }
 
+const beautyReservationDesinger = async (designerId) => {
+
+    console.log(designerId)
+
+    try {
+        const beautyReservationDesingerData = await BeautyReservation.findAll(
+            {
+                where: { business_desinger_id: designerId },
+                attributes: ['date', 'start_time', 'end_time'],
+
+            }
+        );
+        console.log(beautyReservationDesingerData)
+        return beautyReservationDesingerData
+    } catch (error) {
+        console.error('Failed to fetch authority request error: ', error);
+        res.status(500).json({ message: 'Failed to fetch authority request.' });
+    }
+
+
+}
+
 module.exports = {
     beautyReservation,
     beautyReservationGet,
     beautyReservationDetail,
     setCompleteTime,
+    beautyReservationDesinger,
 };

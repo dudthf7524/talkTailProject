@@ -10,7 +10,7 @@ const authMiddlewareSession = require('../middleware/authMiddlewareSession');
 router.post('/beauty/reservation', authMiddleware, async (req, res) => {
     console.log(req.user)
     req.body.platform_id = req.user.id;
-    console.log("req.body")
+    
     console.log(req.body)
     const currentDateTime = dayjs();
     const formattedDateTime = currentDateTime.format('YYYY-MM-DD HH:mm');
@@ -42,7 +42,11 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
 
 })
 
-router.get('/beauty/reservation', async (req, res) => {
+router.get('/beauty/reservation', authMiddlewareSession, async (req, res) => {
+    console.log("req.session")
+    console.log(req.session)
+    console.log("req.session")
+    console.log(req.user)
     const business_registration_number = req.user.business_registration_number;
     
     try {
@@ -77,6 +81,33 @@ router.put('/beauty/reservation/setCompleteTime/:id', async (req, res) => {
         console.error('Error fetching userIformation:', error.message);
         res.status(500).json({ error: error.message });
     }
+})
+
+router.get('/beauty/reservation/date/:id', async (req, res) => {
+    const designerId = req.params.id;
+    try {
+        const result = await reservationDatabase.beautyReservationDesinger(designerId)
+        res.status(201).json(result);
+    } catch (error) {
+        console.error('Error fetching userIformation:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+
+})
+
+router.get('/beauty/reservation/desinger/:id', async (req, res) => {
+    const designerId = req.params.id;
+    console.log("designerId")
+    console.log(designerId)
+
+    try {
+        const result = await reservationDatabase.beautyReservationDesinger(designerId)
+        res.status(201).json(result);
+    } catch (error) {
+        console.error('Error fetching userIformation:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+
 })
 
 module.exports = router;

@@ -162,7 +162,7 @@ const ReservationDetail = () => {
           {
             reservationManagementList.beauty_reservation_is_avaiable
               ? <div className='detail-info'>
-                {reservationManagementList.reservationCompleteTime}
+                {reservationManagementList.end_time}
               </div>
               : <div className='detail-info'>
                 <input

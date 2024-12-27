@@ -93,7 +93,7 @@ function App() {
             <Route path="/pet/detail/:id" element={<PetDetailPage/>} />
             <Route path="/pet-edit/:id" element={<PetEditPage/>} />
             <Route path="/user/information" element={<UserInformation/>} />
-            <Route path="/selected/date" element={<SelectedDatePage />} />
+            <Route path="/selected/date/:id" element={<SelectedDatePage />} />
  
 
 
