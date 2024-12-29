@@ -3,16 +3,17 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ImageContext } from '../Contexts/ImageContext';
 import '../BusinessCSS/registerInformation.css'
+import ReservationInformationModal from './Modal/ReservationInformation';
 function RegisterInformation() {
     // 주소 api
     const [postcode, setPostcode] = useState(""); // 우편번호
     const [roadAddress, setRoadAddress] = useState(""); // 도로명 주소
     const [jibunAddress, setJibunAddress] = useState(""); // 지번 주소
     const [isPopupOpen, setIsPopupOpen] = useState(false); // 팝업 열림/닫힘 상태
-        
-    
+
+
     const popupRef = useRef(null);
-    
+
     const handleAddressSearch = () => {
         setIsPopupOpen(true); // 팝업 열기
 
@@ -75,7 +76,7 @@ function RegisterInformation() {
                 const response = await axios.get('http://localhost:8383/business/auth', { withCredentials: true });
                 setUser(response.data);
                 console.log(response.data)
-                if(!response.data){
+                if (!response.data) {
                     navigate('/business/login'); // 로그인 페이지로 리디렉션
 
                 }
@@ -95,7 +96,7 @@ function RegisterInformation() {
         }
     }, []);
 
-    
+
     const handleUploadClick = (imageType) => {
         navigate(`/business/imgupload/${imageType}`);
     };
@@ -160,7 +161,7 @@ function RegisterInformation() {
             if (user?.business_registration_number) {
                 data.append('business_registration_number', user.business_registration_number);
             }
-            
+
             console.log(data)
 
             // FormData에 이미지 파일 추가
@@ -186,7 +187,15 @@ function RegisterInformation() {
         }
     };
     const [user, setUser] = useState(null);
-  
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    const [actionType, setActionType] = useState('');
+
+    const openModal = (type) => {
+        setActionType(type);
+        setModalOpen(true);
+    };
+
     if (!user) {
         return <div>로딩 중...</div>;
     }
@@ -198,7 +207,7 @@ function RegisterInformation() {
                     <img src={arrowButtonUrl} alt='' onClick={() => navigate('/admin-menu')} />
                 </button>
                 등록자료 올리기
-                <div onClick={handleSave}>저장</div>
+                <div onClick={() => openModal('accept')}>저장</div>
             </div>
             <div className='main-mid'>
                 <div className='upload-box' onClick={() => handleUploadClick('main')}>
@@ -253,13 +262,13 @@ function RegisterInformation() {
                         ></div>
                     </div>
                 )}
-                 <div className='input-container'>
-                <button onClick={handleAddressSearch}>우편번호 찾기</button>
+                <div className='input-container'>
+                    <button onClick={handleAddressSearch}>우편번호 찾기</button>
 
-                  
+
                 </div>
                 <div className='input-container'>
-               
+
 
                     <p>우편번호</p>
                     <input type="text" name='address_postcode' value={postcode} onChange={(e) => setPostcode(e.target.value)} readOnly placeholder="우편번호" />
@@ -361,18 +370,18 @@ function RegisterInformation() {
                             </button>
                         ))}
                     </div>
-                    <p>선택된 영업일: {selectedDays.join(", ")}</p>
-                    <p>휴무일: {offDays.join(", ")}</p>
+                    {/* <p>선택된 영업일: {selectedDays.join(", ")}</p>
+                    <p>휴무일: {offDays.join(", ")}</p> */}
                 </div>
                 <div className='input-container'>
                 </div>
-                <div className='input-container'>
+                <div className='input-container-inline'>
                     <p>가게전화번호</p>
 
                     <input type='text' className='phone' name='business_phone1' value={formData.business_phone1} onChange={handleInputChange} />
-                    -
+                    <span className='phone'>-</span>
                     <input type='text' className='phone' name='business_phone2' value={formData.business_phone2} onChange={handleInputChange} />
-                    -
+                    <span className='phone'>-</span>
                     <input type='text' className='phone' name='business_phone3' value={formData.business_phone3} onChange={handleInputChange} />
                 </div>
 
@@ -387,6 +396,18 @@ function RegisterInformation() {
                     <input type="text" name='business_no_show' value={formData.business_no_show} onChange={handleInputChange} />
                 </div>
             </div>
+          
+            <ReservationInformationModal
+                isOpen={isModalOpen && actionType === 'accept'}
+                onClose={() => setModalOpen(false)}
+                // onConfirm={handleConfirm}
+                registerInformation ={formData}
+                mainImage ={imageFiles.main}
+                priceImage ={imageFiles.pricing}
+                actionType={actionType}
+            />
+
+
         </div>
     );
 }

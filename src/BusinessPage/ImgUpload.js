@@ -7,7 +7,8 @@ function ImgUpload() {
   const navigate = useNavigate();
   const { imageType } = useParams();
   const [selectedFiles, setSelectedFiles] = useState([]);
-
+  console.log(selectedFiles)
+  console.log(imageFiles)
   useEffect(() => {
     setSelectedFiles(imageFiles[imageType] || []);
   }, [imageFiles, imageType]);

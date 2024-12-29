@@ -18,3 +18,44 @@
     border-style: none;
     border-radius: 50px;
 }
+
+
+.input-container-inline {
+  
+    
+    width: 400px;
+    height: 136px;
+    margin: 16px 0;
+    color: #262626;
+    box-sizing: border-box;
+   
+    
+}
+
+.input-container-inline p {
+    font-size: 20px;
+    font-weight: 400;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
+
+.input-container-inline .phone {
+    width : 27%;
+    padding: 15px;
+}
+
+.input-container-inline input{
+
+   
+    height: 30px;
+    margin: 8px 0;
+   
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    color: #262626;
+    outline: none;
+    border-style: solid;
+    font-size: 20px;
+
+}
