@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const BusinessInformation = sequelize.define('TB_BUSINESSES_INFORMATION', {
+    const BusinessInformation = sequelize.define('BUSINESS_INFORMATION', {
       business_information_id: {
         type: DataTypes.INTEGER, // 숫자 타입으로 변경
         allowNull: false,
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: '',
         references: {
-          model: 'TB_BUSINESSES', // Business 테이블을 참조
+          model: 'BUSINESS', // Business 테이블을 참조
           key: 'business_registration_number',
         },
         onUpdate: 'CASCADE', // 외래 키 업데이트 정책
@@ -124,10 +124,11 @@ module.exports = (sequelize, DataTypes) => {
       },
     }, {
       timestamps: false,
+      tableName: 'BUSINESS_INFORMATION',
     });
   
     // 관계 설정: Business 모델과 연관
-    BusinessInformation.belongsTo(sequelize.models.TB_BUSINESSES, { foreignKey: 'business_registration_number', targetKey: 'business_registration_number' });
+    BusinessInformation.belongsTo(sequelize.models.BUSINESS, { foreignKey: 'business_registration_number', targetKey: 'business_registration_number' });
   
     return BusinessInformation;
   };

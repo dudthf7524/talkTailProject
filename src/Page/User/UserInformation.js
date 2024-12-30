@@ -76,7 +76,7 @@ function UserInformation() {
       console.log('Upload successful:', response.data);
 
       // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
-      navigate('/success'); // 성공 페이지로 이동
+      navigate('/home'); // 성공 페이지로 이동
     } catch (error) {
       console.error('Error during upload:', error);
       // 오류 처리

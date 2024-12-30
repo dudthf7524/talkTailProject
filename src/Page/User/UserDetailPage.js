@@ -3,12 +3,13 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import api from '../../Api';
 import Popup from '../Components/PopupModal'; // 팝업 컴포넌트
 
-const EditUserPage = () => {
+const UserDetailPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
     const fileUrl = `${process.env.PUBLIC_URL}/PageImage/user/file.svg`;
     const rightUrl = `${process.env.PUBLIC_URL}/PageImage/user/right.svg`;
+    const [userInformation, setUserInformation] = useState();
 
     const [userInfo, setUserInfo] = useState({
         name: '',
@@ -37,40 +38,26 @@ const EditUserPage = () => {
     }, [userInfo]);
 
     useEffect(() => {
-        const fetchUserData = async () => {
+        const fetchUserInformation = async () => {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) {
                     throw new Error('No token found.');
                 }
 
-                const response = await api.get('/api/user/profile', {
+                const response = await api.get('/api/user/information', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                const userData = response.data;
-                setUserInfo({
-                    name: userData.user_name,
-                    nickname: userData.user_nickname,
-                    phoneNumber: userData.user_phone,
-                    address: userData.user_address,
-                    email: userData.user_email
-                });
-
-                // 주소와 zonecode가 있으면 userInfo 업데이트
-                if (location.state && (location.state.address || location.state.zonecode)) {
-                    const { address, zonecode } = location.state;
-                    console.log('Received address:', address, zonecode);
-                    updateUserInfo(address, zonecode);
-                }
+                setUserInformation(response.data.user)
             } catch (error) {
                 console.error('Error fetching user data:', error);
                 // 오류 처리 로직 추가
             }
         };
 
-        fetchUserData();
+        fetchUserInformation();
     }, [location.state]);
 
     const handleNicknameChange = (e) => {
@@ -129,6 +116,9 @@ const EditUserPage = () => {
         }
     };
 
+    if(!userInformation){
+        return <div>로딩 중 ...</div>
+    }
     return (
         <div lang='ko' className='mid'>
             <div className='navigation'>
@@ -149,31 +139,15 @@ const EditUserPage = () => {
                         <div className='edit-textbox'>
                             <div className='edit-text'>
                                 <p>이름</p>
-                                <p>{userInfo.name}</p>
-                            </div>
-                        </div>
-                        <div className='edit-textbox'>
-                            <div className='edit-text'>
-                                <p>닉네임</p>
-                                {isEditingNickname ? (
-                                    <input
-                                        type="text"
-                                        value={userInfo.nickname}
-                                        onChange={handleNicknameChange}
-                                        onBlur={handleNicknameBlur}
-                                        autoFocus
-                                    />
-                                ) : (
-                                    <p onClick={() => setIsEditingNickname(true)}>{userInfo.nickname}</p>
-                                )}
+                                <p>{userInformation.user_name}</p>
                             </div>
                         </div>
                         <div className='edit-textbox'>
                             <div className='edit-text'>
                                 <p>전화번호</p>
-                                <p>{userInfo.phoneNumber}</p>
+                                <p>{userInformation.user_phone}</p>
                             </div>
-                            {isVerified ? (
+                            {/* {isVerified ? (
                                 <button className='verified'>
                                     인증완료
                                 </button>
@@ -181,7 +155,7 @@ const EditUserPage = () => {
                                 <button className='not-verified'>
                                     인증하기
                                 </button>
-                            )}
+                            )} */}
                         </div>
                         <div className='edit-textbox'>
                             <div className='edit-text'>
@@ -197,7 +171,7 @@ const EditUserPage = () => {
                         계정정보
                     </div>
                     <div className='edit-info-contents'>
-                        <div className='edit-textbox2'>
+                        {/* <div className='edit-textbox2'>
                             <p>이메일</p>
                             <p>{userInfo.email}</p>
                             <img src={rightUrl} alt='' />
@@ -205,7 +179,7 @@ const EditUserPage = () => {
                         <div className='edit-textbox2'>
                             <p>개인정보 유효기간</p>
                             <button>변경</button>
-                        </div>
+                        </div> */}
                         <div className='edit-textbox2'>
                             <p onClick={handleLogout}>로그아웃</p>
                         </div>
@@ -224,4 +198,4 @@ const EditUserPage = () => {
     );
 };
 
-export default EditUserPage;
+export default UserDetailPage;

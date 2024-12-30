@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 
-const { UserInfo } = require('../models');
+const { UserInformation } = require('../models');
 const { User } = require('../models');
 // 사용자 ID를 기반으로 사용자 정보를 조회하는 함수
 const getUserById = async (platform_id, platform) => {
@@ -16,6 +16,27 @@ const getUserById = async (platform_id, platform) => {
       throw new Error('User not found.');
     }
     return user;
+  } catch (error) {
+    throw new Error(`Error fetching user by ID: ${error.message}`);
+  }
+};
+
+const getUserInformation = async (platform_id) => {
+  try {
+    const userInformation = await UserInformation.findOne({
+      where: {
+        platform_id,
+      },
+    });
+    console.log("user")
+    console.log(userInformation)
+    console.log("user")
+    if (!userInformation) {
+      return userInformation;
+      
+    }
+   
+    return userInformation;
   } catch (error) {
     throw new Error(`Error fetching user by ID: ${error.message}`);
   }
@@ -79,7 +100,7 @@ const createUserInformation = async (userData) => {
   console.log('데이터베이스')
   console.log(userData)
   try {
-    const userIformation = await UserInfo.create({
+    const userIformation = await UserInformation.create({
       platform_id: userData.platform_id,
       user_name: userData.user_name,
       user_phone: userphone,
@@ -93,9 +114,38 @@ const createUserInformation = async (userData) => {
   }
 };
 
+const userEidt = async (userEditData) => {
+
+  const phone = userEditData.user_phone1+"-"+userEditData.user_phone2+"-"+userEditData.user_phone3;
+  try {
+    const updatedFields = {
+      user_name: userEditData.user_name,
+      user_phone: phone,
+      updated_at: new Date(), // Assuming `updated_at` should be updated automatically
+    };
+
+    const [rowsUpdated] = await UserInformation.update(updatedFields, {
+      where: { user_information_id: userEditData.user_information_id},
+    });
+
+    console.log([rowsUpdated])
+    if (rowsUpdated === 0) {
+      throw new Error('User not found or not updated.');
+    }
+
+    // 업데이트된 사용자 정보를 조회합니다.
+   return "수정완료"
+  } catch (error) {
+    throw new Error(`Error updating user profile: ${error.message}`);
+  }
+};
+
+
 module.exports = {
   findOrCreateUser,
+  getUserInformation,
   getUserById,
   updateUserProfile,
   createUserInformation,
+  userEidt,
 };

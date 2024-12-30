@@ -9,7 +9,7 @@ const ReservationInformationModal = ({ isOpen, onClose, onConfirm, registerInfor
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content1">
+      <div className="modal-content">
 
         <h3>아래의 내용으로 저장하시겠습니까?</h3>
         <div className='img-preview-container'>

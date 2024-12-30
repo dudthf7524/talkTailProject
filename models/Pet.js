@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Pet = sequelize.define('TB_PETS', {
+    const Pet = sequelize.define('PET', {
       pet_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -57,6 +57,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     }, {
       timestamps: false,
+      tableName: 'PET',
     });
   
     return Pet;

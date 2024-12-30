@@ -14,9 +14,9 @@ import RegisterInformation from './BusinessPage/Registerinformation';
 import { ImageProvider } from './Contexts/ImageContext';
 import ImgUpload from './BusinessPage/ImgUpload';
 import Redirection from './Page/Login/Redirection';
-import KoginSuccess from "./Page/Login/LoginSuccessPage";
+import LoginSuccess from "./Page/Login/LoginSuccessPage";
 import './CSS/components.css';
-import EditUserPage from './Page/User/EditUserPage';
+import UserDetailPage from './Page/User/UserDetailPage';
 import HomePage from './Page/Home/HomePage';
 import ListPage from './Page/List/ListPage';
 import BusinessDetailPage from './Page/List/BusinessDetailPage';
@@ -39,6 +39,8 @@ import ReservationDetail from './BusinessPage/ReservationDetail';
 import CustomerManagement from './BusinessPage/CustomerManagement';
 import WriteNotice from './BusinessPage/WriteNotice';
 import SelectedDatePage from "./Page/Reservation/SelectedDatePage";
+import EditAddressPage from './Page/User/EditAddressPage';
+import UserEdit from './Page/User/UserEdit';
 
 
 function App() {
@@ -77,8 +79,8 @@ function App() {
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/auth/*" element={<Redirection />} />
-            <Route path="/login-success" element={<KoginSuccess />} />
-            <Route path="/edit-user" element={<EditUserPage />} />
+            <Route path="/login-success" element={<LoginSuccess />} />
+            <Route path="/user/detail" element={<UserDetailPage />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/list/:id" element={<ListPage />} />
             <Route path="/business/detail/:id" element={<BusinessDetailPage />} />
@@ -94,8 +96,8 @@ function App() {
             <Route path="/pet-edit/:id" element={<PetEditPage/>} />
             <Route path="/user/information" element={<UserInformation/>} />
             <Route path="/selected/date/:id" element={<SelectedDatePage />} />
- 
-
+            <Route path="/edit-address" element={<EditAddressPage />} />
+            <Route path="/user/edit" element={<UserEdit />} />
 
             <Route path="/business">
               <Route path="login" element={<Login />} />

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import NButtonContainer from '../Components/NavigatorBar/NButtonContainer';
-import List from './List';
+
 import { useNavigate, useParams } from 'react-router-dom';
-import useFetchBusinesses from './useFetchBusinesses';
+
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBeautyList } from '../../redux/beautyList';
@@ -67,11 +67,7 @@ const ListPage = () => {
 
   useEffect(() => {
     const AuthorizeUser = async () => {
-      console.log('Fetching user...');
-      console.log('Fetching user...');
-      console.log('Fetching user...');
-      console.log('Fetching user...');
-      console.log('Fetching user...');
+    
       if (user && user.id) {
 
 
@@ -97,8 +93,27 @@ const ListPage = () => {
     navigate(-1);
   };
 
-  const handleItemClick = (id) => {
-    navigate(`/business/detail/${id}`);
+  const handleItemClick = (id, business_registration_number) => {
+    console.log(business_registration_number)
+    try{
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No token found.');
+      }
+
+      const response = api.post(`/api/user/authority/defense`,{ business_registration_number }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+       
+      
+      })
+     
+    }catch(error){
+      console.log('권한 방어 에러', error)
+      return
+    }
+    // navigate(`/business/detail/${id}`);
   };
 
   const handleSearchChange = (e) => {
@@ -214,7 +229,7 @@ const ListPage = () => {
                   <img src={list.business_main_image}
                     alt={list.business_name}
                     style={{ cursor: 'pointer' }}
-                    onClick={() => handleItemClick(list.business_information_id)} />
+                    onClick={() => handleItemClick(list.business_information_id, list.business_registration_number)} />
                 ) : (
                   <div>No Image Available</div> // 이미지가 없으면 대체 텍스트
                 )}

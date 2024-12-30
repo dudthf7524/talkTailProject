@@ -12,6 +12,7 @@ const authMiddlewareSession = require('../middleware/authMiddlewareSession');
 
 
 router.post('/businesses', async (req, res) => {
+  console.log(req.body)
   try {
     console.log('라우터 저장 코드')
 

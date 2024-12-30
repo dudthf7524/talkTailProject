@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING(200),
                 allowNull: false,
                 references: {
-                    model: 'TB_BUSINESSES',
+                    model: 'BUSINESS',
                     key: 'business_registration_number',
                 },
                 onUpdate: 'CASCADE',
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING(200),
                 allowNull: false,
                 references: {
-                    model: 'TB_USERS',
+                    model: 'USER',
                     key: 'platform_id',
                 },
                 onUpdate: 'CASCADE',
@@ -45,6 +45,7 @@ module.exports = (sequelize, DataTypes) => {
             },
         },
         {
+            tableName: 'USER_AUTHORITY_REQUEST',
             timestamps: false,
         }
     );
@@ -52,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     UserAuthorityRequest.associate = (db) => {
         db.UserAuthorityRequest.belongsTo(db.User, { foreignKey: 'platform_id', targetKey: 'platform_id' });
         db.UserAuthorityRequest.belongsTo(db.Business, { foreignKey: 'business_registration_number', targetKey: 'business_registration_number' });
-        db.UserAuthorityRequest.belongsTo(db.UserInfo, { foreignKey: 'platform_id', targetKey: 'platform_id' });
+        db.UserAuthorityRequest.belongsTo(db.UserInformation, { foreignKey: 'platform_id', targetKey: 'platform_id' });
     };
 
     return UserAuthorityRequest;

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(200),
         allowNull: false,
         references: {
-          model: 'TB_BUSINESSES', // Business 모델을 참조
+          model: 'BUSINESS', // Business 모델을 참조
           key: 'business_registration_number',
         },
         onUpdate: 'CASCADE', // 외래 키 업데이트 정책
@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
     });
   
     // 관계 설정: Business 모델과 연관
-    BusinessBeautySignificant.belongsTo(sequelize.models.TB_BUSINESSES, { foreignKey: 'business_registration_number', targetKey: 'business_registration_number' });
+    BusinessBeautySignificant.belongsTo(sequelize.models.BUSINESS, { foreignKey: 'business_registration_number', targetKey: 'business_registration_number' });
   
     return BusinessBeautySignificant;
   };

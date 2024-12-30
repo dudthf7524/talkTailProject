@@ -5,10 +5,10 @@ const customerManagementGet = async (business_registration_number) => {
 
         let sql = "";
         sql += "select beauty_reservation_id, pet_name, user_name, date, start_time, end_time, beauty_notice_is_available ";
-        sql += "from beauty_reservations br ";
-        sql += "join tb_pets pi ";
+        sql += "from beauty_reservation br ";
+        sql += "join pet pi ";
         sql += "on br.pet_id = pi.pet_id ";
-        sql += "join user_infos ui ";
+        sql += "join user_information ui ";
         sql += "on br.platform_id = ui.platform_id ";
         sql += "where br.business_registration_number = :business_registration_number ";
 

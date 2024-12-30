@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-    const UserInfo = sequelize.define(
-      'USER_INFO',
+    const UserInformation = sequelize.define(
+      'USER_INFORMATION',
       {
         user_information_id: {
           type: DataTypes.INTEGER,
@@ -11,8 +11,9 @@ module.exports = (sequelize, DataTypes) => {
         platform_id: {
           type: DataTypes.STRING(200),
           allowNull: false,
+          unique: true,
           references: {
-            model: 'TB_USERS',
+            model: 'USER',
             key: 'platform_id',
           },
           onUpdate: 'CASCADE',
@@ -39,14 +40,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         timestamps: false,
+        tableName: 'USER_INFORMATION',
       }
     );
   
-    UserInfo.associate = (db) => {
-      db.UserInfo.belongsTo(db.User, { foreignKey: 'platform_id', targetKey: 'platform_id' });
-      db.UserInfo.hasMany(db.UserAuthorityRequest, { foreignKey: 'platform_id', sourceKey: 'platform_id' });
+    UserInformation.associate = (db) => {
+      db.UserInformation.belongsTo(db.User, { foreignKey: 'platform_id', targetKey: 'platform_id' });
+      db.UserInformation.hasMany(db.UserAuthorityRequest, { foreignKey: 'platform_id', sourceKey: 'platform_id' });
     };
   
-    return UserInfo;
+    return UserInformation;
   };
   

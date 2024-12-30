@@ -12,7 +12,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 
 // 모델 정의
 db.User = require('./User')(sequelize, Sequelize);
-db.UserInfo = require('./UserInfo')(sequelize, Sequelize);
+db.UserInformation = require('./UserInformation')(sequelize, Sequelize);
 db.Business = require('./Business')(sequelize, Sequelize);
 db.UserAuthorityRequest = require('./UserAuthorityRequest')(sequelize, Sequelize);
 db.BusinessDesinger = require('./BusinessDesinger')(sequelize, Sequelize);

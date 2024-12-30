@@ -1,4 +1,4 @@
-const { UserAuthorityRequest, UserInfo } = require("../models");  // 여기서 모델을 가져옵니다.
+const { UserAuthorityRequest, UserInformation } = require("../models");  // 여기서 모델을 가져옵니다.
 
 
 const userAuthority = async (userAuthorityData) => {
@@ -28,7 +28,7 @@ const userGetAuthority = async (business_registration_number) => {
       attributes: ['user_authority_request_id', 'business_registration_number', 'authority_is_available'], // UserAuthorityRequest에서 사업자번호만 선택
       include: [
         {
-          model: UserInfo,
+          model: UserInformation,
           required: true, // INNER JOIN을 수행
           attributes: ['user_name', 'user_phone'], // UserInfo에서 필요한 필드만 선택
         },
@@ -38,11 +38,11 @@ const userGetAuthority = async (business_registration_number) => {
     console.log("userGetAuthority");
 
     userGetAuthority.forEach(item => {
-      const userInfo = item.dataValues.USER_INFO.dataValues; // USER_INFO 데이터 추출
+      const UserInformation = item.dataValues.USER_INFO.dataValues; // USER_INFO 데이터 추출
 
       // 필요한 값만 추출하여 출력
-      console.log("Name:", userInfo.user_name);
-      console.log("Phone:", userInfo.user_phone);
+      console.log("Name:", UserInformation.user_name);
+      console.log("Phone:", UserInformation.user_phone);
       console.log("Business Registration Number:", item.dataValues.business_registration_number);
     });
     return userGetAuthority;
@@ -84,9 +84,37 @@ const authorityAvailableTrue = async (id) => {
   }
 }
 
+const authorityDefense = async (platform_id, business_registration_number) => {
+  console.log("database authorityAvailableTrue")
+  console.log(platform_id)
+  console.log(business_registration_number)
+
+  try {
+    const authorityDefenseData = await UserAuthorityRequest.findOne(
+      { authority_is_available: true },
+      {
+         where: 
+        {
+          business_registration_number: business_registration_number,
+          platform_id: platform_id
+
+        }, 
+      }
+    );
+    console.log("authorityDefenseData")
+    console.log(authorityDefenseData)
+    console.log("authorityDefenseData")
+    return authorityDefenseData
+  } catch (error) {
+    console.error('Failed to fetch authority request error: ', error);
+    res.status(500).json({ message: 'Failed to fetch authority request.' });
+  }
+}
+
 module.exports = {
   userAuthority,
   userGetAuthority,
   userGetAuthorityAvailable,
   authorityAvailableTrue,
+  authorityDefense,
 };

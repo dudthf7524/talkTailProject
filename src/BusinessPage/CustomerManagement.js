@@ -55,7 +55,7 @@ const CustomerManagement = () => {
         <div className='page-container' lang='ko'>
             <div className='navigation'>
                 <button>
-                    <img src={arrowButtonUrl} alt='' onClick={() => navigate('/admin-menu')} />
+                    <img src={arrowButtonUrl} alt='' onClick={() => navigate('/business/menu')} />
                 </button>
                 고객관리
                 <div> </div>

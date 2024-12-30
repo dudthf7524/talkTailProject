@@ -42,7 +42,7 @@ function RegisterDesinger() {
             const response = await axios.post(`${apiUrl}/api/business/register/desinger`, formData, { withCredentials: true});
             console.log('Upload successful:', response.data);
             // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
-            navigate('/success'); // 성공 페이지로 이동
+            navigate('/business/menu'); // 성공 페이지로 이동
         } catch (error) {
             console.error('Error during upload:', error);
             // 오류 처리
@@ -55,7 +55,7 @@ function RegisterDesinger() {
         <div className='mid' lang='ko'>
             <div className='navigation'>
                 <button>
-                    <img src={arrowButtonUrl} alt='' onClick={() => navigate('/admin-menu')} />
+                    <img src={arrowButtonUrl} alt='' onClick={() => navigate('/business/menu')} />
                 </button>
                 디자이너 등록
                 <div onClick={handleSave}>저장</div>

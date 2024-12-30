@@ -94,7 +94,7 @@ const EventDetailPage = () => {
     };
 
     const handleItemClick = (business) => {
-        
+
         console.log(business.business_name)
         const id = business.business_registration_number;
         dispatch(setBusinessInfo({
@@ -102,7 +102,7 @@ const EventDetailPage = () => {
             business_registration_number: business.business_registration_number,
             business_no_show: business.business_no_show,
         }));
-        
+
         navigate(`/designer/list/${id}`);
     };
 
@@ -133,12 +133,13 @@ const EventDetailPage = () => {
         const [hour, minute] = time.split(':'); // ':'를 기준으로 분할
         return `${hour}:${minute}`; // 시간과 분을 합쳐서 반환
     };
-
+    console.log(business)
     // 사용 예시
     const weekdayOpenTime = formatTime(business.weekday_open_time);
     const weekdayCloseTime = formatTime(business.weekday_close_time);
     const weekendOpenTime = formatTime(business.weekend_open_time);
     const weekendCloseTime = formatTime(business.weekend_close_time);
+
     return (
         <div lang='ko'>
             <div className='mid'>pricing
@@ -158,22 +159,22 @@ const EventDetailPage = () => {
 
                 <div className='event-img'>
                     {business.business_main_image ? (
-                        <img src={business.business_main_image} alt='Main Event' />
+                        <img src={business.business_main_image} alt='Main Event' style={{ width: "100%", height: "100%" }} />
                     ) : (
                         <p>이미지가 없습니다</p> // 이미지가 없는 경우에 대한 대체 텍스트
                     )}
                 </div>
                 <div className='event-title'>
-                    <div>{business.name}</div>
+                    <div>{business.business_name}</div>
                     <div className={`event-title-button ${isButtonClicked ? 'clicked' : ''}`} onClick={handleButtonClick}>
                         {EventDetailPage ? '예약대기' : '예약가능'}
                     </div>
                 </div>
                 <div className='event-address'>
                     <span>{business.location}</span>
-                    <div className='event-tag-container'>
+                    {/* <div className='event-tag-container'>
                         <EventTags tags={business.tags} />
-                    </div>
+                    </div> */}
                     <p>{business.dayon} 영업</p>
                     <p>{business.dayoff} 휴무</p>
 
@@ -213,14 +214,22 @@ const EventDetailPage = () => {
                     Price information
                 </div>
                 <div className='img'>
-                    <img src={business.business_price_image1}></img>
+                    <img src={business.business_price_image1} style={{ width: "300px", height: "300px" }}></img>
                 </div>
                 <div className='img'>
-                    <img src={business.business_price_image2}></img>
+                    <img src={business.business_price_image2} style={{ width: "300px", height: "300px" }}></img>
                 </div>
-                <div className='img'>
-                    <img src={business.business_price_image3}></img>
-                </div>
+                {
+                    business.business_price_image3
+                        ?
+                        <div className='img'>
+                            <img src={business.business_price_image3} style={{ width: "300px", height: "300px" }}></img>
+                        </div>
+                        :
+                        <div className='img'>
+                        </div>
+                }
+
                 <div className='album-text'>
                     노쇼금액
                 </div>

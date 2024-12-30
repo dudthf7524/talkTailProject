@@ -149,7 +149,7 @@ const PetRegistration = () => {
                 },
             });
             console.log('Upload successful', response.data);
-            navigate('/pet-list');
+            navigate('/pet/list');
         } catch (error) {
             console.error('펫 정보 저장 에러: ', error);
         }

@@ -18,6 +18,18 @@
     border-style: none;
     border-radius: 50px;
 }
+.input-container-id .checkLogin{
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #F0663F;
+    color: white;
+    border-style: none;
+
+}
 
 
 .input-container-inline {
