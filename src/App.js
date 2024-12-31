@@ -84,7 +84,7 @@ function App() {
             <Route path="/home" element={<HomePage />} />
             <Route path="/list/:id" element={<ListPage />} />
             <Route path="/business/detail/:id" element={<BusinessDetailPage />} />
-            <Route path="/designer/list/:id" element={<PetDesigner />} />
+            <Route path="/designer/list" element={<PetDesigner />} />
             <Route path="/select/date/:id" element={<SelectDatePage />} />
             <Route path="/pet/registration" element={<PetRegistrationPage />} />
             <Route path="/my-page" element={<MyPage />} />

@@ -48,12 +48,12 @@ const beautyReservationDetail = async (id) => {
     try {
         let sql = "";
         sql += "select business_desinger_name, user_phone, pet_name, pet_species, pet_breed, pet_birth, pet_weight, pet_gender, pet_neuter, beauty_style, beauty_significant, beauty_caution, end_time, beauty_reservation_is_avaiable ";
-        sql += "from beauty_reservations br ";
-        sql += "join user_infos ui ";
+        sql += "from beauty_reservation br ";
+        sql += "join user_information ui ";
         sql += "on br.platform_id = ui.platform_id ";
-        sql += "join tb_pets tp ";
+        sql += "join pet tp ";
         sql += "on br.pet_id = tp.pet_id ";
-        sql += "join tb_businesses_desingers tbd ";
+        sql += "join business_desinger tbd ";
         sql += "on br.business_desinger_id = tbd.business_desinger_id ";
         sql += "where br.beauty_reservation_id = :id ";
 
@@ -86,7 +86,7 @@ const beautyReservationDetail = async (id) => {
         return results
 
     } catch (error) {
-        throw new Error(`Failed to register pet: ${error.message}`);
+        throw new Error(`Failed to beautyReservationDetail: ${error.message}`);
     }
 };
 

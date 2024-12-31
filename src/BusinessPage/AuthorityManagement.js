@@ -32,8 +32,16 @@ function AuthorityManagement() {
                                 'Business-Registration-Number': userData.business_registration_number,
                             },
                         });
+                        setLists(authorityResponse.data)
                         console.log('User authority data:', authorityResponse.data);
-                        setLists(authorityResponse.data);
+                        console.log('Authority API Response:', authorityResponse);
+                        console.log('Authority API Response Data:', authorityResponse.data);
+                        console.log('Is Array:', Array.isArray(authorityResponse.data));
+                        console.log('Type of Data:', typeof authorityResponse.data);
+                    
+                        console.log(lists)
+                        console.log(lists)
+                        console.log(lists)
                     } catch (authorityError) {
                         console.error('권한 조회 실패:', authorityError);
                     }
@@ -46,6 +54,8 @@ function AuthorityManagement() {
 
         fetchAndAuthorizeUser();
     }, [location.pathname]);
+
+    console.log(lists)
 
     const authorityAvailableTrue = async (user_authority_request_id) => {
         const id = user_authority_request_id
@@ -96,20 +106,16 @@ function AuthorityManagement() {
                 <div className='reservation-text'>거절</div>
             </div>
             <div className="horizontal-line"></div>
-            {lists.map((list, index) => (
+            {Array.isArray(lists) &&lists.map((list, index) => (
                 <div key={index} className='reservation-row'>
                     <div className='reservation-item'>
-                        <p>{list.USER_INFO.user_name}</p> {/* 사용자 이름 */}
+                        <p>{list.user_name}</p> {/* 사용자 이름 */}
                     </div>
                     <div className='reservation-item'>
-                        <p>{list.USER_INFO.user_phone}</p> {/* 사용자 전화번호 */}
+                        <p>{list.user_phone}</p> {/* 사용자 전화번호 */}
                     </div>
                     {
-                        list.authority_is_available === true
-                    }
-
-                    {
-                        list.authority_is_available === true ? (
+                        list.authority_is_available ? (
                             <>
                                 {/* 수락완료, 거절완료 */}
                                 <div className='reservation-item'>

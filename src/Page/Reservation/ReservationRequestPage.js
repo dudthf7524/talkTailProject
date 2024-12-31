@@ -280,9 +280,9 @@ const ReservationRequestPage = () => {
                 }
             );
             console.log(response)
-
+            navigate('/reservation')
         }catch(error){
-
+            console.log('reservation road failed' + error)
         }
 
     }

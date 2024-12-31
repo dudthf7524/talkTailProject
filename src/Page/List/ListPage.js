@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchBeautyList } from '../../redux/beautyList';
 import axios from 'axios';
 import api from '../../Api';
+import AuthorityReauest from '../Components/AuthorityReauest';
 
 const ListPage = () => {
   const navigate = useNavigate();
@@ -19,7 +20,8 @@ const ListPage = () => {
   const trailingUrl = `${process.env.PUBLIC_URL}/PageImage/home/trailing.svg`;
   const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태 추가
   const [user, setUser] = useState(null);
-  const [showModal, setShowModal] = useState(false); // 모달 상태 추가
+  const [showModal, setShowModal] = useState(false); // 모달 상태 추가\
+  const [authorityRequestModal, setAuthorityRequestModal] = useState(false); // 모달 상태 추가
   const [modalMessage, setModalMessage] = useState(''); // 모달 메시지
 
   const [authorityData, setAuthorityData] = useState([]);
@@ -43,8 +45,7 @@ const ListPage = () => {
 
   // 4. 모달 닫기 버튼 클릭 시 모달 닫기
   const closeModal = () => {
-    setShowModal(false);
-    setSelectedBusiness(null); // 선택된 비즈니스 초기화
+    setAuthorityRequestModal(false)
   };
 
   useEffect(() => {
@@ -67,7 +68,7 @@ const ListPage = () => {
 
   useEffect(() => {
     const AuthorizeUser = async () => {
-    
+
       if (user && user.id) {
 
 
@@ -93,27 +94,43 @@ const ListPage = () => {
     navigate(-1);
   };
 
-  const handleItemClick = (id, business_registration_number) => {
+  const handleItemClick = async (id, business_registration_number) => {
     console.log(business_registration_number)
-    try{
+    try {
       const token = localStorage.getItem('token');
       if (!token) {
         throw new Error('No token found.');
       }
 
-      const response = api.post(`/api/user/authority/defense`,{ business_registration_number }, {
+      const response = await api.post(`/api/user/authority/defense`, { business_registration_number }, {
         headers: {
           Authorization: `Bearer ${token}`
         }
-       
-      
+
+
       })
-     
-    }catch(error){
+      console.log("response.data")
+      console.log(response.data)
+      console.log("response.data")
+
+
+      if (response.data == null) {
+
+        setModalMessage('권한 요청 완료 후 이용 가능합니다.')
+        setAuthorityRequestModal(true)
+      }
+      else if (!response.data.authority_is_available) {
+        setModalMessage('권한 요청 대기 중입니다.')
+        console.log("null ")
+        setAuthorityRequestModal(true)
+      }
+      else if (response.data.authority_is_available) {
+        navigate(`/business/detail/${id}`);
+      }
+    } catch (error) {
       console.log('권한 방어 에러', error)
       return
     }
-    // navigate(`/business/detail/${id}`);
   };
 
   const handleSearchChange = (e) => {
@@ -248,7 +265,7 @@ const ListPage = () => {
                       CCTV
                     </div>
                   </div>
-                  <div className="list-content">{list.address_road}{list.business_registration_number} {list.address_detail}</div>
+                  <div className="list-content">{list.address_road} {list.address_detail}</div>
                 </div>
                 <div className='list-title-container'>
                   {/* 권한 상태에 따라 버튼 텍스트 변경 */}
@@ -269,6 +286,11 @@ const ListPage = () => {
             </div>
           ))}
         </div>
+        {authorityRequestModal && (
+          <AuthorityReauest massage={modalMessage} closeModal={closeModal}>
+
+          </AuthorityReauest>
+        )}
       </div>
       {showModal && (
         <div className="modal" >
@@ -279,6 +301,9 @@ const ListPage = () => {
           </div>
         </div>
       )}
+
+
+
       <NButtonContainer />
     </div>
   );

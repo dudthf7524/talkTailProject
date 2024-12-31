@@ -12,7 +12,7 @@
     flex-wrap: wrap;
     height: 107px;
     width: 100%;
-    padding: 24px 16px;
+   
     border-bottom: 1px solid #c4c4c4;
     justify-content: space-between;
 }
@@ -44,23 +44,30 @@
     height: 126px;
     width: 60%;
     flex-direction: column;
-    flex-grow: 1; /* 부모 요소를 꽉 채우도록 설정 */
-    flex-shrink: 1; /* 유연한 크기 조정을 허용 */
-    flex-basis: auto; /* 초기 크기를 자동으로 설정 */
+    flex-grow: 1;
+    /* 부모 요소를 꽉 채우도록 설정 */
+    flex-shrink: 1;
+    /* 유연한 크기 조정을 허용 */
+    flex-basis: auto;
+    /* 초기 크기를 자동으로 설정 */
     align-items: left;
     text-align: left;
     margin-left: 16px;
 }
 
 .tag-container {
-    display: flex; /* 자식 요소들을 가로로 나열 */
-    flex-wrap: wrap; /* 필요한 경우 줄 바꿈 */
+    display: flex;
+    /* 자식 요소들을 가로로 나열 */
+    flex-wrap: wrap;
+    /* 필요한 경우 줄 바꿈 */
     height: 23px;
 }
 
 .list-tag-container {
-    display: flex; /* 자식 요소들을 가로로 나열 */
-    flex-wrap: wrap; /* 필요한 경우 줄 바꿈 */
+    display: flex;
+    /* 자식 요소들을 가로로 나열 */
+    flex-wrap: wrap;
+    /* 필요한 경우 줄 바꿈 */
     height: 23px;
     margin-bottom: 9px;
 }
@@ -70,15 +77,23 @@
     font-weight: 400;
     color: #69645c;
     border: 1px solid #69645c;
-    border-radius: 100px; /* 모서리가 둥근 네모 */
-    margin-right: 8px; /* 태그 간격 설정 */
-    display: flex; /* 자식 요소들을 가로로 나열 */
-    align-items: center; /* 세로 중앙 정렬 */
-    justify-content: center; /* 가로 중앙 정렬 */
-    padding: 2px 8px; /* 좌우 여백 설정 */
+    border-radius: 100px;
+    /* 모서리가 둥근 네모 */
+    margin-right: 8px;
+    /* 태그 간격 설정 */
+    display: flex;
+    /* 자식 요소들을 가로로 나열 */
+    align-items: center;
+    /* 세로 중앙 정렬 */
+    justify-content: center;
+    /* 가로 중앙 정렬 */
+    padding: 2px 8px;
+    /* 좌우 여백 설정 */
     min-width: 30px;
-    text-align: center; /* 텍스트 정렬 설정 */
-    box-sizing: border-box; /* border를 요소의 크기에 포함 */
+    text-align: center;
+    /* 텍스트 정렬 설정 */
+    box-sizing: border-box;
+    /* border를 요소의 크기에 포함 */
 }
 
 .tag {
@@ -86,19 +101,28 @@
     font-weight: 400;
     color: #000000;
     background-color: #fdf3e2;
-    border-radius: 8px; /* 모서리가 둥근 네모 */
-    margin-right: 8px; /* 태그 간격 설정 */
-    display: flex; /* 자식 요소들을 가로로 나열 */
-    align-items: center; /* 세로 중앙 정렬 */
-    justify-content: center; /* 가로 중앙 정렬 */
-    padding: 0px 8px; /* 좌우 여백 설정 */
+    border-radius: 8px;
+    /* 모서리가 둥근 네모 */
+    margin-right: 8px;
+    /* 태그 간격 설정 */
+    display: flex;
+    /* 자식 요소들을 가로로 나열 */
+    align-items: center;
+    /* 세로 중앙 정렬 */
+    justify-content: center;
+    /* 가로 중앙 정렬 */
+    padding: 0px 8px;
+    /* 좌우 여백 설정 */
     min-width: 30px;
-    text-align: center; /* 텍스트 정렬 설정 */
+    text-align: center;
+    /* 텍스트 정렬 설정 */
 }
 
 .popular-tag {
-    background-color: #f5b75c; /* 인기 태그의 배경색 설정 */
-    color: #000000; /* 인기 태그의 글자색 설정 */
+    background-color: #f5b75c;
+    /* 인기 태그의 배경색 설정 */
+    color: #000000;
+    /* 인기 태그의 글자색 설정 */
 }
 
 .title-container {
@@ -120,8 +144,10 @@
     font-weight: 400;
     color: #262626;
     margin-top: 8px;
-    white-space: nowrap; /* 텍스트가 넘칠 경우 줄바꿈 방지 */
-    overflow: hidden; /* 넘친 텍스트 숨김 */
+    white-space: nowrap;
+    /* 텍스트가 넘칠 경우 줄바꿈 방지 */
+    overflow: hidden;
+    /* 넘친 텍스트 숨김 */
 }
 
 .list-title {
@@ -131,14 +157,19 @@
     width: 263px;
     height: 32px;
     margin-top: 8px;
-    white-space: nowrap; /* 텍스트가 넘칠 경우 줄바꿈 방지 */
-    overflow: hidden; /* 넘친 텍스트 숨김 */
+    white-space: nowrap;
+    /* 텍스트가 넘칠 경우 줄바꿈 방지 */
+    
+    /* 넘친 텍스트 숨김 */
 }
 
 .info {
-    display: flex; /* 자식 요소들을 가로로 나열 */
-    justify-content: flex-end; /* 부모 요소의 오른쪽으로 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
+    display: flex;
+    /* 자식 요소들을 가로로 나열 */
+    justify-content: flex-end;
+    /* 부모 요소의 오른쪽으로 정렬 */
+    align-items: center;
+    /* 세로 중앙 정렬 */
     font-size: 12px;
     font-weight: 400;
     color: #7b7b7b;
@@ -150,8 +181,10 @@
     color: #7b7b7b;
     width: 263px;
     height: 26px;
-    white-space: nowrap; /* 텍스트가 넘칠 경우 줄바꿈 방지 */
-    overflow: hidden; /* 넘친 텍스트 숨김 */
+    white-space: nowrap;
+    /* 텍스트가 넘칠 경우 줄바꿈 방지 */
+    overflow: hidden;
+    /* 넘친 텍스트 숨김 */
     text-overflow: ellipsis;
 }
 
@@ -249,7 +282,7 @@
 }
 
 /* 모달 내용 컨테이너 */
-.modal-content {
+.modal-content2aaa {
     background-color: #fff;
     padding: 28px;
     border-radius: 12px;
@@ -271,12 +304,12 @@
 }
 
 /* 모달 본문 */
-.modal-body {
-    margin-bottom: 12px;
+.modal-bodyaaa {
+    padding: 20px;
 }
 
 /* 모달 텍스트 스타일 */
-.modal-body h1 {
+.modal-bodyaaa h1 {
     font-size: 24px;
     font-weight: bold;
     margin: 0;
@@ -317,12 +350,14 @@
 
 /* 확인 버튼이 경고창일 때 스타일 */
 .modal-confirm-button.w {
-    background-color: #EA4335; /* 경고창 빨간색 */
+    background-color: #EA4335;
+    /* 경고창 빨간색 */
 }
 
 /* 확인 버튼이 일반 모달일 때 스타일 */
 .modal-confirm-button.n {
-    background-color: #eb944d; /* 주황색 */
+    background-color: #eb944d;
+    /* 주황색 */
 }
 
 .modal-text.w {

@@ -1,4 +1,4 @@
-const { UserAuthorityRequest, UserInformation } = require("../models");  // 여기서 모델을 가져옵니다.
+const { UserAuthorityRequest, UserInformation, sequelize } = require("../models");  // 여기서 모델을 가져옵니다.
 
 
 const userAuthority = async (userAuthorityData) => {
@@ -23,31 +23,29 @@ const userGetAuthority = async (business_registration_number) => {
   console.log("database userAuthorityData")
 
   try {
-    const userGetAuthority = await UserAuthorityRequest.findAll({
-      where: { business_registration_number: business_registration_number },
-      attributes: ['user_authority_request_id', 'business_registration_number', 'authority_is_available'], // UserAuthorityRequest에서 사업자번호만 선택
-      include: [
-        {
-          model: UserInformation,
-          required: true, // INNER JOIN을 수행
-          attributes: ['user_name', 'user_phone'], // UserInfo에서 필요한 필드만 선택
-        },
-      ],
-    });
+    let sql ="";
+    sql += "select user_authority_request_id, business_registration_number, authority_is_available ,user_name, user_phone  ";
+    sql += "from user_authority_request uar ";
+    sql += "join user_information ui ";
+    sql += "on uar.platform_id = ui.platform_id ";
+    sql += "where uar.business_registration_number = :business_registration_number ";
 
-    console.log("userGetAuthority");
+    const [results, metadata] = await sequelize.query(
+      sql,
 
-    userGetAuthority.forEach(item => {
-      const UserInformation = item.dataValues.USER_INFO.dataValues; // USER_INFO 데이터 추출
+      {
+        replacements: { business_registration_number: business_registration_number }, // 바인딩 파라미터
+        type: sequelize.QueryTypes.SELECT, // 쿼리 유형
+        logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
+      }
 
-      // 필요한 값만 추출하여 출력
-      console.log("Name:", UserInformation.user_name);
-      console.log("Phone:", UserInformation.user_phone);
-      console.log("Business Registration Number:", item.dataValues.business_registration_number);
-    });
-    return userGetAuthority;
+    );
+    console.log(metadata);
+    console.log(results)
+    return [results]
+
   } catch (error) {
-    throw new Error('Failed to create UserInformation', error.message);
+    throw new Error(`Failed to userGetAuthority : ${error.message}`);
   }
 };
 
@@ -75,7 +73,7 @@ const authorityAvailableTrue = async (id) => {
     const authorityAvailableTrueUpdate = await UserAuthorityRequest.update(
       { authority_is_available: true },
       {
-         where: { user_authority_request_id: id }, 
+        where: { user_authority_request_id: id },
       }
     );
   } catch (error) {
@@ -93,17 +91,19 @@ const authorityDefense = async (platform_id, business_registration_number) => {
     const authorityDefenseData = await UserAuthorityRequest.findOne(
       { authority_is_available: true },
       {
-         where: 
+        where:
         {
           business_registration_number: business_registration_number,
           platform_id: platform_id
 
-        }, 
+        },
       }
     );
     console.log("authorityDefenseData")
     console.log(authorityDefenseData)
     console.log("authorityDefenseData")
+
+
     return authorityDefenseData
   } catch (error) {
     console.error('Failed to fetch authority request error: ', error);

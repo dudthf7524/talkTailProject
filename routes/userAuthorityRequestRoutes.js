@@ -69,6 +69,7 @@ router.post('/user/authority/defense',authMiddleware, async(req, res) => {
    const business_registration_number = req.body.business_registration_number;
     try{
         const userGetAuthority = await userAuthorityRequestDatabase.authorityDefense(platform_id, business_registration_number);
+        console.log(userGetAuthority)
         res.json(userGetAuthority);
     }catch(error){
         console.error('Failed to fetch authority request error: ', error);

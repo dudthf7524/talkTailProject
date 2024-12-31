@@ -53,7 +53,6 @@ module.exports = (sequelize, DataTypes) => {
     UserAuthorityRequest.associate = (db) => {
         db.UserAuthorityRequest.belongsTo(db.User, { foreignKey: 'platform_id', targetKey: 'platform_id' });
         db.UserAuthorityRequest.belongsTo(db.Business, { foreignKey: 'business_registration_number', targetKey: 'business_registration_number' });
-        db.UserAuthorityRequest.belongsTo(db.UserInformation, { foreignKey: 'platform_id', targetKey: 'platform_id' });
     };
 
     return UserAuthorityRequest;

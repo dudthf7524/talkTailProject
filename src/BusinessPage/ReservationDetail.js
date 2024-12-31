@@ -7,6 +7,7 @@ import ReservationRejectModal from './Modal/ReservationReject';
 import ReservationCheckModal from './Modal/ReservationCheck';
 import '../CSS/reservationModal.css'
 import api from '../Api'
+import { addMinutes, format, parse } from 'date-fns';
 const ReservationDetail = () => {
 
   const navigate = useNavigate();
@@ -93,7 +94,76 @@ const ReservationDetail = () => {
     setModalOpen(false);
     setCheckModalOpen(true);
   };
+  const businessStartTime = '09:00';
+  const businessEndTime = '18:00';
 
+  const timeSlots = generateTimeSlots(businessStartTime, businessEndTime, 30);
+
+  function generateTimeSlots(start_time, end_time, intervalMinutes) {
+    const start = parse(start_time, 'HH:mm', new Date());
+    const end = parse(end_time, 'HH:mm', new Date());
+
+    const totalIntervals = Math.floor((end - start) / (intervalMinutes * 60 * 1000)); // 총 간격 수 계산
+
+    return Array.from({ length: totalIntervals + 1 }, (_, index) => {
+      const newTime = addMinutes(start, intervalMinutes * index);
+      return format(newTime, 'HH:mm');
+    });
+  }
+
+  const starttime = "09:30";
+  const endtime = "10:30";
+
+
+  console.log(timeSlots)
+  const filteredTimeSlots = timeSlots.filter((time) => {
+    const current = parse(time, 'HH:mm', new Date());
+    const start = parse(starttime, 'HH:mm', new Date());
+    return current >= start;  // starttime 이후의 시간대만 필터링
+  });
+
+  const disabledTimes = (() => {
+    const start = parse(starttime, 'HH:mm', new Date());
+    const end = parse(endtime, 'HH:mm', new Date());
+
+    return timeSlots.filter((time) => {
+      const current = parse(time, 'HH:mm', new Date());
+      return current >= start && current <= end; // start와 end 사이의 시간대 포함
+    });
+  })();
+
+  // const getDisabledTimesByDate = (selectedDate) => {
+
+  //   if (!selectedDate) return []; // 선택된 날짜가 없으면 빈 배열 반환
+
+  //   const formattedDate = format(selectedDate, 'yyyy-MM-dd');
+  //   const reservations = reservationDesinger.filter((item) => item.date === formattedDate);
+
+  //   const disabledTimes = [];
+  //   reservations.forEach(({ start_time, end_time }) => {
+  //     const start = parse(start_time, 'HH:mm', new Date());
+  //     const end = parse(end_time, 'HH:mm', new Date());
+  //     const allTimes = [...timeSlots];
+  //     allTimes.forEach((time) => {
+  //       const current = parse(time, 'HH:mm', new Date());
+  //       if (isWithinInterval(current, { start, end: new Date(end.getTime() - 1) })) {
+  //         disabledTimes.push(time);
+  //       }
+  //     });
+  //   });
+
+  //   return disabledTimes;
+  // };
+
+
+
+  const [modalData, setModalData] = useState(null);
+  const [activeTime, setActiveTime] = useState(null);
+  const handleButtonClick = (time) => {
+
+    setActiveTime(time);
+
+  };
   return (
     <div className='page-container2' lang='ko'>
       <div className='navigation'>
@@ -164,17 +234,20 @@ const ReservationDetail = () => {
               ? <div className='detail-info'>
                 {reservationManagementList.end_time}
               </div>
-              : <div className='detail-info'>
-                <input
-                  type='text'
-                  name='reservationConfirm'
-                  placeholder='미용완료 시간을 입력해주세요.'
-                  value={reservationCompleteTime}
-                  onChange={(e) => setReservationCompleteTime(e.target.value)} // 상태 업데이트
-                />
+              : <div id="modal-body">
+                <div className="time-selection">
+                  {filteredTimeSlots?.map((time) => (
+                    <div
+                      key={time}
+                      className={`time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
+                      onClick={() => !disabledTimes.includes(time) && handleButtonClick(time)}
+                    >
+                      {time}
+                    </div>
+                  ))}
+                </div>
               </div>
           }
-
         </div>
       </div>
       {

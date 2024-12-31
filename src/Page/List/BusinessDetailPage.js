@@ -96,14 +96,16 @@ const EventDetailPage = () => {
     const handleItemClick = (business) => {
 
         console.log(business.business_name)
-        const id = business.business_registration_number;
+        console.log(business.business_registration_number)
+        console.log(business.business_no_show)
+       
         dispatch(setBusinessInfo({
             business_name: business.business_name,
             business_registration_number: business.business_registration_number,
             business_no_show: business.business_no_show,
         }));
 
-        navigate(`/designer/list/${id}`);
+        navigate(`/designer/list`);
     };
 
     useEffect(() => {

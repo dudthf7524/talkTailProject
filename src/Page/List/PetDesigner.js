@@ -11,9 +11,11 @@ const PetDesigner = () => {
   console.log(id)
   const dispatch = useDispatch();
 
-  const designerName = useSelector((state) => state.reservationData.designerName); // Redux 상태 가져오기
+  const designerName = useSelector((state) => state.reservationData); // Redux 상태 가져오기
   console.log("Selected Designer Name:", designerName); // 리덕스 상태 출력
 
+  const business_registration_number = designerName.businessInfo.business_registration_number;
+  
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
   const arrowUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_fill_down.svg`;
@@ -43,7 +45,7 @@ const PetDesigner = () => {
         if (!token) {
           throw new Error('No token found.');
         }
-        const response = await api.get(`/api/designer/list/${id}`, {
+        const response = await api.get(`/api/designer/list/${business_registration_number}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           }
@@ -104,7 +106,7 @@ const PetDesigner = () => {
               className='list-list-container'
               onClick={()=> handleClick(designer.business_desinger_id, designer.business_desinger_name)}
               style={{ cursor: 'pointer' }}>
-              <div className='list-title'>{designer.business_desinger_name}</div>
+              <div className='list-title'><h2>{designer.business_desinger_name}</h2></div>
               <div className='list-content'>{designer.business_desinger_introduce}</div>
             </div>
           ))
