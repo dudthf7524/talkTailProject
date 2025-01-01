@@ -7,7 +7,7 @@ import ReservationRejectModal from './Modal/ReservationReject';
 import ReservationCheckModal from './Modal/ReservationCheck';
 import '../CSS/reservationModal.css'
 import api from '../Api'
-import { addMinutes, format, parse } from 'date-fns';
+import { addMinutes, format, isWithinInterval, parse } from 'date-fns';
 const ReservationDetail = () => {
 
   const navigate = useNavigate();
@@ -110,50 +110,44 @@ const ReservationDetail = () => {
       return format(newTime, 'HH:mm');
     });
   }
+  let start_time = '00:00';
+  let end_time = '00:00';
 
-  const starttime = "09:30";
-  const endtime = "10:30";
+  if (reservationManagementList) {
+    start_time = reservationManagementList.start_time;
+    end_time = reservationManagementList.end_time;
+  }
 
 
-  console.log(timeSlots)
+
+  const now = new Date();
+  console.log(now)
+
   const filteredTimeSlots = timeSlots.filter((time) => {
     const current = parse(time, 'HH:mm', new Date());
-    const start = parse(starttime, 'HH:mm', new Date());
-    return current >= start;  // starttime 이후의 시간대만 필터링
+    const start = parse(start_time, 'HH:mm', new Date());
+    return current >= now; // starttime 이후의 시간대만 필터링
   });
 
   const disabledTimes = (() => {
-    const start = parse(starttime, 'HH:mm', new Date());
-    const end = parse(endtime, 'HH:mm', new Date());
+    const start = parse(start_time, 'HH:mm', new Date());
+    const end = parse(end_time, 'HH:mm', new Date());
+    const disabledTimes = [];
 
-    return timeSlots.filter((time) => {
+    timeSlots.forEach((time) => {
       const current = parse(time, 'HH:mm', new Date());
-      return current >= start && current <= end; // start와 end 사이의 시간대 포함
+      if (isWithinInterval(current, { start, end: new Date(end.getTime() - 1) })) {
+        disabledTimes.push(time);
+      }
     });
+
+    return disabledTimes;
   })();
 
-  // const getDisabledTimesByDate = (selectedDate) => {
+  console.log('Filtered Time Slots:', filteredTimeSlots);
+  console.log('Disabled Times:', disabledTimes);
 
-  //   if (!selectedDate) return []; // 선택된 날짜가 없으면 빈 배열 반환
 
-  //   const formattedDate = format(selectedDate, 'yyyy-MM-dd');
-  //   const reservations = reservationDesinger.filter((item) => item.date === formattedDate);
-
-  //   const disabledTimes = [];
-  //   reservations.forEach(({ start_time, end_time }) => {
-  //     const start = parse(start_time, 'HH:mm', new Date());
-  //     const end = parse(end_time, 'HH:mm', new Date());
-  //     const allTimes = [...timeSlots];
-  //     allTimes.forEach((time) => {
-  //       const current = parse(time, 'HH:mm', new Date());
-  //       if (isWithinInterval(current, { start, end: new Date(end.getTime() - 1) })) {
-  //         disabledTimes.push(time);
-  //       }
-  //     });
-  //   });
-
-  //   return disabledTimes;
-  // };
 
 
 

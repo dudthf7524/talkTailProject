@@ -47,7 +47,7 @@ const beautyReservationDetail = async (id) => {
     console.log(id)
     try {
         let sql = "";
-        sql += "select business_desinger_name, user_phone, pet_name, pet_species, pet_breed, pet_birth, pet_weight, pet_gender, pet_neuter, beauty_style, beauty_significant, beauty_caution, end_time, beauty_reservation_is_avaiable ";
+        sql += "select start_time, end_time, business_desinger_name, user_phone, pet_name, pet_species, pet_breed, pet_birth, pet_weight, pet_gender, pet_neuter, beauty_style, beauty_significant, beauty_caution, end_time, beauty_reservation_is_avaiable ";
         sql += "from beauty_reservation br ";
         sql += "join user_information ui ";
         sql += "on br.platform_id = ui.platform_id ";

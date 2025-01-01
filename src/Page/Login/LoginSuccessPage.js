@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../Api';
-
+import '../../CSS/autoComplete.css';
 const Confirm = () => {
     const navigate = useNavigate();
     const petImgUrl = `${process.env.PUBLIC_URL}/PageImage/pet/pet_img2.png`;

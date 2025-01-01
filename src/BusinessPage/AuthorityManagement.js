@@ -33,15 +33,6 @@ function AuthorityManagement() {
                             },
                         });
                         setLists(authorityResponse.data)
-                        console.log('User authority data:', authorityResponse.data);
-                        console.log('Authority API Response:', authorityResponse);
-                        console.log('Authority API Response Data:', authorityResponse.data);
-                        console.log('Is Array:', Array.isArray(authorityResponse.data));
-                        console.log('Type of Data:', typeof authorityResponse.data);
-                    
-                        console.log(lists)
-                        console.log(lists)
-                        console.log(lists)
                     } catch (authorityError) {
                         console.error('권한 조회 실패:', authorityError);
                     }

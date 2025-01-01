@@ -2,7 +2,8 @@ import React, { useEffect, useContext, useState, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ImageContext } from '../Contexts/ImageContext';
-import '../BusinessCSS/registerInformation.css'
+import '../BusinessCSS/registerInformation.css';
+import '../BusinessCSS/main.css';
 import ReservationInformationModal from './Modal/ReservationInformation';
 function RegisterInformation() {
     // 주소 api

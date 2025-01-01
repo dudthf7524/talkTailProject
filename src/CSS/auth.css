@@ -30,6 +30,7 @@
     flex-shrink: 0; /* 크기 변경 방지 */
     align-items: flex-start; /* 자식 요소를 왼쪽 정렬 */
     overflow: hidden; /* 자식 요소가 넘칠 경우 숨기기 */
+    
 }
 
 .title img {

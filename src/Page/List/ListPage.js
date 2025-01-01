@@ -9,6 +9,7 @@ import { fetchBeautyList } from '../../redux/beautyList';
 import axios from 'axios';
 import api from '../../Api';
 import AuthorityReauest from '../Components/AuthorityReauest';
+import '../../CSS/reservationModal.css'
 
 const ListPage = () => {
   const navigate = useNavigate();
@@ -293,8 +294,8 @@ const ListPage = () => {
         )}
       </div>
       {showModal && (
-        <div className="modal" >
-          <div className="modal-content">
+        <div className="modal-overlay" >
+          <div className="modal-content1">
             <p>{modalMessage}</p>
             <button onClick={closeModal}>닫기</button>
             <button onClick={handleConfirmAuthorityRequest}>확인</button>
