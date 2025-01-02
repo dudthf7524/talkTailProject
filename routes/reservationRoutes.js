@@ -6,34 +6,53 @@ const reservationDatabase = require('../database/reservationDatabase');
 const { alimtalkSend } = require('../aligo_api/kakao');
 const kakao = require('../aligo_api/kakao');
 const authMiddlewareSession = require('../middleware/authMiddlewareSession');
+const userDatabase = require('../database/userDatabase');
 
 router.post('/beauty/reservation', authMiddleware, async (req, res) => {
     console.log(req.user)
-    req.body.platform_id = req.user.id;
-    
-    console.log(req.body)
-    const currentDateTime = dayjs();
-    const formattedDateTime = currentDateTime.format('YYYY-MM-DD HH:mm');
-    console.log(formattedDateTime)
+    console.log("여기까지")
+    const platform_id = req.user.id
+    let user_information = {};
 
-    req.body.reservationApplicationTime = formattedDateTime;
-
-    // 특이사항 알고리즘
-    let significantSum = "";
-    for (let i = 0; i < req.body.beauty_significant.length; i++) {
-
-        significantSum += req.body.beauty_significant[i];
-        if (i < req.body.beauty_significant.length - 1) {
-            significantSum += "/";
-        }
+    try {
+        user_information = await userDatabase.getUserInformation(platform_id)
+       
+    } catch (error) {
+        console.error('Error fetching userIformation:', error.message);
+        res.status(500).json({ error: error.message });
     }
-    // 특이사항 알고리즘
 
-    req.body.beauty_significant = significantSum
-    console.log(req.body)
-   
+    console.log('user_information', user_information.user_name)
+    console.log('user_information', user_information.user_phone)
+    
+    // req.body.platform_id = req.user.id;
+
+    // console.log(req.body)
+    // const currentDateTime = dayjs();
+    // const formattedDateTime = currentDateTime.format('YYYY-MM-DD HH:mm');
+    // console.log(formattedDateTime)
+
+    // req.body.reservationApplicationTime = formattedDateTime;
+
+    // // 특이사항 알고리즘
+    // let significantSum = "";
+    // for (let i = 0; i < req.body.beauty_significant.length; i++) {
+
+    //     significantSum += req.body.beauty_significant[i];
+    //     if (i < req.body.beauty_significant.length - 1) {
+    //         significantSum += "/";
+    //     }
+    // }
+    // // 특이사항 알고리즘
+
+    // req.body.beauty_significant = significantSum
+    // console.log(req.body)
+
     try {
         const result = await reservationDatabase.beautyReservation(req.body)
+        req.body.user_name = user_information.user_name;
+        req.body.user_phone = user_information.user_phone;
+        kakao.alimtalkSend(req, res);
         res.status(201).json({ result });
     } catch (error) {
         console.error('Error fetching userIformation:', error.message);
@@ -48,7 +67,7 @@ router.get('/beauty/reservation', authMiddlewareSession, async (req, res) => {
     console.log("req.session")
     console.log(req.user)
     const business_registration_number = req.user.business_registration_number;
-    
+
     try {
         const result = await reservationDatabase.beautyReservationGet(business_registration_number)
         res.status(201).json(result);
@@ -60,7 +79,7 @@ router.get('/beauty/reservation', authMiddlewareSession, async (req, res) => {
 })
 
 router.get('/beauty/reservation/detail/:id', async (req, res) => {
-    const id  = req.params.id;
+    const id = req.params.id;
     try {
         const result = await reservationDatabase.beautyReservationDetail(id)
         res.status(201).json(result);
@@ -71,7 +90,7 @@ router.get('/beauty/reservation/detail/:id', async (req, res) => {
 })
 
 router.put('/beauty/reservation/setCompleteTime/:id', async (req, res) => {
-    const id  = req.params.id;
+    const id = req.params.id;
     const reservationCompleteTime = req.body.reservationCompleteTime;
 
     try {

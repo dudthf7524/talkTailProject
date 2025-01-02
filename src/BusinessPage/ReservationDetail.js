@@ -21,7 +21,7 @@ const ReservationDetail = () => {
   const [reservationManagementList, setReservationManagementList] = useState([]);
   const [reservationCompleteTime, setReservationCompleteTime] = useState(''); // 완료 시간 상태 추가
 
-  console.log(reservationCompleteTime)
+  // console.log(reservationCompleteTime)
 
   const reservatioInfo = [
     { title: '보호자 연락처', info: '010-5659-9852' },
@@ -68,7 +68,11 @@ const ReservationDetail = () => {
   const closeModal = () => setModalOpen(false);
 
   const handleConfirm = async () => {
+    console.log("reservationCompleteTime")
+    console.log(reservationCompleteTime)
+    console.log("reservationCompleteTime")
     try {
+      console.log(reservationCompleteTime)
       const response = await api.put(`/api/beauty/reservation/setCompleteTime/${id}`, { reservationCompleteTime }, { withCredentials: true });
       console.log('수락');
       setCheckMessage('확정되었습니다.');
@@ -110,23 +114,18 @@ const ReservationDetail = () => {
       return format(newTime, 'HH:mm');
     });
   }
-  let start_time = '00:00';
-  let end_time = '00:00';
 
-  if (reservationManagementList) {
-    start_time = reservationManagementList.start_time;
-    end_time = reservationManagementList.end_time;
-  }
-
+  let start_time = reservationManagementList?.start_time || '00:00';
+  let end_time = reservationManagementList?.end_time || '23:59';
 
 
   const now = new Date();
-  console.log(now)
+
 
   const filteredTimeSlots = timeSlots.filter((time) => {
     const current = parse(time, 'HH:mm', new Date());
     const start = parse(start_time, 'HH:mm', new Date());
-    return current >= now; // starttime 이후의 시간대만 필터링
+    return current >= start; // starttime 이후의 시간대만 필터링
   });
 
   const disabledTimes = (() => {
@@ -144,8 +143,7 @@ const ReservationDetail = () => {
     return disabledTimes;
   })();
 
-  console.log('Filtered Time Slots:', filteredTimeSlots);
-  console.log('Disabled Times:', disabledTimes);
+
 
 
 
@@ -153,9 +151,28 @@ const ReservationDetail = () => {
 
   const [modalData, setModalData] = useState(null);
   const [activeTime, setActiveTime] = useState(null);
-  const handleButtonClick = (time) => {
 
+
+  if(!reservationManagementList){
+    return (
+      <div>로딩 중... </div>
+    )
+  }
+  const handleButtonClick = (time) => {
+    console.log("time") 
+    console.log(time)
+    console.log("time") 
+
+    console.log("reservationCompleteTime") 
+    setReservationCompleteTime(time)
+   
+    console.log(reservationCompleteTime)
+    console.log("reservationCompleteTime") 
     setActiveTime(time);
+
+    console.log("activeTime") 
+    console.log(activeTime)
+    console.log("activeTime") 
 
   };
   return (
@@ -220,6 +237,10 @@ const ReservationDetail = () => {
         <div className='detail-form2'>
           <div className='detail-title'>주의사항</div>
           <div className='detail-info'>{reservationManagementList.beauty_caution}</div>
+        </div>
+        <div className='detail-form2'>
+          <div className='detail-title'>시작시간</div>
+          <div className='detail-info'>{reservationManagementList.start_time}</div>
         </div>
         <div className='detail-form2'>
           <div className='detail-title'>완료시간</div>

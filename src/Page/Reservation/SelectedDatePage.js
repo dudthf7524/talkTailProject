@@ -16,7 +16,7 @@ function createDate(year, month, day) {
 }
 const filterDisabledDays = (date) => {
   const day = getDay(date);
-  return day !== 0 && day !== 6; // 화요일(2)과 수요일(3)을 제외한 날짜만 활성화
+  return day !== 0 && day !== 6 ; // 화요일(2)과 수요일(3)을 제외한 날짜만 활성화
 };
 function generateTimeSlots(start_time, end_time, intervalMinutes) {
   const start = parse(start_time, 'HH:mm', new Date());
@@ -131,12 +131,18 @@ const SelectedDatePage = () => {
     const formattedDate = format(date, 'yyyy-MM-dd');
     const label = dateLabels[formattedDate]; // 라벨을 찾음
     const isSunday = getDay(date) === 0; // 일요일 체크
+    const isSundayOrSaturday = [0, 6].includes(getDay(date)); // 일요일(0) 또는 토요일(6) 체크
     const isSelected = startDate && format(startDate, 'yyyy-MM-dd') === formattedDate;
-
+  
+    // 일요일과 토요일일 경우 '휴무'로 표시
+    const displayLabel = isSundayOrSaturday ? "휴무" : label;
+  
     return (
-      <div className={`day-content ${isSunday ? "sunday" : ""} ${isSelected ? "selected" : ""}`}>
+      <div
+        className={`day-content ${isSunday ? "sunday" : ""} ${isSundayOrSaturday ? "closed" : ""} ${isSelected ? "selected" : ""}`}
+      >
         <div className="day-number">{day}</div>
-        {label && <div className="day-label">{label}</div>} {/* 라벨을 표시 */}
+        {displayLabel && <div className="day-label">{displayLabel}</div>}
       </div>
     );
   };
@@ -353,6 +359,14 @@ const SelectedDatePage = () => {
 
           .selected .day-number {
             font-weight: bold;
+          }
+          .closed .day-number {
+            color: gray; /* 휴무 색상 */
+          }
+          .closed .day-label {
+            font-size: 12px;
+            font-weight: bold;
+            color: gray; /* "휴무" 색상 */
           }
         `}
               </style>

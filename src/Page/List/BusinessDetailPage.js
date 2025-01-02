@@ -98,7 +98,7 @@ const EventDetailPage = () => {
         console.log(business.business_name)
         console.log(business.business_registration_number)
         console.log(business.business_no_show)
-       
+
         dispatch(setBusinessInfo({
             business_name: business.business_name,
             business_registration_number: business.business_registration_number,
@@ -184,19 +184,21 @@ const EventDetailPage = () => {
                     <p>주말｜{weekendOpenTime}~{weekendCloseTime}</p>
                 </div>
                 <div className='event-button-container'>
-                    <div className='event-button'>
+                    {/* <div className='event-button'>
                         <button>
                             <img src={locationUrl} alt='' />
                         </button>
                         <div className='event-button-text'>위치</div>
-                    </div>
+                    </div> */}
                     <div className='event-button'>
-                        <button>
-                            <img src={callUrl} alt='' />
-                        </button>
+                        <a href={`tel:${business.business_phone1}${business.business_phone2}${business.business_phone3}`}>
+                            <button>
+                                <img src={callUrl} alt='' />
+                            </button>
+                        </a>
                         <div className='event-button-text'>전화</div>
                     </div>
-                    <div className='event-button'>
+                    {/* <div className='event-button'>
                         <button>
                             <img src={shareUrl} alt='' />
                         </button>
@@ -207,13 +209,13 @@ const EventDetailPage = () => {
                             <img src={heartUrl} alt='' />
                         </button>
                         <div className='event-button-text'>찜</div>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="event-text-box">
                     {business.business_comment}
                 </div>
                 <div className='information-text'>
-                    Price information
+                    가격표
                 </div>
                 <div className='img'>
                     <img src={business.business_price_image1} style={{ width: "300px", height: "300px" }}></img>

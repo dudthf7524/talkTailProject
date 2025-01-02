@@ -6,25 +6,25 @@ const dayjs = require("dayjs");
 const beautyReservation = async (beautyReservationData) => {
     console.log("미용예약 데이터베이스")
     console.log(beautyReservationData)
-    try {
-        const BeautyReservationData = await BeautyReservation.create({
-            business_registration_number: beautyReservationData.business_registration_number,
-            platform_id: beautyReservationData.platform_id,
-            pet_id: beautyReservationData.pet_id,
-            business_desinger_id: beautyReservationData.business_desinger_id,
-            beauty_style: beautyReservationData.beauty_style,
-            beauty_significant: beautyReservationData.beauty_significant,
-            beauty_caution: beautyReservationData.beauty_caution,
-            deposit_amount: beautyReservationData.depositAmount,
-            reservation_applicationTime: beautyReservationData.reservationApplicationTime,
-            date: beautyReservationData.date,
-            start_time: beautyReservationData.startTime,
-            end_time: beautyReservationData.startTime,
-        });
-        return BeautyReservationData;
-    } catch (error) {
-        throw new Error(`Failed to register pet: ${error.message}`);
-    }
+    // try {
+    //     const BeautyReservationData = await BeautyReservation.create({
+    //         business_registration_number: beautyReservationData.business_registration_number,
+    //         platform_id: beautyReservationData.platform_id,
+    //         pet_id: beautyReservationData.pet_id,
+    //         business_desinger_id: beautyReservationData.business_desinger_id,
+    //         beauty_style: beautyReservationData.beauty_style,
+    //         beauty_significant: beautyReservationData.beauty_significant,
+    //         beauty_caution: beautyReservationData.beauty_caution,
+    //         deposit_amount: beautyReservationData.depositAmount,
+    //         reservation_applicationTime: beautyReservationData.reservationApplicationTime,
+    //         date: beautyReservationData.date,
+    //         start_time: beautyReservationData.startTime,
+    //         end_time: beautyReservationData.startTime,
+    //     });
+    //     return BeautyReservationData;
+    // } catch (error) {
+    //     throw new Error(`Failed to register pet: ${error.message}`);
+    // }
 };
 
 const beautyReservationGet = async (business_registration_number) => {

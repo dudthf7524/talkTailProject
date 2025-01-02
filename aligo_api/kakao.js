@@ -196,35 +196,35 @@ const templateRequest = (req, res) => {
 const alimtalkSend = (req, res) => {
     console.log('카카오 api 처리코드')
     console.log(req.body)
-    const reservationDesiredTime = req.body.reservationDesiredTime;
+    const startTime = req.body.startTime;
     console.log('카카오 api 처리코드')
     req.body = {}
     req.body.username = "최영솔"
     req.body.userphone = "010-7751-4068"
     req.body.style = "전체미용"
-    req.body.reservationDesiredTime = reservationDesiredTime;
+    req.body.start_time = startTime;
 
 
 
     req.body.senderkey = '89df6266d96c0663c9263f3ff08986bcde7e4124';
-    req.body.tpl_code = 'TW_9032',
+    req.body.tpl_code = 'TX_1486',
     req.body.sender = '010-4026-5955',
     req.body.receiver_1 = '010-7751-4068',
     req.body.recvname_1 = '최영솔',
-    req.body.message_1 = `새로운 예약이 등록되었습니다.\n\n고객명: ${req.body.username}\n전화번호: ${req.body.userphone}\n스타일: ${req.body.style}\n예약시간: ${req.body.reservationDesiredTime}\n\n`,
+    req.body.message_1 = `새로운 예약이 등록되었습니다.\n\n고객명: ${req.body.username}\n전화번호: ${req.body.userphone}\n스타일: ${req.body.style}\n예약시간: ${req.body.start_time}\n\n`,
 
 
-    // req.body.button_1 =  JSON.stringify( {
-    //     "button": [
-    //         {
-    //             name: "예약 상세 보기",
-    //             linkType: "WL",
-    //             linkTypeName: "웹링크",
-    //             linkMo: 'https://naver.com',
-    //             linkPc: 'https://naver.com',
-    //         }
-    //     ]
-    // });
+    req.body.button_1 =  JSON.stringify( {
+        "button": [
+            {
+                name: "예약 상세 보기",
+                linkType: "WL",
+                linkTypeName: "웹링크",
+                linkMo: 'https://naver.com',
+                linkPc: 'https://naver.com',
+            }
+        ]
+    });
     
     // button_1: {
     //     "button": [{
@@ -236,7 +236,7 @@ const alimtalkSend = (req, res) => {
     //     }]
     //     }
 
-    // req.body.testMode = 'Y';
+    req.body.testMode = 'Y';
  
 
     console.log(req.body)
@@ -265,7 +265,7 @@ const alimtalkSend = (req, res) => {
 
     // aligoapi.templateList(req, AuthData)
     //     .then((r) => {
-    //         console.log('알림톡 전송 성공:', r.list[0].buttons); // 성공한 응답을 콘솔에 출력
+    //         console.log('알림톡 전송 성공:', r); // 성공한 응답을 콘솔에 출력
     //         res.send(r)
     //     })
     //     .catch((e) => {
@@ -273,15 +273,15 @@ const alimtalkSend = (req, res) => {
     //         res.send(e)
     //     })
 
-    aligoapi.alimtalkSend(req, AuthData)
-        .then((r) => {
-            console.log('알림톡 전송 성공:', r); // 성공한 응답을 콘솔에 출력
-            res.send(r)
-        })
-        .catch((e) => {
-            console.error('알림톡 전송 실패:', e); // 에러 메시지를 콘솔에 출력
-            res.send(e)
-        })
+    // aligoapi.alimtalkSend(req, AuthData)
+    //     .then((r) => {
+    //         console.log('알림톡 전송 성공:', r); // 성공한 응답을 콘솔에 출력
+    //         res.send(r)
+    //     })
+    //     .catch((e) => {
+    //         console.error('알림톡 전송 실패:', e); // 에러 메시지를 콘솔에 출력
+    //         res.send(e)
+    //     })
 }
 
 const historyList = (req, res) => {

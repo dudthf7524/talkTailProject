@@ -10,6 +10,7 @@ const { BusinessBeautySignificant } = require("../models");
 
 
 const createBusiness = async (businessInfo) => {
+    const business_owner_phone = businessInfo.business_owner_phone1 + "-" + businessInfo.business_owner_phone2 + "-" + businessInfo.business_owner_phone3;
     console.log('데이터베이스 저장 코드')
     console.log(businessInfo)
     try {
@@ -21,9 +22,7 @@ const createBusiness = async (businessInfo) => {
             login_password: businessInfo.login_password,
             business_owner_name: businessInfo.business_owner_name,
             business_owner_email: businessInfo.business_owner_email,
-            business_owner_phone1: businessInfo.business_owner_phone1,
-            business_owner_phone2: businessInfo.business_owner_phone2,
-            business_owner_phone3: businessInfo.business_owner_phone3,
+            business_owner_phone: business_owner_phone,
             created_at: new Date(),
             updated_at: new Date(),
         });
@@ -37,7 +36,7 @@ const createBusiness = async (businessInfo) => {
 const createBusinessInformation = async (businessInformationInfo) => {
     console.log("serverce")
     console.log(businessInformationInfo)
-
+    const business_phone = businessInformationInfo.business_phone1 + "-" + businessInformationInfo.business_phone2 + "-" + businessInformationInfo.business_phone3;
     const t = await sequelize.transaction(); // 트랜잭션 시작
 
     try {
@@ -59,9 +58,7 @@ const createBusinessInformation = async (businessInformationInfo) => {
             weekend_close_time: businessInformationInfo.weekend_close_time,
             dayon: businessInformationInfo.dayon,
             dayoff: businessInformationInfo.dayoff,
-            business_phone1: businessInformationInfo.business_phone1,
-            business_phone2: businessInformationInfo.business_phone2,
-            business_phone3: businessInformationInfo.business_phone3,
+            business_phone: business_phone,
             business_comment: businessInformationInfo.business_comment,
             business_no_show: businessInformationInfo.business_no_show,
             created_at: new Date(),

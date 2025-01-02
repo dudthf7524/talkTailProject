@@ -91,16 +91,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: '',
       },
-      business_phone1: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      business_phone2: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      business_phone3: {
-        type: DataTypes.INTEGER,
+      business_phone: {
+        type: DataTypes.STRING(20),
         allowNull: false,
       },
       business_comment: {

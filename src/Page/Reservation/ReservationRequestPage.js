@@ -239,21 +239,7 @@ const ReservationRequestPage = () => {
             startTime: formData.startTime || '',
         };
         console.log(dataToSend)
-        // try {
-        //     const token = localStorage.getItem('token');
-        //     const response = await api.post('/api/beauty/reservation', dataToSend,
-        //         {
-        //             headers: {
-        //                 Authorization: `Bearer ${token}`,
-                        
-        //             }
-        //         }
-        //     );
-        //     console.log(response)
-
-        // } catch (error) {
-            
-        // }
+      
         //  try{
         //     const token = localStorage.getItem('token');
         //     const response = await api.post('/api/akv10/alimtalk/send', JSON.stringify(dataToSend),
