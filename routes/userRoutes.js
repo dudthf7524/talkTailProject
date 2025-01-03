@@ -52,5 +52,25 @@ router.put('/user/edit', async(req, res) => {
         res.status(500).json({ error: error.message });
     }
 })
+router.get('/user/reservation', authMiddleware, async(req, res) => {
+    console.log("useruseruser")
+    console.log(req.user)
+
+    const platform_id = req.user.id
+
+    try{
+        const reservation = await userDatabase.userReservation(platform_id)
+        
+        console.log("reservation")
+        console.log(reservation)
+        console.log("reservation")
+        res.status(201).json({ reservation });
+    }catch(error){
+        console.error('Error fetching userIformation:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+
+
+})
 
 module.exports = router;

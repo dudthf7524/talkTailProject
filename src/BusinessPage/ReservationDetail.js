@@ -92,8 +92,26 @@ const ReservationDetail = () => {
 
   };
 
-  const handleReject = () => {
+  const handleReject = async () => {
+    console.log()
     console.log('거절');
+    try {
+      console.log(reservationCompleteTime)
+      const response = await api.put(`/api/beauty/reservation/reject/${id}`, { reservationCompleteTime }, { withCredentials: true });
+      console.log('수락');
+      setCheckMessage('확정되었습니다.');
+      setModalOpen(false);
+      setCheckModalOpen(true);
+
+      console.log(response.data)
+
+
+      setTimeout(() => {
+        navigate('/business/reservation/management');
+      }, 2000); // 2초 후 리다이렉트
+    } catch (error) {
+      console.error('예약 완료 실패:', error);
+    }
     setCheckMessage('거절사유를 전송했습니다.');
     setModalOpen(false);
     setCheckModalOpen(true);

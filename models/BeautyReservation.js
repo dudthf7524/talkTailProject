@@ -68,7 +68,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
-      }
+      },
+      reservation_state: {
+        type: DataTypes.STRING(10),
+        allowNull: false,
+        defaultValue: '',
+      },
     },
     {
       timestamps: false,

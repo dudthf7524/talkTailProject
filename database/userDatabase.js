@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 
-const { UserInformation } = require('../models');
+const { UserInformation, BeautyReservation } = require('../models');
 const { User } = require('../models');
 // 사용자 ID를 기반으로 사용자 정보를 조회하는 함수
 const getUserById = async (platform_id, platform) => {
@@ -33,9 +33,9 @@ const getUserInformation = async (platform_id) => {
     console.log("user")
     if (!userInformation) {
       return userInformation;
-      
+
     }
-   
+
     return userInformation;
   } catch (error) {
     throw new Error(`Error fetching user by ID: ${error.message}`);
@@ -116,7 +116,7 @@ const createUserInformation = async (userData) => {
 
 const userEidt = async (userEditData) => {
 
-  const phone = userEditData.user_phone1+"-"+userEditData.user_phone2+"-"+userEditData.user_phone3;
+  const phone = userEditData.user_phone1 + "-" + userEditData.user_phone2 + "-" + userEditData.user_phone3;
   try {
     const updatedFields = {
       user_name: userEditData.user_name,
@@ -125,7 +125,7 @@ const userEidt = async (userEditData) => {
     };
 
     const [rowsUpdated] = await UserInformation.update(updatedFields, {
-      where: { user_information_id: userEditData.user_information_id},
+      where: { user_information_id: userEditData.user_information_id },
     });
 
     console.log([rowsUpdated])
@@ -134,12 +134,28 @@ const userEidt = async (userEditData) => {
     }
 
     // 업데이트된 사용자 정보를 조회합니다.
-   return "수정완료"
+    return "수정완료"
   } catch (error) {
     throw new Error(`Error updating user profile: ${error.message}`);
   }
 };
 
+const userReservation = async (platform_id) => {
+  console.log("데이터베이스 코드")
+  console.log(platform_id)
+  try {
+    const reservationData = await BeautyReservation.findAll({
+      where: {
+        platform_id: platform_id,
+      },
+    });
+  
+    return reservationData;
+
+  } catch (error) {
+    throw new Error(`Failed to register pet: ${error.message}`);
+  }
+};
 
 module.exports = {
   findOrCreateUser,
@@ -148,4 +164,5 @@ module.exports = {
   updateUserProfile,
   createUserInformation,
   userEidt,
+  userReservation,
 };

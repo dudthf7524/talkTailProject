@@ -17,7 +17,7 @@ const ReservationManagement = () => {
         const response = await api.get('/api/beauty/reservation', { withCredentials: true });
         setReservationManagementList(response.data);
         console.log(response.data)
-        if(response.data =='common'){
+        if (response.data == 'common') {
           navigate('/business/login');
         }
       } catch (error) {
@@ -65,12 +65,15 @@ const ReservationManagement = () => {
           <div className='reservation-item'>{reservationManagement.reservation_applicationTime}</div>
           <div className='reservation-item'>{reservationManagement.date} {reservationManagement.start_time}</div>
           {
-            reservationManagement.beauty_reservation_is_avaiable
-              ?
-              <div className='reservation-item'>완료</div>
-              :
-              <div className='reservation-item'>예약대기 중</div>
-
+            reservationManagement.reservation_state === '완료' ? (
+              <div style={{ fontWeight: 'bold', color: 'green' }}>완료</div>
+            ) : reservationManagement.reservation_state === '대기' ? (
+              <div style={{ fontWeight: 'bold', color: 'orange' }}>예약대기 중</div>
+            ) : reservationManagement.reservation_state === '거절' ? (
+              <div style={{ fontWeight: 'bold', color: 'red' }}>거절</div>
+            ) : (
+              <div style={{ fontWeight: 'bold', color: 'gray' }}>알 수 없음</div>
+            )
           }
           <div className='reservation-item'>
             <button className='detail-button' onClick={() => navigate(`/business/reservation/detail/${reservationManagement.beauty_reservation_id}`)}>상세보기</button>

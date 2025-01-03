@@ -196,12 +196,17 @@ const templateRequest = (req, res) => {
 const alimtalkSend = (req, res) => {
     console.log('카카오 api 처리코드')
     console.log(req.body)
+
+    const username = req.body.username;
+    const userphone = req.body.userphone;
+    const style = req.body.style;
     const startTime = req.body.startTime;
+
     console.log('카카오 api 처리코드')
     req.body = {}
-    req.body.username = "최영솔"
-    req.body.userphone = "010-7751-4068"
-    req.body.style = "전체미용"
+    req.body.username = username;
+    req.body.userphone = userphone;
+    req.body.style = style;
     req.body.start_time = startTime;
 
 

@@ -25,28 +25,28 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
     console.log('user_information', user_information.user_name)
     console.log('user_information', user_information.user_phone)
     
-    // req.body.platform_id = req.user.id;
+    req.body.platform_id = req.user.id;
 
-    // console.log(req.body)
-    // const currentDateTime = dayjs();
-    // const formattedDateTime = currentDateTime.format('YYYY-MM-DD HH:mm');
-    // console.log(formattedDateTime)
+    console.log(req.body)
+    const currentDateTime = dayjs();
+    const formattedDateTime = currentDateTime.format('YYYY-MM-DD HH:mm');
+    console.log(formattedDateTime)
 
-    // req.body.reservationApplicationTime = formattedDateTime;
+    req.body.reservationApplicationTime = formattedDateTime;
 
-    // // 특이사항 알고리즘
-    // let significantSum = "";
-    // for (let i = 0; i < req.body.beauty_significant.length; i++) {
+    // 특이사항 알고리즘
+    let significantSum = "";
+    for (let i = 0; i < req.body.beauty_significant.length; i++) {
 
-    //     significantSum += req.body.beauty_significant[i];
-    //     if (i < req.body.beauty_significant.length - 1) {
-    //         significantSum += "/";
-    //     }
-    // }
-    // // 특이사항 알고리즘
+        significantSum += req.body.beauty_significant[i];
+        if (i < req.body.beauty_significant.length - 1) {
+            significantSum += "/";
+        }
+    }
+    // 특이사항 알고리즘
 
-    // req.body.beauty_significant = significantSum
-    // console.log(req.body)
+    req.body.beauty_significant = significantSum
+    console.log(req.body)
 
     try {
         const result = await reservationDatabase.beautyReservation(req.body)

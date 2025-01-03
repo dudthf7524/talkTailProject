@@ -41,6 +41,7 @@ import WriteNotice from './BusinessPage/WriteNotice';
 import SelectedDatePage from "./Page/Reservation/SelectedDatePage";
 import EditAddressPage from './Page/User/EditAddressPage';
 import UserEdit from './Page/User/UserEdit';
+import Reservation from './Page/MyPage/Reservation';
 
 
 function App() {
@@ -98,7 +99,9 @@ function App() {
             <Route path="/selected/date/:id" element={<SelectedDatePage />} />
             <Route path="/edit-address" element={<EditAddressPage />} />
             <Route path="/user/edit" element={<UserEdit />} />
+            <Route path="/reservation/" element={<Reservation />} />
 
+            Reservation
             <Route path="/business">
               <Route path="login" element={<Login />} />
               <Route path="menu" element={<BusinessMenu />} />
