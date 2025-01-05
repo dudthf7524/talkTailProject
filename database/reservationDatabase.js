@@ -48,7 +48,7 @@ const beautyReservationDetail = async (id) => {
     console.log(id)
     try {
         let sql = "";
-        sql += "select start_time, end_time, business_desinger_name, user_phone, pet_name, pet_species, pet_breed, pet_birth, pet_weight, pet_gender, pet_neuter, beauty_style, beauty_significant, beauty_caution, end_time, beauty_reservation_is_avaiable ";
+        sql += "select start_time, end_time, business_desinger_name, user_phone, pet_name, pet_species, pet_breed, pet_birth, pet_weight, pet_gender, pet_neuter, beauty_style, beauty_significant, beauty_caution, end_time, beauty_reservation_is_avaiable, reservation_state, reject_content ";
         sql += "from beauty_reservation br ";
         sql += "join user_information ui ";
         sql += "on br.platform_id = ui.platform_id ";
@@ -99,7 +99,7 @@ const setCompleteTime = async (id, reservationComplete) => {
     try {
         const setCompleteTimeUpdate = await BeautyReservation.update(
             {
-                beauty_reservation_is_avaiable: true,
+                reservation_state : "완료",
                 end_time: reservationComplete
             },
             {
@@ -133,6 +133,28 @@ const beautyReservationDesinger = async (designerId) => {
 
 
 }
+const beautyReservationReject = async (beauty_reservation_id, reject_content) => {
+
+    console.log(beauty_reservation_id)
+    console.log(reject_content)
+
+    try {
+        const result = await BeautyReservation.update(
+            {
+                reservation_state : "거절",
+                reject_content: reject_content,
+            },
+            {
+                where: { beauty_reservation_id: beauty_reservation_id },
+            }
+        );
+    } catch (error) {
+        console.error('Failed to fetch authority request error: ', error);
+        res.status(500).json({ message: 'Failed to fetch authority request.' });
+    }
+
+
+}
 
 module.exports = {
     beautyReservation,
@@ -140,4 +162,5 @@ module.exports = {
     beautyReservationDetail,
     setCompleteTime,
     beautyReservationDesinger,
+    beautyReservationReject
 };

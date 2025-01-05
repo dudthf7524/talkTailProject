@@ -92,12 +92,12 @@ const ReservationDetail = () => {
 
   };
 
-  const handleReject = async () => {
-    console.log()
-    console.log('거절');
+  const handleReject = async (rejectComment) => {
+    console.log('거절:', rejectComment); // 거절 사유 확인
+    console.log('거절:', rejectComment); // 거절 사유 확인
     try {
-      console.log(reservationCompleteTime)
-      const response = await api.put(`/api/beauty/reservation/reject/${id}`, { reservationCompleteTime }, { withCredentials: true });
+
+      const response = await api.put(`/api/beauty/reservation/reject/${id}`, { rejectComment }, { withCredentials: true });
       console.log('수락');
       setCheckMessage('확정되었습니다.');
       setModalOpen(false);
@@ -171,26 +171,26 @@ const ReservationDetail = () => {
   const [activeTime, setActiveTime] = useState(null);
 
 
-  if(!reservationManagementList){
+  if (!reservationManagementList) {
     return (
       <div>로딩 중... </div>
     )
   }
   const handleButtonClick = (time) => {
-    console.log("time") 
+    console.log("time")
     console.log(time)
-    console.log("time") 
+    console.log("time")
 
-    console.log("reservationCompleteTime") 
+    console.log("reservationCompleteTime")
     setReservationCompleteTime(time)
-   
+
     console.log(reservationCompleteTime)
-    console.log("reservationCompleteTime") 
+    console.log("reservationCompleteTime")
     setActiveTime(time);
 
-    console.log("activeTime") 
+    console.log("activeTime")
     console.log(activeTime)
-    console.log("activeTime") 
+    console.log("activeTime")
 
   };
   return (
@@ -261,13 +261,26 @@ const ReservationDetail = () => {
           <div className='detail-info'>{reservationManagementList.start_time}</div>
         </div>
         <div className='detail-form2'>
-          <div className='detail-title'>완료시간</div>
           {
-            reservationManagementList.beauty_reservation_is_avaiable
-              ? <div className='detail-info'>
+            reservationManagementList.reservation_state === '완료' ? (
+              <div className='detail-title'>완료시간</div>
+            ) : reservationManagementList.reservation_state === '대기' ? (
+              <div className='detail-title'>완료시간</div>
+            ) : reservationManagementList.reservation_state === '거절' ? (
+              <div className='detail-title'>거절내용</div>
+            ) : (
+              <div style={{ fontWeight: 'bold', color: 'gray' }}>알 수 없음</div>
+            )
+          }
+
+
+          {
+            reservationManagementList.reservation_state === '완료' ? (
+              <div className='detail-info'>
                 {reservationManagementList.end_time}
               </div>
-              : <div id="modal-body">
+            ) : reservationManagementList.reservation_state === '대기' ? (
+              <div id="modal-body">
                 <div className="time-selection">
                   {filteredTimeSlots?.map((time) => (
                     <div
@@ -280,22 +293,37 @@ const ReservationDetail = () => {
                   ))}
                 </div>
               </div>
+            ) : reservationManagementList.reservation_state === '거절' ? (
+              <div className='detail-info' style={{ color: "red", fontWeight: "bold" }}>
+                {reservationManagementList.reject_content}
+              </div>
+            ) : (
+              <div style={{ fontWeight: 'bold', color: 'gray' }}>알 수 없음</div>
+            )
           }
         </div>
       </div>
+
+
+
       {
-        reservationManagementList.beauty_reservation_is_avaiable
-          ?
+        reservationManagementList.reservation_state === '완료' ? (
           <div className='footer-button'>
             예약이 완료되었습니다.
           </div>
-          :
+        ) : reservationManagementList.reservation_state === '대기' ? (
           <div className='footer-button'>
             <button className='reject-btn' onClick={() => openModal('reject')}>거절</button>
             <button className='accept-btn' onClick={() => openModal('accept')}>수락</button>
           </div>
+        ) : reservationManagementList.reservation_state === '거절' ? (
+          <div className='footer-button' style={{ color: "red", fontWeight: "bold" }}>
+            예약이 거절되었습니다.
+          </div>
+        ) : (
+          <div style={{ fontWeight: 'bold', color: 'gray' }}>알 수 없음</div>
+        )
       }
-
 
       <ReservationAcceptModal
         isOpen={isModalOpen && actionType === 'accept'}

@@ -4,9 +4,10 @@ import Checkbox from './CheckboxGroup.js';
 import '../../CSS/reservation.css';
 import '../../CSS/notice.css';
 import Payments from './Payments';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import api from '../../Api';
+import { setBusinessInfo } from '../../redux/reservationData.js';
 const ReservationRequestPage = () => {
     const { id } = useParams();
     const location = useLocation();
@@ -78,6 +79,7 @@ const ReservationRequestPage = () => {
     }, [reservationData]);
 
 
+   
     const initialCheckboxes = [
         { label: '전체미용', name: 'overall beauty' },
         { label: '부분미용', name: 'partial beauty' },
@@ -224,40 +226,35 @@ const ReservationRequestPage = () => {
         petId: reservationData.petId || '',
         date: reservationData.date || '',
         startTime: reservationData.startTime || '',
+        business_owner_phone: reservationData.businessInfo.business_owner_phone || '',
     });
+    
+    const dispatch = useDispatch();
+
     const reservationSave = async () => {
+
+        dispatch(setBusinessInfo({
+                   business_owner_phone: lists.business_owner_phone,
+        }));
+    
 
         const dataToSend = {
             beauty_style: style,
             beauty_caution: reviewText,
-            beauty_significant:formData. significantIssues,
+            beauty_significant: formData.significantIssues,
             depositAmount: formData.depositAmount,
             business_registration_number: formData.business_registration_number,
             business_desinger_id: formData.designerName || '',
             pet_id: formData.petId || '',
             date: formData.date || '',
             startTime: formData.startTime || '',
+            business_owner_phone: formData.business_owner_phone || '',
         };
         console.log(dataToSend)
-      
-        //  try{
-        //     const token = localStorage.getItem('token');
-        //     const response = await api.post('/api/akv10/alimtalk/send', JSON.stringify(dataToSend),
-        //         {
-        //             headers: {
-        //                 Authorization: `Bearer ${token}`,
-        //                 'Content-Type': 'application/json',
-        //             }
-        //         }
-        //     );
-        //     console.log(response)
 
-        // }catch(error){
-
-        // }
-        try{
+         try{
             const token = localStorage.getItem('token');
-            const response = await api.post('/api/beauty/reservation', JSON.stringify(dataToSend),
+            const response = await api.post('/api/akv10/alimtalk/send', JSON.stringify(dataToSend),
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -266,10 +263,25 @@ const ReservationRequestPage = () => {
                 }
             );
             console.log(response)
-            navigate('/reservation')
+
         }catch(error){
-            console.log('reservation road failed' + error)
+
         }
+        // try {
+        //     const token = localStorage.getItem('token');
+        //     const response = await api.post('/api/beauty/reservation', JSON.stringify(dataToSend),
+        //         {
+        //             headers: {
+        //                 Authorization: `Bearer ${token}`,
+        //                 'Content-Type': 'application/json',
+        //             }
+        //         }
+        //     );
+        //     console.log(response)
+        //     navigate('/reservation')
+        // } catch (error) {
+        //     console.log('reservation road failed' + error)
+        // }
 
     }
     return (

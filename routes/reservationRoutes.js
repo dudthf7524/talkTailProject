@@ -47,12 +47,12 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
 
     req.body.beauty_significant = significantSum
     console.log(req.body)
-
+    req.body.user_name = user_information.user_name;
+    req.body.user_phone = user_information.user_phone;
+    kakao.alimtalkSend(req, res);
     try {
-        const result = await reservationDatabase.beautyReservation(req.body)
-        req.body.user_name = user_information.user_name;
-        req.body.user_phone = user_information.user_phone;
-        kakao.alimtalkSend(req, res);
+        // const result = await reservationDatabase.beautyReservation(req.body)
+       
         res.status(201).json({ result });
     } catch (error) {
         console.error('Error fetching userIformation:', error.message);
@@ -128,5 +128,26 @@ router.get('/beauty/reservation/desinger/:id', async (req, res) => {
     }
 
 })
+
+router.put('/beauty/reservation/reject/:id', async (req, res) => {
+    console.log(req.params)
+    console.log(req.body)
+
+    const beauty_reservation_id = req.params.id;
+    const reject_content = req.body.rejectComment;
+
+    console.log(beauty_reservation_id)
+    console.log(reject_content)
+
+    try {
+        const result = await reservationDatabase.beautyReservationReject(beauty_reservation_id, reject_content)
+        res.status(201).json(result);
+    } catch (error) {
+        console.error('Error fetching userIformation:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+
+})
+
 
 module.exports = router;

@@ -206,16 +206,17 @@ const significantGet = async (business_registration_number) => {
     console.log(business_registration_number)
 
     try {
-        // const significantGetData = await BusinessBeautySignificant.findOne({
-        //     business_registration_number: business_registration_number,
+      
 
-        // });
-        // console.log(significantGetData)
-        // return significantGetData;
+        let sql = "";
+        sql += "select business_beauty_significant1 , business_beauty_significant2, business_beauty_significant3 ,business_beauty_significant4 ,business_beauty_significant5 , business_owner_phone ";
+        sql += "from business_beauty_significant bbs ";
+        sql += "join business b ";
+        sql += "on bbs.business_registration_number = b.business_registration_number ";
+        sql += "where b.business_registration_number = :business_registration_number ";
 
         const [results, metadata] = await sequelize.query(
-            "select * from business_beauty_significant where business_registration_number = :business_registration_number",
-
+            sql,
             {
                 replacements: { business_registration_number: business_registration_number }, // 바인딩 파라미터
                 type: sequelize.QueryTypes.SELECT, // 쿼리 유형

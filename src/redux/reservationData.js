@@ -8,10 +8,12 @@ const reservationDataSlice = createSlice({
         date: null,  // 예약 희망시간을 저장할 상태
         startTime : null,
         petId: null,     // 예약 펫 id를 저장할 상태
+        
         businessInfo: {         // 미용가게 정보 (객체 형태)
             business_name: null,         // 가게 이름
             business_registration_number: null, // 사업자 번호
             business_no_show: null,     // 노쇼 방지 금액
+            business_owner_phone : null,
         },
     },
     reducers: {

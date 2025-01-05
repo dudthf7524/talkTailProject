@@ -74,6 +74,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: '',
       },
+      reject_content: {
+        type: DataTypes.STRING(200),
+        allowNull: false,
+        defaultValue: '',
+      },
+      
     },
     {
       timestamps: false,

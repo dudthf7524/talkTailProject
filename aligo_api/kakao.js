@@ -197,26 +197,27 @@ const alimtalkSend = (req, res) => {
     console.log('카카오 api 처리코드')
     console.log(req.body)
 
-    const username = req.body.username;
-    const userphone = req.body.userphone;
-    const style = req.body.style;
-    const startTime = req.body.startTime;
-
+    // const username = req.body.user_name;
+    // const userphone = req.body.user_phone;
+    // const style = req.body.beauty_style;
+    // const startTime = req.body.startTime;
+    // const business_owner_phone = req.body.business_owner_phone;
+    
     console.log('카카오 api 처리코드')
     req.body = {}
-    req.body.username = username;
-    req.body.userphone = userphone;
-    req.body.style = style;
-    req.body.start_time = startTime;
-
+    req.body.username = "최영솔";
+    req.body.userphone = "010-7751-4068";
+    req.body.style = "전체미용";
+    req.body.start_time = "10:30";
+   
 
 
     req.body.senderkey = '89df6266d96c0663c9263f3ff08986bcde7e4124';
     req.body.tpl_code = 'TX_1486',
     req.body.sender = '010-4026-5955',
-    req.body.receiver_1 = '010-7751-4068',
+    req.body.receiver_1 = "010-7751-4068";
     req.body.recvname_1 = '최영솔',
-    req.body.message_1 = `새로운 예약이 등록되었습니다.\n\n고객명: ${req.body.username}\n전화번호: ${req.body.userphone}\n스타일: ${req.body.style}\n예약시간: ${req.body.start_time}\n\n`,
+    req.body.message_1 = `새로운 에약이 등록되었습니다.\n\n고객명 : ${req.body.username}\n전화번호: ${req.body.userphone}\n스타일: ${req.body.style}\n예약시간: ${req.body.start_time}\n\n`,
 
 
     req.body.button_1 =  JSON.stringify( {
@@ -225,8 +226,8 @@ const alimtalkSend = (req, res) => {
                 name: "예약 상세 보기",
                 linkType: "WL",
                 linkTypeName: "웹링크",
-                linkMo: 'https://naver.com',
-                linkPc: 'https://naver.com',
+                linkMo: 'http://www.naver.com',
+                linkPc: 'http://www.naver.com',
             }
         ]
     });
@@ -241,7 +242,7 @@ const alimtalkSend = (req, res) => {
     //     }]
     //     }
 
-    req.body.testMode = 'Y';
+    // req.body.testMode = 'Y';
  
 
     console.log(req.body)
@@ -270,7 +271,7 @@ const alimtalkSend = (req, res) => {
 
     // aligoapi.templateList(req, AuthData)
     //     .then((r) => {
-    //         console.log('알림톡 전송 성공:', r); // 성공한 응답을 콘솔에 출력
+    //         console.log('알림톡 전송 성공:', r.list[0].buttons); // 성공한 응답을 콘솔에 출력
     //         res.send(r)
     //     })
     //     .catch((e) => {
