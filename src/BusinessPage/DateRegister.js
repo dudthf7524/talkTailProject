@@ -6,7 +6,7 @@ import api from '../Api';
 
 function DateRegister() {
     const [dateList, setDateLists] = useState({
-        hours: new Array(7).fill({ isOperatingDay: true, start_time: '', end_time: '' }) // 기본값 설정
+        hours: new Array(7).fill({ isOperatingDay: true, start_time: '09:00', end_time: '19:00' }) // 기본값 설정
     });
     const [step, setStep] = useState(1); // 단계 (1: 영업일 선택, 2: 시간 선택)
     const navigate = useNavigate();
@@ -40,7 +40,18 @@ function DateRegister() {
             return updatedDateList;
         });
     };
-
+    const transformDateList = (dateList) => {
+        const transformed = dateList.hours.reduce((acc, current, index) => {
+            acc[index] = current; // 인덱스를 키로 사용
+            return acc;
+        }, {});
+        return { hours: transformed };
+    };
+    
+    // 예시 사용
+    const transformedDateList = transformDateList(dateList);
+    console.log(transformedDateList);
+    
     // 시간 변경 핸들러
     const handleTimeChange = (dayIndex, type, value) => {
         setDateLists((prev) => {
@@ -56,8 +67,10 @@ function DateRegister() {
 
     // 저장 핸들러
     const handleSave = async () => {
+        const transformedDateList = transformDateList(dateList);
+
         try {
-            await api.post('/api/business/date/register', dateList, { withCredentials: true });
+            await api.post('/api/business/date/register', transformedDateList, { withCredentials: true });
             alert('시간이 등록되었습니다.');
             navigate('/business/menu'); // 등록 후 메뉴로 이동
         } catch (e) {
