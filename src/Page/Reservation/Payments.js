@@ -14,6 +14,9 @@ function Payments({ closePaymentModal, confirmPayment }) {
             console.error('IMP 객체를 초기화할 수 없습니다. 포트원 SDK가 제대로 로드되지 않았습니다.');
         }
     }, []);
+
+
+
     const businessInfo = useSelector((state) => state.reservationData.businessInfo); // Redux 상태 가져오기
     console.log("businessInfo.business_name:", businessInfo.business_name); // 리덕스 상태 출력
     console.log("businessInfo.business_no_show:", businessInfo.business_no_show); // 리덕스 상태 출력
@@ -129,6 +132,7 @@ function Payments({ closePaymentModal, confirmPayment }) {
         }, handlePaymentResponse);
     };
 
+    
     return (
         <div className='modal-overlay'>
             <div className='modal'>

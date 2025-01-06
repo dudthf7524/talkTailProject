@@ -242,7 +242,7 @@ const alimtalkSend = (req, res) => {
     //     }]
     //     }
 
-    // req.body.testMode = 'Y';
+    req.body.testMode = 'Y';
  
 
     console.log(req.body)

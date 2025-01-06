@@ -122,7 +122,7 @@ router.post('/business/login', async (req, res, next) => {
 
 router.get('/businesses/information', authMiddleware, async (req, res) => {
   console.log('검색할 때마다 데이터베이스를 조회한다')
-  
+
   try {
     const { category } = req.query;
     const businessesInformation = await businessDatabase.getBusinesses();
@@ -139,17 +139,17 @@ router.get('/businesses/information', authMiddleware, async (req, res) => {
 router.get('/business/detail/:id', authMiddleware, async (req, res) => {
   const { id } = req.params;
   try {
-      const businessInformationById = await businessDatabase.getBusinessDetailsById(id);
-      res.json(businessInformationById);
+    const businessInformationById = await businessDatabase.getBusinessDetailsById(id);
+    res.json(businessInformationById);
   } catch (error) {
-      res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 })
 
 router.post('/business/register/desinger', async (req, res) => {
 
   try {
-    
+
     console.log(req.body)
     console.log(req.user.business_registration_number)
     const RegisterDesinger = req.body
@@ -168,11 +168,11 @@ router.post('/business/register/desinger', async (req, res) => {
 });
 
 router.put('/business/beauty/significant', async (req, res) => {
-  
+
   try {
-    
+
     console.log(req.body)
-   
+
     const RegisterBeautySignificant = req.body
 
     const businessRegisterDesinger = await businessDatabase.updateBusinessBeautySignificant(RegisterBeautySignificant);
@@ -184,32 +184,67 @@ router.put('/business/beauty/significant', async (req, res) => {
   }
 
 });
-router.post('/business/style/significantGet' ,async(req, res) => {
- 
+router.post('/business/style/significantGet', async (req, res) => {
+
   const business_registration_number = req.body.business_registration_number;
-  try{
-      const userGetAuthority = await businessDatabase.significantGet(business_registration_number);
-      res.json(userGetAuthority);
-  }catch(error){
-      console.error('Failed to fetch authority request error: ', error);
-      res.status(500).json({ message: 'Failed to fetch authority request.' });
+  try {
+    const userGetAuthority = await businessDatabase.significantGet(business_registration_number);
+    res.json(userGetAuthority);
+  } catch (error) {
+    console.error('Failed to fetch authority request error: ', error);
+    res.status(500).json({ message: 'Failed to fetch authority request.' });
   }
 })
 
-router.get('/business/style/significantGet', authMiddlewareSession ,async(req, res) => {
-    console.log(req.session)
-    console.log(req.session.user)
-    console.log("req.user")
-    console.log(req.user.business_registration_number)
-    const business_registration_number = req.user.business_registration_number;
-   
-    try{
-        const userGetAuthority = await businessDatabase.significantGet(business_registration_number);
-        res.json(userGetAuthority);
-    }catch(error){
-        console.error('Failed to fetch authority request error: ', error);
-        res.status(500).json({ message: 'Failed to fetch authority request.' });
-    }
+router.get('/business/style/significantGet', authMiddlewareSession, async (req, res) => {
+  console.log(req.session)
+  console.log(req.session.user)
+  console.log("req.user")
+  console.log(req.user.business_registration_number)
+  const business_registration_number = req.user.business_registration_number;
+
+  try {
+    const userGetAuthority = await businessDatabase.significantGet(business_registration_number);
+    res.json(userGetAuthority);
+  } catch (error) {
+    console.error('Failed to fetch authority request error: ', error);
+    res.status(500).json({ message: 'Failed to fetch authority request.' });
+  }
+})
+
+router.get('/business/date/edit', authMiddlewareSession, async (req, res) => {
+  console.log("라우터")
+  console.log(req.user.registrationNumber)
+  console.log("라우터")
+
+  const business_registration_number = req.user.registrationNumber
+
+  try {
+    const getDateEditData = await businessDatabase.getDateEdit(business_registration_number);
+    res.json(getDateEditData);
+  } catch (error) {
+    console.error('Failed to fetch authority request error: ', error);
+    res.status(500).json({ message: 'Failed to fetch authority request.' });
+  }
+
+})
+
+router.post('/business/date/register', authMiddlewareSession, async (req, res) => {
+  console.log("라우터")
+  console.log(req.user.registrationNumber)
+  console.log(req.body)
+  console.log("라우터")
+
+  const business_registration_number = req.user.registrationNumber
+  const dateRegisterData = req.body
+  try {
+    const getDateEditData = await businessDatabase.dateRegister(business_registration_number, dateRegisterData);
+    res.json(getDateEditData);
+  } catch (error) {
+    console.error('Failed to fetch authority request error: ', error);
+    res.status(500).json({ message: 'Failed to fetch authority request.' });
+  }
+
 })
 
 

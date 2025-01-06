@@ -7,6 +7,8 @@ const { BusinessInformation, sequelize } = require("../models");
 const { BusinessDesinger } = require("../models");
 const { Business } = require("../models");
 const { BusinessBeautySignificant } = require("../models");
+const { StoreHours } = require("../models");
+
 
 
 const createBusiness = async (businessInfo) => {
@@ -238,7 +240,60 @@ const significantGet = async (business_registration_number) => {
     }
 };
 
+const getDateEdit = async (business_registration_number) => {
+    console.log(business_registration_number)
 
+    try {
+        let sql = "";
+        sql += "select * from store_hours ";
+        sql += "where business_registration_number = :business_registration_number ";
+
+        const [results, metadata] = await sequelize.query(
+            sql,
+            {
+                replacements: { business_registration_number: business_registration_number }, // 바인딩 파라미터
+                type: sequelize.QueryTypes.SELECT, // 쿼리 유형
+                logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
+            }
+
+        );
+        console.log(metadata);
+        console.log(results);
+        return results
+
+
+    } catch (error) {
+        // 오류를 더욱 상세하게 로깅
+        console.error('Error creating BusinessBeautySignificant:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        throw new Error('Failed to create RegisterBeautySignificant: ' + error.message);
+    }
+};
+
+const dateRegister = async (business_registration_number, dateRegisterData) => {
+    console.log(business_registration_number)
+    console.log(dateRegisterData)
+
+    try {
+        const business = await Business.create({
+            business_registration_number: businessInfo.business_registration_number,
+            business_registration_name: businessInfo.business_registration_name,
+            category: businessInfo.category,
+            login_id: businessInfo.login_id,
+            login_password: businessInfo.login_password,
+            business_owner_name: businessInfo.business_owner_name,
+            business_owner_email: businessInfo.business_owner_email,
+            business_owner_phone: business_owner_phone,
+            created_at: new Date(),
+            updated_at: new Date(),
+        });
+
+        return business;
+    } catch (error) {
+        throw new Error('Failed to create business', error.message);
+    }
+};
 module.exports = {
     createBusiness,
     businessLogin,
@@ -248,4 +303,6 @@ module.exports = {
     createBusinessDesinger,
     updateBusinessBeautySignificant,
     significantGet,
+    getDateEdit,
+    dateRegister,
 };

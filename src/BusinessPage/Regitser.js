@@ -66,15 +66,6 @@ function Register() {
         <div onClick={handleSave}>저장</div>
       </div>
       <div className='main-mid'>
-        {/* 카테고리
-        <div className='input-container'>
-          <p>사업체 운영 종류</p>
-          <select name='category' onChange={handleInputChange}>
-            <option value="beauty">미용</option>
-            <option value="hotel">호텔</option>
-            <option value="kindergarten">유치원</option>
-          </select>
-        </div> */}
         회원가입
         <div className='input-container-id'>
           <p>아이디</p>

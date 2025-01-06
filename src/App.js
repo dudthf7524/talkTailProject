@@ -42,7 +42,9 @@ import SelectedDatePage from "./Page/Reservation/SelectedDatePage";
 import EditAddressPage from './Page/User/EditAddressPage';
 import UserEdit from './Page/User/UserEdit';
 import Reservation from './Page/MyPage/Reservation';
-
+import DateRegister from './BusinessPage/DateRegister';
+import DateEdit from './BusinessPage/DateEdit';
+import DayOnOffEdit from './BusinessPage/DayOnOffEdit';
 
 function App() {
   const [imageFiles, setImageFiles] = useState({
@@ -101,7 +103,7 @@ function App() {
             <Route path="/user/edit" element={<UserEdit />} />
             <Route path="/reservation/" element={<Reservation />} />
 
-            Reservation
+            
             <Route path="/business">
               <Route path="login" element={<Login />} />
               <Route path="menu" element={<BusinessMenu />} />
@@ -115,6 +117,9 @@ function App() {
               <Route path="reservation/detail/:id" element={<ReservationDetail />} />
               <Route path="customer/management" element={<CustomerManagement />} />
               <Route path="write/notice/:id" element={<WriteNotice />} />
+              <Route path="date/register" element={<DateRegister />} />
+              <Route path="date/edit" element={<DateEdit />} />
+              <Route path="day-on-off/edit" element={<DayOnOffEdit />} />
             </Route>
           </Routes>
         </ImageProvider>

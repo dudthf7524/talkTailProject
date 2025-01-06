@@ -140,3 +140,91 @@
     border: none;
     cursor: pointer;
 }
+
+.date-title {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    padding: 10px;
+    margin-top: 90px;
+}
+
+.date-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 25px;
+    font-weight: bold;
+    
+}
+
+.date-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 25px;
+    height: 90px;
+}
+
+.date-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    padding: 10px;
+}
+
+.date-item input {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    border-radius: 16px;
+    box-sizing: border-box;
+   
+    color: #262626;
+    border: none;
+    outline: none;
+    font-size: 20px;
+   
+}
+/* 공통 스타일 */
+.select-box {
+    width: 100%;
+    font-size: 20px;
+    text-align: center;
+    color: #333;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    padding: 10px;
+    appearance: none; /* 기본 스타일 제거 */
+    -webkit-appearance: none; /* 크롬 및 사파리 */
+    -moz-appearance: none; /* 파이어폭스 */
+}
+
+/* 화살표 추가 */
+.select-box::after {
+    content: "▼";
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #999;
+    pointer-events: none;
+}
+/* hover 효과 */
+.select-box:hover {
+    border-color: #F0663F;
+  
+}
+/* focus 효과 */
+.select-box:focus {
+    outline: none;
+    border-color:#F0663F;
+    box-shadow: 0 0 5px #F0663F;
+    border-width: 2px; /* border 두께 */
+    border-style: solid; /* border 스타일 */
+}
+
+
