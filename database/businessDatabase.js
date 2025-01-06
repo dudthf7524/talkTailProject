@@ -272,23 +272,25 @@ const getDateEdit = async (business_registration_number) => {
 };
 
 const dateRegister = async (business_registration_number, dateRegisterData) => {
+    console.log("aaaaaaaaaaaaaaaa")
     console.log(business_registration_number)
-    console.log(dateRegisterData)
+    console.log(dateRegisterData.hours)
+    console.log("aaaaaaaaaaaaaaaa")
     const storeHoursData = {
         business_registration_number: business_registration_number,
         hours: dateRegisterData // dateRegisterData가 {"0": {...}, "1": {...}, ...} 형태여야 합니다.
     };
 
-    try {
-        // STORE_HOURS 테이블에 영업시간 등록
-        const business = await StoreHours.create(storeHoursData);
-        console.log('Business Hours successfully registered:', business);
+    // try {
+    //     // STORE_HOURS 테이블에 영업시간 등록
+    //     const business = await StoreHours.create(storeHoursData);
+    //     console.log('Business Hours successfully registered:', business);
 
-        return business;
-    } catch (error) {
-        console.error('Failed to create business hours:', error);
-        throw new Error('Failed to create business hours');
-    }
+    //     return business;
+    // } catch (error) {
+    //     console.error('Failed to create business hours:', error);
+    //     throw new Error('Failed to create business hours');
+    // }
 };
 module.exports = {
     createBusiness,

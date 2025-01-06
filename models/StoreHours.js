@@ -9,15 +9,17 @@ module.exports = (sequelize, DataTypes) => {
           autoIncrement: true,
         },
         business_registration_number: {
-          type: DataTypes.STRING(30),
+          type: DataTypes.STRING(200),
           allowNull: false,
           references: {
             model: 'BUSINESS', // BUSINESS 테이블을 참조
             key: 'business_registration_number',
           },
+          onUpdate: 'CASCADE', // 외래 키 업데이트 정책
+          onDelete: 'CASCADE', // 외래 키 삭제 정책
         },
         hours: {
-          type: DataTypes.JSONB, // JSON 형식으로 영업시간을 저장
+          type: DataTypes.JSON, // JSON 형식으로 영업시간을 저장
           allowNull: false,
         },
       },

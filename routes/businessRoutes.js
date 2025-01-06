@@ -230,11 +230,6 @@ router.get('/business/date/edit', authMiddlewareSession, async (req, res) => {
 })
 
 router.post('/business/date/register', authMiddlewareSession, async (req, res) => {
-  console.log("라우터")
-  console.log(req.user.registrationNumber)
-  console.log(req.body)
-  console.log("라우터")
-
   const business_registration_number = req.user.registrationNumber
   const dateRegisterData = req.body
   try {
