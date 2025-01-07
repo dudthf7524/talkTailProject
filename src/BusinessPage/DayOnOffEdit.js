@@ -51,7 +51,7 @@ function DateEdit() {
     const handleSave = async () => {
         console.log('Saving updated times:', dateList); // 저장된 전체 시간 출력
         try {
-            await api.post('/api/business/date/update', dateList, { withCredentials: true });
+            await api.put('/api/business/day-on-off/edit', dateList, { withCredentials: true });
             alert('시간이 저장되었습니다.');
         } catch (e) {
             console.error('시간 저장 실패:', e);

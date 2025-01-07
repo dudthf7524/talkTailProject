@@ -242,5 +242,36 @@ router.post('/business/date/register', authMiddlewareSession, async (req, res) =
 
 })
 
+router.put('/business/day-on-off/edit', authMiddlewareSession, async (req, res) => {
+  const business_registration_number = req.user.registrationNumber
+  const dateRegisterData = req.body
+
+  console.log(business_registration_number)
+  console.log(dateRegisterData)
+  try {
+    const getDateEditData = await businessDatabase.dayOnOffEdit(business_registration_number, dateRegisterData);
+    res.json(getDateEditData);
+  } catch (error) {
+    console.error('Failed to fetch authority request error: ', error);
+    res.status(500).json({ message: 'Failed to fetch authority request.' });
+  }
+
+})
+
+router.put('/business/date/edit', authMiddlewareSession, async (req, res) => {
+  const business_registration_number = req.user.registrationNumber
+  const dateRegisterData = req.body
+
+  console.log(business_registration_number)
+  console.log(dateRegisterData)
+  try {
+    const getDateEditData = await businessDatabase.dateEdit(business_registration_number, dateRegisterData);
+    res.json(getDateEditData);
+  } catch (error) {
+    console.error('Failed to fetch authority request error: ', error);
+    res.status(500).json({ message: 'Failed to fetch authority request.' });
+  }
+
+})
 
 module.exports = router;

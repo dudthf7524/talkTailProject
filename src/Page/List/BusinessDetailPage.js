@@ -23,6 +23,7 @@ const EventDetailPage = () => {
     const [isAccordionOpen, setIsAccordionOpen] = useState(false);
     const [showAllImages, setShowAllImages] = useState(false); // 이미지 상태 추가
     const [business, setBusiness] = useState({});
+    const [hours, setHours] = useState({});
     console.log(business)
     const accordionRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
@@ -121,6 +122,7 @@ const EventDetailPage = () => {
                     }
                 });
                 setBusiness(response.data);
+                setHours(response.data.hours)
                 console.log('Business fetched:', response.data);
             } catch (error) {
                 console.error('Error fetching business:', error);
@@ -135,13 +137,23 @@ const EventDetailPage = () => {
         const [hour, minute] = time.split(':'); // ':'를 기준으로 분할
         return `${hour}:${minute}`; // 시간과 분을 합쳐서 반환
     };
-    console.log(business)
+    console.log(hours)
     // 사용 예시
     const weekdayOpenTime = formatTime(business.weekday_open_time);
     const weekdayCloseTime = formatTime(business.weekday_close_time);
     const weekendOpenTime = formatTime(business.weekend_open_time);
     const weekendCloseTime = formatTime(business.weekend_close_time);
 
+    
+    const operatingDays = Object.values(hours).filter(day => day.isOperatingDay === true);
+
+
+    console.log("operatingDays")
+    
+
+    if (!business) {
+        return <p>로딩 중...</p>; // 로딩 중일 때 처리
+    }
     return (
         <div lang='ko'>
             <div className='mid'>pricing
@@ -177,11 +189,19 @@ const EventDetailPage = () => {
                     {/* <div className='event-tag-container'>
                         <EventTags tags={business.tags} />
                     </div> */}
-                    <p>{business.dayon} 영업</p>
-                    <p>{business.dayoff} 휴무</p>
-
-                    <p>평일｜{weekdayOpenTime}~{weekdayCloseTime}</p>
-                    <p>주말｜{weekendOpenTime}~{weekendCloseTime}</p>
+                  
+                    {operatingDays.length > 0 && (
+                        <div>
+                            {operatingDays.map((day, index) => {
+                                const dayNames = ['일', '월', '화', '수', '목', '금', '토']; // 요일 배열
+                                return (
+                                    <p key={index}>
+                                        {dayNames[index]}&nbsp;&nbsp;{formatTime(day.start_time)} - {formatTime(day.end_time)}
+                                    </p>
+                                );
+                            })}
+                        </div>
+                    )}
                 </div>
                 <div className='event-button-container'>
                     {/* <div className='event-button'>

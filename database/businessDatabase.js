@@ -3,7 +3,7 @@
 
 const bcrypt = require('bcrypt');
 
-const { BusinessInformation, sequelize } = require("../models");
+const { BusinessInformation, sequelize, Sequelize } = require("../models");
 const { BusinessDesinger } = require("../models");
 const { Business } = require("../models");
 const { BusinessBeautySignificant } = require("../models");
@@ -154,21 +154,28 @@ const getBusinessDetailsById = async (id) => {
     console.log(id)
     console.log('aaa')
 
+
+
     try {
-        const businessInformationById = await BusinessInformation.findOne({
-            where: { business_information_id: id },
-            //attributes: {
-            //exclude: ['business_registration_name', 'business_registration_number', 'business_owner']
-            //}
-        });
-        console.log("상세보기")
-        console.log(businessInformationById)
+        let sql = "";
+        sql += "select business_name, business_main_image, business_price_image1, business_price_image2, business_price_image3, business_comment, business_no_show, business_phone, hours ";
+        sql += "from business_information bi ";
+        sql += "join store_hours sh ";
+        sql += "on bi.business_registration_number = sh.business_registration_number ";
+        sql += "where bi.business_information_id = :id ";
 
+        const [results, metadata] = await sequelize.query(
+            sql,
+            {
+                replacements: { id: id }, // 바인딩 파라미터
+                type: sequelize.QueryTypes.SELECT, // 쿼리 유형
+                logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
+            }
 
-
-
-
-        return businessInformationById;
+        );
+        console.log(metadata);
+        console.log(results);
+        return results
     } catch (error) {
         throw new Error('Failed to fetch business details');
     }
@@ -276,22 +283,128 @@ const dateRegister = async (business_registration_number, dateRegisterData) => {
     console.log(business_registration_number)
     console.log(dateRegisterData.hours)
     console.log("aaaaaaaaaaaaaaaa")
+
     const storeHoursData = {
         business_registration_number: business_registration_number,
-        hours: dateRegisterData // dateRegisterData가 {"0": {...}, "1": {...}, ...} 형태여야 합니다.
+        hours: dateRegisterData.hours // dateRegisterData가 {"0": {...}, "1": {...}, ...} 형태여야 합니다.
     };
 
-    // try {
-    //     // STORE_HOURS 테이블에 영업시간 등록
-    //     const business = await StoreHours.create(storeHoursData);
-    //     console.log('Business Hours successfully registered:', business);
+    try {
+        // STORE_HOURS 테이블에 영업시간 등록
+        const business = await StoreHours.create(storeHoursData);
+        console.log('Business Hours successfully registered:', business);
 
-    //     return business;
-    // } catch (error) {
-    //     console.error('Failed to create business hours:', error);
-    //     throw new Error('Failed to create business hours');
-    // }
+        return business;
+    } catch (error) {
+        console.error('Failed to create business hours:', error);
+        throw new Error('Failed to create business hours');
+    }
 };
+
+const dayOnOffEdit = async (business_registration_number, dateRegisterData) => {
+    console.log(business_registration_number);
+    console.log(dateRegisterData.hours);
+    console.log(dateRegisterData.store_id)
+
+    try {
+        let sql = "";
+        sql += "UPDATE store_hours SET hours = JSON_SET( hours, ";
+        sql += "'$.\"0\".isOperatingDay', :isOperatingDay0, ";
+        sql += "'$.\"1\".isOperatingDay', :isOperatingDay1, ";
+        sql += "'$.\"2\".isOperatingDay', :isOperatingDay2, ";
+        sql += "'$.\"3\".isOperatingDay', :isOperatingDay3, ";
+        sql += "'$.\"4\".isOperatingDay', :isOperatingDay4, ";
+        sql += "'$.\"5\".isOperatingDay', :isOperatingDay5, ";
+        sql += "'$.\"6\".isOperatingDay', :isOperatingDay6 ";
+        sql += ") WHERE store_id = :store_id";
+
+        // SQL 쿼리 실행
+        const [results, metadata] = await sequelize.query(
+            sql,
+            {
+                replacements: {
+                    store_id: dateRegisterData.store_id,
+                    isOperatingDay0: dateRegisterData.hours[0].isOperatingDay,
+                    isOperatingDay1: dateRegisterData.hours[1].isOperatingDay,
+                    isOperatingDay2: dateRegisterData.hours[2].isOperatingDay,
+                    isOperatingDay3: dateRegisterData.hours[3].isOperatingDay,
+                    isOperatingDay4: dateRegisterData.hours[4].isOperatingDay,
+                    isOperatingDay5: dateRegisterData.hours[5].isOperatingDay,
+                    isOperatingDay6: dateRegisterData.hours[6].isOperatingDay
+                },
+                type: sequelize.QueryTypes.UPDATE, // UPDATE 쿼리 실행
+                logging: console.log, // 쿼리 로그 출력
+            }
+        );
+
+        console.log(metadata); // 메타데이터 확인
+        console.log(results);  // 실행 결과 확인
+        return results;
+
+    } catch (error) {
+        // 오류를 상세히 로깅
+        console.error('Error updating Business hours:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        throw new Error('Failed to update business hours: ' + error.message);
+    }
+};
+
+const dateEdit = async (business_registration_number, dateRegisterData) => {
+    console.log(dateRegisterData.hours);
+    console.log(dateRegisterData.store_id);
+
+    try {
+        let sql = "";
+        sql += "UPDATE store_hours SET hours = JSON_SET( hours, ";
+        sql += "'$.\"0\".start_time', :startTime0, '$.\"0\".end_time', :endTime0, "; // Sunday
+        sql += "'$.\"1\".start_time', :startTime1, '$.\"1\".end_time', :endTime1, "; // Monday
+        sql += "'$.\"2\".start_time', :startTime2, '$.\"2\".end_time', :endTime2, "; // Tuesday
+        sql += "'$.\"3\".start_time', :startTime3, '$.\"3\".end_time', :endTime3, "; // Wednesday
+        sql += "'$.\"4\".start_time', :startTime4, '$.\"4\".end_time', :endTime4, "; // Thursday
+        sql += "'$.\"5\".start_time', :startTime5, '$.\"5\".end_time', :endTime5, "; // Friday
+        sql += "'$.\"6\".start_time', :startTime6, '$.\"6\".end_time', :endTime6 "; // Saturday
+        sql += ") WHERE store_id = :store_id";
+
+        // SQL 쿼리 실행
+        const [results, metadata] = await sequelize.query(
+            sql,
+            {
+                replacements: {
+                    store_id: dateRegisterData.store_id,
+                    startTime0: dateRegisterData.hours[0].start_time,
+                    endTime0: dateRegisterData.hours[0].end_time,
+                    startTime1: dateRegisterData.hours[1].start_time,
+                    endTime1: dateRegisterData.hours[1].end_time,
+                    startTime2: dateRegisterData.hours[2].start_time,
+                    endTime2: dateRegisterData.hours[2].end_time,
+                    startTime3: dateRegisterData.hours[3].start_time,
+                    endTime3: dateRegisterData.hours[3].end_time,
+                    startTime4: dateRegisterData.hours[4].start_time,
+                    endTime4: dateRegisterData.hours[4].end_time,
+                    startTime5: dateRegisterData.hours[5].start_time,
+                    endTime5: dateRegisterData.hours[5].end_time,
+                    startTime6: dateRegisterData.hours[6].start_time,
+                    endTime6: dateRegisterData.hours[6].end_time
+                },
+                type: sequelize.QueryTypes.UPDATE, // UPDATE 쿼리 실행
+                logging: console.log, // 쿼리 로그 출력
+            }
+        );
+
+        console.log(metadata); // 메타데이터 확인
+        console.log(results);  // 실행 결과 확인
+        return results;
+
+    } catch (error) {
+        // 오류를 상세히 로깅
+        console.error('Error updating Business hours:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        throw new Error('Failed to update business hours: ' + error.message);
+    }
+};
+
 module.exports = {
     createBusiness,
     businessLogin,
@@ -303,4 +416,6 @@ module.exports = {
     significantGet,
     getDateEdit,
     dateRegister,
+    dayOnOffEdit,
+    dateEdit,
 };
