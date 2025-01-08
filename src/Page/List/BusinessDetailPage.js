@@ -4,7 +4,7 @@ import EventTags from './EventTags';
 import '../../CSS/listPage.css';
 import api from '../../Api';
 import { useDispatch, useSelector } from 'react-redux';
-import { setBusinessInfo } from '../../redux/reservationData';
+import { setBusinessInfo, setHour } from '../../redux/reservationData';
 
 
 const EventDetailPage = () => {
@@ -105,6 +105,8 @@ const EventDetailPage = () => {
             business_registration_number: business.business_registration_number,
             business_no_show: business.business_no_show,
         }));
+
+        dispatch(setHour(business.hours));
 
         navigate(`/designer/list`);
     };
@@ -211,7 +213,7 @@ const EventDetailPage = () => {
                         <div className='event-button-text'>위치</div>
                     </div> */}
                     <div className='event-button'>
-                        <a href={`tel:${business.business_phone1}${business.business_phone2}${business.business_phone3}`}>
+                        <a href={`tel:${business.business_phone}`}>
                             <button>
                                 <img src={callUrl} alt='' />
                             </button>

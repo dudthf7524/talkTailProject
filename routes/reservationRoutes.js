@@ -49,9 +49,9 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
     console.log(req.body)
     req.body.user_name = user_information.user_name;
     req.body.user_phone = user_information.user_phone;
-    kakao.alimtalkSend(req, res);
+    // kakao.alimtalkSend(req, res);
     try {
-        // const result = await reservationDatabase.beautyReservation(req.body)
+        const result = await reservationDatabase.beautyReservation(req.body)
        
         res.status(201).json({ result });
     } catch (error) {

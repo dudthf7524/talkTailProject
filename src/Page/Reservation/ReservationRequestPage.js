@@ -79,7 +79,7 @@ const ReservationRequestPage = () => {
     }, [reservationData]);
 
 
-   
+
     const initialCheckboxes = [
         { label: '전체미용', name: 'overall beauty' },
         { label: '부분미용', name: 'partial beauty' },
@@ -228,15 +228,15 @@ const ReservationRequestPage = () => {
         startTime: reservationData.startTime || '',
         business_owner_phone: reservationData.businessInfo.business_owner_phone || '',
     });
-    
+
     const dispatch = useDispatch();
 
     const reservationSave = async () => {
 
         dispatch(setBusinessInfo({
-                   business_owner_phone: lists.business_owner_phone,
+            business_owner_phone: lists.business_owner_phone,
         }));
-    
+
 
         const dataToSend = {
             beauty_style: style,
@@ -252,37 +252,40 @@ const ReservationRequestPage = () => {
         };
         console.log(dataToSend)
 
-         try{
+        try {
             const token = localStorage.getItem('token');
-            const response = await api.post('/api/akv10/alimtalk/send', JSON.stringify(dataToSend),
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    }
-                }
+            const headers = {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            };
+        
+            // 데이터베이스에 저장
+            const reservationResponse = await api.post(
+                '/api/beauty/reservation',
+                JSON.stringify(dataToSend),
+                { headers }
             );
-            console.log(response)
-
-        }catch(error){
-
+            console.log('Reservation saved:', reservationResponse);
+        
+            // 알림톡 전송
+            try {
+                const alimtalkResponse = await api.post(
+                    '/api/akv10/alimtalk/send',
+                    JSON.stringify(dataToSend),
+                    { headers }
+                );
+                console.log('AlimTalk sent:', alimtalkResponse);
+            } catch (alimtalkError) {
+                console.error('AlimTalk sending failed:', alimtalkError);
+                // TODO: 알림톡 실패 시 사용자 알림 또는 재시도 로직 추가
+            }
+        
+            // 예약 성공 후 페이지 이동
+            navigate('/reservation');
+        } catch (error) {
+            console.error('Reservation failed:', error);
+            // TODO: 예약 저장 실패 시 사용자 알림 추가
         }
-        // try {
-        //     const token = localStorage.getItem('token');
-        //     const response = await api.post('/api/beauty/reservation', JSON.stringify(dataToSend),
-        //         {
-        //             headers: {
-        //                 Authorization: `Bearer ${token}`,
-        //                 'Content-Type': 'application/json',
-        //             }
-        //         }
-        //     );
-        //     console.log(response)
-        //     navigate('/reservation')
-        // } catch (error) {
-        //     console.log('reservation road failed' + error)
-        // }
-
     }
     return (
         <div lang='ko'>

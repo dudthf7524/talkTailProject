@@ -158,7 +158,7 @@ const getBusinessDetailsById = async (id) => {
 
     try {
         let sql = "";
-        sql += "select business_name, business_main_image, business_price_image1, business_price_image2, business_price_image3, business_comment, business_no_show, business_phone, hours ";
+        sql += "select bi.business_registration_number, business_name, business_main_image, business_price_image1, business_price_image2, business_price_image3, business_comment, business_no_show, business_phone, hours ";
         sql += "from business_information bi ";
         sql += "join store_hours sh ";
         sql += "on bi.business_registration_number = sh.business_registration_number ";
