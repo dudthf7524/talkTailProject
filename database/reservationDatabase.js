@@ -25,6 +25,7 @@ const beautyReservation = async (beautyReservationData) => {
         return BeautyReservationData;
     } catch (error) {
         throw new Error(`Failed to register pet: ${error.message}`);
+        
     }
 };
 

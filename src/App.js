@@ -101,11 +101,11 @@ function App() {
             <Route path="/selected/date/:id" element={<SelectedDatePage />} />
             <Route path="/edit-address" element={<EditAddressPage />} />
             <Route path="/user/edit" element={<UserEdit />} />
-            <Route path="/reservation/" element={<Reservation />} />
+            <Route path="/reservation" element={<Reservation />} />
 
             
             <Route path="/business">
-              <Route path="login" element={<Login />} />
+              <Route path="" element={<Login />} />
               <Route path="menu" element={<BusinessMenu />} />
               <Route path="register" element={<Register />} />
               <Route path="register/information" element={<RegisterInformation />} />

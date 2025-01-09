@@ -1,5 +1,6 @@
 const aligoapi = require('aligoapi');
 const { userAuthority } = require('../database/userAuthorityRequestDatabase');
+const { result } = require('lodash');
 // 해당 예제는 npm에서도 확인하실 수 있습니다
 // npm i aligoapi
 // https://www.npmjs.com/package/aligoapi
@@ -193,101 +194,27 @@ const templateRequest = (req, res) => {
         })
 }
 
-const alimtalkSend = (req, res) => {
-    console.log('카카오 api 처리코드')
-    console.log(req.body)
-
-    // const username = req.body.user_name;
-    // const userphone = req.body.user_phone;
-    // const style = req.body.beauty_style;
-    // const startTime = req.body.startTime;
-    // const business_owner_phone = req.body.business_owner_phone;
-    
-    console.log('카카오 api 처리코드')
-    req.body = {}
-    req.body.username = "최영솔";
-    req.body.userphone = "010-7751-4068";
-    req.body.style = "전체미용";
-    req.body.start_time = "10:30";
+const alimtalkSend = async (req, res) => {
    
-
-
-    req.body.senderkey = '89df6266d96c0663c9263f3ff08986bcde7e4124';
-    req.body.tpl_code = 'TX_1486',
-    req.body.sender = '010-4026-5955',
-    req.body.receiver_1 = "010-7751-4068";
-    req.body.recvname_1 = '최영솔',
-    req.body.message_1 = `새로운 에약이 등록되었습니다.\n\n고객명 : ${req.body.username}\n전화번호: ${req.body.userphone}\n스타일: ${req.body.style}\n예약시간: ${req.body.start_time}\n\n`,
-
-
-    req.body.button_1 =  JSON.stringify( {
-        "button": [
-            {
-                name: "예약 상세 보기",
-                linkType: "WL",
-                linkTypeName: "웹링크",
-                linkMo: 'http://www.naver.com',
-                linkPc: 'http://www.naver.com',
-            }
-        ]
-    });
-    
-    // button_1: {
-    //     "button": [{
-    //     "name": “알리고 홈페이지”,
-    //     "linkType": "WL",
-    //     "linkTypeName": "웹링크",
-    //     "linkPc": "https://smartsms.aligo.in/",
-    //     "linkMo" : “https://smartsms.aligo.in/”
-    //     }]
-    //     }
-
     req.body.testMode = 'Y';
- 
 
     console.log(req.body)
     console.log(AuthData)
-    // 알림톡 전송
+   
 
-    // req.body = {
-    /*** 필수값입니다 ***/
-    // senderkey: 발신프로필 키
-    // tpl_code: 템플릿 코드
-    // sender: 발신자 연락처
-    // receiver_1: 수신자 연락처
-    // subject_1: 알림톡 제목
-    // message_1: 알림톡 내용
-    /*** 필수값입니다 ***/
-    // senddate: 예약일 // YYYYMMDDHHMMSS
-    // recvname: 수신자 이름
-    // button: 버튼 정보 // JSON string
-    // failover: 실패시 대체문자 전송기능 // Y or N
-    // fsubject: 실패시 대체문자 제목
-    // fmessage: 실패시 대체문자 내용
-    // }
-    // req.body 요청값 예시입니다.
-    // _로 넘버링된 최대 500개의 receiver, subject, message, button, fsubject, fmessage 값을 보내실 수 있습니다
-    // failover값이 Y일때 fsubject와 fmessage값은 필수입니다.
+    return aligoapi.alimtalkSend(req, AuthData)
+        .then((r) => {
+            console.log('알림톡 전송 성공:', r); // 성공한 응답을 콘솔에 출력
+            // res.send(r)
+            return "success";
+        })
+        .catch((e) => {
+            console.error('알림톡 전송 실패:', e); // 에러 메시지를 콘솔에 출력
+            // res.send(e)
+            return "fail";
+        })
 
-    // aligoapi.templateList(req, AuthData)
-    //     .then((r) => {
-    //         console.log('알림톡 전송 성공:', r.list[0].buttons); // 성공한 응답을 콘솔에 출력
-    //         res.send(r)
-    //     })
-    //     .catch((e) => {
-    //         console.error('알림톡 전송 실패:', e); // 에러 메시지를 콘솔에 출력
-    //         res.send(e)
-    //     })
-
-    // aligoapi.alimtalkSend(req, AuthData)
-    //     .then((r) => {
-    //         console.log('알림톡 전송 성공:', r); // 성공한 응답을 콘솔에 출력
-    //         res.send(r)
-    //     })
-    //     .catch((e) => {
-    //         console.error('알림톡 전송 실패:', e); // 에러 메시지를 콘솔에 출력
-    //         res.send(e)
-    //     })
+   
 }
 
 const historyList = (req, res) => {

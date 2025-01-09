@@ -7,32 +7,17 @@ const { alimtalkSend } = require('../aligo_api/kakao');
 const kakao = require('../aligo_api/kakao');
 const authMiddlewareSession = require('../middleware/authMiddlewareSession');
 const userDatabase = require('../database/userDatabase');
+const kakaoProcess = require('../aligo_api/kakaoProcess');
+
 
 router.post('/beauty/reservation', authMiddleware, async (req, res) => {
-    console.log(req.user)
-    console.log("여기까지")
-    const platform_id = req.user.id
-    let user_information = {};
-
-    try {
-        user_information = await userDatabase.getUserInformation(platform_id)
-       
-    } catch (error) {
-        console.error('Error fetching userIformation:', error.message);
-        res.status(500).json({ error: error.message });
-    }
-
-    console.log('user_information', user_information.user_name)
-    console.log('user_information', user_information.user_phone)
     
-    req.body.platform_id = req.user.id;
-
-    console.log(req.body)
+   
     const currentDateTime = dayjs();
     const formattedDateTime = currentDateTime.format('YYYY-MM-DD HH:mm');
-    console.log(formattedDateTime)
-
     req.body.reservationApplicationTime = formattedDateTime;
+
+
 
     // 특이사항 알고리즘
     let significantSum = "";
@@ -44,21 +29,72 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
         }
     }
     // 특이사항 알고리즘
-
+   
     req.body.beauty_significant = significantSum
-    console.log(req.body)
-    req.body.user_name = user_information.user_name;
-    req.body.user_phone = user_information.user_phone;
-    // kakao.alimtalkSend(req, res);
+
+    const platform_id = req.user.id
+    req.body.platform_id = platform_id;
+    let user_information = {};
+    
     try {
-        const result = await reservationDatabase.beautyReservation(req.body)
-       
-        res.status(201).json({ result });
+        user_information = await userDatabase.getUserInformation(platform_id)
+
     } catch (error) {
         console.error('Error fetching userIformation:', error.message);
         res.status(500).json({ error: error.message });
     }
+    
+    const business_owner_phone = req.body.business_owner_phone;
+    const beauty_style = req.body.beauty_style;
+    const star_time = req.body.startTime;
+    
 
+    // try {
+    //     const result = await reservationDatabase.beautyReservation(req.body)
+    //     // if(result == "ddd"){
+    //     //     console.log("데이터 저장 실패")
+    //     // }
+    //     // console.log(result)
+    //     // if (result == "ddd") {
+    //     //     // 데이터베이스 저장 실패
+    //     //     return res.status(500).json({ message: 'Failed to save reservation' });
+    //     // }
+        
+    //     // res.status(201).json({ result });
+    // } catch (error) {
+    //     console.error('Error saving reservation to database:', error.message);
+    //     return res.status(500).json({ error: 'Database save failed' });
+    // }
+    
+    try{
+        req.body = []
+        req.body.user_name = user_information.user_name;
+        req.body.user_phone = user_information.user_phone;
+        req.body.receiver_1 = business_owner_phone;
+        req.body.beauty_style = beauty_style;
+        req.body.start_time = star_time;
+        console.log(req.body)
+        const result = await kakaoProcess.reservationReception(req, res)
+        console.log(result)
+        res.status(201).json(result);
+    }catch{
+        console.error('Error saving reservation to database:', error.message);
+        return res.status(500).json({ error: 'Database save failed' });
+    }
+
+    // if(result){
+    //     req.body = []
+    //     req.body.user_name = user_information.user_name;
+    //     req.body.user_phone = user_information.user_phone;
+    //     req.body.receiver_1 = business_owner_phone;
+    //     req.body.beauty_style = beauty_style;
+    //     req.body.start_time = star_time;
+    //     console.log(req.body)
+    //     kakaoProcess.reservationReception(req, res)
+        
+    // }else{
+    //     result = "데이터베이스 저장 불가에 따른 알림톡 전송 실패";
+    // }
 })
 
 router.get('/beauty/reservation', authMiddlewareSession, async (req, res) => {
@@ -137,8 +173,7 @@ router.put('/beauty/reservation/reject/:id', async (req, res) => {
     const reject_content = req.body.rejectComment;
 
     console.log(beauty_reservation_id)
-    console.log(reject_content)
-
+    console.log(reject_content)    
     try {
         const result = await reservationDatabase.beautyReservationReject(beauty_reservation_id, reject_content)
         res.status(201).json(result);

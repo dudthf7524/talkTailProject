@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import api from '../../Api';
 import { setBusinessInfo } from '../../redux/reservationData.js';
+import ReservationModal from '../Components/ReservationModal.js';
 const ReservationRequestPage = () => {
     const { id } = useParams();
     const location = useLocation();
@@ -19,6 +20,7 @@ const ReservationRequestPage = () => {
     const [reviewText, setReviewText] = useState(""); // 리뷰 텍스트 상태 관리
     const textareaRef = useRef(null); // textarea 참조를 위한 ref
     const [lists, setLists] = useState([]);
+    const [showSuccessModal, setShowSuccessModal] = useState(false); // 예약 성공 모달 상태
 
     const reservationData = useSelector((state) => state.reservationData); // Redux 상태 가져오기
     console.log("Selected Designer Name:", reservationData.businessInfo.business_no_show); // 리덕스 상태 출력
@@ -78,7 +80,14 @@ const ReservationRequestPage = () => {
         }
     }, [reservationData]);
 
-
+    useEffect(() => {
+        if (lists.business_owner_phone) {
+            setFormData((prev) => ({
+                ...prev,
+                business_owner_phone: lists.business_owner_phone,
+            }));
+        }
+    }, [lists]);
 
     const initialCheckboxes = [
         { label: '전체미용', name: 'overall beauty' },
@@ -226,7 +235,7 @@ const ReservationRequestPage = () => {
         petId: reservationData.petId || '',
         date: reservationData.date || '',
         startTime: reservationData.startTime || '',
-        business_owner_phone: reservationData.businessInfo.business_owner_phone || '',
+        business_owner_phone: '',
     });
 
     const dispatch = useDispatch();
@@ -258,30 +267,28 @@ const ReservationRequestPage = () => {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             };
-        
+
             // 데이터베이스에 저장
             const reservationResponse = await api.post(
                 '/api/beauty/reservation',
                 JSON.stringify(dataToSend),
                 { headers }
             );
-            console.log('Reservation saved:', reservationResponse);
-        
-            // 알림톡 전송
-            try {
-                const alimtalkResponse = await api.post(
-                    '/api/akv10/alimtalk/send',
-                    JSON.stringify(dataToSend),
-                    { headers }
-                );
-                console.log('AlimTalk sent:', alimtalkResponse);
-            } catch (alimtalkError) {
-                console.error('AlimTalk sending failed:', alimtalkError);
-                // TODO: 알림톡 실패 시 사용자 알림 또는 재시도 로직 추가
+
+            console.log('Reservation saved:', reservationResponse.data);
+            console.log('Reservation saved:', reservationResponse.status);
+
+            if (reservationResponse.data === 'success' && reservationResponse.status === 201) {
+                // 예약 성공 모달 띄우기
+                setShowSuccessModal(true);
+
+                // 3초 후 페이지 이동
+                setTimeout(() => {
+                    setShowSuccessModal(false);
+                    navigate('/reservation');
+                }, 3000);
             }
-        
-            // 예약 성공 후 페이지 이동
-            navigate('/reservation');
+
         } catch (error) {
             console.error('Reservation failed:', error);
             // TODO: 예약 저장 실패 시 사용자 알림 추가
@@ -345,10 +352,21 @@ const ReservationRequestPage = () => {
                     ? <div className='Nbutton' onClick={openPaymentModal}>예약 및 결제하기</div>
                     : <div className='Nbutton' onClick={reservationSave}>예약하기</div>
             }
-
+            {showSuccessModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h2>예약 접수가 완료되었습니다!</h2>
+                        <p>잠시 후 예약 페이지로 이동합니다.</p>
+                    </div>
+                </div>
+            )}
             {showPaymentModal && (
                 <Payments closePaymentModal={closePaymentModal} confirmPayment={confirmPayment} />
             )}
+            <ReservationModal
+isOpen={showSuccessModal}
+
+/>
         </div>
     );
 };

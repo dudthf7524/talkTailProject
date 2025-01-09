@@ -61,11 +61,11 @@ const Reservation = () => {
                         <div className='reservation-item'>{reservation.date} {reservation.start_time}~{reservation.end_time}</div>
                         {
                             reservation.reservation_state === '완료' ? (
-                                <div style={{ fontWeight: 'bold', color: 'green' }}>완료</div>
+                                <div style={{ fontWeight: 'bold', color: 'green' }}>예약완료</div>
                             ) : reservation.reservation_state === '대기' ? (
                                 <div style={{ fontWeight: 'bold', color: 'orange' }}>예약대기 중</div>
                             ) : reservation.reservation_state === '거절' ? (
-                                <div style={{ fontWeight: 'bold', color: 'red' }}>거절</div>
+                                <div style={{ fontWeight: 'bold', color: 'red' }}>예약거절</div>
                             ) : (
                                 <div style={{ fontWeight: 'bold', color: 'gray' }}>알 수 없음</div>
                             )

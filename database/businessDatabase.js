@@ -183,10 +183,7 @@ const getBusinessDetailsById = async (id) => {
 
 const updateBusinessBeautySignificant = async (RegisterBeautySignificant) => {
     console.log(RegisterBeautySignificant)
-    console.log("aaaaaaaaaaaaaaaaaazzzzzzzzzzzzzzzzzzzzz")
-    console.log("aaaaaaaaaaaaaaaaaazzzzzzzzzzzzzzzzzzzzz")
-    console.log("aaaaaaaaaaaaaaaaaazzzzzzzzzzzzzzzzzzzzz")
-    console.log("aaaaaaaaaaaaaaaaaazzzzzzzzzzzzzzzzzzzzz")
+  
     try {
         const BeautySignificant = await BusinessBeautySignificant.update(
             {
@@ -212,7 +209,6 @@ const updateBusinessBeautySignificant = async (RegisterBeautySignificant) => {
 };
 
 const significantGet = async (business_registration_number) => {
-    console.log(business_registration_number)
 
     try {
 
@@ -233,8 +229,7 @@ const significantGet = async (business_registration_number) => {
             }
 
         );
-        console.log(metadata);
-        console.log(results);
+     
         return results
 
 
