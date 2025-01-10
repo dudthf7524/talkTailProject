@@ -80,7 +80,7 @@ function App() {
 
         <ImageProvider>
           <Routes>
-            <Route path="/" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/auth/*" element={<Redirection />} />
             <Route path="/login-success" element={<LoginSuccess />} />
             <Route path="/user/detail" element={<UserDetailPage />} />

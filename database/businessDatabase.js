@@ -137,13 +137,29 @@ const businessLogin = async (login_id, login_password) => {
 
 const getBusinesses = async () => {
     try {
-        // 비즈니스 데이터 가져오기
-        const businessesInformation = await BusinessInformation.findAll({
-            //where: { category },
-            //attributes: ['id', 'name', 'location'],
-        });
-        return businessesInformation;
+        // // 비즈니스 데이터 가져오기
+        // const businessesInformation = await BusinessInformation.findAll({
+        //     //where: { category },
+        //     //attributes: ['id', 'name', 'location'],
+        // });
+        // return businessesInformation;
+        let sql = "";
+        sql += "select business_information_id, b.business_registration_number, business_name, business_main_image, business_owner_phone, address_road, address_jibun, address_detail ";
+        sql += "from business_information bi ";
+        sql += "join business b ";
+        sql += "on bi.business_registration_number = b.business_registration_number ";
 
+        const [results, metadata] = await sequelize.query(
+            sql,
+            {
+                type: sequelize.QueryTypes.SELECT, // 쿼리 유형
+                logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
+            }
+
+        );
+        console.log(metadata);
+        console.log(results);
+        return [results]
     } catch (error) {
         console.error('Error fetching businesses with details:', error);
         throw new Error('Failed to fetch businesses with details');

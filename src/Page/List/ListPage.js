@@ -28,12 +28,15 @@ const ListPage = () => {
   const [authorityData, setAuthorityData] = useState([]);
 
 
-  const [selectedBusiness, setSelectedBusiness] = useState(null); // 선택된 비즈니스 정보
+  const [selectedBusiness, setSelectedBusiness] = useState(); // 선택된 비즈니스 정보
 
 
 
-  const handleAuthorityRequestClick = (business_registration_number) => {
-    setSelectedBusiness(business_registration_number); // 선택된 비즈니스 등록 번호 저장
+  const handleAuthorityRequestClick = (business_registration_number, business_owner_phone) => {
+    console.log(business_registration_number)
+    console.log(business_owner_phone)
+    setSelectedBusiness({ business_registration_number: business_registration_number, business_owner_phone: business_owner_phone });// 선택된 비즈니스 등록 번호 저장
+    console.log(selectedBusiness)
     setModalMessage('권한 요청을 하시겠습니까?'); // 모달 메시지 설정
     setShowModal(true); // 모달 띄우기
   };
@@ -184,15 +187,30 @@ const ListPage = () => {
 
 
 
-  const userAuthorityRequestButton = async (business_registration_number) => {
-    console.log(business_registration_number);
+  const userAuthorityRequestButton = async (selectedBusiness) => {
+
+    console.log(selectedBusiness)
+    const business_registration_number = selectedBusiness.business_registration_number;
+    const business_owner_phone = selectedBusiness.business_owner_phone;
+
     console.log(user.id);
     const platform_id = user.id;
 
     try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('No token found.');
+      }
+
+
       const response = await api.post('/api/user/authority/request', {
         business_registration_number,
+        business_owner_phone,
         platform_id,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
       });
       console.log('Upload successful', response.data);
       // navigate(`/`);
@@ -206,7 +224,7 @@ const ListPage = () => {
     const authority = authorityData.find(item => item.business_registration_number === business_registration_number);
     return authority ? authority.authority_is_available : null;
   };
-
+  
   if (loading) return <div>로딩 중...</div>;
   if (error) return <div>에러 발생: {error}</div>;
 
@@ -278,7 +296,7 @@ const ListPage = () => {
                     </div>
 
                   ) : (
-                    <button onClick={() => handleAuthorityRequestClick(list.business_registration_number)}>
+                    <button onClick={() => handleAuthorityRequestClick(list.business_registration_number, list.business_owner_phone)}>
                       권한요청
                     </button>
                   )}

@@ -77,24 +77,11 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
         const result = await kakaoProcess.reservationReception(req, res)
         console.log(result)
         res.status(201).json(result);
-    }catch{
+    }catch (error){
         console.error('Error saving reservation to database:', error.message);
         return res.status(500).json({ error: 'Database save failed' });
     }
 
-    // if(result){
-    //     req.body = []
-    //     req.body.user_name = user_information.user_name;
-    //     req.body.user_phone = user_information.user_phone;
-    //     req.body.receiver_1 = business_owner_phone;
-    //     req.body.beauty_style = beauty_style;
-    //     req.body.start_time = star_time;
-    //     console.log(req.body)
-    //     kakaoProcess.reservationReception(req, res)
-        
-    // }else{
-    //     result = "데이터베이스 저장 불가에 따른 알림톡 전송 실패";
-    // }
 })
 
 router.get('/beauty/reservation', authMiddlewareSession, async (req, res) => {

@@ -98,7 +98,7 @@ const SelectedDatePage = () => {
     "2025-01-01": "새해 첫날",
     "2024-03-14": "화이트데이",
   };
-  
+
 
   const monthsAhead = 3;
   const maxDate = addMonths(new Date(), monthsAhead);
@@ -129,50 +129,30 @@ const SelectedDatePage = () => {
 
   const getDisabledTimesByDate = (selectedDate) => {
     if (!selectedDate) return [];
-    console.log("selectedDate")
-    console.log(selectedDate)
-    console.log("selectedDate")
 
     const formattedDate = format(selectedDate, 'yyyy-MM-dd');
-    console.log("formattedDate")
-    console.log(formattedDate)
-    console.log("formattedDate")
     const reservations = reservationDesinger?.filter((item) => item.date === formattedDate) || [];
 
-    console.log("reservationDesinger")
-    console.log(reservationDesinger)
-    console.log("reservationDesinger")
-
-    console.log(modalData)
-    console.log("reservations")
-    console.log(reservations)
-    console.log("reservations")
-
-    
     const disabledTimes = [];
     reservations.forEach(({ start_time, end_time }) => {
-      const start = parse(start_time, 'HH:mm', new Date());
-
-      const end = parse(end_time, 'HH:mm', new Date());
       const timeSlots = generateTimeSlots(start_time, end_time, 30);
-      console.log(modalData.filteredTimeSlots)
-      console.log(...modalData.filteredTimeSlots)
-      const allTimes = [...modalData.filteredTimeSlots];
       timeSlots.forEach((time) => {
         const current = parse(time, 'HH:mm', new Date());
+        const start = parse(start_time, 'HH:mm', new Date());
+        const end = parse(end_time, 'HH:mm', new Date());
+
         if (isWithinInterval(current, { start, end: new Date(end.getTime() - 1) })) {
           disabledTimes.push(time);
         }
       });
     });
-    console.log("disabledTimes")
-    console.log(disabledTimes)
-    console.log("disabledTimes")
+
     return disabledTimes;
   };
 
   const [startDate, setStartDate] = useState('');
   const [selectDate, setSelectDate] = useState('')
+
 
   const handleDateChange = (date) => {
     const formatDate = format(date, 'yyyy-MM-dd');
@@ -187,17 +167,7 @@ const SelectedDatePage = () => {
         const timeSlots = generateTimeSlots(dayHours.start_time, dayHours.end_time, 30);
         const disabledTimesForDate = getDisabledTimesByDate(date);
 
-        // 오늘 날짜 처리
-        if (format(date, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd')) {
-          const now = new Date();
-          const filteredTimeSlots = timeSlots.filter((time) => {
-            const timeObj = parse(time, 'HH:mm', new Date());
-            return timeObj >= now;
-          });
-          setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate, filteredTimeSlots });
-        } else {
-          setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate, filteredTimeSlots: timeSlots });
-        }
+        setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate });
         setIsModalOpen(true);
       }
     }
@@ -371,7 +341,7 @@ const SelectedDatePage = () => {
           {isModalOpen && (
             <div id="modal-body">
               <div className="time-selection">
-                {modalData?.filteredTimeSlots?.map((time) => (
+                {generateTimeSlots(businessStartTime, businessEndTime, 30).map((time) => (
                   <div
                     key={time}
                     className={`time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
