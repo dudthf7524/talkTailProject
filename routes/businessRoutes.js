@@ -274,4 +274,17 @@ router.put('/business/date/edit', authMiddlewareSession, async (req, res) => {
 
 })
 
+router.get('/business/information/edit', authMiddlewareSession, async (req, res) => {
+  
+  const business_registration_number = req.user.registrationNumber
+  try {
+    const getInformation = await businessDatabase.informationEdit(business_registration_number);
+    res.json(getInformation);
+  } catch (error) {
+    console.error('Failed to fetch authority request error: ', error);
+    res.status(500).json({ message: 'Failed to fetch authority request.' });
+  }
+
+})
+
 module.exports = router;

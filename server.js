@@ -17,9 +17,8 @@ const reservationRoutes = require('./routes/reservationRoutes');
 const aligoapi = require('aligoapi');
 const router = express.Router();
 const customerManagementRoutes = require('./routes/customerManagementRoutes');
-
-
 const kakaoApiRoutes = require('./routes/kakaoApiRoutes');
+
 app.listen(8383, () => {
   console.log('http://localhost:8383 에서 서버 실행중')
 })

@@ -2,9 +2,7 @@ import React from 'react';
 import '../../BusinessCSS/reservationModal.css'
 
 const ReservationInformationModal = ({ isOpen, onClose, onConfirm, registerInformation, mainImage, priceImage, actionType }) => {
-  console.log(mainImage)
-  console.log(priceImage)
-  console.log(registerInformation)
+ 
   if (!isOpen) return null;
 
   return (

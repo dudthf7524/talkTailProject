@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../BusinessCSS/auth.css'
-import '../BusinessCSS/reservation.css'
+
+import '../BusinessCSS/authorityManagement.css'
+
 import api from '../Api'
+
 
 
 function AuthorityManagement() {
@@ -32,6 +34,7 @@ function AuthorityManagement() {
                                 'Business-Registration-Number': userData.business_registration_number,
                             },
                         });
+                        console.log(authorityResponse.data)
                         setLists(authorityResponse.data)
                     } catch (authorityError) {
                         console.error('권한 조회 실패:', authorityError);
@@ -81,6 +84,9 @@ function AuthorityManagement() {
     if (!user) {
         return <div>로딩 중...</div>;
     }
+    if (!lists) {
+        return <div>로딩 중...</div>;
+    }
     return (
         <div className='page-container' lang='ko'>
             <div className='navigation'>
@@ -90,39 +96,39 @@ function AuthorityManagement() {
                 권한관리
                 <div> </div>
             </div>
-            <div className='reservation-title'>
-                <div className='reservation-text'>이름</div>
-                <div className='reservation-text'>전화번호</div>
-                <div className='reservation-text'>수락</div>
-                <div className='reservation-text'>거절</div>
+            <div className='authorityManagement-title'>
+                <div className='authorityManagement-text'>이름</div>
+                <div className='authorityManagement-text'>전화번호</div>
+                <div className='authorityManagement-text'>수락</div>
+                <div className='authorityManagement-text'>거절</div>
             </div>
             <div className="horizontal-line"></div>
             {Array.isArray(lists) &&lists.map((list, index) => (
-                <div key={index} className='reservation-row'>
-                    <div className='reservation-item'>
-                        <p>{list.user_name}</p> {/* 사용자 이름 */}
+                <div key={index} className='authorityManagement-row'>
+                    <div className='authorityManagement-item'>
+                        <p>{list.user_name}</p>
                     </div>
-                    <div className='reservation-item'>
-                        <p>{list.user_phone}</p> {/* 사용자 전화번호 */}
+                    <div className='authorityManagement-item'>
+                        <p>{list.user_phone}</p> 
                     </div>
                     {
                         list.authority_is_available ? (
                             <>
                                 {/* 수락완료, 거절완료 */}
-                                <div className='reservation-item'>
+                                <div className='authorityManagement-item'>
                                     수락완료
                                 </div>
-                                <div className='reservation-item'>
+                                <div className='authorityManagement-item'>
                                     수락완료
                                 </div>
                             </>
                         ) : (
                             <>
                                 {/* 요청수락, 요청거절 */}
-                                <div className='reservation-item'>
+                                <div className='authorityManagement-item'>
                                     <button className='detail-button' onClick={() => authorityAvailableTrue(list.user_authority_request_id)}>요청수락</button>
                                 </div>
-                                <div className='reservation-item'>
+                                <div className='authorityManagement-item'>
                                     <button className='refuse-button' onClick={() => navigate('/reservation-detail')}>요청거절</button>
                                 </div>
                             </>

@@ -73,7 +73,7 @@ const AdminMenu = () => {
             <img src={informationIcon} alt="information icon" className='menu-icon' />
             <span className='menu-text'><br />스타일 수정</span>
           </button>
-          <button className='menu-tbt-btn' onClick={() => navigate('/business/register/information')}>
+          <button className='menu-tbt-btn' onClick={() => navigate('/business/edit/information')}>
             <img src={informationIcon} alt="information icon" className='menu-icon' />
             <span className='menu-text'><br />가게 정보 수정</span>
           </button>

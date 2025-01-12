@@ -1,10 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
 import Register from './BusinessPage/Regitser';
 import { Link, Route, Router, Routes } from 'react-router-dom';
-import './BusinessCSS/page.css';
-import './BusinessCSS/main.css';
+import './App.css';
+// import './BusinessCSS/page.css';
+// import './BusinessCSS/main.css';
 import './BusinessFont/font.css';
+// import './CSS/components.css';
 import Login from './BusinessPage/LoginPage';
 import BusinessMenu from './BusinessPage/MenuPage';
 import { useEffect, useState } from 'react';
@@ -15,7 +15,6 @@ import { ImageProvider } from './Contexts/ImageContext';
 import ImgUpload from './BusinessPage/ImgUpload';
 import Redirection from './Page/Login/Redirection';
 import LoginSuccess from "./Page/Login/LoginSuccessPage";
-import './CSS/components.css';
 import UserDetailPage from './Page/User/UserDetailPage';
 import HomePage from './Page/Home/HomePage';
 import ListPage from './Page/List/ListPage';
@@ -45,6 +44,7 @@ import Reservation from './Page/MyPage/Reservation';
 import DateRegister from './BusinessPage/DateRegister';
 import DateEdit from './BusinessPage/DateEdit';
 import DayOnOffEdit from './BusinessPage/DayOnOffEdit';
+import EditInformation from './BusinessPage/EditInformation';
 
 function App() {
   const [imageFiles, setImageFiles] = useState({
@@ -80,7 +80,7 @@ function App() {
 
         <ImageProvider>
           <Routes>
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<LoginPage />} />
             <Route path="/auth/*" element={<Redirection />} />
             <Route path="/login-success" element={<LoginSuccess />} />
             <Route path="/user/detail" element={<UserDetailPage />} />
@@ -105,10 +105,11 @@ function App() {
 
             
             <Route path="/business">
-              <Route path="" element={<Login />} />
+              <Route path="login" element={<Login />} />
               <Route path="menu" element={<BusinessMenu />} />
               <Route path="register" element={<Register />} />
               <Route path="register/information" element={<RegisterInformation />} />
+              <Route path="edit/information" element={<EditInformation />} />
               <Route path="imgupload/:imageType" element={<ImgUpload setImageFiles={handleSetImageFiles} />} />
               <Route path="register/desinger" element={<RegisterDesinger/>} />
               <Route path="authority/management" element={<AuthorityManagement />} />

@@ -4,20 +4,20 @@ const { UserAuthorityRequest, UserInformation, sequelize } = require("../models"
 const userAuthority = async (userAuthorityData) => {
   console.log("database userAuthorityData")
   console.log(userAuthorityData)
-  // try {
-  //   console.log("userAuthorityData")
-  //   const userAuthorityRequest = await UserAuthorityRequest.create({
-  //     business_registration_number: userAuthorityData.business_registration_number,
-  //     platform_id: userAuthorityData.platform_id,
-  //     created_at: new Date(),
-  //     updated_at: new Date(),
-  //   });
+  try {
+    console.log("userAuthorityData")
+    const userAuthorityRequest = await UserAuthorityRequest.create({
+      business_registration_number: userAuthorityData.business_registration_number,
+      platform_id: userAuthorityData.platform_id,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
 
-  //   return userAuthorityRequest;
-  // } catch (error) {
-  //   throw new Error(`Failed to create userAuthority: ${error.message}\nStack Trace: ${error.stack}`);
+    return userAuthorityRequest;
+  } catch (error) {
+    throw new Error(`Failed to create userAuthority: ${error.message}\nStack Trace: ${error.stack}`);
 
-  // }
+  }
 };
 const userGetAuthority = async (business_registration_number) => {
   console.log("database userAuthorityData")

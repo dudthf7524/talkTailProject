@@ -11,12 +11,12 @@ router.post('/user/authority/request',authMiddleware, async (req, res) => {
     console.log(req.user)
     const userAuthorityData = req.body
 
-    // try {
-    //     const userAuthority = await userAuthorityRequestDatabase.userAuthority(userAuthorityData);
-    // } catch (error) {
-    //     console.error('Failed to fetch authority request error: ', error);
-    //     res.status(500).json({ message: 'Failed to fetch authority request.' });
-    // }
+    try {
+        const userAuthority = await userAuthorityRequestDatabase.userAuthority(userAuthorityData);
+    } catch (error) {
+        console.error('Failed to fetch authority request error: ', error);
+        res.status(500).json({ message: 'Failed to fetch authority request.' });
+    }
 
 
 

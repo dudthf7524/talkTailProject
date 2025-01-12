@@ -18,6 +18,7 @@ function DateEdit() {
             try {
                 const response = await api.get('/api/business/date/edit', { withCredentials: true });
                 setDateLists(response.data);
+                console.log(response.data)
                 if (response.data == "common") {
                     navigate('/business/login');
                 }
