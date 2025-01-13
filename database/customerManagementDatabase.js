@@ -1,10 +1,11 @@
 const { sequelize, BeautyNotice, BeautyReservation } = require('../models');
 
 const customerManagementGet = async (business_registration_number) => {
+  
     try {
-
+       
         let sql = "";
-        sql += "select beauty_reservation_id, pet_name, user_name, date, start_time, end_time, beauty_notice_is_available ";
+        sql += "select beauty_reservation_id, pet_name, user_name, date, start_time, end_time, beauty_notice_is_available, beauty_reservation_is_avaiable ";
         sql += "from beauty_reservation br ";
         sql += "join pet pi ";
         sql += "on br.pet_id = pi.pet_id ";
@@ -12,19 +13,24 @@ const customerManagementGet = async (business_registration_number) => {
         sql += "on br.platform_id = ui.platform_id ";
         sql += "where br.business_registration_number = :business_registration_number ";
 
-
+      
         const [results, metadata] = await sequelize.query(
             sql,
 
             {
-                replacements: { business_registration_number: business_registration_number }, // 바인딩 파라미터
-                type: sequelize.QueryTypes.SELECT, // 쿼리 유형
+                replacements: {  business_registration_number }, // 바인딩 파라미터
+                type: sequelize.QueryTypes.SELECTALL, // 쿼리 유형
                 logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
             }
 
         );
+       
         console.log(metadata);
-        console.log(results);
+        console.log("results");
+        console.log("Results:", results);
+        console.log("Results Length:", results.length);
+        console.log("Metadata:", metadata);
+        console.log("results");
         return [results];
 
     } catch (error) {

@@ -15,6 +15,7 @@ const CustomerManagement = () => {
         const fetchReservationManagement = async () => {
             try {
                 const response = await api.get('/api/customer/management', { withCredentials: true });
+                console.log(response.data)
                 if(response.data == 'common'){
                     navigate('/business/login'); // 로그인 페이지로 리디렉션
 

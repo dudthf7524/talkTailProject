@@ -8,7 +8,9 @@ router.get('/customer/management',authMiddlewareSession ,  async (req, res) => {
     console.log(business_registration_number)
     try {
         const result = await customerManagementDatabase.customerManagementGet(business_registration_number)
+        console.log(result)
         res.status(201).json(result);
+        
     } catch (error) {
         console.error('Error fetching userIformation:', error.message);
         res.status(500).json({ error: error.message });

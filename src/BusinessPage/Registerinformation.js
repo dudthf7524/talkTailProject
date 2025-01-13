@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ImageContext } from '../Contexts/ImageContext';
 import '../BusinessCSS/registerInformation.css';
 import '../BusinessCSS/main.css';
-import ReservationInformationModal from './Modal/ReservationInformation';
+import InformationModal from './Modal/InformationModal';
 function RegisterInformation() {
     // 주소 api
     const [postcode, setPostcode] = useState(""); // 우편번호
@@ -398,7 +398,7 @@ function RegisterInformation() {
                 </div>
             </div>
           
-            <ReservationInformationModal
+            <InformationModal
                 isOpen={isModalOpen && actionType === 'accept'}
                 onClose={() => setModalOpen(false)}
                 onConfirm={handleSave}

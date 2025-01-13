@@ -1,11 +1,11 @@
 import React, { useEffect, useContext, useState, useRef } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ImageContext } from '../Contexts/ImageContext';
 // import '../BusinessCSS/registerInformation.css';
 // import '../BusinessCSS/main.css';
 import api from '../Api';
-import ReservationInformationModal from './Modal/ReservationInformation';
+import InformationModal from './Modal/InformationModal';
 
 function EditInformation() {
     // 주소 api
@@ -13,14 +13,84 @@ function EditInformation() {
     const [roadAddress, setRoadAddress] = useState(""); // 도로명 주소
     const [jibunAddress, setJibunAddress] = useState(""); // 지번 주소
     const [isPopupOpen, setIsPopupOpen] = useState(false); // 팝업 열림/닫힘 상태
-
-
     const [list, setLists] = useState({});
     const popupRef = useRef(null);
+    const apiUrl = process.env.REACT_APP_API_BASE_URL;
+    const { imageFiles } = useContext(ImageContext);
+    const navigate = useNavigate();
+    const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessImage/button/arrow_left.svg`;
+    const keyButtonUrl = `${process.env.PUBLIC_URL}/BusinessImage/icon/keyboard_return.svg`;
+    const defaultImage = `${process.env.PUBLIC_URL}/PageImage/pet/pet_img_L.png`;
 
+    const [formData, setFormData] = useState({
+        business_name: '',
+        address_postcode: '',
+        address_road: '',
+        address_jibun: '',
+        business_no_show: '',
+        business_phone1: '',
+        business_phone2: '',
+        business_phone3: '',
+        business_comment: '',
+    });
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await api.get('/api/business/information/edit', { withCredentials: true });
+                const data = response.data;
+
+                if (data === "common") {
+                    navigate('/business/login');
+                    return;
+                }
+                if (data === null) {
+                    navigate('/business/register/information');
+                    return;
+                }
+                setLists(data); // 여기에서 list 상태를 업데이트
+                console.log(Object.keys(data))
+                console.log(Object.keys(data).length)
+                const [phone1 = '', phone2 = '', phone3 = ''] = data.business_phone ? data.business_phone.split("-") : [];
+                let businessNoShow = data.business_no_show != null 
+                ? formatNumber(data.business_no_show) 
+                : '';
+
+                console.log(typeof data.business_no_show);
+                console.log(typeof businessNoShow);
+                console.log(businessNoShow)
+                setFormData({
+                    business_name: data.business_name || '',
+                    address_postcode: data.address_postcode || '',
+                    address_road: data.address_road || '',
+                    address_jibun: data.address_jibun || '',
+                    address_detail: data.address_detail || '',
+                    business_no_show: businessNoShow || '',
+                    business_phone1: phone1,
+                    business_phone2: phone2,
+                    business_phone3: phone3,
+                    business_main_image: data.business_main_image,
+                    business_price_image1: data.business_price_image1,
+                    business_price_image2: data.business_price_image2,
+                    business_price_image3: data.business_price_image3,
+                    business_comment: data.business_comment || '',
+                });
+            } catch (error) {
+                console.error('Failed to fetch business information:', error);
+            }
+        };
+
+        fetchData();
+    }, [navigate]);
+    useEffect(() => {
+        const textarea = document.getElementById('greetingTextarea');
+        if (textarea) { // 요소가 존재하는지 확인
+            const placeholderText = '간단한 인삿말\n30자 이내';
+            textarea.setAttribute('placeholder', placeholderText);
+            textarea.style.whiteSpace = 'pre-line';
+        }
+    }, []);
     const handleAddressSearch = () => {
-        setIsPopupOpen(true); // 팝업 열기
-
+        setIsPopupOpen(true);
         const currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
 
         const script = document.createElement("script");
@@ -30,19 +100,19 @@ function EditInformation() {
         script.onload = () => {
             new window.daum.Postcode({
                 oncomplete: (data) => {
-                    // 도로명 주소와 지번 주소 선택 처리
-                    if (data.userSelectedType === "R") {
-                        setRoadAddress(data.roadAddress); // 도로명 주소
-                    } else {
-                        setRoadAddress("");
-                    }
-                    setJibunAddress(data.jibunAddress); // 지번 주소
-                    setPostcode(data.zonecode); // 우편번호
+                    const updatedFormData = {
+                        ...formData,
+                        address_postcode: data.zonecode,
+                        address_road: data.userSelectedType === "R" ? data.roadAddress : '',
+                        address_jibun: data.jibunAddress,
+                    };
 
-                    // 팝업 닫기
+                    setFormData(updatedFormData);
+                    setPostcode(data.zonecode);
+                    setRoadAddress(data.userSelectedType === "R" ? data.roadAddress : '');
+                    setJibunAddress(data.jibunAddress);
+
                     setIsPopupOpen(false);
-
-                    // 스크롤 위치 복원
                     document.body.scrollTop = currentScroll;
                 },
                 onresize: (size) => {
@@ -55,94 +125,27 @@ function EditInformation() {
             }).embed(popupRef.current);
         };
     };
-    const apiUrl = process.env.REACT_APP_API_BASE_URL;
-    const { imageFiles } = useContext(ImageContext);
-    const navigate = useNavigate();
-    const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessImage/button/arrow_left.svg`;
-    const keyButtonUrl = `${process.env.PUBLIC_URL}/BusinessImage/icon/keyboard_return.svg`;
-   
-    const [formData, setFormData] = useState({
-        business_name: '',
-        address_postcode: '',
-        address_road: '',
-        address_jibun: '',
-        business_no_show: '',
-        business_phone1: '',
-        business_phone2: '',
-        business_phone3: '',
-    });
-   
-    useEffect(() => {
-        const fetchAndAuthorizeUser = async () => {
-            try {
-                console.log('aaaaaaaaaaaaaaa')
-                const response = await api.get('/api/business/information/edit', { withCredentials: true });
-                console.log('aaaaaaaaaaaaaaa')
-                console.log(response.data)
-                setLists(response.data)
-              
-                if (response.data == "common") {
-                    navigate('/business/login');
-                }
-            } catch (e) {
-                console.error('권한 조회 실패:', e);
-            }
-        };
-      
-        fetchAndAuthorizeUser();
-    }, []);
 
-
-    useEffect(() => {
-        if (list) {
-            let phone1 = '';
-            let phone2 = '';
-            let phone3 = '';
-            if(list.business_phone){
-                const [p1, p2, p3] = list.business_phone.split("-");
-                phone1 = p1;
-                phone2 = p2;
-                phone3 = p3;
-            }
-            setFormData(({
-                business_name: list.business_name || '',
-                address_postcode: list.address_postcode || '',
-                address_road: list.address_road || '',
-                address_jibun: list.address_jibun || '',
-                address_detail: list.address_detail || '',
-                business_phone1: phone1 || '',
-                business_phone2: phone2 || '',
-                business_phone3: phone3 || '',
-                business_no_show: list.business_no_show || '',
-            }));
-        }
-    }, [list]);
-
-    useEffect(() => {
-        const textarea = document.getElementById('greetingTextarea');
-        if (textarea) { // 요소가 존재하는지 확인
-            const placeholderText = '간단한 인삿말\n30자 이내';
-            textarea.setAttribute('placeholder', placeholderText);
-            textarea.style.whiteSpace = 'pre-line';
-        }
-    }, []);
-
-
-    const handleUploadClick = (imageType) => {
-        navigate(`/business/imgupload/${imageType}`);
+    const handleUploadClick = (pathName, imageType) => {
+        navigate(`/business/imgupload/${pathName}/${imageType}`);
     };
-    
-    
-    // formData.address_postcode = postcode;
-    // formData.address_road = roadAddress;
-    // formData.address_jibun = jibunAddress;
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
+
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: name === "business_no_show"
+                ? formatNumber(value.replace(/\D/g, '')) // 숫자만 유지하고 포맷팅
+                : value, // 다른 필드는 그대로 처리
+        }));
+    };
+
+    // 숫자 포맷팅 함수 (세 자리마다 , 추가)
+    const formatNumber = (value) => {
+        if (value === 0) return '0'; // 0인 경우 '0' 반환
+        if (!value) return '';       // null 또는 undefined인 경우 빈 문자열 반환
+        return new Intl.NumberFormat('en-US').format(value);
     };
 
     const handleSave = async () => {
@@ -150,15 +153,17 @@ function EditInformation() {
             const data = new FormData();
             // FormData에 텍스트 필드 추가
             Object.keys(formData).forEach((key) => {
-                data.append(key, formData[key]);
+                const value = key === "business_no_show"
+                    ? formData[key].replace(/,/g, '') // 숫자 포맷 제거
+                    : formData[key]; // 다른 필드는 그대로 추가
+                data.append(key, value);
             });
-            console.log('aaa')
-            console.log(data)
-            if (user?.business_registration_number) {
-                data.append('business_registration_number', user.business_registration_number);
+         
+            if (list?.business_information_id) {
+                data.append('business_information_id', list.business_information_id);
             }
 
-            console.log(data)
+            
 
             // FormData에 이미지 파일 추가
             Object.keys(imageFiles).forEach((key) => {
@@ -167,7 +172,7 @@ function EditInformation() {
                 });
             });
             // 서버로 FormData를 전송
-            const response = await axios.post(`${apiUrl}/api/business/register/information`, data, {
+            const response = await axios.put(`${apiUrl}/api/business/edit/information`, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -176,7 +181,7 @@ function EditInformation() {
             console.log('Upload successful:', response.data);
 
             // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
-            navigate('/business/menu'); // 성공 페이지로 이동
+            navigate('/business/edit/information'); // 성공 페이지로 이동
         } catch (error) {
             console.error('Error during upload:', error);
             // 오류 처리
@@ -191,15 +196,9 @@ function EditInformation() {
         setActionType(type);
         setModalOpen(true);
     };
-    console.log('list')
-    console.log(list)
-    console.log(list.address_detail)
-    // if (!user) {
-    //     return <div>로딩 중...</div>;
-    // }
-    
-    if (!list) {
-        return <div>로딩 중 ...</div>;
+
+    if (!list || Object.keys(list).length === 0) {
+        return <div>로딩 중...</div>;
     }
     return (
         <div className='mid' lang='ko'>
@@ -211,25 +210,79 @@ function EditInformation() {
                 <div onClick={() => openModal('accept')}>저장</div>
             </div>
             <div className='main-mid'>
-                <div className='upload-box' onClick={() => handleUploadClick('main')}>
+                <h2>현재 저장된 메인 이미지</h2>
+                <div style={{ position: 'relative', display: 'inline-block' }}>
+                    <img
+                        src={list.business_main_image}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                </div>
+                <div className='upload-box' onClick={() => handleUploadClick('edit', 'main')}>
                     <p>메인사진(상세페이지 최상단 노출)</p>
                     <p>jpg 해상도 430*468</p>
                     <div>
                         <img src={keyButtonUrl} alt='' />
-                        파일올리기
+                        메인 이미지 수정
                     </div>
                 </div>
-                <div className='upload-box' onClick={() => handleUploadClick('pricing')}>
+                <h2>현재 저장된 가격표 이미지</h2>
+                {
+                    list.business_price_image1 ? (
+                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                            <img
+                                src={list.business_price_image1}
+                                alt="Business Price"
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                        </div>
+                    ) : (
+                        <div style={{ position: 'relative', display: 'inline-block' }}>
+
+                        </div>
+                    )
+                }
+                {
+                    list.business_price_image2 ? (
+                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                            <img
+                                src={list.business_price_image2}
+                                alt="Business Price"
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                        </div>
+                    ) : (
+                        <div style={{ position: 'relative', display: 'inline-block' }}>
+
+                        </div>
+                    )
+                }
+                {
+                    list.business_price_image3 ? (
+                        <div style={{ position: 'relative', display: 'inline-block' }}>
+                            <img
+                                src={list.business_price_image3}
+                                alt="Business Price"
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                        </div>
+                    ) : (
+                        <div style={{ position: 'relative', display: 'inline-block' }}>
+
+                        </div>
+                    )
+                }
+                <div className='upload-box' onClick={() => handleUploadClick('edit', 'pricing')}>
                     <p>가격표</p>
                     <p>엑셀,이미지,pdf,한글 파일 등</p>
                     <div>
                         <img src={keyButtonUrl} alt='' />
-                        파일올리기
+                        가격표 이미지 수정
                     </div>
                 </div>
+
                 <div className='input-container'>
-                <p>상호명 {list.business_no_show}</p>
-                <input type='text' name='business_name' value={formData.business_name} onChange={handleInputChange} placeholder='상호명을 입력해 주세요.' />
+                    <p>상호명</p>
+                    <input type='text' name='business_name' value={formData.business_name} onChange={handleInputChange} placeholder='상호명을 입력해 주세요.' />
                 </div>
                 {isPopupOpen && (
                     <div
@@ -272,15 +325,15 @@ function EditInformation() {
 
 
                     <p>우편번호</p>
-                    <input type="text" name='address_postcode' value={formData.address_postcode} onChange={(e) => setPostcode(e.target.value)} readOnly placeholder="우편번호" />
+                    <input type="text" name='address_postcode' value={formData.address_postcode} onChange={(e) => setPostcode(e.target.value)} placeholder="우편번호" />
                 </div>
                 <div className='input-container'>
                     <p>도로명 주소</p>
-                    <input type="text" name='address_road' value={formData.address_road} onChange={handleInputChange} readOnly placeholder="도로명 주소" />
+                    <input type="text" name='address_road' value={formData.address_road} onChange={(e) => setRoadAddress(e.target.value)} placeholder="도로명 주소" />
                 </div>
                 <div className='input-container'>
                     <p>지번 주소</p>
-                    <input type="text" name='address_jibun' value={formData.address_jibun} onChange={handleInputChange} readOnly placeholder="지번 주소" />
+                    <input type="text" name='address_jibun' value={formData.address_jibun} onChange={(e) => setJibunAddress(e.target.value)} placeholder="지번 주소" />
                 </div>
                 <div className='input-container'>
                     <p>상세 주소</p>
@@ -305,11 +358,11 @@ function EditInformation() {
                 </div>
                 <div className='input-container'>
                     <p>노쇼 금액</p>
-                    <input type="text" name='business_no_show' value={formData.business_no_show} onChange={handleInputChange} />
+                    <input type="text" name='business_no_show' value={formData.business_no_show + " 원"} onChange={handleInputChange} />
                 </div>
             </div>
 
-            <ReservationInformationModal
+            <InformationModal
                 isOpen={isModalOpen && actionType === 'accept'}
                 onClose={() => setModalOpen(false)}
                 onConfirm={handleSave}

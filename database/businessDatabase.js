@@ -3,12 +3,12 @@
 
 const bcrypt = require('bcrypt');
 
-const { BusinessInformation, sequelize, Sequelize } = require("../models");
+const { BusinessInformation, sequelize } = require("../models");
 const { BusinessDesinger } = require("../models");
 const { Business } = require("../models");
 const { BusinessBeautySignificant } = require("../models");
 const { StoreHours } = require("../models");
-
+const imgNaverCloud = require('../imageUpload/imgNaverCloud');
 
 
 const createBusiness = async (businessInfo) => {
@@ -199,7 +199,7 @@ const getBusinessDetailsById = async (id) => {
 
 const updateBusinessBeautySignificant = async (RegisterBeautySignificant) => {
     console.log(RegisterBeautySignificant)
-  
+
     try {
         const BeautySignificant = await BusinessBeautySignificant.update(
             {
@@ -245,7 +245,7 @@ const significantGet = async (business_registration_number) => {
             }
 
         );
-     
+
         return results
 
 
@@ -416,9 +416,9 @@ const dateEdit = async (business_registration_number, dateRegisterData) => {
     }
 };
 
-const informationEdit = async (business_registration_number) => {
+const informationEditGet = async (business_registration_number) => {
     console.log(business_registration_number)
-  
+
     try {
         const BeautySignificant = await BusinessInformation.findOne(
             {
@@ -436,6 +436,144 @@ const informationEdit = async (business_registration_number) => {
     }
 };
 
+const informationEditUpdateNoFile = async (informationData, business_information_id) => {
+    console.log(business_information_id)
+    console.log(informationData)
+    const business_phone = informationData.business_phone1 + "-" + informationData.business_phone2 + "-" + informationData.business_phone3;
+    console.log(business_phone)
+    try {
+        const result = await BusinessInformation.update(
+            {
+                business_name: informationData.business_name,
+                address_postcode: informationData.address_postcode,
+                address_road: informationData.address_road,
+                address_jibun: informationData.address_jibun,
+                address_detail: informationData.address_detail,
+                business_no_show: informationData.business_no_show,
+                business_comment: informationData.business_comment,
+                business_phone: business_phone,
+            },
+            {
+                where: {
+                    business_information_id: business_information_id
+                }
+            }
+
+        )
+        return result;
+    } catch (error) {
+        throw new Error(`Failed to fetch pet updateNoFile: ${error.message}`);
+
+    }
+};
+
+const informationUpdateYesMainFile = async (informationData, business_information_id) => {
+    console.log("informationUpdateYesMainFile")
+    console.log(business_information_id)
+    
+    const business_phone = informationData.business_phone1 + "-" + informationData.business_phone2 + "-" + informationData.business_phone3;
+    console.log(business_phone)
+    
+    try {
+        const result = await BusinessInformation.update(
+            {
+                business_name: informationData.business_name,
+                address_postcode: informationData.address_postcode,
+                address_road: informationData.address_road,
+                address_jibun: informationData.address_jibun,
+                address_detail: informationData.address_detail,
+                business_no_show: informationData.business_no_show,
+                business_comment: informationData.business_comment,
+                business_phone: business_phone,
+                business_main_image: informationData.business_main_image,
+            },
+            {
+                where: {
+                    business_information_id: business_information_id
+                }
+            }
+
+        )
+        return result;
+    } catch (error) {
+        throw new Error(`Failed to fetch pet updateNoFile: ${error.message}`);
+
+    }
+};
+
+const informationUpdateYesPricingFile = async (informationData, business_information_id) => {
+    console.log("informationUpdateYesMainFile")
+    console.log(business_information_id)
+    
+    const business_phone = informationData.business_phone1 + "-" + informationData.business_phone2 + "-" + informationData.business_phone3;
+    console.log(business_phone)
+    
+    try {
+        const result = await BusinessInformation.update(
+            {
+                business_name: informationData.business_name,
+                address_postcode: informationData.address_postcode,
+                address_road: informationData.address_road,
+                address_jibun: informationData.address_jibun,
+                address_detail: informationData.address_detail,
+                business_no_show: informationData.business_no_show,
+                business_comment: informationData.business_comment,
+                business_phone: business_phone,
+                business_price_image1: informationData.business_price_image1,
+                business_price_image2: informationData.business_price_image2,
+                business_price_image3: informationData.business_price_image3,
+            },
+            {
+                where: {
+                    business_information_id: business_information_id
+                }
+            }
+
+        )
+        return result;
+    } catch (error) {
+        throw new Error(`Failed to fetch pet updateNoFile: ${error.message}`);
+
+    }
+};
+
+const informationUpdateYesMainAndPricingFile = async (informationData, business_information_id) => {
+    console.log("informationUpdateYesMainFile")
+    console.log(business_information_id)
+    
+    const business_phone = informationData.business_phone1 + "-" + informationData.business_phone2 + "-" + informationData.business_phone3;
+    console.log(business_phone)
+    
+    try {
+        const result = await BusinessInformation.update(
+            {
+                business_name: informationData.business_name,
+                address_postcode: informationData.address_postcode,
+                address_road: informationData.address_road,
+                address_jibun: informationData.address_jibun,
+                address_detail: informationData.address_detail,
+                business_no_show: informationData.business_no_show,
+                business_comment: informationData.business_comment,
+                business_phone: business_phone,
+                business_main_image: informationData.business_main_image,
+                business_price_image1: informationData.business_price_image1,
+                business_price_image2: informationData.business_price_image2,
+                business_price_image3: informationData.business_price_image3,
+            },
+            {
+                where: {
+                    business_information_id: business_information_id
+                }
+            }
+
+        )
+        return result;
+    } catch (error) {
+        throw new Error(`Failed to fetch pet updateNoFile: ${error.message}`);
+
+    }
+};
+
 module.exports = {
     createBusiness,
     businessLogin,
@@ -449,5 +587,9 @@ module.exports = {
     dateRegister,
     dayOnOffEdit,
     dateEdit,
-    informationEdit,
+    informationEditGet,
+    informationEditUpdateNoFile,
+    informationUpdateYesMainFile,
+    informationUpdateYesPricingFile,
+    informationUpdateYesMainAndPricingFile,
 };

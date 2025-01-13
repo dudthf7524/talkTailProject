@@ -110,7 +110,7 @@ function App() {
               <Route path="register" element={<Register />} />
               <Route path="register/information" element={<RegisterInformation />} />
               <Route path="edit/information" element={<EditInformation />} />
-              <Route path="imgupload/:imageType" element={<ImgUpload setImageFiles={handleSetImageFiles} />} />
+              <Route path="imgupload/:pathName/:imageType" element={<ImgUpload setImageFiles={handleSetImageFiles} />} />
               <Route path="register/desinger" element={<RegisterDesinger/>} />
               <Route path="authority/management" element={<AuthorityManagement />} />
               <Route path="register/style" element={<RegisterStyle />} />

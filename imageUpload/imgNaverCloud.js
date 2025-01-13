@@ -126,7 +126,7 @@ const uploadImageToBucket = async (fileBuffer, objectName, mimeType) => {
 };
 
 // 다중 이미지 업로드
-const uploadMultipleImages = async (files, businessId) => {
+const uploadMultipleImages = async (files) => {
     const results = [];
    
     for (const file of files) {

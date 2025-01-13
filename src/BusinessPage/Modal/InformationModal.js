@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../BusinessCSS/reservationModal.css'
 
-const ReservationInformationModal = ({ isOpen, onClose, onConfirm, registerInformation, mainImage, priceImage, actionType }) => {
+const InformationModal = ({ isOpen, onClose, onConfirm, registerInformation, mainImage, priceImage, actionType }) => {
  
   if (!isOpen) return null;
 
@@ -38,11 +38,8 @@ const ReservationInformationModal = ({ isOpen, onClose, onConfirm, registerInfor
           ))}
         </div>
         <div className='registerInformation-content'>
-
-
           <p>상호명</p>
           <span> {registerInformation.business_name}</span>
-
           <p>우편번호</p>
           <span> {registerInformation.address_postcode}</span>
           <p>도로명 주소</p>
@@ -51,18 +48,6 @@ const ReservationInformationModal = ({ isOpen, onClose, onConfirm, registerInfor
           <span> {registerInformation.address_jibun}</span>
           <p>상세 주소</p>
           <span> {registerInformation.address_detail}</span>
-          <p>평일오픈시간</p>
-          <span> {registerInformation.weekday_open_time}</span>
-          <p>평일마감시간</p>
-          <span> {registerInformation.weekday_close_time}</span>
-          <p>주말오픈시간</p>
-          <span> {registerInformation.weekend_open_time}</span>
-          <p>주말마감시간</p>
-          <span> {registerInformation.weekend_close_time}</span>
-          <p>영업일</p>
-          <span> {registerInformation.dayon}</span>
-          <p>휴무일</p>
-          <span> {registerInformation.dayoff}</span>
           <p>가게전화번호</p>
           <span> 
             {registerInformation.business_phone1}-
@@ -84,4 +69,4 @@ const ReservationInformationModal = ({ isOpen, onClose, onConfirm, registerInfor
   );
 };
 
-export default ReservationInformationModal;
+export default InformationModal;

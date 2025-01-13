@@ -103,16 +103,16 @@ function AuthorityManagement() {
                 <div className='authorityManagement-text'>거절</div>
             </div>
             <div className="horizontal-line"></div>
-            {Array.isArray(lists) &&lists.map((list, index) => (
-                <div key={index} className='authorityManagement-row'>
-                    <div className='authorityManagement-item'>
-                        <p>{list.user_name}</p>
-                    </div>
-                    <div className='authorityManagement-item'>
-                        <p>{list.user_phone}</p> 
-                    </div>
-                    {
-                        list.authority_is_available ? (
+            {lists != null? (
+                lists.map((list, index) => (
+                    <div key={index} className='authorityManagement-row'>
+                        <div className='authorityManagement-item'>
+                            <p>{list.user_name}</p>
+                        </div>
+                        <div className='authorityManagement-item'>
+                            <p>{list.user_phone}</p>
+                        </div>
+                        {list.authority_is_available ? (
                             <>
                                 {/* 수락완료, 거절완료 */}
                                 <div className='authorityManagement-item'>
@@ -126,16 +126,29 @@ function AuthorityManagement() {
                             <>
                                 {/* 요청수락, 요청거절 */}
                                 <div className='authorityManagement-item'>
-                                    <button className='detail-button' onClick={() => authorityAvailableTrue(list.user_authority_request_id)}>요청수락</button>
+                                    <button
+                                        className='detail-button'
+                                        onClick={() => authorityAvailableTrue(list.user_authority_request_id)}
+                                    >
+                                        요청수락
+                                    </button>
                                 </div>
                                 <div className='authorityManagement-item'>
-                                    <button className='refuse-button' onClick={() => navigate('/reservation-detail')}>요청거절</button>
+                                    <button
+                                        className='refuse-button'
+                                        onClick={() => navigate('/reservation-detail')}
+                                    >
+                                        요청거절
+                                    </button>
                                 </div>
                             </>
-                        )
-                    }
-                </div>
-            ))}
+                        )}
+                    </div>
+                ))
+            ) : (
+                <div className='empty-message'>현재 권한 요청 관리 정보가 없습니다.</div>
+            )}
+
 
         </div>
     );

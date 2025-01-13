@@ -62,7 +62,7 @@ router.post('/business/register/information', upload.fields([
     Object.keys(files).forEach(key => {
       fileArray.push(...files[key]);
     });
-    const imageUploadResults = await imgNaverCloud.uploadMultipleImages(fileArray, '00000');
+    const imageUploadResults = await imgNaverCloud.uploadMultipleImages(fileArray);
     //const businessRegisterDesinger = await businessDatabase.createBusinessBeautySignificant(RegisterBeautySignificant);
 
     console.log(imageUploadResults)
@@ -275,16 +275,131 @@ router.put('/business/date/edit', authMiddlewareSession, async (req, res) => {
 })
 
 router.get('/business/information/edit', authMiddlewareSession, async (req, res) => {
-  
+
   const business_registration_number = req.user.registrationNumber
   try {
-    const getInformation = await businessDatabase.informationEdit(business_registration_number);
+    const getInformation = await businessDatabase.informationEditGet(business_registration_number);
     res.json(getInformation);
   } catch (error) {
     console.error('Failed to fetch authority request error: ', error);
     res.status(500).json({ message: 'Failed to fetch authority request.' });
   }
 
+})
+
+router.put('/business/edit/information', upload.fields([
+  { name: 'main', maxCount: 1 },
+  { name: 'pricing', maxCount: 3 }
+]), async (req, res) => {
+  console.log("req.body")
+  // console.log(req.body);
+  // console.log(req.files);
+  // console.log(req.files.main);
+  // console.log(req.files.pricing);
+
+  const business_information_id = req.body.business_information_id;
+  const formData = req.body;
+  const files = req.files;
+  const fileArray = [];
+
+  Object.keys(files).forEach(key => {
+    fileArray.push(...files[key]);
+  });
+
+  console.log(fileArray)
+  const imageUploadResults = await imgNaverCloud.uploadMultipleImages(fileArray);
+
+  console.log(imageUploadResults)
+  // 비즈니스 데이터 생성
+  const informationData = {
+    ...formData,
+
+  };
+
+  // imageUploadResults를 분류하여 businessData에 추가
+  const pricingImages = [];
+  imageUploadResults.forEach(result => {
+    if (result.image_type === 'main') {
+      informationData.business_main_image = result.url; // main 이미지는 business_main_image에 저장
+    } else if (result.image_type === 'pricing') {
+      pricingImages.push(result.url); // pricing 이미지는 배열에 저장
+    }
+  });
+  
+  informationData.business_price_image1 = '';
+  informationData.business_price_image2 = '';
+  informationData.business_price_image3 = '';
+  
+  
+  // pricing 이미지를 순서대로 business_price_image1, business_price_image2, ...에 저장
+  pricingImages.forEach((url, index) => {
+    informationData[`business_price_image${index + 1}`] = url;
+  });
+
+  console.log("informationData")
+  console.log(informationData)
+  console.log("informationData")
+
+
+  if (req.files.main && !req.files.pricing) {
+    console.log('메인이 있다')
+
+    if (formData.business_main_image) {
+      await imgNaverCloud.deleteImage(formData.business_main_image);
+    }
+    const result = await businessDatabase.informationUpdateYesMainFile(informationData, business_information_id);
+
+    res.json(result);
+
+  } else if (req.files.pricing && !req.files.main) {
+    console.log('가격표가 있다')
+    const priceImages = [
+      formData.business_price_image1,
+      formData.business_price_image2,
+      formData.business_price_image3
+    ];
+
+    // 모든 이미지를 순회하며 삭제
+    for (const image of priceImages) {
+      if (image) {
+        await imgNaverCloud.deleteImage(image);
+      }
+    }
+
+    const result = await businessDatabase.informationUpdateYesPricingFile(informationData, business_information_id);
+
+    res.json(result);
+  }
+  else if (req.files.main && req.files.pricing) {
+    console.log('메인이 있다')
+    console.log('가격표가 있다')
+
+    const priceImages = [
+      formData.business_main_image,
+      formData.business_price_image1,
+      formData.business_price_image2,
+      formData.business_price_image3
+    ];
+
+    // 모든 이미지를 순회하며 삭제
+    for (const image of priceImages) {
+      if (image) {
+        await imgNaverCloud.deleteImage(image);
+      }
+    }
+    const result = await businessDatabase.informationUpdateYesMainAndPricingFile(informationData, business_information_id);
+
+    res.json(result);
+  } else {
+    console.log('둘다 없다')
+    try {
+      const getInformation = await businessDatabase.informationEditUpdateNoFile(informationData, business_information_id);
+      res.json(getInformation);
+    } catch (error) {
+      console.error('Failed to fetch authority request error: ', error);
+      res.status(500).json({ message: 'Failed to fetch authority request.' });
+    }
+  }
 })
 
 module.exports = router;

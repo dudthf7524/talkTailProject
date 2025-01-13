@@ -1,12 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ImageContext } from '../Contexts/ImageContext';
 
 function ImgUpload() {
   const { imageFiles, updateImageFiles } = useContext(ImageContext);
   const navigate = useNavigate();
   const { imageType } = useParams();
+  const { pathName } = useParams();
   const [selectedFiles, setSelectedFiles] = useState([]);
+
   console.log(selectedFiles)
   console.log(imageFiles)
   useEffect(() => {
@@ -31,9 +33,16 @@ function ImgUpload() {
 
   const handleSave = () => {
     updateImageFiles(imageType, selectedFiles);
-    navigate('/business/register/information');
+    if(pathName === 'register'){
+      navigate('/business/register/information');
+    }
+    if(pathName === 'edit'){
+      navigate('/business/edit/information');
+    }
+   
   };
   console.log(imageType)
+  console.log(pathName)
   console.log(selectedFiles)
 
   return (
