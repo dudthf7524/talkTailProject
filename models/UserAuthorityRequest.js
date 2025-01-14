@@ -33,6 +33,11 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 defaultValue: false,
             },
+            authority_state: {
+                type: DataTypes.STRING(10),
+                allowNull: false,
+                defaultValue: '',
+            },
             created_at: {
                 type: DataTypes.DATE,
                 allowNull: false,

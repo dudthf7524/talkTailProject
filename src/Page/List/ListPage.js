@@ -20,7 +20,6 @@ const ListPage = () => {
   const mapUrl = `${process.env.PUBLIC_URL}/PageImage/list/map.svg`;
   const trailingUrl = `${process.env.PUBLIC_URL}/PageImage/home/trailing.svg`;
   const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태 추가
-  const [user, setUser] = useState(null);
   const [showModal, setShowModal] = useState(false); // 모달 상태 추가\
   const [authorityRequestModal, setAuthorityRequestModal] = useState(false); // 모달 상태 추가
   const [modalMessage, setModalMessage] = useState(''); // 모달 메시지
@@ -53,46 +52,25 @@ const ListPage = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      axios.get('http://localhost:8383/user/auth', {
-        headers: {
-          Authorization: `Bearer ${token}`,  // Authorization 헤더에 토큰 추가
-        }
-      })
-        .then(response => {
-          console.log(response.data);  // 서버에서 전달하는 사용자 정보 출력
-          setUser(response.data)
-        })
-        .catch(error => {
-          console.error('에러 발생:', error);
-        });
-    }
-  }, []);
-
-  useEffect(() => {
     const AuthorizeUser = async () => {
-
-      if (user && user.id) {
-
-
-        try {
-          const response = await api.get('/api/user/authority/available', {
-            headers: {
-              'user-id': user.id,
-            },
-          });
-          console.log('User authority data:', response.data);
-          setAuthorityData(response.data);
-        } catch (authorityError) {
-          console.error('권한 조회 실패:', authorityError);
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('No token found.');
         }
+        const response = await api.get('/api/user/authority/available', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+        console.log('User authority data:', response.data);
+        setAuthorityData(response.data);
+      } catch (authorityError) {
+        console.error('권한 조회 실패:', authorityError);
       }
     }
-    if (user) {
-      AuthorizeUser();
-    }
-  }, [user]);
+    AuthorizeUser();
+  }, []);
   // 뒤로 가기
   const goBack = () => {
     navigate(-1);
@@ -122,13 +100,15 @@ const ListPage = () => {
 
         setModalMessage('권한 요청 완료 후 이용 가능합니다.')
         setAuthorityRequestModal(true)
-      }
-      else if (!response.data.authority_is_available) {
-        setModalMessage('권한 요청 대기 중입니다.')
-        console.log("null ")
+      }else if (response.data.authority_state === '거절') {
+        setModalMessage('권한 요청 완료 후 이용 가능합니다.')
         setAuthorityRequestModal(true)
       }
-      else if (response.data.authority_is_available) {
+      else if (response.data.authority_state === '대기') {
+        setModalMessage('권한 요청 대기 중입니다.')
+        setAuthorityRequestModal(true)
+      }
+      else if (response.data.authority_state === '완료') {
         navigate(`/business/detail/${id}`);
       }
     } catch (error) {
@@ -193,9 +173,6 @@ const ListPage = () => {
     const business_registration_number = selectedBusiness.business_registration_number;
     const business_owner_phone = selectedBusiness.business_owner_phone;
 
-    console.log(user.id);
-    const platform_id = user.id;
-
     try {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -206,14 +183,13 @@ const ListPage = () => {
       const response = await api.post('/api/user/authority/request', {
         business_registration_number,
         business_owner_phone,
-        platform_id,
       }, {
         headers: {
           Authorization: `Bearer ${token}`,
         }
       });
       console.log('Upload successful', response.data);
-      // navigate(`/`);
+      window.location.href = '/list/beauty';
     } catch (error) {
       console.error('Error occurred:', error);
     }
@@ -222,9 +198,13 @@ const ListPage = () => {
   }
   const getAuthorityStatus = (business_registration_number) => {
     const authority = authorityData.find(item => item.business_registration_number === business_registration_number);
-    return authority ? authority.authority_is_available : null;
+    console.log(authority)
+
+    
+
+    return authority ? authority.authority_state : null;
   };
-  
+
   if (loading) return <div>로딩 중...</div>;
   if (error) return <div>에러 발생: {error}</div>;
 
@@ -285,15 +265,17 @@ const ListPage = () => {
                     </div>
                   </div>
                   <div className="list-content">{list.address_road} {list.address_detail}</div>
-                </div>
-                <div className='list-title-container'>
+                  <div className='list-title-container'>
                   {/* 권한 상태에 따라 버튼 텍스트 변경 */}
-                  {getAuthorityStatus(list.business_registration_number) === true ? (
+                  {getAuthorityStatus(list.business_registration_number) === '완료' ? (
                     <button disabled>권한요청이 완료되었습니다.</button>
-                  ) : getAuthorityStatus(list.business_registration_number) === false ? (
+                  ) : getAuthorityStatus(list.business_registration_number) === '대기' ? (
                     <div className='authority available'>
                       <span style={{ color: "red" }}>권한 요청 중입니다.</span><span> (권한 승인 대기중...)</span>
                     </div>
+
+                  ) : getAuthorityStatus(list.business_registration_number) === '거절' ? (
+                    <span style={{ color: "red" }}>권한요청이 거절되었습니다.</span>
 
                   ) : (
                     <button onClick={() => handleAuthorityRequestClick(list.business_registration_number, list.business_owner_phone)}>
@@ -301,6 +283,8 @@ const ListPage = () => {
                     </button>
                   )}
                 </div>
+                </div>
+               
               </div>
             </div>
           ))}

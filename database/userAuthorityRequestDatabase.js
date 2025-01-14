@@ -1,14 +1,15 @@
 const { UserAuthorityRequest, UserInformation, sequelize } = require("../models");  // 여기서 모델을 가져옵니다.
 
 
-const userAuthority = async (userAuthorityData) => {
+const userAuthority = async (userAuthorityData, platform_id) => {
   console.log("database userAuthorityData")
   console.log(userAuthorityData)
   try {
     console.log("userAuthorityData")
     const userAuthorityRequest = await UserAuthorityRequest.create({
       business_registration_number: userAuthorityData.business_registration_number,
-      platform_id: userAuthorityData.platform_id,
+      platform_id: platform_id,
+      authority_state: '대기',
       created_at: new Date(),
       updated_at: new Date(),
     });
@@ -24,13 +25,13 @@ const userGetAuthority = async (business_registration_number) => {
 
   try {
     let sql ="";
-    sql += "select user_authority_request_id, business_registration_number, authority_is_available ,user_name, user_phone  ";
+    sql += "select user_authority_request_id, business_registration_number, authority_is_available, authority_state ,user_name, user_phone  ";
     sql += "from user_authority_request uar ";
     sql += "join user_information ui ";
     sql += "on uar.platform_id = ui.platform_id ";
     sql += "where uar.business_registration_number = :business_registration_number ";
 
-    const [results, metadata] = await sequelize.query(
+    const [result, metadata] = await sequelize.query(
       sql,
 
       {
@@ -41,8 +42,13 @@ const userGetAuthority = async (business_registration_number) => {
 
     );
     console.log(metadata);
-    console.log(results)
-    return [results]
+    console.log(result)
+
+    if(result === undefined){
+      return null
+    }
+
+    return Array.isArray(result) ? result : [result];
 
   } catch (error) {
     throw new Error(`Failed to userGetAuthority : ${error.message}`);
@@ -55,7 +61,7 @@ const userGetAuthorityAvailable = async (user_id) => {
   try {
     const userGetAuthority = await UserAuthorityRequest.findAll({
       where: { platform_id: user_id },
-      attributes: ['business_registration_number', 'authority_is_available'], // UserAuthorityRequest에서 사업자번호만 선택
+      attributes: ['business_registration_number', 'authority_state'], // UserAuthorityRequest에서 사업자번호만 선택
     });
 
     console.log("userGetAuthority");
@@ -65,13 +71,13 @@ const userGetAuthorityAvailable = async (user_id) => {
   }
 };
 
-const authorityAvailableTrue = async (id) => {
+const authorityAvailableTrue = async (id, authority_state) => {
   console.log("database authorityAvailableTrue")
   console.log(id)
 
   try {
     const authorityAvailableTrueUpdate = await UserAuthorityRequest.update(
-      { authority_is_available: true },
+      { authority_state: authority_state },
       {
         where: { user_authority_request_id: id },
       }

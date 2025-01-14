@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../CSS/customer.css'
+import '../BusinessCSS/customerManagement.css'
 import { useEffect } from 'react';
 import api from '../Api'
 
@@ -37,21 +37,6 @@ const CustomerManagement = () => {
 
     console.log(reservationManagementList)
 
-    const customerResults = [
-        {
-            reservationtime: '24-05-10-13:00',
-            customername: '멍멍이/김인간',
-            resultButton: '내용보기',
-            detailButton: '상세보기'
-        },
-        {
-            reservationtime: '24-05-10-13:00',
-            customername: '야옹이/최사람',
-            resultButton: '내용쓰기',
-            detailButton: '상세보기'
-        },
-    ];
-
     return (
         <div className='page-container' lang='ko'>
             <div className='navigation'>
@@ -61,14 +46,14 @@ const CustomerManagement = () => {
                 고객관리
                 <div> </div>
             </div>
-            <div className='customer-title'>
-                <div className='customer-text'>시작시간</div>
-                <div className='customer-text'>종료시간</div>
-                <div className='customer-text'>반려동물/보호자</div>
-                <div className='customer-text'>알림장</div>
+            <div className='customerManagement-title'>
+                <div className='customerManagement-text'>시작시간</div>
+                <div className='customerManagement-text'>종료시간</div>
+                <div className='customerManagement-text'>반려동물/보호자</div>
+                <div className='customerManagement-text'>알림장</div>
 
             </div>
-            <div class="horizontal-line"></div>
+            <div id="horizontal-line">&nbsp;</div>
 
             {reservationManagementList != null ? (
                 reservationManagementList.map((reservationManagement, index) => (

@@ -31,7 +31,7 @@ const customerManagementGet = async (business_registration_number) => {
         console.log("Results Length:", results.length);
         console.log("Metadata:", metadata);
         console.log("results");
-        return [results];
+        return results;
 
     } catch (error) {
         throw new Error(`Failed to register pet: ${error.message}`);
