@@ -111,6 +111,8 @@ function RegisterInformation() {
         dayoff: '',
         business_no_show: '',
     });
+
+    
     formData.address_postcode = postcode;
     formData.address_road = roadAddress;
     formData.address_jibun = jibunAddress;

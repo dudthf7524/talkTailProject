@@ -35,7 +35,9 @@ const ReservationDetail = () => {
     { title: '특이사항', info: '피부병\n심장질환\n마킹\n침흘림\n더아프면 유감' },
     { title: '주의사항', info: '우리개는 물어요\n조심하세요' }
   ];
-
+  const [formData, setFormData] = useState({
+    business_no_show: '',
+});
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -68,12 +70,20 @@ const ReservationDetail = () => {
   const closeModal = () => setModalOpen(false);
 
   const handleConfirm = async () => {
+    
+    console.log(reservationManagementList.business_name)
+    console.log(reservationManagementList.business_phone)
+    console.log(formData.business_no_show)
     console.log("reservationCompleteTime")
     console.log(reservationCompleteTime)
     console.log("reservationCompleteTime")
+    const business_no_show = formData.business_no_show;
+    const business_name = reservationManagementList.business_name;
+    const business_phone = reservationManagementList.business_phone;
+
     try {
       console.log(reservationCompleteTime)
-      const response = await api.put(`/api/beauty/reservation/setCompleteTime/${id}`, { reservationCompleteTime }, { withCredentials: true });
+      const response = await api.put(`/api/beauty/reservation/setCompleteTime/${id}`, { reservationCompleteTime, business_no_show, business_name, business_phone }, { withCredentials: true });
       console.log('수락');
       setCheckMessage('확정되었습니다.');
       setModalOpen(false);
@@ -193,6 +203,14 @@ const ReservationDetail = () => {
     console.log("activeTime")
 
   };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+        ...formData,
+        [name]: value,
+    });
+};
   return (
     <div className='page-container2' lang='ko'>
       <div className='navigation'>
@@ -302,8 +320,13 @@ const ReservationDetail = () => {
             )
           }
         </div>
+        <div className='detail-form2'>
+          <div className='detail-title'>미용가격</div>
+          <div className='detail-info'><input type="text" name='business_no_show'  onChange={handleInputChange} />
+          </div>
+        </div>
       </div>
-
+   
 
 
       {

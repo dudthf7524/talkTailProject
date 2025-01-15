@@ -49,22 +49,13 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
     const star_time = req.body.startTime;
     
 
-    // try {
-    //     const result = await reservationDatabase.beautyReservation(req.body)
-    //     // if(result == "ddd"){
-    //     //     console.log("데이터 저장 실패")
-    //     // }
-    //     // console.log(result)
-    //     // if (result == "ddd") {
-    //     //     // 데이터베이스 저장 실패
-    //     //     return res.status(500).json({ message: 'Failed to save reservation' });
-    //     // }
-        
-    //     // res.status(201).json({ result });
-    // } catch (error) {
-    //     console.error('Error saving reservation to database:', error.message);
-    //     return res.status(500).json({ error: 'Database save failed' });
-    // }
+    try {
+        const result = await reservationDatabase.beautyReservation(req.body)
+       
+    } catch (error) {
+        console.error('Error saving reservation to database:', error.message);
+        return res.status(500).json({ error: 'Database save failed' });
+    }
     
     try{
         req.body = []
@@ -115,14 +106,40 @@ router.get('/beauty/reservation/detail/:id', async (req, res) => {
 router.put('/beauty/reservation/setCompleteTime/:id', async (req, res) => {
     const id = req.params.id;
     const reservationCompleteTime = req.body.reservationCompleteTime;
+    const business_no_show = req.body.business_no_show;
+    const business_name = req.body.business_name;
+    const business_phone = req.body.business_phone;
+    console.log(id)
+    console.log(reservationCompleteTime)
+    console.log(business_no_show)
+    console.log(business_name)
+    console.log(business_phone)
+    
+    // try {
+    //     const result = await reservationDatabase.setCompleteTime(id, reservationCompleteTime)
+    //     res.status(201).json(result);
+    // } catch (error) {
+    //     console.error('Error fetching userIformation:', error.message);
+    //     res.status(500).json({ error: error.message });
+    // }
 
-    try {
-        const result = await reservationDatabase.setCompleteTime(id, reservationCompleteTime)
+    
+    try{
+        req.body = []
+        req.body.user_name = user_information.user_name;
+        req.body.user_phone = user_information.user_phone;
+        req.body.receiver_1 = business_owner_phone;
+        req.body.beauty_style = beauty_style;
+        req.body.start_time = star_time;
+        console.log(req.body)
+        const result = await kakaoProcess.reservationComplete(req, res)
+        console.log(result)
         res.status(201).json(result);
-    } catch (error) {
-        console.error('Error fetching userIformation:', error.message);
-        res.status(500).json({ error: error.message });
+    }catch (error){
+        console.error('Error saving reservation to database:', error.message);
+        return res.status(500).json({ error: 'Database save failed' });
     }
+
 })
 
 router.get('/beauty/reservation/date/:id', async (req, res) => {

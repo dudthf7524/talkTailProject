@@ -5,7 +5,7 @@ import '../../CSS/listPage.css';
 import api from '../../Api';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBusinessInfo } from '../../redux/reservationData';
-
+import { setHour } from '../../redux/reservationData';
 
 const EventDetailPage = () => {
     const { id } = useParams();
@@ -99,13 +99,13 @@ const EventDetailPage = () => {
         console.log(business.business_name)
         console.log(business.business_registration_number)
         console.log(business.business_no_show)
-
+        console.log(hours)
         dispatch(setBusinessInfo({
             business_name: business.business_name,
             business_registration_number: business.business_registration_number,
             business_no_show: business.business_no_show,
         }));
-
+        dispatch(setHour(hours));
         navigate(`/designer/list`);
     };
 
@@ -137,19 +137,19 @@ const EventDetailPage = () => {
         const [hour, minute] = time.split(':'); // ':'를 기준으로 분할
         return `${hour}:${minute}`; // 시간과 분을 합쳐서 반환
     };
-    console.log(hours)
+
     // 사용 예시
     const weekdayOpenTime = formatTime(business.weekday_open_time);
     const weekdayCloseTime = formatTime(business.weekday_close_time);
     const weekendOpenTime = formatTime(business.weekend_open_time);
     const weekendCloseTime = formatTime(business.weekend_close_time);
 
-    
+
     const operatingDays = Object.values(hours).filter(day => day.isOperatingDay === true);
 
 
-    console.log("operatingDays")
-    
+
+
 
     if (!business) {
         return <p>로딩 중...</p>; // 로딩 중일 때 처리
@@ -189,7 +189,7 @@ const EventDetailPage = () => {
                     {/* <div className='event-tag-container'>
                         <EventTags tags={business.tags} />
                     </div> */}
-                  
+
                     {operatingDays.length > 0 && (
                         <div>
                             {operatingDays.map((day, index) => {
