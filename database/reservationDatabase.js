@@ -15,7 +15,8 @@ const beautyReservation = async (beautyReservationData) => {
             beauty_style: beautyReservationData.beauty_style,
             beauty_significant: beautyReservationData.beauty_significant,
             beauty_caution: beautyReservationData.beauty_caution,
-            deposit_amount: beautyReservationData.depositAmount,
+            beauty_price: 0,
+            paid_price: beautyReservationData.depositAmount,
             reservation_applicationTime: beautyReservationData.reservationApplicationTime,
             date: beautyReservationData.date,
             start_time: beautyReservationData.startTime,
@@ -49,7 +50,7 @@ const beautyReservationDetail = async (id) => {
     console.log(id)
     try {
         let sql = "";
-        sql += "select business_name, business_phone, start_time, end_time, business_desinger_name, user_phone, pet_name, pet_species, pet_breed, pet_birth, pet_weight, pet_gender, pet_neuter, beauty_style, beauty_significant, beauty_caution, end_time, beauty_reservation_is_avaiable, reservation_state, reject_content ";
+        sql += "select business_name, business_phone, date, start_time, end_time, business_desinger_name, user_phone, pet_name, pet_species, pet_breed, pet_birth, pet_weight, pet_gender, pet_neuter, beauty_style, beauty_significant, beauty_caution, end_time, reservation_state, reject_content ,beauty_price, paid_price ";
         sql += "from beauty_reservation br ";
         sql += "join user_information ui ";
         sql += "on br.platform_id = ui.platform_id ";
@@ -94,16 +95,19 @@ const beautyReservationDetail = async (id) => {
     }
 };
 
-const setCompleteTime = async (id, reservationComplete) => {
+const setCompleteTime = async (id, reservationComplete ,beauty_price, paid_prices) => {
 
-
+    console.log(id)
     console.log(reservationComplete)
-
+    console.log(beauty_price)
+    console.log(paid_prices)
     try {
         const setCompleteTimeUpdate = await BeautyReservation.update(
             {
                 reservation_state : "완료",
-                end_time: reservationComplete
+                end_time: reservationComplete,
+                beauty_price: beauty_price,
+                paid_price: paid_prices
             },
             {
                 where: { beauty_reservation_id: id },

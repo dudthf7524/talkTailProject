@@ -106,31 +106,43 @@ router.get('/beauty/reservation/detail/:id', async (req, res) => {
 router.put('/beauty/reservation/setCompleteTime/:id', async (req, res) => {
     const id = req.params.id;
     const reservationCompleteTime = req.body.reservationCompleteTime;
-    const business_no_show = req.body.business_no_show;
+    const beauty_price = Number(req.body.beauty_price);
     const business_name = req.body.business_name;
     const business_phone = req.body.business_phone;
+    const start_time = req.body.start_time;
+    const date = req.body.date;
+    const user_phone = req.body.user_phone;
+    const paid_price = req.body.paid_price;
+    console.log(req.body)
     console.log(id)
     console.log(reservationCompleteTime)
-    console.log(business_no_show)
+    console.log(beauty_price)
+    console.log(typeof beauty_price)
     console.log(business_name)
     console.log(business_phone)
-    
-    // try {
-    //     const result = await reservationDatabase.setCompleteTime(id, reservationCompleteTime)
-    //     res.status(201).json(result);
-    // } catch (error) {
-    //     console.error('Error fetching userIformation:', error.message);
-    //     res.status(500).json({ error: error.message });
-    // }
+    console.log(start_time)
+    console.log(date)
+    console.log(user_phone)
+    console.log(paid_price)
+    console.log(typeof paid_price)
+    req.body.reservationDate = date+" "+start_time+"~"+reservationCompleteTime;
+    const paid_prices = paid_price + beauty_price;
+
+    console.log(paid_prices)
+
+    try {
+        const result = await reservationDatabase.setCompleteTime(id, reservationCompleteTime, beauty_price, paid_prices)
+        
+    } catch (error) {
+        console.error('Error fetching userIformation:', error.message);
+        res.status(500).json({ error: error.message });
+    }
 
     
     try{
-        req.body = []
-        req.body.user_name = user_information.user_name;
-        req.body.user_phone = user_information.user_phone;
-        req.body.receiver_1 = business_owner_phone;
-        req.body.beauty_style = beauty_style;
-        req.body.start_time = star_time;
+        req.body.receiver_1 = user_phone;
+        
+        
         console.log(req.body)
         const result = await kakaoProcess.reservationComplete(req, res)
         console.log(result)
@@ -175,15 +187,27 @@ router.put('/beauty/reservation/reject/:id', async (req, res) => {
 
     const beauty_reservation_id = req.params.id;
     const reject_content = req.body.rejectComment;
-
+    const user_phone  =req.body.user_phone
     console.log(beauty_reservation_id)
-    console.log(reject_content)    
+    console.log(reject_content)
+
     try {
         const result = await reservationDatabase.beautyReservationReject(beauty_reservation_id, reject_content)
-        res.status(201).json(result);
+       
     } catch (error) {
         console.error('Error fetching userIformation:', error.message);
         res.status(500).json({ error: error.message });
+    }
+    
+    try{
+        req.body.receiver_1 = user_phone;
+        console.log(req.body)
+        const result = await kakaoProcess.reservationReject(req, res)
+        console.log(result)
+        res.status(201).json(result);
+    }catch (error){
+        console.error('Error saving reservation to database:', error.message);
+        return res.status(500).json({ error: 'Database save failed' });
     }
 
 })

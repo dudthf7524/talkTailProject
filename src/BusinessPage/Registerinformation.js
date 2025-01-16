@@ -53,16 +53,6 @@ function RegisterInformation() {
         };
     };
 
-
-    const times = [
-        "00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30",
-        "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30",
-        "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
-        "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
-        "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30",
-        "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"
-    ];
-
     const apiUrl = process.env.REACT_APP_API_BASE_URL;
     const { imageFiles } = useContext(ImageContext);
     const navigate = useNavigate();
@@ -98,17 +88,14 @@ function RegisterInformation() {
     }, []);
 
 
-    const handleUploadClick = (imageType) => {
-        navigate(`/business/imgupload/${imageType}`);
+    const handleUploadClick = (pathName, imageType) => {
+        navigate(`/business/imgupload/${pathName}/${imageType}`);
     };
-
     const [formData, setFormData] = useState({
         business_name: '',
         address_postcode: '',
         address_road: '',
         address_jibun: '',
-        dayon: '',
-        dayoff: '',
         business_no_show: '',
     });
 
@@ -125,31 +112,6 @@ function RegisterInformation() {
         });
     };
 
-    const [selectedDays, setSelectedDays] = useState([]); // 선택된 요일을 저장
-    const daysOfWeek = ["월", "화", "수", "목", "금", "토", "일"];
-
-    const toggleDay = (day) => {
-        setSelectedDays((prevSelected) =>
-            prevSelected.includes(day)
-                ? prevSelected.filter((d) => d !== day) // 이미 선택된 경우 제거
-                : [...prevSelected, day] // 선택된 경우 추가
-        );
-    };
-    const offDays = daysOfWeek.filter((day) => !selectedDays.includes(day));
-
-    var dayon = '';
-    var dayoff = '';
-    for (let i = 0; i < selectedDays.length; i++) {
-        dayon += selectedDays[i]
-    }
-
-    for (let i = 0; i < offDays.length; i++) {
-        dayoff += offDays[i]
-    }
-
-
-    formData.dayon = dayon;
-    formData.dayoff = dayoff;
     console.log(formData)
 
     const handleSave = async () => {
@@ -173,7 +135,7 @@ function RegisterInformation() {
                     data.append(key, file);
                 });
             });
-            // 서버로 FormData를 전송
+            
             const response = await axios.post(`${apiUrl}/api/business/register/information`, data, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -213,7 +175,7 @@ function RegisterInformation() {
                 <div onClick={() => openModal('accept')}>저장</div>
             </div>
             <div className='main-mid'>
-                <div className='upload-box' onClick={() => handleUploadClick('main')}>
+                <div className='upload-box' onClick={() => handleUploadClick('register', 'main')}>
                     <p>메인사진(상세페이지 최상단 노출)</p>
                     <p>jpg 해상도 430*468</p>
                     <div>
@@ -221,7 +183,7 @@ function RegisterInformation() {
                         파일올리기
                     </div>
                 </div>
-                <div className='upload-box' onClick={() => handleUploadClick('pricing')}>
+                <div className='upload-box' onClick={() => handleUploadClick('register', 'pricing')}>
                     <p>가격표</p>
                     <p>엑셀,이미지,pdf,한글 파일 등</p>
                     <div>
@@ -288,96 +250,7 @@ function RegisterInformation() {
                     <p>상세 주소</p>
                     <input type="text" name='address_detail' value={formData.address_detail} onChange={handleInputChange} placeholder="상세 주소" />
                 </div>
-
-
-
-                <div className='input-container'>
-                    <p>평일오픈시간</p>
-                    <select
-                        onChange={(e) =>
-                            setFormData((prevData) => ({
-                                ...prevData,
-                                weekday_open_time: e.target.value, // 선택된 값을 formData에 저장
-                            }))
-                        }
-                    >
-                        {times.map((time, i) => (
-                            <option key={i} value={time}>{time}</option>
-                        ))}
-                    </select>
-
-                </div>
-                <div className='input-container'>
-                    <p>평일마감시간</p>
-                    <select
-                        onChange={(e) =>
-                            setFormData((prevData) => ({
-                                ...prevData,
-                                weekday_close_time: e.target.value, // 선택된 값을 formData에 저장
-                            }))
-                        }
-                    >
-                        {times.map((time, i) => (
-                            <option key={i} value={time}>{time}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className='input-container'>
-                    <p>주말오픈시간</p>
-                    <select
-                        onChange={(e) =>
-                            setFormData((prevData) => ({
-                                ...prevData,
-                                weekend_open_time: e.target.value, // 선택된 값을 formData에 저장
-                            }))
-                        }
-                    >
-                        {times.map((time, i) => (
-                            <option key={i} value={time}>{time}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className='input-container'>
-                    <p>주말마감시간</p>
-                    <select
-                        onChange={(e) =>
-                            setFormData((prevData) => ({
-                                ...prevData,
-                                weekend_close_time: e.target.value, // 선택된 값을 formData에 저장
-                            }))
-                        }
-                    >
-                        {times.map((time, i) => (
-                            <option key={i} value={time}>{time}</option>
-                        ))}
-                    </select>
-                </div>
-
-                <div className='input-container'>
-                    <p>영업일</p>
-                    <div style={{ display: 'flex', gap: '10px' }}>
-                        {daysOfWeek.map((day) => (
-                            <button
-                                key={day}
-                                onClick={() => toggleDay(day)}
-                                style={{
-                                    padding: '10px 15px',
-                                    borderRadius: '5px',
-                                    border: '1px solid #ddd',
-                                    backgroundColor: selectedDays.includes(day) ? '#4CAF50' : '#fff',
-                                    color: selectedDays.includes(day) ? '#fff' : '#000',
-                                    cursor: 'pointer',
-                                }}
-                            >
-                                {day}
-                            </button>
-                        ))}
-                    </div>
-                    {/* <p>선택된 영업일: {selectedDays.join(", ")}</p>
-                    <p>휴무일: {offDays.join(", ")}</p> */}
-                </div>
-                <div className='input-container'>
-                </div>
+             
                 <div className='input-container-inline'>
                     <p>가게전화번호</p>
 

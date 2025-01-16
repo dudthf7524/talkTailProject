@@ -36,7 +36,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(30),
         allowNull: false,
       },
-      deposit_amount: {
+      beauty_price: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      paid_price: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -59,11 +63,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: '',
       },
-      beauty_reservation_is_avaiable: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-      },
+      // beauty_reservation_is_avaiable: {
+      //   type: DataTypes.BOOLEAN,
+      //   allowNull: false,
+      //   defaultValue: false,
+      // },
       beauty_notice_is_available: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

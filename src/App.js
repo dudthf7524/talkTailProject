@@ -45,6 +45,7 @@ import DateRegister from './BusinessPage/DateRegister';
 import DateEdit from './BusinessPage/DateEdit';
 import DayOnOffEdit from './BusinessPage/DayOnOffEdit';
 import EditInformation from './BusinessPage/EditInformation';
+import BusinessBeautyEditOption from './BusinessPage/BusinessBeautyEditOption';
 
 function App() {
   const [imageFiles, setImageFiles] = useState({
@@ -121,6 +122,7 @@ function App() {
               <Route path="date/register" element={<DateRegister />} />
               <Route path="date/edit" element={<DateEdit />} />
               <Route path="day-on-off/edit" element={<DayOnOffEdit />} />
+              <Route path="edit/option" element={<BusinessBeautyEditOption />} />
             </Route>
           </Routes>
         </ImageProvider>

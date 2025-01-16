@@ -36,8 +36,8 @@ const ReservationDetail = () => {
     { title: '주의사항', info: '우리개는 물어요\n조심하세요' }
   ];
   const [formData, setFormData] = useState({
-    business_no_show: '',
-});
+    beauty_price: 0,
+  });
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -70,31 +70,37 @@ const ReservationDetail = () => {
   const closeModal = () => setModalOpen(false);
 
   const handleConfirm = async () => {
-    
+
     console.log(reservationManagementList.business_name)
     console.log(reservationManagementList.business_phone)
     console.log(formData.business_no_show)
     console.log("reservationCompleteTime")
     console.log(reservationCompleteTime)
     console.log("reservationCompleteTime")
-    const business_no_show = formData.business_no_show;
+    const beauty_price = formData.beauty_price;
     const business_name = reservationManagementList.business_name;
     const business_phone = reservationManagementList.business_phone;
-
+    const start_time = reservationManagementList.start_time;
+    const date = reservationManagementList.date;
+    const user_phone = reservationManagementList.user_phone;
+    const paid_price = reservationManagementList.paid_price;
     try {
       console.log(reservationCompleteTime)
-      const response = await api.put(`/api/beauty/reservation/setCompleteTime/${id}`, { reservationCompleteTime, business_no_show, business_name, business_phone }, { withCredentials: true });
+      const response = await api.put(`/api/beauty/reservation/setCompleteTime/${id}`, { reservationCompleteTime, beauty_price, business_name, business_phone, start_time, date, user_phone, paid_price }, { withCredentials: true });
       console.log('수락');
-      setCheckMessage('확정되었습니다.');
-      setModalOpen(false);
-      setCheckModalOpen(true);
+
 
       console.log(response.data)
+      if (response.data === 'success') {
+        setCheckMessage('확정되었습니다.');
+        setModalOpen(false);
+        setCheckModalOpen(true);
+        setTimeout(() => {
+          window.location.href = '/business/reservation/management';
+        }, 2000); // 2초 후 리다이렉트
+      }
 
 
-      setTimeout(() => {
-        navigate('/business/reservation/management');
-      }, 2000); // 2초 후 리다이렉트
     } catch (error) {
       console.error('예약 완료 실패:', error);
     }
@@ -103,11 +109,16 @@ const ReservationDetail = () => {
   };
 
   const handleReject = async (rejectComment) => {
+
     console.log('거절:', rejectComment); // 거절 사유 확인
     console.log('거절:', rejectComment); // 거절 사유 확인
+    const business_name = reservationManagementList.business_name;
+    const business_phone = reservationManagementList.business_phone;
+    const user_phone = reservationManagementList.user_phone;
+    
     try {
 
-      const response = await api.put(`/api/beauty/reservation/reject/${id}`, { rejectComment }, { withCredentials: true });
+      const response = await api.put(`/api/beauty/reservation/reject/${id}`, { rejectComment, business_name, business_phone, user_phone }, { withCredentials: true });
       console.log('수락');
       setCheckMessage('확정되었습니다.');
       setModalOpen(false);
@@ -207,10 +218,10 @@ const ReservationDetail = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
-        ...formData,
-        [name]: value,
+      ...formData,
+      [name]: value,
     });
-};
+  };
   return (
     <div className='page-container2' lang='ko'>
       <div className='navigation'>
@@ -275,9 +286,14 @@ const ReservationDetail = () => {
           <div className='detail-info'>{reservationManagementList.beauty_caution}</div>
         </div>
         <div className='detail-form2'>
+          <div className='detail-title'>예약날짜</div>
+          <div className='detail-info'>{reservationManagementList.date}</div>
+        </div>
+        <div className='detail-form2'>
           <div className='detail-title'>시작시간</div>
           <div className='detail-info'>{reservationManagementList.start_time}</div>
         </div>
+
         <div className='detail-form2'>
           {
             reservationManagementList.reservation_state === '완료' ? (
@@ -320,13 +336,33 @@ const ReservationDetail = () => {
             )
           }
         </div>
-        <div className='detail-form2'>
-          <div className='detail-title'>미용가격</div>
-          <div className='detail-info'><input type="text" name='business_no_show'  onChange={handleInputChange} />
-          </div>
-        </div>
+        {
+          reservationManagementList.reservation_state === '완료' ? (
+            <div className='detail-form2'>
+              <div className='detail-title'>미용금액</div>
+              <div className='detail-info'>{reservationManagementList.beauty_price} 원</div>
+            </div>
+          ) : reservationManagementList.reservation_state === '대기' ? (
+            <div className='detail-form2'>
+              <div className='detail-title'>미용가격</div>
+              <div className='detail-info'><input
+                type="number"
+                name="beauty_price"
+                min="0"
+                step="1000" // 1000 단위로 값 증가
+                onChange={handleInputChange}
+              />
+              </div>
+            </div>
+          ) : (
+            <div className='detail-info'>
+
+            </div>
+          )
+        }
+
       </div>
-   
+
 
 
       {
