@@ -1,9 +1,44 @@
-.modal {
+.modal_container {
   width: 300px;
-  height: 300px;
+  height: 200px;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background-color: white;
+  box-shadow: 4px 4px 0px 0px rgba(161, 157, 157, 0.3);
+  border-radius: 10px;
+}
+.modal_container img {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+.modal_container .title {
+  font-size: 30px;
+  margin: 0;
+}
+.modal_container .content {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+.modal_container .btn {
+  width: 50px;
+  height: 25px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 4px;
 }

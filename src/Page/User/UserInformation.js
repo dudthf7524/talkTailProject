@@ -84,7 +84,7 @@ function UserInformation() {
   };
 
   return (
-    <div className="mid user_information" lang="ko">
+    <div className="mid user_information_total" lang="ko">
       <div className="navigation">
         <button>
           <img
