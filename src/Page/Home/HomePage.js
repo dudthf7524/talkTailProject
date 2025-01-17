@@ -93,10 +93,11 @@ const MainPage = () => {
   };
 
   const [openModal, setOpenModal] = useState(false);
-
+  const modalTitle = "알림";
+  const modalContent = "해당 서비스는 준비 중입니다.";
   return (
     <div lang="ko">
-      <div className="mid">
+      <div className="mid home_total">
         <div className="home-header">
           <div className="home-location">
             <button>
@@ -149,7 +150,7 @@ const MainPage = () => {
                 <img src={b1Url} alt="" />
               </div>
               {/* <div className="button-item" onClick={() => handleItemClick(2)}> */}
-              <div className="button-item">
+              <div className="button-item" onClick={() => setOpenModal(true)}>
                 {/* <br></br> */}
                 {/* 유치원 */}
                 <img src={b2Url} alt="" />
@@ -157,29 +158,29 @@ const MainPage = () => {
             준비중 */}
               </div>
               {/* <div className="button-item" onClick={() => handleItemClick(3)}> */}
-              <div className="button-item">
+              <div className="button-item" onClick={() => setOpenModal(true)}>
                 <img src={b3Url} alt="" />
               </div>
               {/* <div className="button-item" onClick={() => handleItemClick(4)}> */}
-              <div className="button-item">
+              <div className="button-item" onClick={() => setOpenModal(true)}>
                 <img src={b4Url} alt="" />
               </div>
             </div>
-            <div className="button-grid-con">
+            <div className="button-grid-con" onClick={() => setOpenModal(true)}>
               {/* <div className="button-item" onClick={() => handleItemClick(5)}> */}
               <div className="button-item">
                 <img src={b5Url} alt="" />
               </div>
               {/* <div className="button-item" onClick={() => handleItemClick(6)}> */}
-              <div className="button-item">
+              <div className="button-item" onClick={() => setOpenModal(true)}>
                 <img src={b6Url} alt="" />
               </div>
               {/* <div className="button-item" onClick={() => handleItemClick(7)}> */}
-              <div className="button-item">
+              <div className="button-item" onClick={() => setOpenModal(true)}>
                 <img src={b7Url} alt="" />
               </div>
               {/* <div className="button-item" onClick={() => handleItemClick(8)}> */}
-              <div className="button-item">
+              <div className="button-item" onClick={() => setOpenModal(true)}>
                 <img src={b8Url} alt="" />
               </div>
             </div>
@@ -234,7 +235,17 @@ const MainPage = () => {
         </div>
       </div>
       <NButtonContainer />
-      {openModal ? <Modal /> : ""}
+      {openModal ? (
+        <Modal
+          openModal={() => {
+            setOpenModal(false);
+          }}
+          title={modalTitle}
+          content={modalContent}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

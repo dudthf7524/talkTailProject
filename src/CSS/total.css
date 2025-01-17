@@ -11,3 +11,6 @@
 .user_information .input_box input {
   width: 28%;
 }
+.home_total .button-item {
+  cursor: pointer;
+}
