@@ -35,19 +35,20 @@ import AuthorityManagement from "./BusinessPage/AuthorityManagement";
 import UserInformation from "./Page/User/UserInformation";
 import RegisterStyle from "./BusinessPage/RegisterStyle";
 import ReservationManagement from "./BusinessPage/ReservationManagement";
-import BusinessReservationDetail from './BusinessPage/ReservationDetail';
-import CustomerManagement from './BusinessPage/CustomerManagement';
-import WriteNotice from './BusinessPage/WriteNotice';
+import BusinessReservationDetail from "./BusinessPage/ReservationDetail";
+import CustomerManagement from "./BusinessPage/CustomerManagement";
+import WriteNotice from "./BusinessPage/WriteNotice";
 import SelectedDatePage from "./Page/Reservation/SelectedDatePage";
-import EditAddressPage from './Page/User/EditAddressPage';
-import UserEdit from './Page/User/UserEdit';
-import Reservation from './Page/MyPage/Reservation';
-import DateRegister from './BusinessPage/DateRegister';
-import DateEdit from './BusinessPage/DateEdit';
-import DayOnOffEdit from './BusinessPage/DayOnOffEdit';
-import EditInformation from './BusinessPage/EditInformation';
-import BusinessBeautyEditOption from './BusinessPage/BusinessBeautyEditOption';
-import ReservationDetail from './Page/MyPage/ReservationDetail';
+import EditAddressPage from "./Page/User/EditAddressPage";
+import UserEdit from "./Page/User/UserEdit";
+import Reservation from "./Page/MyPage/Reservation";
+import DateRegister from "./BusinessPage/DateRegister";
+import DateEdit from "./BusinessPage/DateEdit";
+import DayOnOffEdit from "./BusinessPage/DayOnOffEdit";
+import EditInformation from "./BusinessPage/EditInformation";
+import BusinessBeautyEditOption from "./BusinessPage/BusinessBeautyEditOption";
+import ReservationDetail from "./Page/MyPage/ReservationDetail";
+
 
 function App() {
   const [imageFiles, setImageFiles] = useState({
