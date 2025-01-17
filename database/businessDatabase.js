@@ -136,6 +136,31 @@ const businessLogin = async (login_id, login_password) => {
     }
 };
 
+const checkLogin = async (login_id) => {
+    try {
+
+        // business 테이블에서 login_id (business_id)에 해당하는 사업자 정보 조회
+        const business = await Business.findOne({
+            where: { login_id: login_id },  // login_id는 business_id에 해당
+        });
+        
+        if(business){
+            return '1'
+        }
+
+        if (!business) {
+            // 해당 사업자가 존재하지 않으면 null 반환
+            return '0';
+        }
+        console.log(business)
+        // 사업자가 존재하면 해당 사업자 객체 반환
+        
+    } catch (error) {
+        console.error('Error in business login:', error);
+        throw new Error('Failed to fetch business data');
+    }
+};
+
 const getBusinesses = async () => {
     try {
         // // 비즈니스 데이터 가져오기
@@ -643,4 +668,5 @@ module.exports = {
     informationUpdateYesMainAndPricingFile,
     beautyOptionGet,
     updateBusinessBeautyOption,
+    checkLogin
 };

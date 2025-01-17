@@ -33,20 +33,21 @@ import PetDetailPage from "./Page/Pet/PetDetailPage";
 import PetEditPage from "./Page/Pet/PetEditPage";
 import AuthorityManagement from "./BusinessPage/AuthorityManagement";
 import UserInformation from "./Page/User/UserInformation";
-import RegisterStyle from "./BusinessPage/RegisterStyle";
-import ReservationManagement from "./BusinessPage/ReservationManagement";
-import ReservationDetail from "./BusinessPage/ReservationDetail";
-import CustomerManagement from "./BusinessPage/CustomerManagement";
-import WriteNotice from "./BusinessPage/WriteNotice";
+import RegisterStyle from './BusinessPage/RegisterStyle';
+import ReservationManagement from './BusinessPage/ReservationManagement';
+import BusinessReservationDetail from './BusinessPage/ReservationDetail';
+import CustomerManagement from './BusinessPage/CustomerManagement';
+import WriteNotice from './BusinessPage/WriteNotice';
 import SelectedDatePage from "./Page/Reservation/SelectedDatePage";
-import EditAddressPage from "./Page/User/EditAddressPage";
-import UserEdit from "./Page/User/UserEdit";
-import Reservation from "./Page/MyPage/Reservation";
-import DateRegister from "./BusinessPage/DateRegister";
-import DateEdit from "./BusinessPage/DateEdit";
-import DayOnOffEdit from "./BusinessPage/DayOnOffEdit";
-import EditInformation from "./BusinessPage/EditInformation";
-import BusinessBeautyEditOption from "./BusinessPage/BusinessBeautyEditOption";
+import EditAddressPage from './Page/User/EditAddressPage';
+import UserEdit from './Page/User/UserEdit';
+import Reservation from './Page/MyPage/Reservation';
+import DateRegister from './BusinessPage/DateRegister';
+import DateEdit from './BusinessPage/DateEdit';
+import DayOnOffEdit from './BusinessPage/DayOnOffEdit';
+import EditInformation from './BusinessPage/EditInformation';
+import BusinessBeautyEditOption from './BusinessPage/BusinessBeautyEditOption';
+import ReservationDetail from './Page/MyPage/ReservationDetail';
 
 function App() {
   const [imageFiles, setImageFiles] = useState({
@@ -112,7 +113,8 @@ function App() {
             <Route path="/edit-address" element={<EditAddressPage />} />
             <Route path="/user/edit" element={<UserEdit />} />
             <Route path="/reservation" element={<Reservation />} />
-
+            <Route path="/reservation/detail/:id" element={<ReservationDetail />} />
+            
             <Route path="/business">
               <Route path="login" element={<Login />} />
               <Route path="menu" element={<BusinessMenu />} />
@@ -132,18 +134,9 @@ function App() {
                 element={<AuthorityManagement />}
               />
               <Route path="register/style" element={<RegisterStyle />} />
-              <Route
-                path="reservation/management"
-                element={<ReservationManagement />}
-              />
-              <Route
-                path="reservation/detail/:id"
-                element={<ReservationDetail />}
-              />
-              <Route
-                path="customer/management"
-                element={<CustomerManagement />}
-              />
+              <Route path="reservation/management" element={<ReservationManagement />} />
+              <Route path="reservation/detail/:id" element={<BusinessReservationDetail />} />
+              <Route path="customer/management" element={<CustomerManagement />} />
               <Route path="write/notice/:id" element={<WriteNotice />} />
               <Route path="date/register" element={<DateRegister />} />
               <Route path="date/edit" element={<DateEdit />} />
