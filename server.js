@@ -37,7 +37,7 @@ sequelize.sync({ force: false })
 passportConfig();
 
 app.use(cors({
-  origin: 'http://localhost:3000',  // 리액트 앱의 URL
+  origin: ['http://localhost:3000', 'http://www.talktail.store'],  // 리액트 앱의 URL 배열로 설정
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Business-Registration-Number', 'user-id'], // 허용할 헤더
   credentials: true,
