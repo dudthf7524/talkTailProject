@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../BusinessCSS/menu.css'
 import api from '../Api'
-import axios from 'axios';
 
 const AdminMenu = () => {
   const logoUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/logo/logo.svg`;
@@ -19,7 +18,7 @@ const AdminMenu = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get('http://localhost:8383/business/auth', { withCredentials: true });
+        const response = await api.get('/business/auth', { withCredentials: true });
         setUser(response.data);
         console.log(response.data)
         if (!response.data) {

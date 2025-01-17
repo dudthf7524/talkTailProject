@@ -7,6 +7,8 @@ import LoginModal from "./Modal/LoginModal.js";
 const Login = () => {
   const logoUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/logo/logo.svg`;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
+  console.log('aaaaaaaaaa')
+  console.log(apiUrl)
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const modalTitle = "로그인 완료";

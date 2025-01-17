@@ -19,8 +19,9 @@ const router = express.Router();
 const customerManagementRoutes = require('./routes/customerManagementRoutes');
 const kakaoApiRoutes = require('./routes/kakaoApiRoutes');
 
-app.listen(8383, () => {
-  console.log('http://localhost:8383 에서 서버 실행중')
+const port = 80;
+app.listen(port, () => {
+  console.log(`http://localhost:${port} 에서 서버 실행중`)
 })
 // 프론트엔드에서 데이터 가져올때 
 app.use(express.json());
