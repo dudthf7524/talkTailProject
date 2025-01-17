@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from '../../Api';
 
 function UserInformation() {
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -13,8 +14,8 @@ function UserInformation() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      axios
-        .get("http://localhost:8383/user/auth", {
+      api
+        .get("/user/auth", {
           headers: {
             Authorization: `Bearer ${token}`, // Authorization 헤더에 토큰 추가
           },
