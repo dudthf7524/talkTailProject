@@ -130,10 +130,7 @@ function App() {
                 element={<ImgUpload setImageFiles={handleSetImageFiles} />}
               />
               <Route path="register/desinger" element={<RegisterDesinger />} />
-              <Route
-                path="authority/management"
-                element={<AuthorityManagement />}
-              />
+              <Route path="authority/management" element={<AuthorityManagement />}/>
               <Route path="register/style" element={<RegisterStyle />} />
               <Route path="reservation/management" element={<ReservationManagement />} />
               <Route path="reservation/detail/:id" element={<BusinessReservationDetail />} />
@@ -142,10 +139,7 @@ function App() {
               <Route path="date/register" element={<DateRegister />} />
               <Route path="date/edit" element={<DateEdit />} />
               <Route path="day-on-off/edit" element={<DayOnOffEdit />} />
-              <Route
-                path="edit/option"
-                element={<BusinessBeautyEditOption />}
-              />
+              <Route path="edit/option" element={<BusinessBeautyEditOption />}/>
             </Route>
           </Routes>
         </ImageProvider>

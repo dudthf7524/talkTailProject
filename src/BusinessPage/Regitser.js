@@ -52,6 +52,11 @@ function Register() {
   };
 
   async function checkLogin() {
+    if (!formData.login_id.trim()) { // 아이디 입력이 비어 있는지 확인
+      setCheckMessage("아이디를 입력해주세요.");
+      setIsIdValid(false);
+      return;
+    }
     try {
       const response = await axios.post(`${apiUrl}/api/business/checkLogin`, { login_id: formData.login_id });
 

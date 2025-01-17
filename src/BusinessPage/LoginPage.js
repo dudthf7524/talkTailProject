@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../BusinessCSS/auth.css'
 import axios from 'axios';
-import LoginModal from './Modal/LoginModal';
+import LoginModal from "./Modal/LoginModal.js";
 
 const Login = () => {
   const logoUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/logo/logo.svg`;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const [isModalOpen, setModalOpen] = useState(false);
-    const [actionType, setActionType] = useState('');
-  
-  
-    const login = async () => {
+  const [openModal, setOpenModal] = useState(false);
+  const modalTitle = "로그인 완료";
+  const modalContent = "잠시 후 메뉴페이지로 이동합니다.";
+
+  const login = async () => {
 
     const form = document.querySelector(".loginform");
     const formData = new FormData(form);
@@ -27,11 +27,10 @@ const Login = () => {
       // axios로 데이터 전송
       const response = await axios.post(`${apiUrl}/api/business/login`, data, { withCredentials: true });
       if (response.status === 200) {
-        setModalOpen(true);
-        alert("로그인이 완료되었습니다.");
-        console.log("req.body : ", response.data)
-       
-        navigate("/business/menu");
+        setOpenModal(true);
+        setTimeout(() => {
+          navigate("/business/menu");
+        }, 2000);
       }
     } catch (error) {
       console.error("등록 실패:", error);
@@ -69,12 +68,17 @@ const Login = () => {
       <div className='find-id-pw-text'>
         <Link to="/find-admin-account">아이디/비밀번호 찾기</Link>
       </div>
-      <LoginModal
-        isOpen={isModalOpen === true}
-        onClose={() => setModalOpen(false)}
-        onConfirm={login}
-        actionType={actionType}
-      />
+      {openModal ? (
+        <LoginModal
+          openModal={() => {
+            setOpenModal(false);
+          }}
+          title={modalTitle}
+          content={modalContent}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
