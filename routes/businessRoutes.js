@@ -36,6 +36,25 @@ router.post('/businesses', async (req, res) => {
 
 })
 
+router.post('/business/checkLogin', async (req, res) => {
+  console.log(req.body)
+  const login_id = req.body.login_id;
+
+  console.log(login_id)
+
+
+  try {
+    
+    const business = await businessDatabase.checkLogin(login_id);
+    res.status(201).json(business);
+    
+  } catch (error) {
+    console.error('Error creating business', error.message);
+    res.status(500).json({ error: error.message });
+  }
+
+})
+
 router.post('/business/register/information', upload.fields([
   { name: 'main', maxCount: 1 },
   { name: 'sub', maxCount: 50 },
@@ -432,6 +451,5 @@ router.put('/business/beauty/option', authMiddlewareSession,  async (req, res) =
     console.error('Error creating business with images:', error);
     res.status(500).json({ error: error.message });
   }
-
 });
 module.exports = router;
