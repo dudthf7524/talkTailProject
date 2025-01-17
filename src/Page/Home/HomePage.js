@@ -1,7 +1,8 @@
-import React, { useRef, useState } from 'react';
-import NButtonContainer from '../Components/NavigatorBar/NButtonContainer';
-import '../../CSS/page.css';
+import React, { useRef, useState } from "react";
+import NButtonContainer from "../Components/NavigatorBar/NButtonContainer";
+import "../../CSS/page.css";
 import { useNavigate } from "react-router-dom";
+import Modal from "../../modal";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const MainPage = () => {
     if (!isDragging) return;
     e.preventDefault();
     const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startX); // 스크롤 속도 조정
+    const walk = x - startX; // 스크롤 속도 조정
     containerRef.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -59,7 +60,7 @@ const MainPage = () => {
     if (!isDragging) return;
     e.preventDefault();
     const x = e.pageX - containerRef2.current.offsetLeft;
-    const walk = (x - startX); // 스크롤 속도 조정
+    const walk = x - startX; // 스크롤 속도 조정
     containerRef2.current.scrollLeft = scrollLeft - walk;
   };
 
@@ -77,22 +78,24 @@ const MainPage = () => {
     if (!isDragging) return;
     e.preventDefault();
     const x = e.pageX - containerRef3.current.offsetLeft;
-    const walk = (x - startX); // 스크롤 속도 조정
+    const walk = x - startX; // 스크롤 속도 조정
     containerRef3.current.scrollLeft = scrollLeft - walk;
   };
 
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
-      setIsOpen(!isOpen);
+    setIsOpen(!isOpen);
   };
 
   const handleItemClick = (id) => {
     navigate(`/list/${id}`);
   };
 
+  const [openModal, setOpenModal] = useState(false);
+
   return (
-    <div lang='ko'>
+    <div lang="ko">
       <div className="mid">
         <div className="home-header">
           <div className="home-location">
@@ -112,8 +115,8 @@ const MainPage = () => {
         </div>
         <div className="home-container1"></div>
         <div className="home-container2"></div>
-        <div 
-          className="home-container3" 
+        <div
+          className="home-container3"
           ref={containerRef}
           onMouseDown={startDrag}
           onMouseLeave={stopDrag}
@@ -123,58 +126,66 @@ const MainPage = () => {
           <div className="margin"></div>
           {imageNumbers.map((number) => (
             <div className="home-container3-img" key={number}>
-              <div className="img-number">
-                {number}/9
-              </div>
+              <div className="img-number">{number}/9</div>
             </div>
           ))}
         </div>
-        
+
         <div className="category">
-        <div className="text">카테고리</div>
-        <div 
-          className="button-grid"
-          ref={containerRef2}
-          onMouseDown={startDrag2}
-          onMouseLeave={stopDrag2}
-          onMouseUp={stopDrag2}
-          onMouseMove={onDrag2}
-        >
-        <div className="button-grid-con">
-          <div className="button-item" onClick={() => handleItemClick('beauty')}>
-            <img src={b1Url} alt=""/>
-          </div>
-          <div className="button-item" onClick={() => handleItemClick(2)}>
-            <br></br>
-            유치원
-            {/* <img src={b2Url} alt=""/> */}
-            <br></br>
-            준비중
-          </div>
-          <div className="button-item" onClick={() => handleItemClick(3)}>
-            <img src={b3Url} alt=""/>
-          </div>
-          <div className="button-item" onClick={() => handleItemClick(4)}>
-            <img src={b4Url} alt=""/>
+          <div className="text">카테고리</div>
+          <div
+            className="button-grid"
+            ref={containerRef2}
+            onMouseDown={startDrag2}
+            onMouseLeave={stopDrag2}
+            onMouseUp={stopDrag2}
+            onMouseMove={onDrag2}
+          >
+            <div className="button-grid-con">
+              <div
+                className="button-item"
+                onClick={() => handleItemClick("beauty")}
+              >
+                <img src={b1Url} alt="" />
+              </div>
+              {/* <div className="button-item" onClick={() => handleItemClick(2)}> */}
+              <div className="button-item">
+                {/* <br></br> */}
+                {/* 유치원 */}
+                <img src={b2Url} alt="" />
+                {/* <br></br>
+            준비중 */}
+              </div>
+              {/* <div className="button-item" onClick={() => handleItemClick(3)}> */}
+              <div className="button-item">
+                <img src={b3Url} alt="" />
+              </div>
+              {/* <div className="button-item" onClick={() => handleItemClick(4)}> */}
+              <div className="button-item">
+                <img src={b4Url} alt="" />
+              </div>
+            </div>
+            <div className="button-grid-con">
+              {/* <div className="button-item" onClick={() => handleItemClick(5)}> */}
+              <div className="button-item">
+                <img src={b5Url} alt="" />
+              </div>
+              {/* <div className="button-item" onClick={() => handleItemClick(6)}> */}
+              <div className="button-item">
+                <img src={b6Url} alt="" />
+              </div>
+              {/* <div className="button-item" onClick={() => handleItemClick(7)}> */}
+              <div className="button-item">
+                <img src={b7Url} alt="" />
+              </div>
+              {/* <div className="button-item" onClick={() => handleItemClick(8)}> */}
+              <div className="button-item">
+                <img src={b8Url} alt="" />
+              </div>
+            </div>
           </div>
         </div>
-        <div className="button-grid-con">
-          <div className="button-item" onClick={() => handleItemClick(5)}>
-            <img src={b5Url} alt=""/>
-          </div>
-          <div className="button-item" onClick={() => handleItemClick(6)}>
-            <img src={b6Url} alt=""/>
-          </div>
-          <div className="button-item" onClick={() => handleItemClick(7)}>
-            <img src={b7Url} alt=""/>
-          </div>
-          <div className="button-item" onClick={() => handleItemClick(8)}>
-            <img src={b8Url} alt=""/>
-          </div>
-        </div>
-      </div>
-      </div>
-        <div 
+        <div
           className="home-container4"
           ref={containerRef3}
           onMouseDown={startDrag3}
@@ -189,21 +200,20 @@ const MainPage = () => {
         </div>
         <div className="tail-container">
           <div className="tail-item">
-            <img src={logoUrl} alt=""/>
+            <img src={logoUrl} alt="" />
             <div className="tail-text">
               애견미용샵 ｜상품입점｜제휴문의｜상담문의
             </div>
-            <div className="tail-number">
-              070-4571-7580
+            <div className="tail-number">070-4571-7580</div>
+            <div className="tail-a">이용약관｜개인정보 처리방침</div>
+            <div
+              className={`tail-accordion ${isOpen ? "open" : ""}`}
+              onClick={toggleAccordion}
+            >
+              사업자 정보
+              <img src={footArrowUrl} alt="arrow" />
             </div>
-            <div className="tail-a">
-              이용약관｜개인정보 처리방침
-            </div>
-            <div className={`tail-accordion ${isOpen ? 'open' : ''}`} onClick={toggleAccordion}>
-                사업자 정보
-                <img src={footArrowUrl} alt="arrow" />
-            </div>
-            <div className={`hidden-content ${isOpen ? 'open' : ''}`}>
+            <div className={`hidden-content ${isOpen ? "open" : ""}`}>
               <div className="hidden-item">
                 <div>대표</div>
                 <div>사업자등록번호</div>
@@ -219,13 +229,12 @@ const MainPage = () => {
                 <div>creamoff2021@naver.com</div>
               </div>
             </div>
-            <div className="tail-co">
-              @말꼬리 co Ltd. All rigths reserved
-            </div>
+            <div className="tail-co">@말꼬리 co Ltd. All rigths reserved</div>
           </div>
         </div>
       </div>
       <NButtonContainer />
+      {openModal ? <Modal /> : ""}
     </div>
   );
 };
