@@ -7,8 +7,9 @@ const { BusinessInformation, sequelize } = require("../models");
 const { BusinessDesinger } = require("../models");
 const { Business } = require("../models");
 const { BusinessBeautySignificant } = require("../models");
+const { BusinessBeautyOption } = require("../models");
+const { BusinessAccountNumber } = require("../models");
 const { StoreHours } = require("../models");
-const imgNaverCloud = require('../imageUpload/imgNaverCloud');
 
 
 const createBusiness = async (businessInfo) => {
@@ -54,12 +55,6 @@ const createBusinessInformation = async (businessInformationInfo) => {
             address_road: businessInformationInfo.address_road,
             address_jibun: businessInformationInfo.address_jibun,
             address_detail: businessInformationInfo.address_detail,
-            weekday_open_time: businessInformationInfo.weekday_open_time,
-            weekday_close_time: businessInformationInfo.weekday_close_time,
-            weekend_open_time: businessInformationInfo.weekend_open_time,
-            weekend_close_time: businessInformationInfo.weekend_close_time,
-            dayon: businessInformationInfo.dayon,
-            dayoff: businessInformationInfo.dayoff,
             business_phone: business_phone,
             business_comment: businessInformationInfo.business_comment,
             business_no_show: businessInformationInfo.business_no_show,
@@ -73,13 +68,19 @@ const createBusinessInformation = async (businessInformationInfo) => {
         }, { transaction: t });
 
 
+        // 3. 사업자 옵션 저장 (디폴트 값 저장)
+        const beautyOption = await BusinessBeautyOption.create({
+            business_registration_number: businessInformationInfo.business_registration_number,
+        }, { transaction: t });
+
         // 커밋하여 모든 작업을 완료
         await t.commit();
 
         // 두 개의 데이터를 객체로 묶어서 반환
         return {
             businessInformation,
-            beautySignificant
+            beautySignificant,
+            beautyOption
         };
 
     } catch (error) {
@@ -135,6 +136,31 @@ const businessLogin = async (login_id, login_password) => {
     }
 };
 
+const checkLogin = async (login_id) => {
+    try {
+
+        // business 테이블에서 login_id (business_id)에 해당하는 사업자 정보 조회
+        const business = await Business.findOne({
+            where: { login_id: login_id },  // login_id는 business_id에 해당
+        });
+        
+        if(business){
+            return '1'
+        }
+
+        if (!business) {
+            // 해당 사업자가 존재하지 않으면 null 반환
+            return '0';
+        }
+        console.log(business)
+        // 사업자가 존재하면 해당 사업자 객체 반환
+        
+    } catch (error) {
+        console.error('Error in business login:', error);
+        throw new Error('Failed to fetch business data');
+    }
+};
+
 const getBusinesses = async () => {
     try {
         // // 비즈니스 데이터 가져오기
@@ -144,10 +170,12 @@ const getBusinesses = async () => {
         // });
         // return businessesInformation;
         let sql = "";
-        sql += "select business_information_id, b.business_registration_number, business_name, business_main_image, business_owner_phone, address_road, address_jibun, address_detail ";
+        sql += "select business_information_id, b.business_registration_number, business_name, business_main_image, business_owner_phone, address_road, address_jibun, address_detail, business_beauty_option1 ,business_beauty_option2 ,business_beauty_option3 ,business_beauty_option4 ,business_beauty_option5 ";
         sql += "from business_information bi ";
         sql += "join business b ";
         sql += "on bi.business_registration_number = b.business_registration_number ";
+        sql += "join business_beauty_option bdo ";
+        sql += "on bi.business_registration_number = bdo.business_registration_number ";
 
         const [results, metadata] = await sequelize.query(
             sql,
@@ -470,10 +498,10 @@ const informationEditUpdateNoFile = async (informationData, business_information
 const informationUpdateYesMainFile = async (informationData, business_information_id) => {
     console.log("informationUpdateYesMainFile")
     console.log(business_information_id)
-    
+
     const business_phone = informationData.business_phone1 + "-" + informationData.business_phone2 + "-" + informationData.business_phone3;
     console.log(business_phone)
-    
+
     try {
         const result = await BusinessInformation.update(
             {
@@ -504,10 +532,10 @@ const informationUpdateYesMainFile = async (informationData, business_informatio
 const informationUpdateYesPricingFile = async (informationData, business_information_id) => {
     console.log("informationUpdateYesMainFile")
     console.log(business_information_id)
-    
+
     const business_phone = informationData.business_phone1 + "-" + informationData.business_phone2 + "-" + informationData.business_phone3;
     console.log(business_phone)
-    
+
     try {
         const result = await BusinessInformation.update(
             {
@@ -540,10 +568,10 @@ const informationUpdateYesPricingFile = async (informationData, business_informa
 const informationUpdateYesMainAndPricingFile = async (informationData, business_information_id) => {
     console.log("informationUpdateYesMainFile")
     console.log(business_information_id)
-    
+
     const business_phone = informationData.business_phone1 + "-" + informationData.business_phone2 + "-" + informationData.business_phone3;
     console.log(business_phone)
-    
+
     try {
         const result = await BusinessInformation.update(
             {
@@ -574,6 +602,72 @@ const informationUpdateYesMainAndPricingFile = async (informationData, business_
     }
 };
 
+const beautyOptionGet = async (business_registration_number) => {
+    console.log(business_registration_number)
+
+    try {
+        const BeautySignificant = await BusinessBeautyOption.findOne(
+            {
+                where: { business_registration_number: business_registration_number }
+            }
+
+        );
+        console.log(BeautySignificant)
+        return BeautySignificant;
+    } catch (error) {
+        // 오류를 더욱 상세하게 로깅
+        console.error('Error creating BusinessBeautySignificant:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        throw new Error('Failed to create RegisterBeautySignificant: ' + error.message);
+    }
+};
+
+const updateBusinessBeautyOption = async (RegisterBeautyOption, business_registration_number) => {
+
+
+    try {
+        const result = await BusinessBeautyOption.update(
+            {
+                business_beauty_option1: RegisterBeautyOption.business_beauty_option1,
+                business_beauty_option2: RegisterBeautyOption.business_beauty_option2,
+                business_beauty_option3: RegisterBeautyOption.business_beauty_option3,
+                business_beauty_option4: RegisterBeautyOption.business_beauty_option4,
+                business_beauty_option5: RegisterBeautyOption.business_beauty_option5,
+            },
+            {
+                where: { business_registration_number: business_registration_number }
+            }
+
+        );
+        return result;
+    } catch (error) {
+        // 오류를 더욱 상세하게 로깅
+        console.error('Error creating BusinessBeautySignificant:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        throw new Error('Failed to create RegisterBeautySignificant: ' + error.message);
+    }
+};
+
+const accountNumber = async (accountNumberData, business_registration_number) => {
+    console.log('데이터베이스 저장 코드')
+    console.log(accountNumberData)
+    console.log(business_registration_number)
+    try {
+        const business = await BusinessAccountNumber.create({
+            business_registration_number: business_registration_number,
+            bank_code: accountNumberData.bankCode,
+            account_holder: accountNumberData.accountHolder,
+            account_number: accountNumberData.accountNumber,
+        });
+
+        return business;
+    } catch (error) {
+        throw new Error('Failed to create business', error.message);
+    }
+};
+
 module.exports = {
     createBusiness,
     businessLogin,
@@ -592,4 +686,8 @@ module.exports = {
     informationUpdateYesMainFile,
     informationUpdateYesPricingFile,
     informationUpdateYesMainAndPricingFile,
+    beautyOptionGet,
+    updateBusinessBeautyOption,
+    checkLogin,
+    accountNumber,
 };

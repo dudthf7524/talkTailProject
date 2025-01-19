@@ -82,8 +82,67 @@ async function authorityYesOrNo(req, res) {
     }
 }
 
+async function reservationComplete(req, res) {
+    console.log(req.body)
+    req.body.senderkey ='89df6266d96c0663c9263f3ff08986bcde7e4124';
+    req.body.tpl_code = 'TX_2673',
+    req.body.sender = '010-4026-5955',
+    req.body.message_1 = `test 예약이 완료되었습니다.\n\n업체명 : ${req.body.business_name}\n매장 전화번호 : ${req.body.business_phone}\n예약일자 : ${req.body.reservationDate}\n미용가격 : ${req.body.beauty_price}`,
+    req.body.button_1 =  JSON.stringify( {
+        "button": [
+            {
+                name: "예약 상세 보기",
+                linkType: "WL",
+                linkTypeName: "웹링크",
+                linkMo: 'http://www.naver.com',
+                linkPc: 'http://www.naver.com',
+            }
+        ]
+    });
+
+    console.log(req.body)
+
+    try {
+        const result = await kakao.alimtalkSend(req, res);
+        console.log('알림톡 전송 결과:', result);
+        return result;
+    } catch (error) {
+        throw new Error('Failed to reservationReception: ' + error.message);
+    }
+}
+
+
+async function reservationReject(req, res) {
+
+    req.body.senderkey ='89df6266d96c0663c9263f3ff08986bcde7e4124';
+    req.body.tpl_code = 'TX_2675',
+    req.body.sender = '010-4026-5955',
+    req.body.message_1 = `예약이 거절되었습니다\n\n업체명 : ${req.body.business_name}\n매장 전화번호 : ${req.body.business_phone}\n거절사유 : ${req.body.rejectComment}`,
+    req.body.button_1 =  JSON.stringify( {
+        "button": [
+            {
+                name: "talktail 바로가기",
+                linkType: "WL",
+                linkTypeName: "웹링크",
+                linkMo: 'http://www.naver.com',
+                linkPc: 'http://www.naver.com',
+            }
+        ]
+    });
+    
+    try {
+        const result = await kakao.alimtalkSend(req, res);
+        console.log('알림톡 전송 결과:', result);
+        return result;
+    } catch (error) {
+        throw new Error('Failed to reservationReception: ' + error.message);
+    }
+}
+
 module.exports = {
     reservationReception,
     authorityRequest,
     authorityYesOrNo,
+    reservationComplete,
+    reservationReject,
 };

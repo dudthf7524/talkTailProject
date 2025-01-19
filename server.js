@@ -19,14 +19,18 @@ const router = express.Router();
 const customerManagementRoutes = require('./routes/customerManagementRoutes');
 const kakaoApiRoutes = require('./routes/kakaoApiRoutes');
 
-app.listen(8383, () => {
-  console.log('http://localhost:8383 에서 서버 실행중')
+const BankDatabase = require('./models/BankDatabase'); // BankDatabase 함수 가져오기
+
+const port = 8383;
+app.listen(port, () => {
+  console.log(`http://localhost:${port} 에서 서버 실행중`)
 })
 // 프론트엔드에서 데이터 가져올때 
 app.use(express.json());
 // 데이터베이스 연결
 sequelize.sync({ force: false })
-  .then(() => {
+  .then(async () => {
+    await BankDatabase(); // 데이터베이스 초기화 실행
     console.log('데이터베이스 연결 성공');
   })
   .catch((err) => {
@@ -36,7 +40,7 @@ sequelize.sync({ force: false })
 passportConfig();
 
 app.use(cors({
-  origin: 'http://localhost:3000',  // 리액트 앱의 URL
+  origin: ['http://localhost:3000', 'http://www.talktail.store'],  // 리액트 앱의 URL 배열로 설정
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Business-Registration-Number', 'user-id'], // 허용할 헤더
   credentials: true,

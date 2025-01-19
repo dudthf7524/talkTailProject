@@ -48,7 +48,7 @@ const PetSelectPage = () => {
                 예약 펫 선택
                 <div></div>
             </div>
-            <PetInfo isSelectable={true} onSelectPet={handleSelectPet} />
+            <PetInfo isSelectable={true} onSelectPet={handleSelectPet} fileName={"select"} />
             {showWarning && <p className='warning'>펫을 선택해주세요.</p>}
             <div className='Nbutton' onClick={() => handleNext(id)}>다음</div>
         </div>

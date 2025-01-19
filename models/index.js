@@ -22,6 +22,10 @@ db.BusinessBeautySignificant = require('./BusinessBeautySignificant')(sequelize,
 db.BeautyReservation = require('./BeautyReservation')(sequelize, Sequelize);
 db.BeautyNotice = require('./BeautyNotice')(sequelize, Sequelize);
 db.StoreHours = require('./StoreHours')(sequelize, Sequelize);
+db.BusinessBeautyOption = require('./BusinessBeautyOption')(sequelize, Sequelize);
+db.BankInformation = require('./BankInformation')(sequelize, Sequelize);
+db.BusinessAccountNumber = require('./BusinessAccountNumber')(sequelize, Sequelize);
+
 
 // 관계 설정
 Object.keys(db).forEach((modelName) => {
@@ -29,6 +33,7 @@ Object.keys(db).forEach((modelName) => {
     db[modelName].associate(db);
   }
 });
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

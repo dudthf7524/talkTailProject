@@ -2,12 +2,20 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../BusinessCSS/auth.css'
 import axios from 'axios';
-const Login = () =>{
+import LoginModal from "./Modal/LoginModal.js";
+
+const Login = () => {
   const logoUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/logo/logo.svg`;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
+  console.log('aaaaaaaaaa')
+  console.log(apiUrl)
   const navigate = useNavigate();
+  const [openModal, setOpenModal] = useState(false);
+  const modalTitle = "로그인 완료";
+  const modalContent = "잠시 후 메뉴페이지로 이동합니다.";
+
   const login = async () => {
-    
+
     const form = document.querySelector(".loginform");
     const formData = new FormData(form);
 
@@ -16,14 +24,15 @@ const Login = () =>{
       password: formData.get("password")
     };
     console.log(data)
-    
+
     try {
       // axios로 데이터 전송
-      const response = await axios.post(`http://localhost:8383/api/business/login`, data, { withCredentials: true});
+      const response = await axios.post(`${apiUrl}/api/business/login`, data, { withCredentials: true });
       if (response.status === 200) {
-        alert("로그인이 완료되었습니다.");
-        console.log("req.body : ", response.data);
-        navigate("/business/menu");
+        setOpenModal(true);
+        setTimeout(() => {
+          navigate("/business/menu");
+        }, 2000);
       }
     } catch (error) {
       console.error("등록 실패:", error);
@@ -32,7 +41,7 @@ const Login = () =>{
 
   }
 
-  
+
 
   return (
     <div className='login' lang='ko'>
@@ -42,7 +51,7 @@ const Login = () =>{
       <div className='login-text'>
         관리자 로그인
       </div>
-     
+
       <form className='loginform' typeof='post' onSubmit={login}>
         <div className='login-form'>
           <input type='text' id='username' name='username' placeholder='ID' />
@@ -61,6 +70,17 @@ const Login = () =>{
       <div className='find-id-pw-text'>
         <Link to="/find-admin-account">아이디/비밀번호 찾기</Link>
       </div>
+      {openModal ? (
+        <LoginModal
+          openModal={() => {
+            setOpenModal(false);
+          }}
+          title={modalTitle}
+          content={modalContent}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

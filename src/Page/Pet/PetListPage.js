@@ -24,7 +24,7 @@ const PetListPage = () => {
                     <img src={noteUrl} alt='' />
                 </button>
             </div>
-            <PetInfo isSelectable={false}/>
+            <PetInfo isSelectable={false} fileName={"list"}/>
         </div>
     );
 };

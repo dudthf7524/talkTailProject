@@ -255,13 +255,19 @@ const ListPage = () => {
                   <div className="list-title">{list.business_name}</div>
                   <div className="list-tag-container">
                     <div className='list-tag'>
-                      소형견
+                    {list.business_beauty_option1}
                     </div>
                     <div className='list-tag'>
-                      대형견
+                    {list.business_beauty_option2}
                     </div>
                     <div className='list-tag'>
-                      CCTV
+                    {list.business_beauty_option3}
+                    </div>
+                    <div className='list-tag'>
+                    {list.business_beauty_option4}
+                    </div>
+                    <div className='list-tag'>
+                    {list.business_beauty_option5}
                     </div>
                   </div>
                   <div className="list-content">{list.address_road} {list.address_detail}</div>

@@ -36,6 +36,25 @@ router.post('/businesses', async (req, res) => {
 
 })
 
+router.post('/business/checkLogin', async (req, res) => {
+  console.log(req.body)
+  const login_id = req.body.login_id;
+
+  console.log(login_id)
+
+
+  try {
+    
+    const business = await businessDatabase.checkLogin(login_id);
+    res.status(201).json(business);
+    
+  } catch (error) {
+    console.error('Error creating business', error.message);
+    res.status(500).json({ error: error.message });
+  }
+
+})
+
 router.post('/business/register/information', upload.fields([
   { name: 'main', maxCount: 1 },
   { name: 'sub', maxCount: 50 },
@@ -402,4 +421,50 @@ router.put('/business/edit/information', upload.fields([
   }
 })
 
+router.get('/business/beauty/option', authMiddlewareSession, async (req, res) => {
+  console.log('검색할 때마다 데이터베이스를 조회한다')
+  console.log(req.user)
+  console.log(req.user.registrationNumber)
+
+  const business_registration_number = req.user.registrationNumber;
+  
+  try {
+    const userGetAuthority = await businessDatabase.beautyOptionGet(business_registration_number);
+    res.json(userGetAuthority);
+  } catch (error) {
+    console.error('Failed to fetch authority request error: ', error);
+    res.status(500).json({ message: 'Failed to fetch authority request.' });
+  }
+})
+
+router.put('/business/beauty/option', authMiddlewareSession,  async (req, res) => {
+  console.log(req.body)
+  const business_registration_number = req.user.registrationNumber;
+  const RegisterBeautyOption = req.body;
+  try {
+    
+
+    const result = await businessDatabase.updateBusinessBeautyOption(RegisterBeautyOption ,business_registration_number);
+
+    res.status(201).json({ result });
+  } catch (error) {
+    console.error('Error creating business with images:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.post('/business/account/number', authMiddlewareSession,  async (req, res) => {
+  console.log(req.body)
+  const business_registration_number = req.user.registrationNumber;
+  console.log(business_registration_number)
+  const accountNumberData = req.body;
+  try {
+    const result = await businessDatabase.accountNumber(accountNumberData ,business_registration_number);
+
+    res.status(201).json({ result });
+  } catch (error) {
+    console.error('Error creating business with images:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 module.exports = router;

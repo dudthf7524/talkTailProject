@@ -10,11 +10,6 @@ import { setStartTime } from '../../redux/reservationData';
 import { useDispatch, useSelector } from 'react-redux';
 import api from '../../Api'
 
-// 직관적인 월을 받아서 Date 객체를 생성하는 함수
-function createDate(year, month, day) {
-  return new Date(year, month - 1, day);
-}
-
 function generateTimeSlots(start_time, end_time, intervalMinutes) {
   const start = parse(start_time, 'HH:mm', new Date());
   const end = parse(end_time, 'HH:mm', new Date());
@@ -30,10 +25,8 @@ function generateTimeSlots(start_time, end_time, intervalMinutes) {
 const SelectedDatePage = () => {
 
   const hours = useSelector((state) => state.reservationData.hour); // Redux 상태 가져오기
-  // console.log("Selected Designer Name:", hours); // 리덕스 상태 출력
-
+  console.log("Selected Designer Name:", hours); // 리덕스 상태 출력
   const { id } = useParams();
-  // console.log(id)
   const [reservationDesinger, setReservationDesinger] = useState();
 
   useEffect(() => {
@@ -60,9 +53,7 @@ const SelectedDatePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
 
-  // const morning = ['10:00', '10:30', '11:00', '11:30'];
-  // const afternoon = ['12:00', '12:30', '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30'];
-  // const afternoon = ['12:00', '12:30', '1:00', '1:30', '2:00', '2:30', '3:00', '3:30', '4:00', '4:30', '5:00', '5:30', '6:00', '6:30', '7:00', '7:30'];
+ 
   const [activeTime, setActiveTime] = useState(null);
 
   const filterDisabledDays = (date) => {
@@ -107,17 +98,18 @@ const SelectedDatePage = () => {
 
   const renderDayContents = (day, date) => {
     const formattedDate = format(date, 'yyyy-MM-dd');
-    const label = dateLabels[formattedDate]; // 라벨을 찾음
-    const isSunday = getDay(date) === 0; // 일요일 체크
-    const isSundayOrSaturday = [0, 6].includes(getDay(date)); // 일요일(0) 또는 토요일(6) 체크
+    const label = dateLabels[formattedDate]; // 특별한 날짜 라벨 (예: 크리스마스)
+    const dayIndex = getDay(date); // 요일 정보 추출 (0: 일요일, 6: 토요일)
+  
+    const isOperatingDay = hours?.[dayIndex]?.isOperatingDay; // 해당 요일의 영업 상태 확인
     const isSelected = startDate && format(startDate, 'yyyy-MM-dd') === formattedDate;
-
-    // 일요일과 토요일일 경우 '휴무'로 표시
-    const displayLabel = isSundayOrSaturday ? "휴무" : label;
-
+  
+    // "휴무" 라벨 적용 조건: 영업하지 않는 요일 또는 기존 라벨
+    const displayLabel = isOperatingDay ? label : "휴무";
+  
     return (
       <div
-        className={`day-content ${isSunday ? "sunday" : ""} ${isSundayOrSaturday ? "closed" : ""} ${isSelected ? "selected" : ""}`}
+        className={`day-content ${!isOperatingDay ? "closed" : ""} ${isSelected ? "selected" : ""}`}
       >
         <div className="day-number">{day}</div>
         {displayLabel && <div className="day-label">{displayLabel}</div>}
@@ -132,20 +124,21 @@ const SelectedDatePage = () => {
 
     const formattedDate = format(selectedDate, 'yyyy-MM-dd');
     const reservations = reservationDesinger?.filter((item) => item.date === formattedDate) || [];
-
     const disabledTimes = [];
+
     reservations.forEach(({ start_time, end_time }) => {
-      const timeSlots = generateTimeSlots(start_time, end_time, 30);
+      const start = parse(start_time, 'HH:mm', new Date());
+      const end = parse(end_time, 'HH:mm', new Date());
+
+      // 현재 날짜의 모든 가능한 시간 슬롯을 생성하고 예약된 시간만 비활성화합니다.
       timeSlots.forEach((time) => {
         const current = parse(time, 'HH:mm', new Date());
-        const start = parse(start_time, 'HH:mm', new Date());
-        const end = parse(end_time, 'HH:mm', new Date());
-
         if (isWithinInterval(current, { start, end: new Date(end.getTime() - 1) })) {
           disabledTimes.push(time);
         }
       });
     });
+
 
     return disabledTimes;
   };
@@ -160,14 +153,31 @@ const SelectedDatePage = () => {
     setSelectDate(formatDate);
 
     if (date) {
+      console.log(date)
       const day = getDay(date);
       const dayHours = hours[day];
+      console.log(day)
+      console.log("dayHours")
+      console.log(dayHours)
 
       if (dayHours?.isOperatingDay) {
         const timeSlots = generateTimeSlots(dayHours.start_time, dayHours.end_time, 30);
         const disabledTimesForDate = getDisabledTimesByDate(date);
 
-        setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate });
+        console.log("disabledTimesForDate")
+        console.log(disabledTimesForDate)
+
+        // 오늘 날짜 처리
+        if (format(date, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd')) {
+          const now = new Date();
+          const filteredTimeSlots = timeSlots.filter((time) => {
+            const timeObj = parse(time, 'HH:mm', new Date());
+            return timeObj >= now;
+          });
+          setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate, filteredTimeSlots });
+        } else {
+          setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate, filteredTimeSlots: timeSlots });
+        }
         setIsModalOpen(true);
       }
     }
@@ -341,7 +351,7 @@ const SelectedDatePage = () => {
           {isModalOpen && (
             <div id="modal-body">
               <div className="time-selection">
-                {generateTimeSlots(businessStartTime, businessEndTime, 30).map((time) => (
+                {modalData?.filteredTimeSlots?.map((time) => (
                   <div
                     key={time}
                     className={`time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
@@ -351,17 +361,6 @@ const SelectedDatePage = () => {
                   </div>
                 ))}
               </div>
-              {/* <div className="time-selection">
-                {timeSlots.map((time) => (
-                  <div
-                    key={time}
-                    className={`time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
-                    onClick={() => !disabledTimes.includes(time) && handleButtonClick(time)}
-                  >
-                    {time}
-                  </div>
-                ))}
-              </div> */}
             </div>
           )}
         </div>

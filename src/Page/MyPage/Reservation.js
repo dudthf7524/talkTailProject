@@ -71,7 +71,7 @@ const Reservation = () => {
                             )
                         }
                         <div className='reservation-item'>
-                            <button className='detail-button' onClick={() => navigate(`/business/reservation/detail/${reservation.beauty_reservation_id}`)}>상세보기</button>
+                            <button className='detail-button' onClick={() => navigate(`/reservation/detail/${reservation.beauty_reservation_id}`)}>상세보기</button>
                         </div>
                     </div>
                 ))}

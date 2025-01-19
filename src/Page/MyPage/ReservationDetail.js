@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import '../CSS/auth.css'
-import '../CSS/reservation.css'
-import ReservationAcceptModal from './Modal/ReservationAccept';
-import ReservationRejectModal from './Modal/ReservationReject';
-import ReservationCheckModal from './Modal/ReservationCheck';
-import '../CSS/reservationModal.css'
-import api from '../Api'
+// import '../CSS/auth.css'
+// import '../CSS/reservation.css'
+// import ReservationAcceptModal from './Modal/ReservationAccept';
+// import ReservationRejectModal from './Modal/ReservationReject';
+// import ReservationCheckModal from './Modal/ReservationCheck';
+// import '../CSS/reservationModal.css'
+import api from '../../Api'
 import { addMinutes, format, isWithinInterval, parse } from 'date-fns';
 const ReservationDetail = () => {
 
@@ -21,7 +21,6 @@ const ReservationDetail = () => {
   const [reservationManagementList, setReservationManagementList] = useState([]);
   const [reservationCompleteTime, setReservationCompleteTime] = useState(''); // 완료 시간 상태 추가
 
- 
   const [formData, setFormData] = useState({
     beauty_price: 0,
   });
@@ -40,7 +39,14 @@ const ReservationDetail = () => {
     fetchUser();
   }, []);
 
- 
+  const formatInfo = (text) => {
+    return text.split('\n').map((item, index) => (
+      <React.Fragment key={index}>
+        {item}
+        <br />
+      </React.Fragment>
+    ));
+  };
 
   const openModal = (type) => {
     setActionType(type);
@@ -117,59 +123,7 @@ const ReservationDetail = () => {
     setModalOpen(false);
     setCheckModalOpen(true);
   };
-  const businessStartTime = '09:00';
-  const businessEndTime = '18:00';
-
-  const timeSlots = generateTimeSlots(businessStartTime, businessEndTime, 30);
-
-  function generateTimeSlots(start_time, end_time, intervalMinutes) {
-    const start = parse(start_time, 'HH:mm', new Date());
-    const end = parse(end_time, 'HH:mm', new Date());
-
-    const totalIntervals = Math.floor((end - start) / (intervalMinutes * 60 * 1000)); // 총 간격 수 계산
-
-    return Array.from({ length: totalIntervals + 1 }, (_, index) => {
-      const newTime = addMinutes(start, intervalMinutes * index);
-      return format(newTime, 'HH:mm');
-    });
-  }
-
-  let start_time = reservationManagementList?.start_time || '00:00';
-  let end_time = reservationManagementList?.end_time || '23:59';
-
-
-  const now = new Date();
-
-
-  const filteredTimeSlots = timeSlots.filter((time) => {
-    const current = parse(time, 'HH:mm', new Date());
-    const start = parse(start_time, 'HH:mm', new Date());
-    return current >= start; // starttime 이후의 시간대만 필터링
-  });
-
-  const disabledTimes = (() => {
-    const start = parse(start_time, 'HH:mm', new Date());
-    const end = parse(end_time, 'HH:mm', new Date());
-    const disabledTimes = [];
-
-    timeSlots.forEach((time) => {
-      const current = parse(time, 'HH:mm', new Date());
-      if (isWithinInterval(current, { start, end: new Date(end.getTime() - 1) })) {
-        disabledTimes.push(time);
-      }
-    });
-
-    return disabledTimes;
-  })();
-
-
-
-
-
-
-
-  const [modalData, setModalData] = useState(null);
-  const [activeTime, setActiveTime] = useState(null);
+  
 
 
   if (!reservationManagementList) {
@@ -178,20 +132,7 @@ const ReservationDetail = () => {
     )
   }
   const handleButtonClick = (time) => {
-    console.log("time")
-    console.log(time)
-    console.log("time")
-
-    console.log("reservationCompleteTime")
-    setReservationCompleteTime(time)
-
-    console.log(reservationCompleteTime)
-    console.log("reservationCompleteTime")
-    setActiveTime(time);
-
-    console.log("activeTime")
-    console.log(activeTime)
-    console.log("activeTime")
+    
 
   };
 
@@ -206,7 +147,7 @@ const ReservationDetail = () => {
     <div className='page-container2' lang='ko'>
       <div className='navigation'>
         <button>
-          <img src={arrowButtonUrl} alt='' onClick={() => navigate('/business/reservation/management')} />
+          <img src={arrowButtonUrl} alt='' onClick={() => navigate('/reservation')} />
         </button>
         상세보기
         <div> </div>
@@ -294,18 +235,7 @@ const ReservationDetail = () => {
                 {reservationManagementList.end_time}
               </div>
             ) : reservationManagementList.reservation_state === '대기' ? (
-              <div id="modal-body">
-                <div className="time-selection">
-                  {filteredTimeSlots?.map((time) => (
-                    <div
-                      key={time}
-                      className={`time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
-                      onClick={() => !disabledTimes.includes(time) && handleButtonClick(time)}
-                    >
-                      {time}
-                    </div>
-                  ))}
-                </div>
+              <div className='detail-info'>{reservationManagementList.business_name}에서<br></br> 시간을 확인 중 입니다.
               </div>
             ) : reservationManagementList.reservation_state === '거절' ? (
               <div className='detail-info' style={{ color: "red", fontWeight: "bold" }}>
@@ -324,14 +254,8 @@ const ReservationDetail = () => {
             </div>
           ) : reservationManagementList.reservation_state === '대기' ? (
             <div className='detail-form2'>
-              <div className='detail-title'>미용가격</div>
-              <div className='detail-info'><input
-                type="number"
-                name="beauty_price"
-                min="0"
-                step="1000" // 1000 단위로 값 증가
-                onChange={handleInputChange}
-              />
+              <div className='detail-title'>미용금액</div>
+              <div className='detail-info'>{reservationManagementList.business_name}에서<br></br> 금액을 책정중입니다.
               </div>
             </div>
           ) : (
@@ -352,8 +276,8 @@ const ReservationDetail = () => {
           </div>
         ) : reservationManagementList.reservation_state === '대기' ? (
           <div className='footer-button'>
-            <button className='reject-btn' onClick={() => openModal('reject')}>거절</button>
-            <button className='accept-btn' onClick={() => openModal('accept')}>수락</button>
+            {/* <button className='reject-btn' onClick={() => openModal('reject')}>거절</button>
+            <button className='accept-btn' onClick={() => openModal('accept')}>수락</button> */}
           </div>
         ) : reservationManagementList.reservation_state === '거절' ? (
           <div className='footer-button' style={{ color: "red", fontWeight: "bold" }}>
@@ -364,25 +288,7 @@ const ReservationDetail = () => {
         )
       }
 
-      <ReservationAcceptModal
-        isOpen={isModalOpen && actionType === 'accept'}
-        onClose={() => setModalOpen(false)}
-        onConfirm={handleConfirm}
-        actionType={actionType}
-      />
-
-      <ReservationRejectModal
-        isOpen={isModalOpen && actionType === 'reject'}
-        onClose={() => setModalOpen(false)}
-        onConfirm={handleReject}
-        actionType={actionType}
-      />
-
-      <ReservationCheckModal
-        isOpen={isCheckModalOpen}
-        onClose={() => setCheckModalOpen(false)}
-        message={checkMessage}
-      />
+     
     </div>
   );
 };

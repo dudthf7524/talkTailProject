@@ -1,0 +1,16 @@
+/* UserInformation.js */
+
+.user_information .input_box {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 30px;
+  justify-content: space-between;
+}
+
+.user_information .input_box input {
+  width: 28%;
+}
+.home_total .button-item {
+  cursor: pointer;
+}

@@ -48,6 +48,7 @@ import DayOnOffEdit from "./BusinessPage/DayOnOffEdit";
 import EditInformation from "./BusinessPage/EditInformation";
 import BusinessBeautyEditOption from "./BusinessPage/BusinessBeautyEditOption";
 import ReservationDetail from "./Page/MyPage/ReservationDetail";
+import AccountNumber from "./BusinessPage/AccountNumber";
 
 
 function App() {
@@ -140,6 +141,7 @@ function App() {
               <Route path="date/edit" element={<DateEdit />} />
               <Route path="day-on-off/edit" element={<DayOnOffEdit />} />
               <Route path="edit/option" element={<BusinessBeautyEditOption />}/>
+              <Route path="account/number" element={<AccountNumber />}/>
             </Route>
           </Routes>
         </ImageProvider>

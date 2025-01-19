@@ -61,36 +61,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: '',
       },
-      weekday_open_time: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-        defaultValue: '00:00:00',
-      },
-      weekday_close_time: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-        defaultValue: '00:00:00',
-      },
-      weekend_open_time: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-        defaultValue: '00:00:00',
-      },
-      weekend_close_time: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-        defaultValue: '00:00:00',
-      },
-      dayon: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-        defaultValue: '',
-      },
-      dayoff: {
-        type: DataTypes.STRING(20),
-        allowNull: false,
-        defaultValue: '',
-      },
       business_phone: {
         type: DataTypes.STRING(20),
         allowNull: false,
