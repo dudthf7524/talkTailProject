@@ -113,44 +113,8 @@ const ReservationRequestPage = () => {
         { label: lists.business_beauty_significant5, name: lists.business_beauty_significant5 },
     ];
 
-    const [checkboxState, setCheckboxState] = useState(
-        initialCheckboxes.reduce((acc, checkbox) => {
-            acc[checkbox.name] = false;
-            return acc;
-        }, {})
-    );
-
-    const [checkboxState2, setCheckboxState2] = useState(
-        secondCheckboxes.reduce((acc, checkbox) => {
-            acc[checkbox.name] = false;
-            return acc;
-        }, {})
-    );
-
-    const [checkboxState3, setCheckboxState3] = useState(
-        thirdCheckboxes.reduce((acc, checkbox) => {
-            acc[checkbox.name] = false;
-            return acc;
-        }, {})
-    );
-
     const goBack = () => {
         navigate(-1);
-    };
-
-    // 체크박스 변경 핸들러
-    // const handleCheckboxChange = (name, checked) => {
-    //     setCheckboxState(prevState => ({
-    //         ...prevState,
-    //         [name]: checked
-    //     }));
-    // };
-
-    const handleCheckboxChange2 = (name, checked) => {
-        setCheckboxState2(prevState => ({
-            ...prevState,
-            [name]: checked
-        }));
     };
 
     const handleCheckboxChange3 = (name, checked) => {
@@ -343,7 +307,6 @@ const ReservationRequestPage = () => {
                     <h2>예약금</h2>
                     <div className='row'>
                         <h1>{formatCurrency(reservationData.businessInfo.business_no_show)} 원</h1>
-
                     </div>
                 </div>
             </div>
