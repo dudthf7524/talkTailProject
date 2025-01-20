@@ -49,6 +49,8 @@ import EditInformation from "./BusinessPage/EditInformation";
 import BusinessBeautyEditOption from "./BusinessPage/BusinessBeautyEditOption";
 import ReservationDetail from "./Page/MyPage/ReservationDetail";
 import AccountNumber from "./BusinessPage/AccountNumber";
+import Notice from "./Page/MyPage/Notice";
+import NoticeDetail from "./Page/MyPage/NoticeDetail";
 
 function App() {
   const [imageFiles, setImageFiles] = useState({
@@ -114,10 +116,17 @@ function App() {
             <Route path="/edit-address" element={<EditAddressPage />} />
             <Route path="/user/edit" element={<UserEdit />} />
             <Route path="/reservation" element={<Reservation />} />
+<<<<<<< HEAD
             <Route
               path="/reservation/detail/:id"
               element={<ReservationDetail />}
             />
+=======
+            <Route path="/reservation/detail/:id" element={<ReservationDetail />} />
+            
+            <Route path="/notice" element={<Notice />} />
+            <Route path="/notice/:id" element={<NoticeDetail />} />
+>>>>>>> client
 
             <Route path="/business">
               <Route path="login" element={<Login />} />

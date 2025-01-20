@@ -361,10 +361,11 @@ const WriteNotice = () => {
                         placeholder='전달사항을 입력해주세요.'
                     />
                 </div>
-
-                <div className='footer'>
+                <div className='notice-footer'>
                     <button className='send-btn' onClick={openModal}>보내기</button>
                 </div>
+
+
             </div>
             <NoticeSendModal
                 isOpen={isModalOpen}

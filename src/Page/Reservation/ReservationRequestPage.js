@@ -301,13 +301,55 @@ const ReservationRequestPage = () => {
                         />
                     </div>
                 </div>
+                <div className='reservation-contents'>
+                    <div className='payment'>
+                        <table style={{textAlign : "left"}}  >
+                            <tr>
+                                <td>
+                                    계좌이체정보
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td width={50}>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {lists.name}
+                                </th>
+
+                                <th>
+                                    {lists.account_number}
+                                </th>
+                                <th>
+                                    &nbsp;
+                                </th>
+                                <th>
+                                    예금주
+                                </th>
+                                <th>
+                                    {lists.account_holder}
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
+
             <div className='payment-container'>
                 <div className='payment'>
+
                     <h2>예약금</h2>
+
                     <div className='row'>
                         <h1>{formatCurrency(reservationData.businessInfo.business_no_show)} 원</h1>
                     </div>
+
                 </div>
             </div>
             {
@@ -327,9 +369,9 @@ const ReservationRequestPage = () => {
                 <Payments closePaymentModal={closePaymentModal} confirmPayment={confirmPayment} />
             )}
             <ReservationModal
-isOpen={showSuccessModal}
+                isOpen={showSuccessModal}
 
-/>
+            />
         </div>
     );
 };

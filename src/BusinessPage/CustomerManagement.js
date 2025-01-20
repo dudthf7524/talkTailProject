@@ -9,22 +9,24 @@ const CustomerManagement = () => {
     const navigate = useNavigate();
     const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
 
-    const [reservationManagementList, setReservationManagementList] = useState([]);
+    const [reservationManagementList, setReservationManagementList] = useState();
 
     useEffect(() => {
         const fetchReservationManagement = async () => {
             try {
                 const response = await api.get('/api/customer/management', { withCredentials: true });
                 console.log(response.data)
-                if(response.data == 'common'){
+                if (response.data == 'common') {
                     navigate('/business/login'); // 로그인 페이지로 리디렉션
 
                 }
-                if (response.data[0] == null) {
-                    setReservationManagementList(response.data[0]);
-                } else {
-                    setReservationManagementList(response.data);
-                }
+                setReservationManagementList(response.data);
+
+                // if (response.data[0] == null) {
+                //     setReservationManagementList(response.data[0]);
+                // } else {
+                //     setReservationManagementList(response.data);
+                // }
                 console.log(response.data)
             } catch (error) {
 
