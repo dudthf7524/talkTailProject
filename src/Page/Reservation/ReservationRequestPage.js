@@ -303,36 +303,40 @@ const ReservationRequestPage = () => {
                 </div>
                 <div className='reservation-contents'>
                     <div className='payment'>
+                        <table style={{textAlign : "left"}}  >
+                            <tr>
+                                <td>
+                                    계좌이체정보
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td width={50}>
+                                    &nbsp;
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {lists.name}
+                                </th>
 
-                        <h2>은행</h2>
-
-                        <div className='row'>
-                            {lists.name}
-                        </div>
-
-                    </div>
-                    <div className='payment'>
-
-                        <h2>은행</h2>
-
-                        <div className='row'>
-                            {lists.name}
-                        </div>
-
-                    </div>
-                    <div className='payment'>
-
-                        <h2>예금주</h2>
-
-                        <div className='row'>
-                            {lists.account_holder}
-                        </div>
-                        <h2>계좌번호</h2>
-
-                        <div className='row'>
-                            {lists.account_number}
-                        </div>
-
+                                <th>
+                                    {lists.account_number}
+                                </th>
+                                <th>
+                                    &nbsp;
+                                </th>
+                                <th>
+                                    예금주
+                                </th>
+                                <th>
+                                    {lists.account_holder}
+                                </th>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>

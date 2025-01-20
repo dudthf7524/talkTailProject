@@ -49,6 +49,8 @@ import EditInformation from "./BusinessPage/EditInformation";
 import BusinessBeautyEditOption from "./BusinessPage/BusinessBeautyEditOption";
 import ReservationDetail from "./Page/MyPage/ReservationDetail";
 import AccountNumber from "./BusinessPage/AccountNumber";
+import Notice from "./Page/MyPage/Notice";
+import NoticeDetail from "./Page/MyPage/NoticeDetail";
 
 
 function App() {
@@ -117,6 +119,9 @@ function App() {
             <Route path="/reservation" element={<Reservation />} />
             <Route path="/reservation/detail/:id" element={<ReservationDetail />} />
             
+            <Route path="/notice" element={<Notice />} />
+            <Route path="/notice/:id" element={<NoticeDetail />} />
+
             <Route path="/business">
               <Route path="login" element={<Login />} />
               <Route path="menu" element={<BusinessMenu />} />
