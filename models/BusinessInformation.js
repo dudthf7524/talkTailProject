@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const BusinessInformation = sequelize.define('BUSINESS_INFORMATION', {
+    const BusinessInformation = sequelize.define('business_information', {
       business_information_id: {
         type: DataTypes.INTEGER, // 숫자 타입으로 변경
         allowNull: false,
@@ -86,7 +86,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     }, {
       timestamps: false,
-      tableName: 'BUSINESS_INFORMATION',
+      tableName: 'business_information',
     });
   
       BusinessInformation.associate = (db) => {
