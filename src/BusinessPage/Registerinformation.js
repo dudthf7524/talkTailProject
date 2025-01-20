@@ -5,6 +5,7 @@ import { ImageContext } from '../Contexts/ImageContext';
 import '../BusinessCSS/registerInformation.css';
 import '../BusinessCSS/main.css';
 import InformationModal from './Modal/InformationModal';
+import api from '../Api'
 function RegisterInformation() {
     // 주소 api
     const [postcode, setPostcode] = useState(""); // 우편번호
@@ -64,7 +65,7 @@ function RegisterInformation() {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await axios.get('http://localhost:8383/business/auth', { withCredentials: true });
+                const response = await api.get('/business/auth', { withCredentials: true });
                 setUser(response.data);
                 console.log(response.data)
                 if (!response.data) {
