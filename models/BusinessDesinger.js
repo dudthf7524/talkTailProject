@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const BusinessDesinger = sequelize.define('BUSINESS_DESINGER', {
+    const BusinessDesinger = sequelize.define('business_desinger', {
       business_desinger_id: {
         type: DataTypes.INTEGER, // 숫자 타입으로 변경
         allowNull: false,
@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     }, {
       timestamps: false,
-      tableName: 'BUSINESS_DESINGER',
+      tableName: 'business_desinger',
     });
   
     // 관계 설정: Business 모델과 연관
