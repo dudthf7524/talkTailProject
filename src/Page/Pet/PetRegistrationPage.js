@@ -157,7 +157,7 @@ const PetRegistration = () => {
 
   return (
     <div lang="ko">
-      <div className="r-mid">
+      <div className="r-mid registration_total">
         <div className="navigation">
           <button>
             <img src={arrowButtonUrl} alt="" onClick={goBack} />
@@ -433,26 +433,23 @@ const PetRegistration = () => {
                 />
               </div>
             ))}
-            <div className="PetRegistration-container2">
-              <p>기타 추가 사항이</p>
-              <RadioButton
+            <div className="PetRegistration-container2 text_area">
+              <p>기타 추가 사항</p>
+              <textarea
+                className="textbox-gray2"
+                placeholder="예) 피부병, 심장질환, 마킹, 마운팅 등"
+                name="etc"
+                value={formData.etc}
+                onChange={handleInputChange}
+              />
+              {/* <RadioButton
                 options={[
                   { label: "있어요", value: "true" },
                   { label: "없어요", value: "false" },
                 ]}
                 selectedOption={formData.additionalInfo}
                 onSelect={(value) => handleRadioSelect("additionalInfo", value)}
-              />
-            </div>
-            <div className="PetRegistration-container2">
-              <input
-                type="text"
-                className="textbox-gray2"
-                placeholder="예) 피부병,심장질환,마킹,마운팅 등"
-                name="etc"
-                value={formData.etc}
-                onChange={handleInputChange}
-              />
+              /> */}
             </div>
           </div>
           <div

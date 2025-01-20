@@ -29,3 +29,15 @@
 .user_edit_total .input_box input {
   width: 28%;
 }
+
+/* PetRegistrationPage.js */
+.registration_total .text_area {
+  height: auto;
+  margin-bottom: 30px;
+}
+.registration_total .text_area p {
+  margin-bottom: 30px;
+}
+.registration_total .text_area textarea {
+  text-align: left;
+}

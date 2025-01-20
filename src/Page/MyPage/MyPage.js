@@ -188,11 +188,11 @@ const MyPage = () => {
                   <p onClick={handleLogout}>로그아웃</p>
                 </div>
               </div>
-              <div className="edit-textbox">
+              {/* <div className="edit-textbox">
                 <div className="edit-text">
                   <p>탈퇴</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -253,7 +253,7 @@ const MainPage = () => {
                 <div>creamoff2021@naver.com</div>
               </div>
             </div>
-            <div className="tail-co">@말꼬리 co Ltd. All rigths reserved</div>
+            <div className="tail-co">@TalkTail co Ltd. All rigths reserved</div>
           </div>
         </div>
       </div>
