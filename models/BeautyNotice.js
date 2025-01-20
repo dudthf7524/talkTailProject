@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const BeautyNotice = sequelize.define(
-        'BEAUTY_NOTICE',
+        'beauty_notice',
         {
             beauty_notice_id: {
                 type: DataTypes.INTEGER,
@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         {
             timestamps: false,
-            tableName: 'BEAUTY_NOTICE',
+            tableName: 'beauty_notice',
         }
     );
 

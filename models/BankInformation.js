@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const BankInformation = sequelize.define(
-        'BANK_INFORMATION',
+        'bank_information',
         {
             name: {
                 type: DataTypes.STRING,
@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         {
             timestamps: false,
-            tableName: 'BANK_INFORMATION',
+            tableName: 'bank_information',
         }
     );
 

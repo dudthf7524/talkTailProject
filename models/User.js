@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    'USER',
+    'user',
     {
       platform_id: {
         type: DataTypes.STRING(200),
@@ -10,30 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(20),
         allowNull: false,
       },
-      // user_name: {
-      //   type: DataTypes.STRING(20),
-      //   allowNull: false,
-      //   defaultValue: '',
-      // },
-      // user_nickname: {
-      //   type: DataTypes.STRING(20),
-      //   allowNull: false,
-      //   defaultValue: '',
-      // },
-      // user_email: {
-      //   type: DataTypes.STRING(150),
-      //   allowNull: false,
-      // },
-      // user_phone: {
-      //   type: DataTypes.STRING(20),
-      //   allowNull: true,
-      //   defaultValue: '',
-      // },
-      // user_address: {
-      //   type: DataTypes.STRING(100),
-      //   allowNull: false,
-      //   defaultValue: '',
-      // },
       created_at: {
         type: DataTypes.DATE,
         defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
@@ -48,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: false,
-      tableName: 'USER',
+      tableName: 'user',
       indexes: [
         {
           unique: true,

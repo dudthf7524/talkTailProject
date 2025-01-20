@@ -17,9 +17,16 @@ const MyPage = () => {
   const [isEditingNickname, setIsEditingNickname] = useState(false);
   const [userInformation, setUserInformation] = useState();
 
+  const modalTitle = "로그아웃 완료";
+  const modalContent = "잠시 후 로그인 페이지로 이동합니다.";
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/'); // Redirect to home if no token is found
+      return;
+    }
     fetchUserInformation();
-  }, []);
+  }, [navigate]);
 
   const fetchNickname = async () => {
     try {
@@ -100,19 +107,31 @@ const MyPage = () => {
     navigate(-1); // 뒤로 가기
   };
   const [showPopup, setShowPopup] = useState(false);
+<<<<<<< HEAD
   const [popupMessage, setPopupMessage] = useState("");
+=======
+  const [popupMessage, setPopupMessage] = useState('');
+
+>>>>>>> client
   const handleLogout = () => {
     localStorage.removeItem("token");
     setPopupMessage("You have been logged out.");
     setShowPopup(true);
+    setTimeout(() => {
+      navigate("/");
+    }, 1500);
   };
 
+<<<<<<< HEAD
   const handleClosePopup = () => {
     setShowPopup(false);
     if (popupMessage === "You have been logged out.") {
       navigate("/"); // 로그아웃 후 홈 페이지로 이동
     }
   };
+=======
+
+>>>>>>> client
 
   if (!userInformation) {
     return <div>로딩 중 ...</div>;
@@ -178,6 +197,7 @@ const MyPage = () => {
                   </div>
                 </div>
               </div>
+<<<<<<< HEAD
             </div>
           </div>
           <div className="mypage-info-container">
@@ -203,6 +223,32 @@ const MyPage = () => {
           >
             {popupMessage}
           </Popup>
+=======
+
+            </div>
+          </div>
+          <div className='mypage-info-container'>
+            <div className='mypage-info'>계정정보</div>
+            <div className='mypage-info-contents'>
+              <div className='edit-textbox'>
+                <div className='edit-text'>
+                  <p onClick={handleLogout} style={{ cursor: "pointer" }}>로그아웃</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        {showPopup ? (
+          <Popup
+            openModal={() => {
+            }}
+            title={modalTitle}
+            content={modalContent}
+          />
+        ) : (
+          ""
+>>>>>>> client
         )}
       </div>
       <NButtonContainer />

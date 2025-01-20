@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: '',
         references: {
-          model: 'BUSINESS', // Business 테이블을 참조
+          model: 'business', // Business 테이블을 참조
           key: 'business_registration_number',
         },
         onUpdate: 'CASCADE', // 외래 키 업데이트 정책
@@ -89,9 +89,14 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'BUSINESS_INFORMATION',
     });
   
-    // 관계 설정: Business 모델과 연관
-    BusinessInformation.belongsTo(sequelize.models.BUSINESS, { foreignKey: 'business_registration_number', targetKey: 'business_registration_number' });
-  
+      BusinessInformation.associate = (db) => {
+
+        BusinessInformation.belongsTo(db.Business, {
+        foreignKey: 'business_registration_number',
+        targetKey: 'business_registration_number',
+      });
+    };
+
     return BusinessInformation;
   };
   

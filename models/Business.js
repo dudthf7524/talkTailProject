@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Business = sequelize.define(
-      'BUSINESS',
+      'business',
       {
         business_registration_number: {
           type: DataTypes.STRING(200),
@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         timestamps: false,
-        tableName: 'BUSINESS',
+        tableName: 'business',
       }
     );
   
