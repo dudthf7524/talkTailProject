@@ -301,13 +301,51 @@ const ReservationRequestPage = () => {
                         />
                     </div>
                 </div>
+                <div className='reservation-contents'>
+                    <div className='payment'>
+
+                        <h2>은행</h2>
+
+                        <div className='row'>
+                            {lists.name}
+                        </div>
+
+                    </div>
+                    <div className='payment'>
+
+                        <h2>은행</h2>
+
+                        <div className='row'>
+                            {lists.name}
+                        </div>
+
+                    </div>
+                    <div className='payment'>
+
+                        <h2>예금주</h2>
+
+                        <div className='row'>
+                            {lists.account_holder}
+                        </div>
+                        <h2>계좌번호</h2>
+
+                        <div className='row'>
+                            {lists.account_number}
+                        </div>
+
+                    </div>
+                </div>
             </div>
+
             <div className='payment-container'>
                 <div className='payment'>
+
                     <h2>예약금</h2>
+
                     <div className='row'>
                         <h1>{formatCurrency(reservationData.businessInfo.business_no_show)} 원</h1>
                     </div>
+
                 </div>
             </div>
             {
@@ -327,9 +365,9 @@ const ReservationRequestPage = () => {
                 <Payments closePaymentModal={closePaymentModal} confirmPayment={confirmPayment} />
             )}
             <ReservationModal
-isOpen={showSuccessModal}
+                isOpen={showSuccessModal}
 
-/>
+            />
         </div>
     );
 };
