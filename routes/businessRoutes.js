@@ -213,6 +213,7 @@ router.post('/business/style/significantGet', async (req, res) => {
     console.error('Failed to fetch authority request error: ', error);
     res.status(500).json({ message: 'Failed to fetch authority request.' });
   }
+  
 })
 
 router.get('/business/style/significantGet', authMiddlewareSession, async (req, res) => {

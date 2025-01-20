@@ -258,10 +258,14 @@ const significantGet = async (business_registration_number) => {
 
 
         let sql = "";
-        sql += "select business_beauty_significant1 , business_beauty_significant2, business_beauty_significant3 ,business_beauty_significant4 ,business_beauty_significant5 , business_owner_phone ";
+        sql += "select business_beauty_significant1 , business_beauty_significant2, business_beauty_significant3 ,business_beauty_significant4 ,business_beauty_significant5 , business_owner_phone, name, account_holder, account_number ";
         sql += "from business_beauty_significant bbs ";
         sql += "join business b ";
         sql += "on bbs.business_registration_number = b.business_registration_number ";
+        sql += "join business_account_number bau ";
+        sql += "on bbs.business_registration_number = bau.business_registration_number ";
+        sql += "join bank_information bi ";
+        sql += "on bau.bank_code = bi.code ";
         sql += "where b.business_registration_number = :business_registration_number ";
 
         const [results, metadata] = await sequelize.query(
