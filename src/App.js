@@ -116,17 +116,10 @@ function App() {
             <Route path="/edit-address" element={<EditAddressPage />} />
             <Route path="/user/edit" element={<UserEdit />} />
             <Route path="/reservation" element={<Reservation />} />
-<<<<<<< HEAD
-            <Route
-              path="/reservation/detail/:id"
-              element={<ReservationDetail />}
-            />
-=======
             <Route path="/reservation/detail/:id" element={<ReservationDetail />} />
             
             <Route path="/notice" element={<Notice />} />
             <Route path="/notice/:id" element={<NoticeDetail />} />
->>>>>>> client
 
             <Route path="/business">
               <Route path="login" element={<Login />} />
