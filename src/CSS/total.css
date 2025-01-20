@@ -1,16 +1,31 @@
 /* UserInformation.js */
-
-.user_information .input_box {
+.user_information_total .input_box {
   display: flex;
   align-items: center;
   font-weight: 500;
   font-size: 30px;
   justify-content: space-between;
 }
-
-.user_information .input_box input {
+.user_information_total .input_box input {
   width: 28%;
 }
+
+/* HomePage.js */
 .home_total .button-item {
   cursor: pointer;
+}
+.home_total .home-location img {
+  height: 100%;
+}
+
+/* UserEdit.js */
+.user_edit_total .input_box {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 30px;
+  justify-content: space-between;
+}
+.user_edit_total .input_box input {
+  width: 28%;
 }

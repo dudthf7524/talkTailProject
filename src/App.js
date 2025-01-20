@@ -49,7 +49,6 @@ import EditInformation from "./BusinessPage/EditInformation";
 import BusinessBeautyEditOption from "./BusinessPage/BusinessBeautyEditOption";
 import ReservationDetail from "./Page/MyPage/ReservationDetail";
 
-
 function App() {
   const [imageFiles, setImageFiles] = useState({
     main: [],
@@ -114,8 +113,11 @@ function App() {
             <Route path="/edit-address" element={<EditAddressPage />} />
             <Route path="/user/edit" element={<UserEdit />} />
             <Route path="/reservation" element={<Reservation />} />
-            <Route path="/reservation/detail/:id" element={<ReservationDetail />} />
-            
+            <Route
+              path="/reservation/detail/:id"
+              element={<ReservationDetail />}
+            />
+
             <Route path="/business">
               <Route path="login" element={<Login />} />
               <Route path="menu" element={<BusinessMenu />} />
@@ -135,9 +137,18 @@ function App() {
                 element={<AuthorityManagement />}
               />
               <Route path="register/style" element={<RegisterStyle />} />
-              <Route path="reservation/management" element={<ReservationManagement />} />
-              <Route path="reservation/detail/:id" element={<BusinessReservationDetail />} />
-              <Route path="customer/management" element={<CustomerManagement />} />
+              <Route
+                path="reservation/management"
+                element={<ReservationManagement />}
+              />
+              <Route
+                path="reservation/detail/:id"
+                element={<BusinessReservationDetail />}
+              />
+              <Route
+                path="customer/management"
+                element={<CustomerManagement />}
+              />
               <Route path="write/notice/:id" element={<WriteNotice />} />
               <Route path="date/register" element={<DateRegister />} />
               <Route path="date/edit" element={<DateEdit />} />

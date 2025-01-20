@@ -3,6 +3,8 @@ import NButtonContainer from "../Components/NavigatorBar/NButtonContainer";
 import "../../CSS/page.css";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../modal";
+import Tos from "./tos";
+import Privacy from "./privacy";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -10,7 +12,8 @@ const MainPage = () => {
   const arrowUrl = `${process.env.PUBLIC_URL}/PageImage/home/arrow.svg`;
   const footArrowUrl = `${process.env.PUBLIC_URL}/PageImage/home/footArrow.svg`;
   const trailingUrl = `${process.env.PUBLIC_URL}/PageImage/home/trailing.svg`;
-  const logoUrl = `${process.env.PUBLIC_URL}/PageImage/home/logo.svg`;
+  // const logoUrl = `${process.env.PUBLIC_URL}/PageImage/home/logo.svg`;
+  const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.jpg`;
   const b1Url = `${process.env.PUBLIC_URL}/PageImage/home/b1.svg`;
   const b2Url = `${process.env.PUBLIC_URL}/PageImage/home/b2.svg`;
   const b3Url = `${process.env.PUBLIC_URL}/PageImage/home/b3.svg`;
@@ -95,23 +98,27 @@ const MainPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const modalTitle = "알림";
   const modalContent = "해당 서비스는 준비 중입니다.";
+
+  const [openTos, setOpenTos] = useState(false);
+  const [openPrivacy, setOpenPrivacy] = useState(false);
   return (
     <div lang="ko">
       <div className="mid home_total">
         <div className="home-header">
           <div className="home-location">
-            <button>
+            {/* <button>
               <img src={locationUrl} alt="location" />
             </button>
             위치를 설정하세요.
             <button>
               <img src={arrowUrl} alt="arrow" />
-            </button>
+            </button> */}
+            <img src="/image/talktail_logo.jpg" alt="" />
           </div>
           <div className="trailing">
-            <button>
+            {/* <button>
               <img src={trailingUrl} alt="trailing" />
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="home-container1"></div>
@@ -206,7 +213,23 @@ const MainPage = () => {
               애견미용샵 ｜상품입점｜제휴문의｜상담문의
             </div>
             <div className="tail-number">070-4571-7580</div>
-            <div className="tail-a">이용약관｜개인정보 처리방침</div>
+            <div className="tail-a">
+              <span
+                onClick={() => {
+                  setOpenTos(true);
+                }}
+              >
+                이용약관
+              </span>
+              ｜
+              <span
+                onClick={() => {
+                  setOpenPrivacy(true);
+                }}
+              >
+                개인정보 처리방침
+              </span>
+            </div>
             <div
               className={`tail-accordion ${isOpen ? "open" : ""}`}
               onClick={toggleAccordion}
@@ -224,9 +247,9 @@ const MainPage = () => {
               </div>
               <div className="hidden-item2">
                 <div>권도혁</div>
-                <div>836-34-00928</div>
+                <div>514-87-03021</div>
                 <div>00000000</div>
-                <div>경산북도 경산시 하양읍 대학리 13-13</div>
+                <div>경상북도 경산시 삼풍로 27, 309호</div>
                 <div>creamoff2021@naver.com</div>
               </div>
             </div>
@@ -242,6 +265,24 @@ const MainPage = () => {
           }}
           title={modalTitle}
           content={modalContent}
+        />
+      ) : (
+        ""
+      )}
+      {openTos ? (
+        <Tos
+          openModal={() => {
+            setOpenTos(false);
+          }}
+        />
+      ) : (
+        ""
+      )}
+      {openPrivacy ? (
+        <Privacy
+          openModal={() => {
+            setOpenPrivacy(false);
+          }}
         />
       ) : (
         ""
