@@ -1,13 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
     const BusinessAccountNumber = sequelize.define(
-        'BUSINESS_ACCOUNT_NUMBER',
+        'business_account_number',
         {
             business_registration_number: {
                 type: DataTypes.STRING(200),
                 allowNull: false,
                 defaultValue: '',
                 references: {
-                    model: 'BUSINESS', // Business 테이블을 참조
+                    model: 'business', // Business 테이블을 참조
                     key: 'business_registration_number',
                 },
                 onUpdate: 'CASCADE', // 외래 키 업데이트 정책
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         {
             timestamps: false,
-            tableName: 'BUSINESS_ACCOUNT_NUMBER',
+            tableName: 'business_account_number',
         }
     );
 

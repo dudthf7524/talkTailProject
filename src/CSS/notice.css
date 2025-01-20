@@ -494,6 +494,14 @@ button.verified {
     color: #262626;
     font-size: 16px;
     font-weight: 400;
+    text-align: center;
+}
+.view-contents-title{
+    width: 30%;
+}
+
+.view-contents-option{
+    width: 50%;
 }
 
 .view-contents-style h1 {

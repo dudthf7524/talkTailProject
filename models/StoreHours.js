@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const StoreHours = sequelize.define(
-      'STORE_HOURS',
+      'store_hours',
       {
         store_id: {
           type: DataTypes.INTEGER,
@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         timestamps: false,
-        tableName: 'STORE_HOURS',
+        tableName: 'store_hours',
       }
     );
   

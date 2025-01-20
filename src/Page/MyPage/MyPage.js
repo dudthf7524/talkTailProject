@@ -17,9 +17,16 @@ const MyPage = () => {
   const [isEditingNickname, setIsEditingNickname] = useState(false);
   const [userInformation, setUserInformation] = useState();
 
+  const modalTitle = "로그아웃 완료";
+  const modalContent = "잠시 후 로그인 페이지로 이동합니다.";
   useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/'); // Redirect to home if no token is found
+      return;
+    }
     fetchUserInformation();
-  }, []);
+  }, [navigate]);
 
   const fetchNickname = async () => {
     try {
@@ -100,18 +107,17 @@ const MyPage = () => {
   };
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     setPopupMessage('You have been logged out.');
     setShowPopup(true);
+    setTimeout(() => {
+      navigate("/");
+    }, 1500);
   };
 
-  const handleClosePopup = () => {
-    setShowPopup(false);
-    if (popupMessage === 'You have been logged out.') {
-      navigate('/'); // 로그아웃 후 홈 페이지로 이동
-    }
-  };
+
 
   if (!userInformation) {
     return <div>로딩 중 ...</div>
@@ -177,7 +183,7 @@ const MyPage = () => {
                   </div>
                 </div>
               </div>
-             
+
             </div>
           </div>
           <div className='mypage-info-container'>
@@ -185,21 +191,22 @@ const MyPage = () => {
             <div className='mypage-info-contents'>
               <div className='edit-textbox'>
                 <div className='edit-text'>
-                  <p onClick={handleLogout}>로그아웃</p>
+                  <p onClick={handleLogout} style={{ cursor: "pointer" }}>로그아웃</p>
                 </div>
               </div>
-              <div className='edit-textbox'>
-                <div className='edit-text'>
-                  <p>탈퇴</p>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>
-        {showPopup && (
-          <Popup closeModal={handleClosePopup} isWarning={popupMessage.includes('Failed')}>
-            {popupMessage}
-          </Popup>
+        {showPopup ? (
+          <Popup
+            openModal={() => {
+            }}
+            title={modalTitle}
+            content={modalContent}
+          />
+        ) : (
+          ""
         )}
       </div>
       <NButtonContainer />
