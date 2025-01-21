@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import PetInfo from './PetInfo';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,20 @@ const PetSelectPage = () => {
     const dispatch = useDispatch();
     const designerName = useSelector((state) => state.reservationData); // Redux 상태 가져오기
     console.log("Selected Designer Name:", designerName); // 리덕스 상태 출력
+    console.log(designerName.startTime)
+
+
+
+    useEffect(() => {
+        if (designerName.startTime == null) {
+            navigate('/list/beauty');
+            return;
+        }
+    }, []);
+
+
+
+
     const goBack = () => {
         navigate(-1);
     };
@@ -22,7 +36,7 @@ const PetSelectPage = () => {
         setSelectedPet(pet);
         console.log(pet.pet_id)
         const petId = pet.pet_id;
-        
+
         dispatch(setPetId(petId));
         setShowWarning(false); // 펫을 선택할 때 경고 메시지 숨김
     };

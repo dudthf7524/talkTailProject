@@ -15,6 +15,10 @@ const PetDesigner = () => {
   console.log("Selected Designer Name:", designerName); // 리덕스 상태 출력
 
   const business_registration_number = designerName.businessInfo.business_registration_number;
+
+  if(business_registration_number ===null){
+    navigate(-1)
+  }
   
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
@@ -75,7 +79,7 @@ const PetDesigner = () => {
         디자이너 선택
         <div></div>
       </div>
-      <div className={`list-header ${isDropdownOpen ? 'open' : ''}`}>
+      {/* <div className={`list-header ${isDropdownOpen ? 'open' : ''}`}>
         <div className='list-header-i'>
           <div className='list-header-item' onClick={toggleDropdown}>
             거리 순
@@ -97,7 +101,7 @@ const PetDesigner = () => {
             <div className='dropdown-item'>쌓인 후기 내림차 순</div>
           </div>
         )}
-      </div>
+      </div> */}
       <div className="list-mid-h">
         {
           Array.isArray(designers) && designers.map((designer, index) => (

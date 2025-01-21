@@ -211,7 +211,7 @@ const EventDetailPage = () => {
                         <div className='event-button-text'>위치</div>
                     </div> */}
                     <div className='event-button'>
-                        <a href={`tel:${business.business_phone1}${business.business_phone2}${business.business_phone3}`}>
+                        <a href={`tel:${business.business_phone}`}>
                             <button>
                                 <img src={callUrl} alt='' />
                             </button>
