@@ -24,10 +24,15 @@ const ReservationRequestPage = () => {
 
     const reservationData = useSelector((state) => state.reservationData); // Redux 상태 가져오기
     console.log("Selected Designer Name:", reservationData.businessInfo.business_no_show); // 리덕스 상태 출력
-    console.log("Selected 사업자 번호:", reservationData.businessInfo); // 리덕스 상태 출력
+    console.log("Selected 사업자 번호 : ", reservationData.businessInfo); // 리덕스 상태 출력
     console.log("Selected 사업자 번호:", reservationData);
 
-
+    useEffect(() => {
+        if (!reservationData.businessInfo || !reservationData.businessInfo.business_registration_number) {
+            // reservationData가 없으면 '/list/beauty' 페이지로 이동
+            // navigate('/list/beauty');
+        }
+    }, [reservationData, navigate]);
 
     const handleStyle = (e) => {
         setStyle(e.target.value);
@@ -61,6 +66,10 @@ const ReservationRequestPage = () => {
     }, [reviewText]);
 
     useEffect(() => {
+        const aaa = async () => {
+
+       
+        
         if (reservationData.businessInfo.business_registration_number) {
             const styleSignificant = async () => {
                 console.log("styleSignificant")
@@ -77,8 +86,13 @@ const ReservationRequestPage = () => {
             styleSignificant();
         } else {
             console.log("데이터가 아직 준비되지 않았습니다.");
+            navigate('/list/beauty')
+            return false;
         }
-    }, [reservationData]);
+    }
+    aaa();
+
+    }, []);
 
     useEffect(() => {
         if (lists.business_owner_phone) {
@@ -158,6 +172,9 @@ const ReservationRequestPage = () => {
         navigate('/reservation-confirm');
     };
     const formatCurrency = (amount) => {
+        if(amount === null){
+            return '0';
+        }
         return amount.toLocaleString('ko-KR'); // 한국어 스타일로 포맷
     };
 
