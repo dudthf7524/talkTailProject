@@ -65,7 +65,7 @@ const ReservationRequestPage = () => {
             const styleSignificant = async () => {
                 console.log("styleSignificant")
                 try {
-                    const response = await api.post('/api/business/style/significantGet', {
+                    const response = await api.post('/api/business/style/accountNumberGet', {
                         business_registration_number: reservationData.businessInfo.business_registration_number,
                     });
                     console.log('User authority data:', response.data);
