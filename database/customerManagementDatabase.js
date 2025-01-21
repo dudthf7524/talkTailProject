@@ -24,13 +24,7 @@ const customerManagementGet = async (business_registration_number) => {
             }
 
         );
-       
-        console.log(metadata);
-        console.log("results");
-        console.log("Results:", results);
-        console.log("Results Length:", results.length);
-        console.log("Metadata:", metadata);
-        console.log("results");
+        console.log(results)
         return [results];
 
     } catch (error) {

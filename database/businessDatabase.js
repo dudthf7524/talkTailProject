@@ -252,10 +252,9 @@ const updateBusinessBeautySignificant = async (RegisterBeautySignificant) => {
     }
 };
 
-const significantGet = async (business_registration_number) => {
+const accountNumberGet = async (business_registration_number) => {
 
     try {
-
 
         let sql = "";
         sql += "select business_beauty_significant1 , business_beauty_significant2, business_beauty_significant3 ,business_beauty_significant4 ,business_beauty_significant5 , business_owner_phone, name, account_holder, account_number ";
@@ -278,6 +277,7 @@ const significantGet = async (business_registration_number) => {
 
         );
 
+        console.log(results)
         return results
 
 
@@ -672,6 +672,26 @@ const accountNumber = async (accountNumberData, business_registration_number) =>
     }
 };
 
+const significantGet = async (business_registration_number) => {
+    console.log(business_registration_number)
+
+    try {
+        const BeautySignificant = await BusinessBeautySignificant.findOne(
+            {
+                where: { business_registration_number: business_registration_number }
+            }
+
+        );
+        return BeautySignificant;
+    } catch (error) {
+        // 오류를 더욱 상세하게 로깅
+        console.error('Error creating BusinessBeautySignificant:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        throw new Error('Failed to create RegisterBeautySignificant: ' + error.message);
+    }
+};
+
 module.exports = {
     createBusiness,
     businessLogin,
@@ -694,4 +714,5 @@ module.exports = {
     updateBusinessBeautyOption,
     checkLogin,
     accountNumber,
+    accountNumberGet,
 };

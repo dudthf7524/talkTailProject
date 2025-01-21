@@ -203,18 +203,7 @@ router.put('/business/beauty/significant', async (req, res) => {
   }
 
 });
-router.post('/business/style/significantGet', async (req, res) => {
 
-  const business_registration_number = req.body.business_registration_number;
-  try {
-    const userGetAuthority = await businessDatabase.significantGet(business_registration_number);
-    res.json(userGetAuthority);
-  } catch (error) {
-    console.error('Failed to fetch authority request error: ', error);
-    res.status(500).json({ message: 'Failed to fetch authority request.' });
-  }
-  
-})
 
 router.get('/business/style/significantGet', authMiddlewareSession, async (req, res) => {
   console.log(req.session)
@@ -468,4 +457,17 @@ router.post('/business/account/number', authMiddlewareSession,  async (req, res)
     res.status(500).json({ error: error.message });
   }
 });
+
+router.post('/business/style/accountNumberGet', async (req, res) => {
+
+  const business_registration_number = req.body.business_registration_number;
+
+  try {
+    const userGetAuthority = await businessDatabase.accountNumberGet(business_registration_number);
+    res.json(userGetAuthority);
+  } catch (error) {
+    console.error('Failed to fetch authority request error: ', error);
+    res.status(500).json({ message: 'Failed to fetch authority request.' });
+  }
+})
 module.exports = router;

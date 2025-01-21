@@ -13,7 +13,7 @@ router.get('/customer/management',authMiddlewareSession ,  async (req, res) => {
         res.status(201).json(result);
         
     } catch (error) {
-        console.error('Error fetching userIformation:', error.message);
+        console.error('고객 관리 리스트 에러:', error.message);
         res.status(500).json({ error: error.message });
     }
 

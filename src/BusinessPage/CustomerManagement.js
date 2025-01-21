@@ -9,7 +9,7 @@ const CustomerManagement = () => {
     const navigate = useNavigate();
     const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
 
-    const [reservationManagementList, setReservationManagementList] = useState();
+    const [reservationManagementList, setReservationManagementList] = useState([]);
 
     useEffect(() => {
         const fetchReservationManagement = async () => {
@@ -20,13 +20,11 @@ const CustomerManagement = () => {
                     navigate('/business/login'); // 로그인 페이지로 리디렉션
 
                 }
-                setReservationManagementList(response.data);
-
-                // if (response.data[0] == null) {
-                //     setReservationManagementList(response.data[0]);
-                // } else {
-                //     setReservationManagementList(response.data);
-                // }
+                if (response.data[0] === null || response.data === null) {
+                    return;
+                } else {
+                    setReservationManagementList(response.data);
+                }
                 console.log(response.data)
             } catch (error) {
 
@@ -38,6 +36,7 @@ const CustomerManagement = () => {
     }, []);
 
     console.log(reservationManagementList)
+
 
     return (
         <div className='page-container' lang='ko'>

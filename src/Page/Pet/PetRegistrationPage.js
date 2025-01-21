@@ -340,7 +340,7 @@ const PetRegistration = () => {
                             <input
                                 type="text"
                                 className="textbox-gray"
-                                placeholder="YY/MM/DD"
+                                placeholder="YYYY/MM/DD"
                                 name="birthDate"
                                 value={formData.birthDate}
                                 onChange={handleInputChange}

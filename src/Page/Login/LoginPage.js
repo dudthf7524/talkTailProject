@@ -11,6 +11,7 @@ const LoginPage = () => {
     const image3Url = `${process.env.PUBLIC_URL}/PageImage/auth/pictures/img (3).png`;
     const image4Url = `${process.env.PUBLIC_URL}/PageImage/auth/pictures/img (4).png`;
     const image5Url = `${process.env.PUBLIC_URL}/PageImage/auth/pictures/img (5).png`;
+    
 
     const kakao_key = process.env.REACT_APP_KAKAO_CLIENT_ID;
     const redirect_uri_kakao = process.env.REACT_APP_KAKAO_REDIRECT_URI;
@@ -20,6 +21,8 @@ const LoginPage = () => {
 
     const google_client_id = process.env.REACT_APP_GOOGLE_CLIENT_ID;
     const redirect_uri_google = process.env.REACT_APP_GOOGLE_REDIRECT_URI;
+
+    console.log(redirect_uri_kakao)
 
     const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakao_key}&redirect_uri=${redirect_uri_kakao}&response_type=code`;
     const naverURL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naver_key}&redirect_uri=${redirect_uri_naver}&state=STATE_STRING`;
