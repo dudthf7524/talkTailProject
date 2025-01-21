@@ -23,9 +23,14 @@ function generateTimeSlots(start_time, end_time, intervalMinutes) {
 }
 
 const SelectedDatePage = () => {
-
+  const navigate = useNavigate();
   const hours = useSelector((state) => state.reservationData.hour); // Redux 상태 가져오기
+  console.log(hours)
+ 
   console.log("Selected Designer Name:", hours); // 리덕스 상태 출력
+  if(hours === null){
+    navigate('list/beauty')
+  }
   const { id } = useParams();
   const [reservationDesinger, setReservationDesinger] = useState();
 
@@ -57,11 +62,15 @@ const SelectedDatePage = () => {
   const [activeTime, setActiveTime] = useState(null);
 
   const filterDisabledDays = (date) => {
+    if (hours === null) {
+      navigate('/list/beauty'); // hours가 null일 때 이동
+      return false; // 이후 로직은 처리하지 않음
+    }
     const day = getDay(date);
-    // console.log("Checking day:", day, "Operating Day:", hours?.[day]?.isOperatingDay);
-
     return hours[day]?.isOperatingDay;
   };
+
+  console.log(filterDisabledDays)
 
   const handleButtonClick = (time) => {
 
@@ -75,7 +84,6 @@ const SelectedDatePage = () => {
   };
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
 
-  const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
   };

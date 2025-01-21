@@ -6,7 +6,7 @@ const Redirection = () => {
     const code = new URLSearchParams(window.location.search).get('code');
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_BASE_URL;
-
+    console.log(code)
     useEffect(() => {
         let authProvider = '';
 
@@ -32,7 +32,7 @@ const Redirection = () => {
 
                 let endpoint = '';
                 console.log(authProvider)
-              
+                console.log(apiUrl)
                 if (authProvider === 'kakao') {
                     endpoint = `${apiUrl}/api/auth/kakao?code=${authCode}`;
                 } else if (authProvider === 'naver') {
