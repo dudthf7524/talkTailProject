@@ -40,7 +40,7 @@ router.get('/auth/kakao', async (req, res) => {
     
     try {
         code = req.query.code;
-
+        console.log(code)
         if (!code) {
             return res.status(400).json({ message: 'Authorization code not found.' });
         }

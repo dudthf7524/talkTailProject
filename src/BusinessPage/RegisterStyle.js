@@ -60,7 +60,7 @@ function RegisterStyle() {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const response = await axios.get('http://localhost:8383/business/auth', { withCredentials: true });
+                const response = await api.get('/business/auth', { withCredentials: true });
                 if (!response.data) navigate('/business/login');
                 setUser(response.data);
             } catch (error) {
