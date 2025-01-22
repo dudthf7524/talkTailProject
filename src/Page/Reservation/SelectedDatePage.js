@@ -123,6 +123,21 @@ const SelectedDatePage = () => {
         {displayLabel && <div className="day-label">{displayLabel}</div>}
       </div>
     );
+    // return (
+    //   <div
+    //     className={`day-content ${!isOperatingDay ? "closed" : ""} ${isSelected ? "selected" : ""}`}
+    //     style={{
+    //       border: "1px solid #ccc", // 칸막이 효과
+    //       borderRadius: "0", // 모서리 둥글기 제거 (표처럼 보이게 하기 위해)
+    //       boxSizing: "border-box", // 테두리를 포함한 박스 크기 계산
+    //       padding: "4px", // 내부 간격
+    //       backgroundColor: isSelected ? "#f0663f" : "", // 선택된 날짜 배경색
+    //     }}
+    //   >
+    //     <div className="day-number">{day}</div>
+    //     {displayLabel && <div className="day-label">{displayLabel}</div>}
+    //   </div>
+    // );
   };
 
 
@@ -205,12 +220,21 @@ const SelectedDatePage = () => {
 
   const dispatch = useDispatch();
 
-  const handleItemClick = () => {
+  const handleItemClick = async () => {
     console.log(selectDate)
     console.log(activeTime)
     dispatch(setDate(selectDate));
     dispatch(setStartTime(activeTime));
-    navigate(`/pet-select/1`);
+    try {
+      const response = await api.post('/api/beauty/reservation/timeCheck', {
+        activeTime: activeTime,
+      });
+      console.log('User authority data:', response.data);
+     
+  } catch (error) {
+      console.error('권한 조회 실패:', error.message);
+  }
+    // navigate(`/pet-select/1`);
   };
 
   return (

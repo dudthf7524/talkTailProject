@@ -93,7 +93,10 @@ router.get('/beauty/reservation', authMiddlewareSession, async (req, res) => {
 })
 
 router.get('/beauty/reservation/detail/:id', async (req, res) => {
+
     const id = req.params.id;
+    const date = req.params.date;
+    
     try {
         const result = await reservationDatabase.beautyReservationDetail(id)
         res.status(201).json(result);
@@ -101,7 +104,30 @@ router.get('/beauty/reservation/detail/:id', async (req, res) => {
         console.error('Error fetching userIformation:', error.message);
         res.status(500).json({ error: error.message });
     }
-})
+
+});
+
+router.get('/beauty/reservation/detail/:id/:date', async (req, res) => {
+
+    const id = req.params.id;
+    const date = req.params.date;
+    console.log('routes')
+    console.log(date)
+    try {
+        const result = await reservationDatabase.beautyReservationDetail(id)
+
+        const resultTime  = await reservationDatabase.beautyReservationTime(date)
+        console.log('시간 데이터')
+        console.log(resultTime)
+        console.log('시간 데이터')
+        const results = [result, resultTime];
+        res.status(201).json(results);
+    } catch (error) {
+        console.error('Error fetching userIformation:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+
+});
 
 router.put('/beauty/reservation/setCompleteTime/:id', async (req, res) => {
     const id = req.params.id;
@@ -209,6 +235,35 @@ router.put('/beauty/reservation/reject/:id', async (req, res) => {
         console.error('Error saving reservation to database:', error.message);
         return res.status(500).json({ error: 'Database save failed' });
     }
+
+})
+
+router.post('/beauty/reservation/timeCheck', async (req, res) => {
+    console.log(req.body)
+
+    const reservationTime = req.body.activeTime;
+    console.log(reservationTime)
+   
+    // const user_phone  =req.body.user_phone
+
+    try {
+        const result = await reservationDatabase.beautyTimeCheck(reservationTime)
+       
+    } catch (error) {
+        console.error('Error fetching userIformation:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+    
+    // try{
+    //     req.body.receiver_1 = user_phone;
+    //     console.log(req.body)
+    //     const result = await kakaoProcess.reservationReject(req, res)
+    //     console.log(result)
+    //     res.status(201).json(result);
+    // }catch (error){
+    //     console.error('Error saving reservation to database:', error.message);
+    //     return res.status(500).json({ error: 'Database save failed' });
+    // }
 
 })
 

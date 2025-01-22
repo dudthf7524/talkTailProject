@@ -75,6 +75,7 @@ const beautyReservationDetail = async (id) => {
         console.log(metadata);
         console.log(results.pet_birth);
 
+        
         // 나이 계산 함수 (dayjs 사용)
         const calculateAge = (birthDate, referenceDate = dayjs()) => {
             const birth = dayjs(birthDate);
@@ -159,9 +160,51 @@ const beautyReservationReject = async (beauty_reservation_id, reject_content) =>
         console.error('Failed to fetch authority request error: ', error);
         res.status(500).json({ message: 'Failed to fetch authority request.' });
     }
+}
+
+const beautyTimeCheck = async (reservationTime) => {
+
+    console.log(reservationTime)
+
+    // try {
+    //     const result = await BeautyReservation.update(
+    //         {
+    //             reservation_state : "거절",
+    //             reject_content: reject_content,
+    //         },
+
+    //         {
+    //             where: { beauty_reservation_id: beauty_reservation_id },
+    //         }
+    //     );
+    // } catch (error) {
+    //     console.error('Failed to fetch authority request error: ', error);
+    //     res.status(500).json({ message: 'Failed to fetch authority request.' });
+    // }
 
 
 }
+
+const beautyReservationTime = async (date) => {
+
+    console.log(date)
+    console.log('database')
+    try {
+        const result = await BeautyReservation.findAll({
+            where: { date: date },
+            attributes: ['start_time', 'end_time'], // 여기로 이동
+        });
+        console.log(result.length)
+        return result
+    } catch (error) {
+        console.error('Failed to fetch authority request error: ', error);
+        res.status(500).json({ message: 'Failed to fetch authority request.' });
+    }
+
+
+}
+
+
 
 module.exports = {
     beautyReservation,
@@ -169,5 +212,7 @@ module.exports = {
     beautyReservationDetail,
     setCompleteTime,
     beautyReservationDesinger,
-    beautyReservationReject
+    beautyReservationReject,
+    beautyTimeCheck,
+    beautyReservationTime
 };
