@@ -94,7 +94,7 @@ function UserEdit() {
       // 오류 처리
     }
   };
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(true);
   const [popupMessage, setPopupMessage] = useState("");
 
   const handleConfirmEdit = () => {
