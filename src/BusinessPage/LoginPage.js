@@ -5,7 +5,8 @@ import axios from "axios";
 import LoginModal from "./Modal/LoginModal.js";
 
 const Login = () => {
-  const logoUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/logo/logo.svg`;
+  // const logoUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/logo/logo.svg`;
+  const logoUrl = `${process.env.PUBLIC_URL}/Image/talkTail_logo.jpg`;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   console.log("aaaaaaaaaa");
   console.log(apiUrl);
