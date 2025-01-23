@@ -5,7 +5,7 @@ import api from "../Api";
 
 const AdminMenu = () => {
   // const logoUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/logo/logo.svg`;
-  const logoUrl = `${process.env.PUBLIC_URL}/Image/talkTail_logo.jpg`;
+  const logoUrl = `${process.env.PUBLIC_URL}/Image/Talktail-logo.png`;
   const reservationIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/reservationIcon.svg`;
   const customerIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/customerIcon.png`;
   const reviewIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/reviewIcon.png`;

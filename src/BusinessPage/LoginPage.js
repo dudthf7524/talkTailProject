@@ -6,7 +6,8 @@ import LoginModal from "./Modal/LoginModal.js";
 
 const Login = () => {
   // const logoUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/logo/logo.svg`;
-  const logoUrl = `${process.env.PUBLIC_URL}/Image/talkTail_logo.jpg`;
+  const logoUrl = `${process.env.PUBLIC_URL}/Image/talkTail_logo.png`;
+  const logoUrl2 = `${process.env.PUBLIC_URL}/Image/TalkTail.png`;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   console.log("aaaaaaaaaa");
   console.log(apiUrl);
@@ -46,6 +47,7 @@ const Login = () => {
     <div className="login" lang="ko">
       <div className="login-logo">
         <img src={logoUrl} alt="logo img"></img>
+        <img src={logoUrl2} alt="logo img"></img>
       </div>
       <div className="login-text">관리자 로그인</div>
 
