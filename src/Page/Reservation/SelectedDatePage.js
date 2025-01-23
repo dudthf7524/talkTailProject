@@ -223,17 +223,21 @@ const SelectedDatePage = () => {
   const handleItemClick = async () => {
     console.log(selectDate)
     console.log(activeTime)
+    const selectedDateObject = new Date(selectDate);
+    const dayOfWeek = selectedDateObject.getDay(); // 0: 일요일, 1: 월요일, ..., 6: 토요일
+    console.log("선택한 날짜의 요일(숫자):", dayOfWeek);
+
     dispatch(setDate(selectDate));
     dispatch(setStartTime(activeTime));
-    try {
-      const response = await api.post('/api/beauty/reservation/timeCheck', {
-        activeTime: activeTime,
-      });
-      console.log('User authority data:', response.data);
+  //   try {
+  //     const response = await api.post('/api/beauty/reservation/timeCheck', {
+  //       activeTime: activeTime,
+  //     });
+  //     console.log('User authority data:', response.data);
      
-  } catch (error) {
-      console.error('권한 조회 실패:', error.message);
-  }
+  // } catch (error) {
+  //     console.error('권한 조회 실패:', error.message);
+  // }
     // navigate(`/pet-select/1`);
   };
 

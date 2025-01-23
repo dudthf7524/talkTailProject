@@ -35,6 +35,7 @@ const ReservationDetail = () => {
       console.log(date)
       try {
         const response = await api.get(`/api/beauty/reservation/detail/${id}/${date}`, { withCredentials: true });
+       
         console.log(response.data)
         setReservationManagementList(response.data[0]);
         setTimeLists(response.data[1]);
@@ -49,7 +50,6 @@ const ReservationDetail = () => {
   }, []);
 
  
-  console.log(timeList)
   const openModal = (type) => {
     setActionType(type);
     setModalOpen(true);
