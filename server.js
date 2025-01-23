@@ -64,9 +64,7 @@ app.use(session({
 app.use(passport.session());
 
 app.use(express.static(path.join(__dirname, './build')));
-app.use("/image", express.static(path.join(__dirname, "public/image")));
-app.use("/BusinessPageImage", express.static(path.join(__dirname, "public/BusinessPageImage")));
-app.use("/PageImage", express.static(path.join(__dirname, "public/PageImage")));
+
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './build/index.html'));
