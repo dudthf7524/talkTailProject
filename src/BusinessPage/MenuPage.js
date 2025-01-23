@@ -5,7 +5,8 @@ import api from "../Api";
 
 const AdminMenu = () => {
   // const logoUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/logo/logo.svg`;
-  const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail-logo.jpg`;
+  const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
+  const logoUrl2 = `${process.env.PUBLIC_URL}/image/Talktail.png`;
   const reservationIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/reservationIcon.svg`;
   const customerIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/customerIcon.png`;
   const reviewIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/reviewIcon.png`;
@@ -210,6 +211,7 @@ const AdminMenu = () => {
           ""
         )}
 
+        <img src={logoUrl2} alt="logo img" className="logo-img"></img>
         <img src={logoUrl} alt="logo img" className="logo-img"></img>
       </div>
     </div>
