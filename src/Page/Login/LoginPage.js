@@ -2,7 +2,7 @@ import React from "react";
 import "../../CSS/auth.css";
 
 const LoginPage = () => {
-  const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.jpg`;
+  const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
   const googleUrl = `${process.env.PUBLIC_URL}/PageImage/auth/google logo.svg`;
   const kakaoUrl = `${process.env.PUBLIC_URL}/PageImage/auth/KAKAO logo.svg`;
   const naverUrl = `${process.env.PUBLIC_URL}/PageImage/auth/Naver logo.svg`;

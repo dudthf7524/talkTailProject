@@ -116,22 +116,19 @@ router.get('/beauty/reservation/detail/:id/:date', async (req, res) => {
     console.log(date)
     try {
         const result = await reservationDatabase.beautyReservationDetail(id)
-        
-
         const 요일 = 4;
-
-        console.log(result.hours[0])
-        console.log(result.hours[0])
-        console.log(result.hours[0])
-        console.log(result.hours[0])
-        console.log(result.hours[0])
-
-
+        console.log()
+        console.log('aaaaaaaaa')
+        var hourDay ;
+        for (let i = 0 ; i<Object.keys(result.hours).length; i++){
+            if(i == 요일){
+                hourDay = result.hours[i]
+            }
+        }
+        console.log(hourDay)
         const resultTime  = await reservationDatabase.beautyReservationTime(date)
-        
-        
-        const results = [result, resultTime];
-
+        console.log(resultTime)
+        const results = [result, resultTime, hourDay];
         res.status(201).json(results);
     } catch (error) {
         console.error('Error fetching userIformation:', error.message);

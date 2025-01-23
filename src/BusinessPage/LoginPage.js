@@ -7,9 +7,8 @@ import LoginModal from "./Modal/LoginModal.js";
 const Login = () => {
   // const logoUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/logo/logo.svg`;
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
-  const logoUrl2 = `${process.env.PUBLIC_URL}/image/Talktail.png`;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
-  console.log("aaaaaaaaaa");
+
   console.log(apiUrl);
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
@@ -46,8 +45,7 @@ const Login = () => {
   return (
     <div className="login" lang="ko">
       <div className="login-logo">
-        <img src={logoUrl} alt="logo img"></img>
-        <img src={logoUrl2} alt="logo img"></img>
+        <img src={logoUrl} alt="logo img" style={{width : "50%",}}></img>
       </div>
       <div className="login-text">관리자 로그인</div>
 

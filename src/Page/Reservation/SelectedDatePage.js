@@ -50,9 +50,7 @@ const SelectedDatePage = () => {
     // console.log("reservationDesinger")
     // console.log(reservationDesinger)
   }
-  const businessStartTime = '09:00';
-  const businessEndTime = '18:00';
-  const timeSlots = React.useMemo(() => generateTimeSlots(businessStartTime, businessEndTime, 30), []);
+ 
 
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -70,7 +68,7 @@ const SelectedDatePage = () => {
     return hours[day]?.isOperatingDay;
   };
 
-  console.log(filterDisabledDays)
+ 
 
   const handleButtonClick = (time) => {
 
@@ -142,26 +140,33 @@ const SelectedDatePage = () => {
 
 
 
-  const getDisabledTimesByDate = (selectedDate) => {
+  const getDisabledTimesByDate = (selectedDate  ,st , dt) => {
     if (!selectedDate) return [];
 
     const formattedDate = format(selectedDate, 'yyyy-MM-dd');
     const reservations = reservationDesinger?.filter((item) => item.date === formattedDate) || [];
+    console.log(reservations)
     const disabledTimes = [];
-
+    console.log(disabledTimes)
     reservations.forEach(({ start_time, end_time }) => {
       const start = parse(start_time, 'HH:mm', new Date());
       const end = parse(end_time, 'HH:mm', new Date());
 
       // 현재 날짜의 모든 가능한 시간 슬롯을 생성하고 예약된 시간만 비활성화합니다.
+      const timeSlots = generateTimeSlots(st, dt, 30);
+      console.log(timeSlots)
+
       timeSlots.forEach((time) => {
         const current = parse(time, 'HH:mm', new Date());
+       
         if (isWithinInterval(current, { start, end: new Date(end.getTime() - 1) })) {
           disabledTimes.push(time);
         }
+       
       });
     });
 
+    console.log(disabledTimes)
 
     return disabledTimes;
   };
@@ -185,7 +190,9 @@ const SelectedDatePage = () => {
 
       if (dayHours?.isOperatingDay) {
         const timeSlots = generateTimeSlots(dayHours.start_time, dayHours.end_time, 30);
-        const disabledTimesForDate = getDisabledTimesByDate(date);
+        console.log("timeSlots")
+        console.log(timeSlots)
+        const disabledTimesForDate = getDisabledTimesByDate(date, dayHours.start_time , dayHours.end_time);
 
         console.log("disabledTimesForDate")
         console.log(disabledTimesForDate)
