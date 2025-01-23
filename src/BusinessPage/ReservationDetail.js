@@ -24,22 +24,25 @@ const ReservationDetail = () => {
   const [reservationManagementList, setReservationManagementList] = useState([]);
   const [reservationCompleteTime, setReservationCompleteTime] = useState(''); // 완료 시간 상태 추가
   const [timeList, setTimeLists] = useState([]);
- 
+  const [hourday, setHourDay] = useState([]);
+
   const [formData, setFormData] = useState({
     beauty_price: 0,
   });
 
-  
+
   useEffect(() => {
     const fetchUser = async () => {
       console.log(date)
       try {
         const response = await api.get(`/api/beauty/reservation/detail/${id}/${date}`, { withCredentials: true });
-       
+
         console.log(response.data)
         setReservationManagementList(response.data[0]);
         setTimeLists(response.data[1]);
-        
+        setHourDay(response.data[2]);
+
+
       } catch (error) {
 
         console.error('예약관리 상세보기 실패', error);
@@ -49,7 +52,7 @@ const ReservationDetail = () => {
     fetchUser();
   }, []);
 
- 
+
   const openModal = (type) => {
     setActionType(type);
     setModalOpen(true);
@@ -57,6 +60,7 @@ const ReservationDetail = () => {
 
   const closeModal = () => setModalOpen(false);
 
+  console.log(hourday)
   const handleConfirm = async () => {
 
     console.log(reservationManagementList.business_name)
@@ -103,7 +107,7 @@ const ReservationDetail = () => {
     const business_name = reservationManagementList.business_name;
     const business_phone = reservationManagementList.business_phone;
     const user_phone = reservationManagementList.user_phone;
-    
+
     try {
 
       const response = await api.put(`/api/beauty/reservation/reject/${id}`, { rejectComment, business_name, business_phone, user_phone }, { withCredentials: true });
@@ -125,8 +129,9 @@ const ReservationDetail = () => {
     setModalOpen(false);
     setCheckModalOpen(true);
   };
-  const businessStartTime = '09:00';
-  const businessEndTime = '18:00';
+
+  const businessStartTime = hourday?.start_time || "09:00"; // 기본값 09:00
+  const businessEndTime = hourday?.end_time || "18:00"; // 기본값 18:00
 
   const timeSlots = generateTimeSlots(businessStartTime, businessEndTime, 30);
 
@@ -147,32 +152,54 @@ const ReservationDetail = () => {
 
 
   const now = new Date();
+  const today = format(now, 'yyyy-MM-dd'); // 오늘 날짜 형식: yyyy-MM-dd
+  const currentTime = format(now, 'HH:mm'); // 현재 시간 형식: HH:mm
+
+
+  const disabledTimes = (() => {
+    const disabledTimesSet = new Set();
+  
+    // 시간 리스트를 순회하여 시작 시간과 끝 시간 사이의 모든 시간을 추가
+    timeList.forEach(({ start_time, end_time }) => {
+      const start = parse(start_time, 'HH:mm', new Date());
+      const end = parse(end_time, 'HH:mm', new Date());
+      
+      for (let time = start; time <= end; time = addMinutes(time, 30)) {
+        disabledTimesSet.add(format(time, 'HH:mm')); // 30분 단위로 시간 추가
+      }
+    });
+  
+    return Array.from(disabledTimesSet);
+  })();
+
+  console.log(disabledTimes)
 
 
   const filteredTimeSlots = timeSlots.filter((time) => {
     const current = parse(time, 'HH:mm', new Date());
     const start = parse(start_time, 'HH:mm', new Date());
-    return current >= start; // starttime 이후의 시간대만 필터링
+    
+    // 예약 날짜가 오늘 이전인 경우, 모든 시간을 포함
+    if (reservationManagementList.date < today) {
+      console.log('11')
+      return false;
+    }
+
+    // 예약 날짜가 오늘인 경우, 현재 시간 이후의 시간만 표시
+    if (reservationManagementList.date === today) {
+      console.log('22')
+      return current >= start && format(current, 'HH:mm') >= currentTime;
+    }
+
+    // 예약 날짜가 미래인 경우, 기존 조건 적용
+    console.log('33')
+    
+    return current >= start;
   });
 
-  const disabledTimes = (() => {
-    const start = parse(start_time, 'HH:mm', new Date());
-    const end = parse(end_time, 'HH:mm', new Date());
-    const disabledTimes = [];
 
-    timeSlots.forEach((time) => {
-      const current = parse(time, 'HH:mm', new Date());
-      if (isWithinInterval(current, { start, end: new Date(end.getTime() - 1) })) {
-        disabledTimes.push(time);
-      }
-    });
-
-    return disabledTimes;
-  })();
-
-
-
-
+  
+  console.log(filteredTimeSlots)
 
 
 
@@ -308,7 +335,7 @@ const ReservationDetail = () => {
                     <div
                       key={time}
                       className={`time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
-                      onClick={() => !disabledTimes.includes(time) && handleButtonClick(time)}
+                      onClick={() => !disabledTimes.includes(time) && handleButtonClick(time)} // 비활성화된 시간 클릭 방지
                     >
                       {time}
                     </div>

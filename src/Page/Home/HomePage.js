@@ -13,7 +13,8 @@ const MainPage = () => {
   const footArrowUrl = `${process.env.PUBLIC_URL}/PageImage/home/footArrow.svg`;
   const trailingUrl = `${process.env.PUBLIC_URL}/PageImage/home/trailing.svg`;
   // const logoUrl = `${process.env.PUBLIC_URL}/PageImage/home/logo.svg`;
-  const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.jpg`;
+  const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
+
   const b1Url = `${process.env.PUBLIC_URL}/PageImage/home/b1.svg`;
   const b2Url = `${process.env.PUBLIC_URL}/PageImage/home/b2.svg`;
   const b3Url = `${process.env.PUBLIC_URL}/PageImage/home/b3.svg`;
@@ -121,7 +122,17 @@ const MainPage = () => {
             </button> */}
           </div>
         </div>
-        <div className="home-container1"></div>
+        <div className="home-container1">
+          <h1>미용을 이용해주세요</h1>
+        
+            <div
+                className="button-items"
+                onClick={() => handleItemClick("beauty")}
+              >
+                <img src={b1Url} alt="" />
+              </div>
+              클릭
+        </div>
         <div className="home-container2"></div>
         <div
           className="home-container3"
@@ -208,7 +219,8 @@ const MainPage = () => {
         </div>
         <div className="tail-container">
           <div className="tail-item">
-            <img src={logoUrl} alt="" />
+            <img src={logoUrl} alt=""  style={{width: "50%"}}/>
+        
             <div className="tail-text">
               애견미용샵 ｜상품입점｜제휴문의｜상담문의
             </div>
