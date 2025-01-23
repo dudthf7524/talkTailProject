@@ -113,7 +113,7 @@ const MainPage = () => {
             <button>
               <img src={arrowUrl} alt="arrow" />
             </button> */}
-            <img src="/image/talktail_logo.jpg" alt="" />
+            <img src={logoUrl} alt="" />
           </div>
           <div className="trailing">
             {/* <button>

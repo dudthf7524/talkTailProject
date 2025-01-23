@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import '../CSS/auth.css'
 import '../CSS/reservation.css'
 import ReservationAcceptModal from './Modal/ReservationAccept';
@@ -13,24 +13,33 @@ const ReservationDetail = () => {
   const navigate = useNavigate();
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
   const { id } = useParams();
+  const location = useLocation();
 
+  // 부모 컴포넌트에서 전달된 date 값 가져오기
+  const { date } = location.state || {}; // state가 없는 경우 대비
   const [isModalOpen, setModalOpen] = useState(false);
   const [isCheckModalOpen, setCheckModalOpen] = useState(false);
   const [checkMessage, setCheckMessage] = useState('');
   const [actionType, setActionType] = useState('');
   const [reservationManagementList, setReservationManagementList] = useState([]);
   const [reservationCompleteTime, setReservationCompleteTime] = useState(''); // 완료 시간 상태 추가
-
+  const [timeList, setTimeLists] = useState([]);
  
   const [formData, setFormData] = useState({
     beauty_price: 0,
   });
+
+  
   useEffect(() => {
     const fetchUser = async () => {
+      console.log(date)
       try {
-        const response = await api.get(`/api/beauty/reservation/detail/${id}`, { withCredentials: true });
-        setReservationManagementList(response.data);
+        const response = await api.get(`/api/beauty/reservation/detail/${id}/${date}`, { withCredentials: true });
+       
         console.log(response.data)
+        setReservationManagementList(response.data[0]);
+        setTimeLists(response.data[1]);
+        
       } catch (error) {
 
         console.error('예약관리 상세보기 실패', error);
@@ -41,7 +50,6 @@ const ReservationDetail = () => {
   }, []);
 
  
-
   const openModal = (type) => {
     setActionType(type);
     setModalOpen(true);

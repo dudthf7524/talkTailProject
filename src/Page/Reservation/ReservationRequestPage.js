@@ -9,6 +9,7 @@ import axios from 'axios';
 import api from '../../Api';
 import { setBusinessInfo } from '../../redux/reservationData.js';
 import ReservationModal from '../Components/ReservationModal.js';
+
 const ReservationRequestPage = () => {
     const { id } = useParams();
     const location = useLocation();
@@ -67,9 +68,6 @@ const ReservationRequestPage = () => {
 
     useEffect(() => {
         const aaa = async () => {
-
-       
-        
         if (reservationData.businessInfo.business_registration_number) {
             const styleSignificant = async () => {
                 console.log("styleSignificant")
@@ -226,8 +224,6 @@ const ReservationRequestPage = () => {
         dispatch(setBusinessInfo({
             business_owner_phone: lists.business_owner_phone,
         }));
-
-
         const dataToSend = {
             beauty_style: style,
             beauty_caution: reviewText,

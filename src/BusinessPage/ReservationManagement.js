@@ -76,8 +76,16 @@ const ReservationManagement = () => {
             )
           }
           <div className='reservation-item'>
-            <button className='detail-button' onClick={() => navigate(`/business/reservation/detail/${reservationManagement.beauty_reservation_id}`)}>상세보기</button>
-          </div>
+            <button
+              className="detail-button"
+              onClick={() =>
+                navigate(`/business/reservation/detail/${reservationManagement.beauty_reservation_id}`, {
+                  state: { date: reservationManagement.date },
+                })
+              }
+            >
+              상세보기
+            </button>          </div>
         </div>
       ))}
 

@@ -41,3 +41,36 @@
 .registration_total .text_area textarea {
   text-align: left;
 }
+
+/* LoginPage.js */
+.login_total .login-title img {
+  width: 30%;
+}
+
+/* LoginSuccessPage.js */
+.loginPage_total .confirm p {
+  width: 100%;
+}
+.loginPage_total .Nbutton2 div {
+  cursor: pointer;
+}
+
+/* UserEditModal.js */
+.modal1_total {
+  /* max-height: 30vw; */
+}
+
+/* MenuPage.js */
+.menuPage_total .more_btn {
+  width: 398px;
+  height: 100px;
+  background-color: #ffffff;
+  border: 1px solid #f0663f;
+  border-radius: 16px;
+  font-size: 24px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.menuPage_total .logo-img {
+  margin-top: 30px;
+}

@@ -4,7 +4,7 @@ const UserEditModal = ({ children, text, closeModal, isWarning }) => {
   const XUrl = `${process.env.PUBLIC_URL}/PageImage/components/X.svg`;
 
   return (
-    <div lang="ko" className="modal1">
+    <div lang="ko" className="modal1 modal1_total">
       <div className="modal-content">
         <button className="close-button" onClick={closeModal}>
           <img src={XUrl} alt="Close" />

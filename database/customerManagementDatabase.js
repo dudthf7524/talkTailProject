@@ -19,13 +19,13 @@ const customerManagementGet = async (business_registration_number) => {
 
             {
                 replacements: {  business_registration_number }, // 바인딩 파라미터
-                type: sequelize.QueryTypes.SELECT, // 쿼리 유형
+                type: sequelize.QueryTypes.SELECTALL, // 쿼리 유형
                 logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
             }
 
         );
         console.log(results)
-        return [results];
+        return results;
 
     } catch (error) {
         throw new Error(`Failed to register pet: ${error.message}`);

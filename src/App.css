@@ -10,7 +10,13 @@
   align-items: center;
   width: 430px;
   height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   background-color: #ffffff;
   position: relative;
   margin: 0 auto;
+}
+.Container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge, Opera용 */
 }
