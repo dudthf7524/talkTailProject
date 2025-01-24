@@ -55,9 +55,15 @@ app.use(
 );
 
 app.use(passport.initialize());
+<<<<<<< HEAD
 app.use(
   session({
     secret: "암호화에 쓸 비번", // 세션 암호화 키
+=======
+
+app.use(session({
+  secret: '암호화에 쓸 비번', // 세션 암호화 키
+>>>>>>> client
 
     resave: false,
     saveUninitialized: false,
