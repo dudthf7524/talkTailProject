@@ -17,6 +17,28 @@
 .home_total .home-location img {
   height: 100%;
 }
+.home_total .home-container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #f0663f;
+}
+.home_total .home-container1 p {
+  font-size: 18px;
+  color: white;
+}
+.home_total .home-container1 .btn {
+  width: 30%;
+  height: 15%;
+  color: white;
+  font-size: 15px;
+  border: 1px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 
 /* UserEdit.js */
 .user_edit_total .input_box {
@@ -73,4 +95,55 @@
 }
 .menuPage_total .logo-img {
   margin-top: 30px;
+}
+
+/* ReservationDetail.js */
+.reservation_total .pickupBtn {
+  width: 40%;
+  height: 2.5vw;
+  margin: 2vw auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0663f;
+  color: white;
+  cursor: pointer;
+}
+
+/* ListPage.js */
+.listPage_total .title {
+  font-size: 20px;
+  color: #f0663f;
+}
+.listPage_total span {
+  color: #f0663f;
+}
+.listPage_total .modal-content1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.listPage_total .modal-content1 p {
+  margin: 0;
+}
+.listPage_total .modal-content1 .btn_box {
+  width: 60%;
+  height: 20%;
+  display: flex;
+  justify-content: space-between;
+}
+.listPage_total .modal-content1 .btn_box .btn {
+  width: 40%;
+  height: 100%;
+  cursor: pointer;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.listPage_total .modal-content1 .btn_box .btn:nth-child(2) {
+  border: none;
+  background-color: #f0663f;
+  color: white;
 }
