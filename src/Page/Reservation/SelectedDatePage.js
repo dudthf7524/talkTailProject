@@ -148,6 +148,8 @@ const SelectedDatePage = () => {
     console.log(reservations)
     const disabledTimes = [];
     console.log(disabledTimes)
+
+
     reservations.forEach(({ start_time, end_time }) => {
       const start = parse(start_time, 'HH:mm', new Date());
       const end = parse(end_time, 'HH:mm', new Date());
@@ -166,9 +168,13 @@ const SelectedDatePage = () => {
       });
     });
 
+
     console.log(disabledTimes)
 
+
     return disabledTimes;
+    
+    
   };
 
   const [startDate, setStartDate] = useState('');
@@ -184,6 +190,7 @@ const SelectedDatePage = () => {
       console.log(date)
       const day = getDay(date);
       const dayHours = hours[day];
+
       console.log(day)
       console.log("dayHours")
       console.log(dayHours)
@@ -192,6 +199,7 @@ const SelectedDatePage = () => {
         const timeSlots = generateTimeSlots(dayHours.start_time, dayHours.end_time, 30);
         console.log("timeSlots")
         console.log(timeSlots)
+        
         const disabledTimesForDate = getDisabledTimesByDate(date, dayHours.start_time , dayHours.end_time);
 
         console.log("disabledTimesForDate")
@@ -200,11 +208,16 @@ const SelectedDatePage = () => {
         // 오늘 날짜 처리
         if (format(date, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd')) {
           const now = new Date();
+          console.log(now)
+          
           const filteredTimeSlots = timeSlots.filter((time) => {
             const timeObj = parse(time, 'HH:mm', new Date());
+            console.log(timeObj)
             return timeObj >= now;
           });
-          setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate, filteredTimeSlots });
+
+          console.log(filteredTimeSlots)
+          setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate, filteredTimeSlots: filteredTimeSlots });
         } else {
           setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate, filteredTimeSlots: timeSlots });
         }
@@ -245,7 +258,7 @@ const SelectedDatePage = () => {
   // } catch (error) {
   //     console.error('권한 조회 실패:', error.message);
   // }
-    // navigate(`/pet-select/1`);
+    navigate(`/pet-select/1`);
   };
 
   return (
