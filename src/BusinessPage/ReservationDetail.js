@@ -8,6 +8,8 @@ import ReservationCheckModal from './Modal/ReservationCheck';
 import '../CSS/reservationModal.css'
 import api from '../Api'
 import { addMinutes, format, isWithinInterval, parse } from 'date-fns';
+import ReservationDetailModal from "./ReservationDetailModal";
+
 const ReservationDetail = () => {
 
   const navigate = useNavigate();
@@ -204,6 +206,9 @@ const ReservationDetail = () => {
   }
   completeTimeProcess();
 
+  const [openPickup, setOpenPickup] = useState(false);
+
+
   // const completeTimeProcess = () => {
   //   if (reservationManagementList.date > today) {
   //     filteredTimeSlots = timeSlots.filter((time) => {
@@ -261,54 +266,54 @@ const ReservationDetail = () => {
 
 
   // 30분 단위로 순서대로 되어 있는지 확인하는 함수
-const isTimeSlotsInOrder = (timeSlots) => {
-  // timeSlots 배열이 비어있는지 확인
-  if (timeSlots.length === 0) return true;
+  const isTimeSlotsInOrder = (timeSlots) => {
+    // timeSlots 배열이 비어있는지 확인
+    if (timeSlots.length === 0) return true;
 
-  // 시간을 HH:mm 형식으로 파싱하여 배열을 비교
-  for (let i = 1; i < timeSlots.length; i++) {
-    const prevTime = parse(timeSlots[i - 1], 'HH:mm', new Date());
-    const currentTime = parse(timeSlots[i], 'HH:mm', new Date());
+    // 시간을 HH:mm 형식으로 파싱하여 배열을 비교
+    for (let i = 1; i < timeSlots.length; i++) {
+      const prevTime = parse(timeSlots[i - 1], 'HH:mm', new Date());
+      const currentTime = parse(timeSlots[i], 'HH:mm', new Date());
 
-    // 두 시간 차이가 30분인지 확인
-    const timeDiff = (currentTime - prevTime) / (1000 * 60); // 차이 (분 단위)
+      // 두 시간 차이가 30분인지 확인
+      const timeDiff = (currentTime - prevTime) / (1000 * 60); // 차이 (분 단위)
 
-    if (timeDiff !== 30) {
-      console.log(`Error at index ${i}: ${timeSlots[i - 1]} -> ${timeSlots[i]}`);
+      if (timeDiff !== 30) {
+        console.log(`Error at index ${i}: ${timeSlots[i - 1]} -> ${timeSlots[i]}`);
 
-      return false; // 30분 단위가 아니면 false 반환
+        return false; // 30분 단위가 아니면 false 반환
+      }
     }
-  }
 
-  return true; // 모든 시간이 30분 단위로 순서대로 되어 있으면 true 반환
-};
+    return true; // 모든 시간이 30분 단위로 순서대로 되어 있으면 true 반환
+  };
 
-// disabledTimes가 30분 단위로 순서대로 되어 있는지 확인
-const isDisabledTimesValid = isTimeSlotsInOrder(disabledTimes);
+  // disabledTimes가 30분 단위로 순서대로 되어 있는지 확인
+  const isDisabledTimesValid = isTimeSlotsInOrder(disabledTimes);
 
-console.log(isDisabledTimesValid); // true 또는 false 출력
-
+  console.log(isDisabledTimesValid); // true 또는 false 출력
 
 
-const uniqueAndSortDisabledTimes = (times) => {
-  // Set을 사용해 중복 제거
-  const uniqueTimes = [...new Set(times)];
 
-  // 내림차순으로 정렬 (HH:mm 형식으로 파싱하여 비교)
-  return uniqueTimes.sort((a, b) => {
-    const timeA = parse(a, 'HH:mm', new Date());
-    const timeB = parse(b, 'HH:mm', new Date());
+  const uniqueAndSortDisabledTimes = (times) => {
+    // Set을 사용해 중복 제거
+    const uniqueTimes = [...new Set(times)];
 
-    // 내림차순으로 정렬하려면 b - a를 반환
-    return timeA - timeB;
-  });
-};
+    // 내림차순으로 정렬 (HH:mm 형식으로 파싱하여 비교)
+    return uniqueTimes.sort((a, b) => {
+      const timeA = parse(a, 'HH:mm', new Date());
+      const timeB = parse(b, 'HH:mm', new Date());
+
+      // 내림차순으로 정렬하려면 b - a를 반환
+      return timeA - timeB;
+    });
+  };
 
 
-// 중복을 제거하고 내림차순으로 정렬한 disabledTimes
-const sortedDisabledTimes = uniqueAndSortDisabledTimes(disabledTimes);
+  // 중복을 제거하고 내림차순으로 정렬한 disabledTimes
+  const sortedDisabledTimes = uniqueAndSortDisabledTimes(disabledTimes);
 
-console.log(sortedDisabledTimes);
+  console.log(sortedDisabledTimes);
 
 
 
@@ -349,7 +354,7 @@ console.log(sortedDisabledTimes);
     });
   };
   return (
-    <div className='page-container2' lang='ko'>
+    <div className='page-container2 reservation_total' lang='ko'>
       <div className='navigation'>
         <button>
           <img src={arrowButtonUrl} alt='' onClick={() => navigate('/business/reservation/management')} />
@@ -444,7 +449,7 @@ console.log(sortedDisabledTimes);
                 <div className="time-selection">
                   {
                     reservationNo ? (
-                      <div className="time-selection" style={{color : "red", fontWeight : "bold"}}>
+                      <div className="time-selection" style={{ color: "red", fontWeight: "bold" }}>
                         예약불가
                       </div>
                     ) : (
@@ -500,7 +505,14 @@ console.log(sortedDisabledTimes);
 
       </div>
 
-
+      <div
+        className="pickupBtn"
+        onClick={() => {
+          setOpenPickup(true);
+        }}
+      >
+        픽업 메시지 보내기
+      </div>
 
       {
         reservationManagementList.reservation_state === '완료' ? (
@@ -540,6 +552,18 @@ console.log(sortedDisabledTimes);
         onClose={() => setCheckModalOpen(false)}
         message={checkMessage}
       />
+
+      {openPickup ? (
+        <ReservationDetailModal
+          openModal={() => {
+            setOpenPickup(false);
+          }}
+          petName={reservationManagementList.pet_name}
+          userPhone={reservationManagementList.user_phone}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
