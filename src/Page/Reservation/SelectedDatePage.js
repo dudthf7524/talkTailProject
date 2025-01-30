@@ -26,9 +26,9 @@ const SelectedDatePage = () => {
   const navigate = useNavigate();
   const hours = useSelector((state) => state.reservationData.hour); // Redux 상태 가져오기
   console.log(hours)
- 
+
   console.log("Selected Designer Name:", hours); // 리덕스 상태 출력
-  if(hours === null){
+  if (hours === null) {
     navigate('list/beauty')
   }
   const { id } = useParams();
@@ -50,13 +50,13 @@ const SelectedDatePage = () => {
     // console.log("reservationDesinger")
     // console.log(reservationDesinger)
   }
- 
+
 
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
 
- 
+
   const [activeTime, setActiveTime] = useState(null);
 
   const filterDisabledDays = (date) => {
@@ -68,7 +68,7 @@ const SelectedDatePage = () => {
     return hours[day]?.isOperatingDay;
   };
 
- 
+
 
   const handleButtonClick = (time) => {
 
@@ -106,13 +106,13 @@ const SelectedDatePage = () => {
     const formattedDate = format(date, 'yyyy-MM-dd');
     const label = dateLabels[formattedDate]; // 특별한 날짜 라벨 (예: 크리스마스)
     const dayIndex = getDay(date); // 요일 정보 추출 (0: 일요일, 6: 토요일)
-  
+
     const isOperatingDay = hours?.[dayIndex]?.isOperatingDay; // 해당 요일의 영업 상태 확인
     const isSelected = startDate && format(startDate, 'yyyy-MM-dd') === formattedDate;
-  
+
     // "휴무" 라벨 적용 조건: 영업하지 않는 요일 또는 기존 라벨
     const displayLabel = isOperatingDay ? label : "휴무";
-  
+
     return (
       <div
         className={`day-content ${!isOperatingDay ? "closed" : ""} ${isSelected ? "selected" : ""}`}
@@ -140,7 +140,7 @@ const SelectedDatePage = () => {
 
 
 
-  const getDisabledTimesByDate = (selectedDate  ,st , dt) => {
+  const getDisabledTimesByDate = (selectedDate, st, dt) => {
     if (!selectedDate) return [];
 
     const formattedDate = format(selectedDate, 'yyyy-MM-dd');
@@ -160,11 +160,11 @@ const SelectedDatePage = () => {
 
       timeSlots.forEach((time) => {
         const current = parse(time, 'HH:mm', new Date());
-       
+
         if (isWithinInterval(current, { start, end: new Date(end.getTime() - 1) })) {
           disabledTimes.push(time);
         }
-       
+
       });
     });
 
@@ -173,8 +173,8 @@ const SelectedDatePage = () => {
 
 
     return disabledTimes;
-    
-    
+
+
   };
 
   const [startDate, setStartDate] = useState('');
@@ -199,8 +199,8 @@ const SelectedDatePage = () => {
         const timeSlots = generateTimeSlots(dayHours.start_time, dayHours.end_time, 30);
         console.log("timeSlots")
         console.log(timeSlots)
-        
-        const disabledTimesForDate = getDisabledTimesByDate(date, dayHours.start_time , dayHours.end_time);
+
+        const disabledTimesForDate = getDisabledTimesByDate(date, dayHours.start_time, dayHours.end_time);
 
         console.log("disabledTimesForDate")
         console.log(disabledTimesForDate)
@@ -209,7 +209,7 @@ const SelectedDatePage = () => {
         if (format(date, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd')) {
           const now = new Date();
           console.log(now)
-          
+
           const filteredTimeSlots = timeSlots.filter((time) => {
             const timeObj = parse(time, 'HH:mm', new Date());
             console.log(timeObj)
@@ -249,15 +249,15 @@ const SelectedDatePage = () => {
 
     dispatch(setDate(selectDate));
     dispatch(setStartTime(activeTime));
-  //   try {
-  //     const response = await api.post('/api/beauty/reservation/timeCheck', {
-  //       activeTime: activeTime,
-  //     });
-  //     console.log('User authority data:', response.data);
-     
-  // } catch (error) {
-  //     console.error('권한 조회 실패:', error.message);
-  // }
+    //   try {
+    //     const response = await api.post('/api/beauty/reservation/timeCheck', {
+    //       activeTime: activeTime,
+    //     });
+    //     console.log('User authority data:', response.data);
+
+    // } catch (error) {
+    //     console.error('권한 조회 실패:', error.message);
+    // }
     navigate(`/pet-select/1`);
   };
 

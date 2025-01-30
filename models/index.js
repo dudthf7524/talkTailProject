@@ -25,6 +25,7 @@ db.StoreHours = require('./StoreHours')(sequelize, Sequelize);
 db.BusinessBeautyOption = require('./BusinessBeautyOption')(sequelize, Sequelize);
 db.BankInformation = require('./BankInformation')(sequelize, Sequelize);
 db.BusinessAccountNumber = require('./BusinessAccountNumber')(sequelize, Sequelize);
+db.DesingerCloseDay = require('./DesingerCloseDay')(sequelize, Sequelize);
 
 
 // 관계 설정

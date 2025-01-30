@@ -692,6 +692,26 @@ const significantGet = async (business_registration_number) => {
     }
 };
 
+const desingerList = async (business_registration_number) => {
+    console.log(business_registration_number)
+
+    try {
+        const result = await BusinessDesinger.findAll(
+            {
+                where: { business_registration_number: business_registration_number }
+            }
+
+        );
+        return result;
+    } catch (error) {
+        // 오류를 더욱 상세하게 로깅
+        console.error('Error creating BusinessBeautySignificant:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        throw new Error('Failed to create RegisterBeautySignificant: ' + error.message);
+    }
+};
+
 module.exports = {
     createBusiness,
     businessLogin,
@@ -715,4 +735,5 @@ module.exports = {
     checkLogin,
     accountNumber,
     accountNumberGet,
+    desingerList,
 };
