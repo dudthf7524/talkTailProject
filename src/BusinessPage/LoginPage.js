@@ -45,7 +45,7 @@ const Login = () => {
   return (
     <div className="login" lang="ko">
       <div className="login-logo">
-        <img src={logoUrl} alt="logo img" style={{width : "50%",}}></img>
+        <img src={logoUrl} alt="logo img" style={{ width: "50%" }}></img>
       </div>
       <div className="login-text">관리자 로그인</div>
 

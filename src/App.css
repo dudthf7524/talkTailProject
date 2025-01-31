@@ -17,6 +17,11 @@
   position: relative;
   margin: 0 auto;
 }
+@media (max-width: 500px) {
+  .Container {
+    width: 100%;
+  }
+}
 .Container::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge, Opera용 */
 }
