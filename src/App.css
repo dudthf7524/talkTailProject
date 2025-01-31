@@ -1,8 +1,8 @@
 .App {
+  width: 100%;
   text-align: center;
   align-items: center;
   background-color: #a3a3a3;
-  border: 1px solid red;
 }
 
 .Container {
@@ -21,7 +21,7 @@
 }
 @media (max-width: 500px) {
   .Container {
-    width: 100vw;
+    width: 100%;
     border: 3px solid purple;
   }
 }
