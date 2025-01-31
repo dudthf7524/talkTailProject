@@ -34,7 +34,7 @@ const Login = () => {
         setOpenModal(true);
         setTimeout(() => {
           navigate("/business/menu");
-        }, 2000);
+        }, 1000);
       }
     } catch (error) {
       console.error("등록 실패:", error);

@@ -41,7 +41,10 @@ const ListPage = () => {
     setModalMessage("권한 요청을 하시겠습니까?"); // 모달 메시지 설정
     setShowModal(true); // 모달 띄우기
   };
+
   const handleConfirmAuthorityRequest = () => {
+    console.log(selectedBusiness)
+
     if (selectedBusiness) {
       userAuthorityRequestButton(selectedBusiness); // 권한 요청 함수 호출
     }
@@ -78,8 +81,10 @@ const ListPage = () => {
     navigate(-1);
   };
 
-  const handleItemClick = async (id, business_registration_number) => {
+  const handleItemClick = async (id, business_registration_number, business_name, business_owner_phone) => {
     console.log(business_registration_number);
+    console.log(business_name);
+    console.log(business_owner_phone);
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -95,15 +100,25 @@ const ListPage = () => {
           },
         }
       );
+
       console.log("response.data");
       console.log(response.data);
       console.log("response.data");
 
       if (response.data == null) {
+        setSelectBusinessName(business_name)
+        setSelectedBusiness({
+          business_registration_number: business_registration_number,
+          business_owner_phone: business_owner_phone,
+          
+        });
+        setModalMessage("권한 요청을 하시겠습니까?"); // 모달 메시지 설정
+        setShowModal(true); // 모달 띄우기
+      } else if (response.data.authority_state === "") {
         setModalMessage("권한 요청 완료 후 이용 가능합니다.");
         setAuthorityRequestModal(true);
       } else if (response.data.authority_state === "거절") {
-        setModalMessage("권한 요청 완료 후 이용 가능합니다.");
+        setModalMessage("권한 요청 거절");
         setAuthorityRequestModal(true);
       } else if (response.data.authority_state === "대기") {
         setModalMessage("권한 요청 대기 중입니다.");
@@ -175,7 +190,7 @@ const ListPage = () => {
       if (!token) {
         throw new Error("No token found.");
       }
-
+      console.log(business_owner_phone)
       const response = await api.post(
         "/api/user/authority/request",
         {
@@ -250,7 +265,9 @@ const ListPage = () => {
                       onClick={() =>
                         handleItemClick(
                           list.business_information_id,
-                          list.business_registration_number
+                          list.business_registration_number,
+                          list.business_name,
+                          list.business_owner_phone
                         )
                       }
                     />
@@ -281,8 +298,8 @@ const ListPage = () => {
                     <div className="list-content">
                       {list.address_road} {list.address_detail}
                     </div>
-                    <div className="list-title-container">
-                      {/* 권한 상태에 따라 버튼 텍스트 변경 */}
+                    {/* <div className="list-title-container">
+                    
                       {getAuthorityStatus(list.business_registration_number) ===
                       "완료" ? (
                         <button disabled>권한요청이 완료되었습니다.</button>
@@ -314,7 +331,7 @@ const ListPage = () => {
                           권한요청
                         </button>
                       )}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

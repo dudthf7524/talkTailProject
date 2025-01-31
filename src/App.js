@@ -53,6 +53,8 @@ import Notice from "./Page/MyPage/Notice";
 import NoticeDetail from "./Page/MyPage/NoticeDetail";
 import DesingerList from "./BusinessPage/DesingerList";
 import DesingerClosedDays from "./BusinessPage/DesingerClosedDays";
+import Authority from "./Page/User/Authority";
+
 
 function App() {
   const [imageFiles, setImageFiles] = useState({
@@ -122,6 +124,7 @@ function App() {
             
             <Route path="/notice" element={<Notice />} />
             <Route path="/notice/:id" element={<NoticeDetail />} />
+            <Route path="/authority/management" element={<Authority />}/>
 
             <Route path="/business">
               <Route path="login" element={<Login />} />
