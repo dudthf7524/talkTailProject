@@ -49,13 +49,13 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
     const star_time = req.body.startTime;
     
 
-    try {
-        const result = await reservationDatabase.beautyReservation(req.body)
+    // try {
+    //     const result = await reservationDatabase.beautyReservation(req.body)
        
-    } catch (error) {
-        console.error('Error saving reservation to database:', error.message);
-        return res.status(500).json({ error: 'Database save failed' });
-    }
+    // } catch (error) {
+    //     console.error('Error saving reservation to database:', error.message);
+    //     return res.status(500).json({ error: 'Database save failed' });
+    // }
     
     try{
         req.body = []

@@ -265,3 +265,9 @@ li {
 .pm {
     text-align: left;
 }
+
+.day-label.disabled-label {
+    font-size: 12px;
+    font-weight: bold;
+    color: gray;
+  }

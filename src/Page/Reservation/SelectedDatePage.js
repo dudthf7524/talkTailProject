@@ -23,7 +23,9 @@ function generateTimeSlots(start_time, end_time, intervalMinutes) {
 }
 
 const SelectedDatePage = () => {
+  const [lists, setLists] = useState([]);
   const navigate = useNavigate();
+  
   const hours = useSelector((state) => state.reservationData.hour); // Redux 상태 가져오기
   console.log(hours)
 
@@ -50,6 +52,21 @@ const SelectedDatePage = () => {
     // console.log("reservationDesinger")
     // console.log(reservationDesinger)
   }
+
+  useEffect(() => {
+    console.log(id)
+    const list = async () => {
+      try {
+        const response = await api.get(`/api/desinger/day/list/${id}`, { id: id }, { withCredentials: true });
+        setLists(response.data);
+        console.log(response.data)
+
+      } catch (e) {
+        console.error('휴무일 리스트 오류:', e);
+      }
+    };
+    list();
+  }, []);
 
 
 
@@ -85,15 +102,31 @@ const SelectedDatePage = () => {
   const goBack = () => {
     navigate(-1);
   };
-  const disabledDates = [
-    // createDate(2024, 12, 31), // 12월 31일
-  ];
+
+  function createDate(year, month, day) {
+    // JavaScript에서 월은 0부터 시작하므로, 입력값에서 1을 빼서 월을 설정합니다.
+    return new Date(year, month - 1, day);
+  }
+  for(let i =0; i<lists.length; i++){
+    console.log(lists[i].desinger_close_day)
+  }
+ 
+  // const disabledDates = [
+  //   createDate(2025, 2, 25), // 12월 31일
+
+  // ];
+
+  const disabledDates = lists.map(item => createDate(
+    parseInt(item.desinger_close_day.split('-')[0]), // 년도
+    parseInt(item.desinger_close_day.split('-')[1]), // 월
+    parseInt(item.desinger_close_day.split('-')[2]) // 일
+  ));
 
   const dateLabels = {
     "2024-12-25": "크리스마스",
     "2024-12-31": "연말",
     "2025-01-01": "새해 첫날",
-    "2024-03-14": "화이트데이",
+    "2025-03-14": "화이트데이",
   };
 
 
@@ -109,9 +142,11 @@ const SelectedDatePage = () => {
 
     const isOperatingDay = hours?.[dayIndex]?.isOperatingDay; // 해당 요일의 영업 상태 확인
     const isSelected = startDate && format(startDate, 'yyyy-MM-dd') === formattedDate;
+    const isDisabledDate = disabledDates.some((disabledDate) => format(disabledDate, 'yyyy-MM-dd') === formattedDate); // 비활성화된 날짜 확인
 
     // "휴무" 라벨 적용 조건: 영업하지 않는 요일 또는 기존 라벨
     const displayLabel = isOperatingDay ? label : "휴무";
+    const disabledLabel = isDisabledDate ? "휴무일" : null;
 
     return (
       <div
@@ -119,6 +154,8 @@ const SelectedDatePage = () => {
       >
         <div className="day-number">{day}</div>
         {displayLabel && <div className="day-label">{displayLabel}</div>}
+        {disabledLabel && <div className="day-label disabled-label">{disabledLabel}</div>} {/* 휴무 라벨 추가 */}
+
       </div>
     );
     // return (
@@ -249,6 +286,7 @@ const SelectedDatePage = () => {
 
     dispatch(setDate(selectDate));
     dispatch(setStartTime(activeTime));
+
     //   try {
     //     const response = await api.post('/api/beauty/reservation/timeCheck', {
     //       activeTime: activeTime,
@@ -258,6 +296,7 @@ const SelectedDatePage = () => {
     // } catch (error) {
     //     console.error('권한 조회 실패:', error.message);
     // }
+
     navigate(`/pet-select/1`);
   };
 
