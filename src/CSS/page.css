@@ -144,7 +144,7 @@ a {
   align-items: center; /* 요소들을 수직 가운데 정렬 */
   padding: 0 20px; /* 상단 바의 좌우 여백을 설정 */
   height: 56px; /* 높이를 56px로 설정 */
-  position: absolute; /* 부모 요소를 기준으로 절대 위치 */
+  position: fixed; /* 부모 요소를 기준으로 절대 위치 */
   bottom: 0; /* 부모 요소의 맨 아래에 위치 */
   left: 0; /* 좌측에 위치 */
   right: 0; /* 우측에 위치 */
@@ -297,7 +297,7 @@ a {
   align-items: center;
   height: 56px;
   width: 100%;
-  background-color:#ffffff;
+  background-color: #ffffff;
   color: #ffffff;
 }
 
