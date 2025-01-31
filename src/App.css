@@ -1,8 +1,8 @@
 .App {
-  width: 100%;
   text-align: center;
   align-items: center;
   background-color: #a3a3a3;
+  border: 1px solid red;
 }
 
 .Container {
@@ -17,10 +17,12 @@
   background-color: #ffffff;
   position: relative;
   margin: 0 auto;
+  border: 3px solid green;
 }
 @media (max-width: 500px) {
   .Container {
-    width: 100%;
+    width: 100vw;
+    border: 3px solid purple;
   }
 }
 .Container::-webkit-scrollbar {
