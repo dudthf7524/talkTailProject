@@ -1,19 +1,36 @@
-import React, { useState } from 'react';
-import '../../CSS/calender.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState } from "react";
+import "../../CSS/calender.css";
+import { useNavigate, useParams } from "react-router-dom";
 // import { setDesiredReservationTime } from '../../redux/reservationData';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
 function SelectDatePage() {
-  const [selectAfternoon, setSelectAfternoon] = useState('');
+  const [selectAfternoon, setSelectAfternoon] = useState("");
   const designerName = useSelector((state) => state.reservationData);
   const dispatch = useDispatch();
-  
-  const morning = ['10:30', '11:00', '11:30'];
-  const afternoon = ['12:00', '12:30', '1:00', '1:30', '2:00', '2:30', '3:00', '3:30', '4:00', '4:30', '5:00', '5:30', '6:00', '6:30', '7:00', '7:30'];
+
+  const morning = ["10:30", "11:00", "11:30"];
+  const afternoon = [
+    "12:00",
+    "12:30",
+    "1:00",
+    "1:30",
+    "2:00",
+    "2:30",
+    "3:00",
+    "3:30",
+    "4:00",
+    "4:30",
+    "5:00",
+    "5:30",
+    "6:00",
+    "6:30",
+    "7:00",
+    "7:30",
+  ];
 
   const [date, setDate] = useState(new Date());
-  const [reservationDate, setReservationDate] = useState('');
+  const [reservationDate, setReservationDate] = useState("");
   const [modalData, setModalData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTime, setActiveTime] = useState(null);
@@ -56,8 +73,8 @@ function SelectDatePage() {
     return dates.map((d, i) => {
       const condition =
         i >= prevDates.length && i < prevDates.length + thisDates.length
-          ? 'this'
-          : 'other';
+          ? "this"
+          : "other";
       const isToday =
         d === new Date().getDate() &&
         viewMonth - 1 === new Date().getMonth() &&
@@ -68,7 +85,9 @@ function SelectDatePage() {
       return (
         <div
           key={i}
-          className={`date ${condition} ${isToday ? 'today' : ''} ${isDateDisabled ? 'disabled' : ''}`}
+          className={`date ${condition} ${isToday ? "today" : ""} ${
+            isDateDisabled ? "disabled" : ""
+          }`}
           onClick={() => !isDateDisabled && openModal(viewYear, viewMonth, d)} // 비활성화된 날짜는 클릭되지 않음
         >
           <span className="day-number">{d}</span>
@@ -78,8 +97,8 @@ function SelectDatePage() {
   };
 
   const openModal = (year, month, day) => {
-    const formattedMonth = month.toString().padStart(2, '0');
-    const formattedDay = day.toString().padStart(2, '0');
+    const formattedMonth = month.toString().padStart(2, "0");
+    const formattedDay = day.toString().padStart(2, "0");
     const formattedDate = `${year}-${formattedMonth}-${formattedDay}`;
     setReservationDate(formattedDate);
     setIsModalOpen(true);
@@ -110,7 +129,7 @@ function SelectDatePage() {
   // 오늘 이후로 최대 몇 개월까지 예약 가능한지 확인
   const canGoNext = () => {
     const maxDate = new Date();
-    maxDate.setMonth(maxDate.getMonth() + impossibleMonths-1);
+    maxDate.setMonth(maxDate.getMonth() + impossibleMonths - 1);
     return date <= maxDate;
   };
 
@@ -187,7 +206,9 @@ function SelectDatePage() {
                     {morning.map((time) => (
                       <th key={time}>
                         <div
-                          className={`a ${activeTime === time ? 'clicked' : ''}`}
+                          className={`a ${
+                            activeTime === time ? "clicked" : ""
+                          }`}
                           onClick={() => handleButtonClick(time)}
                         >
                           {time}
@@ -207,7 +228,9 @@ function SelectDatePage() {
                           {afternoon.slice(index, index + 4).map((t) => (
                             <th key={t}>
                               <div
-                                className={`a ${activeTime === t ? 'clicked' : ''}`}
+                                className={`a ${
+                                  activeTime === t ? "clicked" : ""
+                                }`}
                                 onClick={() => handleButtonClick(t)}
                               >
                                 {t}
@@ -225,7 +248,11 @@ function SelectDatePage() {
           )}
         </div>
       </div>
-      <div className="Nbutton" onClick={handleItemClick}>
+      <div
+        className="Nbutton"
+        onClick={handleItemClick}
+        style={{ cursor: "pointer" }}
+      >
         예약하기
       </div>
     </>
