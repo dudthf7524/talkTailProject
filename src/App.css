@@ -9,7 +9,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 430px;
+  width: 100%;
+  max-width: 430px;
   height: 100vh;
   overflow-y: auto;
   scrollbar-width: none;
@@ -18,11 +19,11 @@
   position: relative;
   margin: 0 auto;
 }
-/* @media (max-width: 500px) {
+@media (max-width: 500px) {
   .Container {
-    width: 100%;
+    min-width: 380px;
   }
-} */
+}
 .Container::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge, Opera용 */
 }
