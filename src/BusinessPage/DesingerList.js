@@ -63,7 +63,7 @@ function DesingerList() {
                 lists.map((list, index) => (
                     <div key={index} className='desingerlist-row'>
                         <div className='desingerlist-item'>{list.business_desinger_name}</div>
-                        <div className='desingerlist-item'><button  onClick={() => navigate('/business/write/ClosedDays')}>휴무일 설정</button></div>
+                        <div className='desingerlist-item'><button  onClick={() => navigate('/business/write/ClosedDays', { state: { id: list.business_desinger_id } })}>휴무일 설정</button></div>
                     </div>
 
                 )
