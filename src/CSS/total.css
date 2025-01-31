@@ -241,12 +241,10 @@
   padding: 0;
   display: flex;
   justify-content: space-between;
-  border: 1px solid blue;
 }
 .footer_total button {
   width: 13%;
   height: 100%;
-  border: 1px solid red;
 }
 .footer_total button img {
   width: 100%;
