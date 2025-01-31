@@ -80,7 +80,7 @@ const LoginPage = () => {
       </div>
       <div className="login-text">
         우리 아이를 위한 특별한 곳,<br></br>
-        여기에서 시작해요!
+        여기에서 시작해요!!
       </div>
       <div className="login-button-container">
         <button>
