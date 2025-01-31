@@ -11,6 +11,9 @@
 }
 
 /* HomePage.js */
+.main_container {
+  border: 1px solid red;
+}
 .home_total .button-item {
   cursor: pointer;
 }
@@ -229,4 +232,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* NButtonContainer.js */
+.footer_total {
+  width: 430px;
+  margin: 0 auto;
 }

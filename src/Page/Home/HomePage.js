@@ -112,7 +112,7 @@ const MainPage = () => {
     }
   };
   return (
-    <div lang="ko">
+    <div lang="ko" className="main_container">
       <div className="mid home_total">
         <div className="home-header">
           <div className="home-location">
