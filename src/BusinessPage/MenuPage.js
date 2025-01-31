@@ -193,7 +193,7 @@ const AdminMenu = () => {
             </div>
             <button
               className="menu-tbt-btn2"
-              onClick={() => navigate("/business/register/desinger")}
+              onClick={() => navigate("/business/list/desinger")}
             >
               <img
                 src={customerIcon}

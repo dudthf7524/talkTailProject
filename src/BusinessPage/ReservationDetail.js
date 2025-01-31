@@ -8,6 +8,8 @@ import ReservationCheckModal from './Modal/ReservationCheck';
 import '../CSS/reservationModal.css'
 import api from '../Api'
 import { addMinutes, format, isWithinInterval, parse } from 'date-fns';
+import ReservationDetailModal from "./ReservationDetailModal";
+
 const ReservationDetail = () => {
 
   const navigate = useNavigate();
@@ -139,16 +141,15 @@ const ReservationDetail = () => {
     const start = parse(start_time, 'HH:mm', new Date());
     const end = parse(end_time, 'HH:mm', new Date());
 
-    const totalIntervals = Math.floor((end - start) / (intervalMinutes * 60 * 1000)); // 총 간격 수 계산
 
+    const totalIntervals = Math.floor((end - start) / (intervalMinutes * 60 * 1000)); // 총 간격 수 계산
     return Array.from({ length: totalIntervals + 1 }, (_, index) => {
       const newTime = addMinutes(start, intervalMinutes * index);
       return format(newTime, 'HH:mm');
     });
   }
 
-  let start_time = reservationManagementList?.start_time || '00:00';
-  let end_time = reservationManagementList?.end_time || '23:59';
+
 
 
   const now = new Date();
@@ -156,50 +157,165 @@ const ReservationDetail = () => {
   const currentTime = format(now, 'HH:mm'); // 현재 시간 형식: HH:mm
 
 
-  const disabledTimes = (() => {
-    const disabledTimesSet = new Set();
-  
-    // 시간 리스트를 순회하여 시작 시간과 끝 시간 사이의 모든 시간을 추가
-    timeList.forEach(({ start_time, end_time }) => {
-      const start = parse(start_time, 'HH:mm', new Date());
-      const end = parse(end_time, 'HH:mm', new Date());
-      
-      for (let time = start; time <= end; time = addMinutes(time, 30)) {
-        disabledTimesSet.add(format(time, 'HH:mm')); // 30분 단위로 시간 추가
+  const disabledTimes = [];
+
+  const allTimeSlots = generateTimeSlots(businessStartTime, businessEndTime, 30);
+
+  timeList.forEach(({ start_time, end_time }) => {
+    const start = parse(start_time, 'HH:mm', new Date());
+    const end = parse(end_time, 'HH:mm', new Date());
+
+    allTimeSlots.forEach((time) => {
+      const current = parse(time, 'HH:mm', new Date());
+
+      // 예약된 시간 범위에 포함된 슬롯만 비활성화
+      if (isWithinInterval(current, { start: new Date(start.getTime() + 1), end: new Date(end.getTime() ) })) {
+        disabledTimes.push(time);
       }
     });
-  
-    return Array.from(disabledTimesSet);
-  })();
-
-  console.log(disabledTimes)
-
-
-  const filteredTimeSlots = timeSlots.filter((time) => {
-    const current = parse(time, 'HH:mm', new Date());
-    const start = parse(start_time, 'HH:mm', new Date());
-    
-    // 예약 날짜가 오늘 이전인 경우, 모든 시간을 포함
-    if (reservationManagementList.date < today) {
-      console.log('11')
-      return false;
-    }
-
-    // 예약 날짜가 오늘인 경우, 현재 시간 이후의 시간만 표시
-    if (reservationManagementList.date === today) {
-      console.log('22')
-      return current >= start && format(current, 'HH:mm') >= currentTime;
-    }
-
-    // 예약 날짜가 미래인 경우, 기존 조건 적용
-    console.log('33')
-    
-    return current >= start;
   });
 
+  var filteredTimeSlots;
 
-  
-  console.log(filteredTimeSlots)
+  const completeTimeProcess = () => {
+    if (reservationManagementList.date > today) {
+      filteredTimeSlots = timeSlots.filter((time) => {
+        const current = parse(time, 'HH:mm', new Date());
+        let start_time = reservationManagementList?.start_time || '00:00';
+        const start = parse(start_time, 'HH:mm', new Date());
+
+
+        // 예약 날짜가 오늘 이전인 경우, 모든 시간을 포함
+        if (reservationManagementList.date < today) {
+          console.log('11')
+          return false;
+        }
+
+        // 예약 날짜가 오늘인 경우, 현재 시간 이후의 시간만 표시
+        if (reservationManagementList.date === today) {
+          console.log('22')
+          return current >= start && format(current, 'HH:mm') >= currentTime;
+        }
+
+        // 예약 날짜가 미래인 경우, 기존 조건 적용
+        console.log('33')
+
+        return current >= start;
+      });
+    }
+  }
+  completeTimeProcess();
+
+  const [openPickup, setOpenPickup] = useState(false);
+
+
+  // const completeTimeProcess = () => {
+  //   if (reservationManagementList.date > today) {
+  //     filteredTimeSlots = timeSlots.filter((time) => {
+  //       const current = parse(time, 'HH:mm', new Date()); // 현재 시간대
+  //       const start = parse(reservationManagementList?.start_time || '00:00', 'HH:mm', new Date()); // 예약 시작 시간
+
+  //       // 비활성화된 시간을 정렬하여 마지막 비활성화된 시간 구하기
+  //       const sortedDisabledTimes = disabledTimes
+  //         .map((t) => parse(t, 'HH:mm', new Date()))
+  //         .sort((a, b) => a - b); // 시간 순으로 정렬
+
+  //       const lastDisabledTime = sortedDisabledTimes[sortedDisabledTimes.length - 1]; // 마지막 비활성화된 시간
+
+  //       // 조건:
+  //       // 1. 예약 시작 시간 이후만 선택
+  //       // 2. 비활성화된 시간대는 제외
+  //       // 3. 마지막 비활성화된 시간 이후는 선택 불가
+  //       return (
+  //         current > start && // 예약 시작 시간 이후만 선택
+  //         !disabledTimes.includes(time) && // 비활성화된 시간 제외
+  //         (lastDisabledTime ? current <= lastDisabledTime : true) // 마지막 비활성화된 시간 이후는 선택 불가
+  //       );
+  //     });
+  //   }
+  // };
+
+
+  console.log(timeList)
+
+
+  const isDisabledForCompletion = (startTime) => {
+    if (!startTime) return false; // 시작 시간이 없으면 패스
+    const parsedStartTime = parse(startTime, 'HH:mm', new Date());
+    const startPlus30 = addMinutes(parsedStartTime, 30);
+    const formattedStartPlus30 = format(startPlus30, 'HH:mm');
+    return disabledTimes.includes(formattedStartPlus30);
+  };
+
+
+  console.log(disabledTimes)
+  console.log(isDisabledForCompletion(reservationManagementList.start_time))
+
+
+  if (isDisabledForCompletion(reservationManagementList.start_time)) {
+
+  }
+
+
+  var reservationNo = isDisabledForCompletion(reservationManagementList.start_time)
+
+
+
+  console.log(reservationNo)
+
+
+
+
+
+  // 30분 단위로 순서대로 되어 있는지 확인하는 함수
+  const isTimeSlotsInOrder = (timeSlots) => {
+    // timeSlots 배열이 비어있는지 확인
+    if (timeSlots.length === 0) return true;
+
+    // 시간을 HH:mm 형식으로 파싱하여 배열을 비교
+    for (let i = 1; i < timeSlots.length; i++) {
+      const prevTime = parse(timeSlots[i - 1], 'HH:mm', new Date());
+      const currentTime = parse(timeSlots[i], 'HH:mm', new Date());
+
+      // 두 시간 차이가 30분인지 확인
+      const timeDiff = (currentTime - prevTime) / (1000 * 60); // 차이 (분 단위)
+
+      if (timeDiff !== 30) {
+        console.log(`Error at index ${i}: ${timeSlots[i - 1]} -> ${timeSlots[i]}`);
+        
+        return false; // 30분 단위가 아니면 false 반환
+      }
+    }
+
+    return true; // 모든 시간이 30분 단위로 순서대로 되어 있으면 true 반환
+  };
+
+  // disabledTimes가 30분 단위로 순서대로 되어 있는지 확인
+  const isDisabledTimesValid = isTimeSlotsInOrder(disabledTimes);
+
+  console.log(isDisabledTimesValid); // true 또는 false 출력
+
+
+
+  const uniqueAndSortDisabledTimes = (times) => {
+    // Set을 사용해 중복 제거
+    const uniqueTimes = [...new Set(times)];
+
+    // 내림차순으로 정렬 (HH:mm 형식으로 파싱하여 비교)
+    return uniqueTimes.sort((a, b) => {
+      const timeA = parse(a, 'HH:mm', new Date());
+      const timeB = parse(b, 'HH:mm', new Date());
+
+      // 내림차순으로 정렬하려면 b - a를 반환
+      return timeA - timeB;
+    });
+  };
+
+
+  // 중복을 제거하고 내림차순으로 정렬한 disabledTimes
+  const sortedDisabledTimes = uniqueAndSortDisabledTimes(disabledTimes);
+
+  console.log(sortedDisabledTimes);
 
 
 
@@ -230,6 +346,8 @@ const ReservationDetail = () => {
 
   };
 
+
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -238,7 +356,7 @@ const ReservationDetail = () => {
     });
   };
   return (
-    <div className='page-container2' lang='ko'>
+    <div className='page-container2 reservation_total' lang='ko'>
       <div className='navigation'>
         <button>
           <img src={arrowButtonUrl} alt='' onClick={() => navigate('/business/reservation/management')} />
@@ -331,15 +449,26 @@ const ReservationDetail = () => {
             ) : reservationManagementList.reservation_state === '대기' ? (
               <div id="modal-body">
                 <div className="time-selection">
-                  {filteredTimeSlots?.map((time) => (
-                    <div
-                      key={time}
-                      className={`time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
-                      onClick={() => !disabledTimes.includes(time) && handleButtonClick(time)} // 비활성화된 시간 클릭 방지
-                    >
-                      {time}
-                    </div>
-                  ))}
+                  {
+                    reservationNo ? (
+                      <div className="time-selection" style={{ color: "red", fontWeight: "bold" }}>
+                        예약불가
+                      </div>
+                    ) : (
+                      <div className="time-selection">
+                        {filteredTimeSlots?.map((time) => (
+                          <div
+                            key={time}
+                            className={`time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
+                            onClick={() => !disabledTimes.includes(time) && handleButtonClick(time)} // 비활성화된 시간 클릭 방지
+                          >
+                            {time}
+                          </div>
+                        ))}
+
+                      </div>
+                    )
+                  }
                 </div>
               </div>
             ) : reservationManagementList.reservation_state === '거절' ? (
@@ -378,7 +507,14 @@ const ReservationDetail = () => {
 
       </div>
 
-
+      <div
+        className="pickupBtn"
+        onClick={() => {
+          setOpenPickup(true);
+        }}
+      >
+        픽업 메시지 보내기
+      </div>
 
       {
         reservationManagementList.reservation_state === '완료' ? (
@@ -418,6 +554,18 @@ const ReservationDetail = () => {
         onClose={() => setCheckModalOpen(false)}
         message={checkMessage}
       />
+
+      {openPickup ? (
+        <ReservationDetailModal
+          openModal={() => {
+            setOpenPickup(false);
+          }}
+          petName={reservationManagementList.pet_name}
+          userPhone={reservationManagementList.user_phone}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

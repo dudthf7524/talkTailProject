@@ -47,6 +47,7 @@ app.use(cors({
 }));
 
 app.use(passport.initialize());
+
 app.use(session({
   secret: '암호화에 쓸 비번', // 세션 암호화 키
 
