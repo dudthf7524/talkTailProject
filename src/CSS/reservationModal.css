@@ -82,7 +82,7 @@
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    border: none;
+    
     border-radius: 3px;
     width: 120px;
     margin: 0 5px;
@@ -91,6 +91,7 @@
   
   .confirm-btn {
     background-color: #F0663F;
+    border: none;
     color: white;
   }
 
@@ -100,7 +101,10 @@
   }
   
   .cancel-btn {
-    background-color: #7B7B7B;
-    color: white;
+    background-color: white;
+    color: #F0663F;
+    border: 1px solid;
+    border-color: #F0663F;
+
   }
   

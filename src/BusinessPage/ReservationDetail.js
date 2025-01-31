@@ -169,7 +169,7 @@ const ReservationDetail = () => {
       const current = parse(time, 'HH:mm', new Date());
 
       // 예약된 시간 범위에 포함된 슬롯만 비활성화
-      if (isWithinInterval(current, { start, end: new Date(end.getTime() - 1) })) {
+      if (isWithinInterval(current, { start: new Date(start.getTime() + 1), end: new Date(end.getTime() ) })) {
         disabledTimes.push(time);
       }
     });
@@ -246,6 +246,8 @@ const ReservationDetail = () => {
     const formattedStartPlus30 = format(startPlus30, 'HH:mm');
     return disabledTimes.includes(formattedStartPlus30);
   };
+
+
   console.log(disabledTimes)
   console.log(isDisabledForCompletion(reservationManagementList.start_time))
 
@@ -280,7 +282,7 @@ const ReservationDetail = () => {
 
       if (timeDiff !== 30) {
         console.log(`Error at index ${i}: ${timeSlots[i - 1]} -> ${timeSlots[i]}`);
-
+        
         return false; // 30분 단위가 아니면 false 반환
       }
     }

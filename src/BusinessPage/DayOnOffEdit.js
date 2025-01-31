@@ -21,6 +21,8 @@ function DateEdit() {
                 console.log(response.data)
                 if (response.data == "common") {
                     navigate('/business/login');
+                }else if(!response.data){
+                    navigate('/business/date/register')
                 }
             } catch (e) {
                 console.error('권한 조회 실패:', e);
