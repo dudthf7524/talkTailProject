@@ -1,4 +1,4 @@
-.reservation_modal {
+.petInfo_modal {
   width: 360px;
   height: auto;
   background-color: white;
@@ -11,39 +11,39 @@
   flex-direction: column;
   align-items: center;
 }
-.reservation_modal > img {
+.petInfo_modal > img {
   position: absolute;
   top: 1vw;
   right: 1vw;
   cursor: pointer;
 }
-.reservation_modal .title {
+.petInfo_modal .title {
   font-size: 20px;
   font-weight: 600;
   color: #f0663f;
   margin-top: 40px;
 }
-.reservation_modal .subTitle {
+.petInfo_modal .subTitle {
   font-size: 17px;
   font-weight: 500;
   margin: 0;
   margin-top: 20px;
   margin-bottom: 15px;
 }
-.reservation_modal .selectBox {
+.petInfo_modal .selectBox {
   width: 100%;
   height: 2vw;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
-.reservation_modal select {
+.petInfo_modal select {
   width: 50%;
   height: 2vw;
   font-size: 15px;
   text-align: center;
 }
-.reservation_modal .selectBox p {
+.petInfo_modal .selectBox p {
   width: 25%;
   height: 100%;
   display: flex;
@@ -51,14 +51,14 @@
   margin: 0;
   padding-left: 0.5vw;
 }
-.reservation_modal .text {
+.petInfo_modal .text {
   font-size: 15px;
   border: 1px solid #f0663f;
   margin: 0;
   text-align: left;
   padding: 0 10px;
 }
-.reservation_modal .sendBtn {
+.petInfo_modal .sendBtn {
   width: 120px;
   height: 50px;
   background-color: #f0663f;
@@ -71,7 +71,32 @@
   margin-bottom: 40px;
   cursor: pointer;
 }
-.reservation_modal .sendBtn img {
+.petInfo_modal .sendBtn img {
   width: 20%;
   height: 50%;
+}
+.petInfo_modal .delete_text {
+  color: red;
+  margin-top: 3vw;
+  margin-bottom: 2vw;
+}
+.petInfo_modal .btn_box {
+  width: 50%;
+  height: 1.5vw;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1vw;
+}
+.petInfo_modal .btn_box p {
+  width: 45%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  border: 1px solid black;
+  cursor: pointer;
+}
+.petInfo_modal .btn_box p:last-child {
+  color: red;
 }

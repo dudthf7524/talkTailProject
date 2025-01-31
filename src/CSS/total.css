@@ -51,6 +51,9 @@
 .user_edit_total .input_box input {
   width: 28%;
 }
+.user_edit_total .modal-content {
+  display: none;
+}
 
 /* PetRegistrationPage.js */
 .registration_total .text_area {
@@ -146,4 +149,38 @@
   border: none;
   background-color: #f0663f;
   color: white;
+}
+
+/* PetInfo.js */
+.petList_total .event-accordion {
+  cursor: pointer;
+}
+.petList_total .pet-accordion-content .pet-contents {
+  height: 100%;
+  position: relative;
+  border-bottom: 1px solid #f0663f;
+}
+.petList_total .pet-accordion-content .pet-contents:first-child {
+  border-top: 1px solid #f0663f;
+}
+.petList_total .infoBox {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.petList_total .infoBox .pet-contents-info {
+  height: 33.33%;
+}
+.petList_total .deleteBtn {
+  width: 20%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* Reservation.js  */
+.userReservation_total .reservation-row div:nth-child(3) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

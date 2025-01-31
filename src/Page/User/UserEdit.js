@@ -114,7 +114,7 @@ function UserEdit() {
     }
   };
   return (
-    <div className="mid user_edit_total" lang="ko">
+    <div className="user_edit_total" lang="ko">
       <div className="navigation">
         <button>
           <img src={arrowButtonUrl} alt="" onClick={() => navigate(-1)} />
