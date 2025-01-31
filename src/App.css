@@ -17,12 +17,10 @@
   background-color: #ffffff;
   position: relative;
   margin: 0 auto;
-  border: 3px solid green;
 }
 @media (max-width: 500px) {
   .Container {
-    width: 100%;
-    border: 3px solid purple;
+    width: 100vw;
   }
 }
 .Container::-webkit-scrollbar {

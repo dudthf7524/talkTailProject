@@ -51,36 +51,49 @@ const LoginPage = () => {
         <img src={logoUrl} alt="logo" />
       </div>
       <div className="login-pictures">
-        <table>
+        <div className="top">
+          <img className="big" src={image1Url} alt="" />
+          <img className="small" src={image2Url} alt="" />
+        </div>
+        <div className="bottom">
+          <div className="left">
+            <img src={image3Url} alt="" />
+          </div>
+          <div className="right">
+            <img src={image4Url} alt="" />
+            <img src={image5Url} alt="" />
+          </div>
+        </div>
+        {/* <table>
           <tbody>
             <tr>
-              <td colSpan="2" rowSpan="2">
+              <td className="big" colSpan="2" rowSpan="2">
                 <img src={image1Url} alt="" />
               </td>
-              <td rowSpan="2">
+              <td className="small" rowSpan="2">
                 <img src={image2Url} alt="" />
               </td>
             </tr>
             <tr></tr>
             <tr>
-              <td colSpan="2" rowSpan="2">
+              <td className="big" colSpan="2" rowSpan="2">
                 <img src={image3Url} alt="" />
               </td>
-              <td>
+              <td className="small">
                 <img src={image4Url} alt="" />
               </td>
             </tr>
             <tr>
-              <td>
+              <td className="small">
                 <img src={image5Url} alt="" />
               </td>
             </tr>
           </tbody>
-        </table>
+        </table> */}
       </div>
       <div className="login-text">
         우리 아이를 위한 특별한 곳,<br></br>
-        여기에서 시작해요!
+        여기에서 시작해요!!!
       </div>
       <div className="login-button-container">
         <button>
