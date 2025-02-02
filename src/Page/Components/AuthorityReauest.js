@@ -16,6 +16,7 @@ const AuthorityReauest = ({  text, closeModal, massage}) => {
                 </div>
                 <div className="modal-footer">
                     <p>{text}</p>
+                    
                 </div>
             </div>
         </div>

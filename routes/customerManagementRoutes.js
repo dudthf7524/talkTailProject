@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const customerManagementDatabase = require('../database/customerManagementDatabase');
 const authMiddlewareSession = require('../middleware/authMiddlewareSession');
+const authMiddleware = require('../middleware/authMiddleware');
 
 router.get('/customer/management',authMiddlewareSession ,  async (req, res) => {
     const business_registration_number = req.user.business_registration_number;
@@ -12,7 +13,7 @@ router.get('/customer/management',authMiddlewareSession ,  async (req, res) => {
         res.status(201).json(result);
         
     } catch (error) {
-        console.error('Error fetching userIformation:', error.message);
+        console.error('고객 관리 리스트 에러:', error.message);
         res.status(500).json({ error: error.message });
     }
 
@@ -28,6 +29,40 @@ router.post('/customer/notice/write/:id', async (req, res) => {
     try {
         const result = await customerManagementDatabase.customerNoticeWrite(id, data);
         const result2 = await customerManagementDatabase.customerNoticeTrue(id);
+        res.status(201).json(result);
+    } catch (error) {
+        console.error('Error fetching userIformation:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+
+})
+
+router.get('/customer/notice/list',authMiddleware, async (req, res) => {
+    const platform_id = req.user.id;
+    console.log(platform_id)
+
+    
+    try {
+        const result = await customerManagementDatabase.customerNoticeList(platform_id);
+        res.status(201).json(result);
+    } catch (error) {
+        console.error('Error fetching userIformation:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+
+})
+
+router.get('/customer/notice/detail/:id',authMiddleware, async (req, res) => {
+    const platform_id = req.user.id;
+    console.log(platform_id)
+
+    console.log(req.params)
+
+    const id  = req.params.id;
+    console.log(id)
+    
+    try {
+        const result = await customerManagementDatabase.customerNoticeDetail(id);
         res.status(201).json(result);
     } catch (error) {
         console.error('Error fetching userIformation:', error.message);

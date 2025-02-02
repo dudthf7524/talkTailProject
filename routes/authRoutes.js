@@ -40,7 +40,7 @@ router.get('/auth/kakao', async (req, res) => {
     
     try {
         code = req.query.code;
-
+        console.log(code)
         if (!code) {
             return res.status(400).json({ message: 'Authorization code not found.' });
         }
@@ -49,9 +49,9 @@ router.get('/auth/kakao', async (req, res) => {
         if (kakaoAuthCodes.has(code)) {
             return res.status(400).json({ message: 'Authorization code already used.' });
         }
-
+        console.log(process.env.KAKAO_CLIENT_ID)
+        console.log(process.env.KAKAO_REDIRECT_URI)
         kakaoAuthCodes.add(code); // 인가 코드 저장
-
         const tokenRequest = await axios({
             method: 'POST',
             url: 'https://kauth.kakao.com/oauth/token',
@@ -65,7 +65,8 @@ router.get('/auth/kakao', async (req, res) => {
                 code: code,
             },
         });
-
+        console.log(tokenRequest)
+        console.log('aaaaaaaaaaaaaaaa')
         const accessToken = tokenRequest.data.access_token;
 
         const userInfoRequest = await axios({

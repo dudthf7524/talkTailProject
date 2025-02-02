@@ -14,7 +14,7 @@ const NButtonContainer = () => {
   const modalContent = "해당 서비스는 준비 중입니다.";
 
   return (
-    <div className="navigation-bar">
+    <div className="navigation-bar footer_total">
       <button
         className="header-nickname-button"
         onClick={() => navigate("/reservation")}

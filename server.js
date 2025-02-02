@@ -21,7 +21,7 @@ const kakaoApiRoutes = require('./routes/kakaoApiRoutes');
 
 const BankDatabase = require('./models/BankDatabase'); // BankDatabase 함수 가져오기
 
-const port = 8383;
+const port = 80;
 app.listen(port, () => {
   console.log(`http://localhost:${port} 에서 서버 실행중`)
 })
@@ -47,6 +47,7 @@ app.use(cors({
 }));
 
 app.use(passport.initialize());
+
 app.use(session({
   secret: '암호화에 쓸 비번', // 세션 암호화 키
 
@@ -64,6 +65,7 @@ app.use(session({
 app.use(passport.session());
 
 app.use(express.static(path.join(__dirname, './build')));
+
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, './build/index.html'));

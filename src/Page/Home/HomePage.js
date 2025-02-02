@@ -8,12 +8,14 @@ import Privacy from "./privacy";
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const categoryRef = useRef(null);
   const locationUrl = `${process.env.PUBLIC_URL}/PageImage/home/location.svg`;
   const arrowUrl = `${process.env.PUBLIC_URL}/PageImage/home/arrow.svg`;
   const footArrowUrl = `${process.env.PUBLIC_URL}/PageImage/home/footArrow.svg`;
   const trailingUrl = `${process.env.PUBLIC_URL}/PageImage/home/trailing.svg`;
   // const logoUrl = `${process.env.PUBLIC_URL}/PageImage/home/logo.svg`;
-  const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.jpg`;
+  const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
+
   const b1Url = `${process.env.PUBLIC_URL}/PageImage/home/b1.svg`;
   const b2Url = `${process.env.PUBLIC_URL}/PageImage/home/b2.svg`;
   const b3Url = `${process.env.PUBLIC_URL}/PageImage/home/b3.svg`;
@@ -101,8 +103,16 @@ const MainPage = () => {
 
   const [openTos, setOpenTos] = useState(false);
   const [openPrivacy, setOpenPrivacy] = useState(false);
+  const scrollCategory = () => {
+    if (categoryRef.current) {
+      categoryRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
   return (
-    <div lang="ko">
+    <div lang="ko" className="main_container">
       <div className="mid home_total">
         <div className="home-header">
           <div className="home-location">
@@ -113,7 +123,7 @@ const MainPage = () => {
             <button>
               <img src={arrowUrl} alt="arrow" />
             </button> */}
-            <img src="/image/talktail_logo.jpg" alt="" />
+            <img src={logoUrl} alt="" />
           </div>
           <div className="trailing">
             {/* <button>
@@ -121,7 +131,12 @@ const MainPage = () => {
             </button> */}
           </div>
         </div>
-        <div className="home-container1"></div>
+        <div className="home-container1">
+          <p>아직 예약내역이 없어요. 예약기능을 이용해보세요.</p>
+          <div className="btn" onClick={scrollCategory}>
+            예약하러 가기
+          </div>
+        </div>
         <div className="home-container2"></div>
         <div
           className="home-container3"
@@ -139,7 +154,7 @@ const MainPage = () => {
           ))}
         </div>
 
-        <div className="category">
+        <div className="category" ref={categoryRef}>
           <div className="text">카테고리</div>
           <div
             className="button-grid"
@@ -208,7 +223,8 @@ const MainPage = () => {
         </div>
         <div className="tail-container">
           <div className="tail-item">
-            <img src={logoUrl} alt="" />
+            <img src={logoUrl} alt="" style={{ width: "50%" }} />
+
             <div className="tail-text">
               애견미용샵 ｜상품입점｜제휴문의｜상담문의
             </div>
@@ -248,12 +264,12 @@ const MainPage = () => {
               <div className="hidden-item2">
                 <div>권도혁</div>
                 <div>514-87-03021</div>
-                <div>00000000</div>
+                <div>2025-경북경산-0073</div>
                 <div>경상북도 경산시 삼풍로 27, 309호</div>
                 <div>creamoff2021@naver.com</div>
               </div>
             </div>
-            <div className="tail-co">@말꼬리 co Ltd. All rigths reserved</div>
+            <div className="tail-co">@TalkTail co Ltd. All rigths reserved</div>
           </div>
         </div>
       </div>

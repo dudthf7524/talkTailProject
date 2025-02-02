@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const UserAuthorityRequest = sequelize.define(
-        'USER_AUTHORITY_REQUEST',
+        'user_authority_request',
         {
             user_authority_request_id: {
                 type: DataTypes.INTEGER,
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING(200),
                 allowNull: false,
                 references: {
-                    model: 'BUSINESS',
+                    model: 'business',
                     key: 'business_registration_number',
                 },
                 onUpdate: 'CASCADE',
@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING(200),
                 allowNull: false,
                 references: {
-                    model: 'USER',
+                    model: 'user',
                     key: 'platform_id',
                 },
                 onUpdate: 'CASCADE',
@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
             },
         },
         {
-            tableName: 'USER_AUTHORITY_REQUEST',
+            tableName: 'user_authority_request',
             timestamps: false,
         }
     );

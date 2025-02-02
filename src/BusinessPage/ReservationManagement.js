@@ -29,21 +29,6 @@ const ReservationManagement = () => {
     fetchReservationManagement();
   }, []);
 
-  const reservations = [
-    {
-      requestTime: '24-05-10-13:39',
-      desiredTime: '24-05-12-15:00',
-      status: '완료',
-      detailButton: '상세보기'
-    },
-    {
-      requestTime: '24-05-10-13:39',
-      desiredTime: '24-05-12-15:00',
-      status: '완료',
-      detailButton: '상세보기'
-    },
-  ];
-
   return (
     <div className='page-container' lang='ko'>
       <div className='navigation'>
@@ -76,8 +61,16 @@ const ReservationManagement = () => {
             )
           }
           <div className='reservation-item'>
-            <button className='detail-button' onClick={() => navigate(`/business/reservation/detail/${reservationManagement.beauty_reservation_id}`)}>상세보기</button>
-          </div>
+            <button
+              className="detail-button"
+              onClick={() =>
+                navigate(`/business/reservation/detail/${reservationManagement.beauty_reservation_id}`, {
+                  state: { date: reservationManagement.date },
+                })
+              }
+            >
+              상세보기
+            </button>          </div>
         </div>
       ))}
 

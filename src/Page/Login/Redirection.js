@@ -6,7 +6,7 @@ const Redirection = () => {
     const code = new URLSearchParams(window.location.search).get('code');
     const navigate = useNavigate();
     const apiUrl = process.env.REACT_APP_API_BASE_URL;
-
+    console.log(code)
     useEffect(() => {
         let authProvider = '';
 
@@ -32,6 +32,7 @@ const Redirection = () => {
 
                 let endpoint = '';
                 console.log(authProvider)
+                console.log(apiUrl)
                 if (authProvider === 'kakao') {
                     endpoint = `${apiUrl}/api/auth/kakao?code=${authCode}`;
                 } else if (authProvider === 'naver') {
@@ -41,9 +42,9 @@ const Redirection = () => {
                 }
                 console.log(endpoint)
                 const response = await axios.get(endpoint);
-                
+               
                 const token = response.data.token;
-
+                console.log(token)
                 localStorage.setItem('token', token); // 토큰 저장
 
                 navigate('/login-success');

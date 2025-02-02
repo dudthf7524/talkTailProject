@@ -11,11 +11,36 @@
 }
 
 /* HomePage.js */
+.main_container {
+  border: 1px solid red;
+}
 .home_total .button-item {
   cursor: pointer;
 }
 .home_total .home-location img {
-  height: 100%;
+  height: 70%;
+}
+.home_total .home-container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #f0663f;
+}
+.home_total .home-container1 p {
+  font-size: 18px;
+  color: white;
+}
+.home_total .home-container1 .btn {
+  width: 30%;
+  height: 15%;
+  color: white;
+  font-size: 15px;
+  border: 1px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 /* UserEdit.js */
@@ -28,4 +53,210 @@
 }
 .user_edit_total .input_box input {
   width: 28%;
+}
+.user_edit_total .modal-content {
+  display: none;
+}
+
+/* PetRegistrationPage.js */
+.registration_total .text_area {
+  height: auto;
+  margin-bottom: 30px;
+}
+.registration_total .text_area p {
+  margin-bottom: 30px;
+}
+.registration_total .text_area textarea {
+  text-align: left;
+}
+
+/* LoginPage.js */
+.login_total .login-title img {
+  width: 30%;
+}
+.login_total .login-pictures {
+  width: 90%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.login_total .login-pictures .top {
+  width: 100%;
+  height: 257px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 11px;
+}
+.login_total .login-pictures .top .big {
+  width: 60.66%;
+  height: 100%;
+}
+.login_total .login-pictures .top .small {
+  width: 33%;
+  height: 100%;
+}
+.login_total .login-pictures .bottom {
+  width: 100%;
+  height: 257px;
+  display: flex;
+  justify-content: space-between;
+}
+.login_total .login-pictures .bottom .left {
+  width: 60.66%;
+  height: 100%;
+}
+.login_total .login-pictures .bottom .left img {
+  width: 100%;
+  height: 100%;
+}
+.login_total .login-pictures .bottom .right {
+  width: 33%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.login_total .login-pictures .bottom .right img {
+  width: 100%;
+  height: 47.86%;
+}
+/* LoginSuccessPage.js */
+.loginPage_total .confirm p {
+  width: 100%;
+}
+.loginPage_total .Nbutton2 div {
+  cursor: pointer;
+}
+
+/* UserEditModal.js */
+.modal1_total {
+  /* max-height: 30vw; */
+}
+
+/* MenuPage.js */
+.menuPage_total .more_btn {
+  width: 398px;
+  height: 100px;
+  background-color: #ffffff;
+  border: 1px solid #f0663f;
+  border-radius: 16px;
+  font-size: 24px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.menuPage_total .logo-img {
+  margin-top: 30px;
+}
+
+/* ReservationDetail.js */
+.reservation_total .pickupBtn {
+  width: 40%;
+  height: 2.5vw;
+  margin: 2vw auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0663f;
+  color: white;
+  cursor: pointer;
+}
+
+/* ListPage.js */
+.listPage_total .title {
+  font-size: 20px;
+  color: #f0663f;
+}
+.listPage_total span {
+  color: #f0663f;
+}
+.listPage_total .modal-content1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.listPage_total .modal-content1 p {
+  margin: 0;
+}
+.listPage_total .modal-content1 .btn_box {
+  width: 60%;
+  height: 20%;
+  display: flex;
+  justify-content: space-between;
+}
+.listPage_total .modal-content1 .btn_box .btn {
+  width: 40%;
+  height: 100%;
+  cursor: pointer;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.listPage_total .modal-content1 .btn_box .btn:nth-child(2) {
+  border: none;
+  background-color: #f0663f;
+  color: white;
+}
+
+/* PetInfo.js */
+.petList_total .event-accordion {
+  cursor: pointer;
+}
+.petList_total .pet-accordion-content .pet-contents {
+  height: 100%;
+  position: relative;
+  border-bottom: 1px solid #f0663f;
+}
+.petList_total .pet-accordion-content .pet-contents:first-child {
+  border-top: 1px solid #f0663f;
+}
+.petList_total .infoBox {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.petList_total .infoBox .pet-contents-info {
+  height: 33.33%;
+}
+.petList_total .deleteBtn {
+  width: 20%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* Reservation.js  */
+.userReservation_total .reservation-row div:nth-child(3) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* NButtonContainer.js */
+.footer_total {
+  width: 430px;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+.footer_total button {
+  width: 13%;
+  height: 100%;
+}
+.footer_total button img {
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 500px) {
+  .footer_total {
+    width: 100%;
+  }
+}
+
+/* BusinessDetailPage.js */
+.detailPage_total .writing-div {
+  height: 80px;
 }

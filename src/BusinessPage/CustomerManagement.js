@@ -16,12 +16,12 @@ const CustomerManagement = () => {
             try {
                 const response = await api.get('/api/customer/management', { withCredentials: true });
                 console.log(response.data)
-                if(response.data == 'common'){
+                if (response.data == 'common') {
                     navigate('/business/login'); // 로그인 페이지로 리디렉션
 
                 }
-                if (response.data[0] == null) {
-                    setReservationManagementList(response.data[0]);
+                if (response.data[0] === null || response.data === null) {
+                    return;
                 } else {
                     setReservationManagementList(response.data);
                 }
@@ -36,6 +36,7 @@ const CustomerManagement = () => {
     }, []);
 
     console.log(reservationManagementList)
+
 
     return (
         <div className='page-container' lang='ko'>

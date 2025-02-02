@@ -67,7 +67,7 @@
     width: 100%; /* 너비를 고정 */
     left: 0;
     right: 0;
-    top: 232px;
+    top: 100px;
     height: calc(100% - 288px); /* 높이를 계산하여 설정 */
     overflow-y: auto; /* 세로 스크롤 활성화 */
 }
@@ -494,6 +494,14 @@ button.verified {
     color: #262626;
     font-size: 16px;
     font-weight: 400;
+    text-align: center;
+}
+.view-contents-title{
+    width: 30%;
+}
+
+.view-contents-option{
+    width: 50%;
 }
 
 .view-contents-style h1 {

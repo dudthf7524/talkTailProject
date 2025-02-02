@@ -56,6 +56,8 @@ router.get('/user/authority', authMiddlewareSession, async (req, res) => {
 
     try {
         const userGetAuthority = await userAuthorityRequestDatabase.userGetAuthority(business_registration_number);
+        console.log('aaaa');
+        console.log(userGetAuthority)
         res.json(userGetAuthority);
     } catch (error) {
         console.error('Failed to fetch authority request error: ', error);
@@ -137,6 +139,19 @@ router.post('/user/authority/defense', authMiddleware, async (req, res) => {
     const business_registration_number = req.body.business_registration_number;
     try {
         const userGetAuthority = await userAuthorityRequestDatabase.authorityDefense(platform_id, business_registration_number);
+        console.log(userGetAuthority)
+        res.json(userGetAuthority);
+    } catch (error) {
+        console.error('Failed to fetch authority request error: ', error);
+        res.status(500).json({ message: 'Failed to fetch authority request.' });
+    }
+})
+
+router.get('/user/authority/list', authMiddleware, async (req, res) => {
+    console.log("방어 라우트")
+    const platform_id = req.user.id;
+    try {
+        const userGetAuthority = await userAuthorityRequestDatabase.userAuthorityList(platform_id);
         console.log(userGetAuthority)
         res.json(userGetAuthority);
     } catch (error) {

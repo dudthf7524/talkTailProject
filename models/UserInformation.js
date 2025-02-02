@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     const UserInformation = sequelize.define(
-      'USER_INFORMATION',
+      'user_information',
       {
         user_information_id: {
           type: DataTypes.INTEGER,
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false,
           unique: true,
           references: {
-            model: 'USER',
+            model: 'user',
             key: 'platform_id',
           },
           onUpdate: 'CASCADE',
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       {
         timestamps: false,
-        tableName: 'USER_INFORMATION',
+        tableName: 'user_information',
       }
     );
   

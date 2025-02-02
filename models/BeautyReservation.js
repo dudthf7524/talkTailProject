@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const BeautyReservation = sequelize.define(
-    'BEAUTY_RESERVATION',
+    'beauty_reservation',
     {
       beauty_reservation_id: {
         type: DataTypes.INTEGER,
@@ -87,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       timestamps: false,
-      tableName: 'BEAUTY_RESERVATION',
+      tableName: 'beauty_reservation',
     }
   );
 

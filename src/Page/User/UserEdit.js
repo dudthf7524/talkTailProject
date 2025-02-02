@@ -94,7 +94,7 @@ function UserEdit() {
       // 오류 처리
     }
   };
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(true);
   const [popupMessage, setPopupMessage] = useState("");
 
   const handleConfirmEdit = () => {
@@ -114,7 +114,7 @@ function UserEdit() {
     }
   };
   return (
-    <div className="mid user_edit_total" lang="ko">
+    <div className="user_edit_total" lang="ko">
       <div className="navigation">
         <button>
           <img src={arrowButtonUrl} alt="" onClick={() => navigate(-1)} />

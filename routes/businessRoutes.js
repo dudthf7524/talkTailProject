@@ -44,10 +44,10 @@ router.post('/business/checkLogin', async (req, res) => {
 
 
   try {
-    
+
     const business = await businessDatabase.checkLogin(login_id);
     res.status(201).json(business);
-    
+
   } catch (error) {
     console.error('Error creating business', error.message);
     res.status(500).json({ error: error.message });
@@ -165,17 +165,16 @@ router.get('/business/detail/:id', authMiddleware, async (req, res) => {
   }
 })
 
-router.post('/business/register/desinger', async (req, res) => {
+router.post('/business/register/desinger', authMiddlewareSession, async (req, res) => {
 
   try {
 
-    console.log(req.body)
-    console.log(req.user.business_registration_number)
+
     const RegisterDesinger = req.body
 
     RegisterDesinger.business_registration_number = req.user.business_registration_number;
 
-    console.log(RegisterDesinger)
+
     const businessRegisterDesinger = await businessDatabase.createBusinessDesinger(RegisterDesinger);
 
     res.status(201).json({ businessRegisterDesinger });
@@ -203,18 +202,7 @@ router.put('/business/beauty/significant', async (req, res) => {
   }
 
 });
-router.post('/business/style/significantGet', async (req, res) => {
 
-  const business_registration_number = req.body.business_registration_number;
-  try {
-    const userGetAuthority = await businessDatabase.significantGet(business_registration_number);
-    res.json(userGetAuthority);
-  } catch (error) {
-    console.error('Failed to fetch authority request error: ', error);
-    res.status(500).json({ message: 'Failed to fetch authority request.' });
-  }
-  
-})
 
 router.get('/business/style/significantGet', authMiddlewareSession, async (req, res) => {
   console.log(req.session)
@@ -345,12 +333,12 @@ router.put('/business/edit/information', upload.fields([
       pricingImages.push(result.url); // pricing 이미지는 배열에 저장
     }
   });
-  
+
   informationData.business_price_image1 = '';
   informationData.business_price_image2 = '';
   informationData.business_price_image3 = '';
-  
-  
+
+
   // pricing 이미지를 순서대로 business_price_image1, business_price_image2, ...에 저장
   pricingImages.forEach((url, index) => {
     informationData[`business_price_image${index + 1}`] = url;
@@ -428,7 +416,7 @@ router.get('/business/beauty/option', authMiddlewareSession, async (req, res) =>
   console.log(req.user.registrationNumber)
 
   const business_registration_number = req.user.registrationNumber;
-  
+
   try {
     const userGetAuthority = await businessDatabase.beautyOptionGet(business_registration_number);
     res.json(userGetAuthority);
@@ -438,14 +426,14 @@ router.get('/business/beauty/option', authMiddlewareSession, async (req, res) =>
   }
 })
 
-router.put('/business/beauty/option', authMiddlewareSession,  async (req, res) => {
+router.put('/business/beauty/option', authMiddlewareSession, async (req, res) => {
   console.log(req.body)
   const business_registration_number = req.user.registrationNumber;
   const RegisterBeautyOption = req.body;
   try {
-    
 
-    const result = await businessDatabase.updateBusinessBeautyOption(RegisterBeautyOption ,business_registration_number);
+
+    const result = await businessDatabase.updateBusinessBeautyOption(RegisterBeautyOption, business_registration_number);
 
     res.status(201).json({ result });
   } catch (error) {
@@ -454,13 +442,13 @@ router.put('/business/beauty/option', authMiddlewareSession,  async (req, res) =
   }
 });
 
-router.post('/business/account/number', authMiddlewareSession,  async (req, res) => {
+router.post('/business/account/number', authMiddlewareSession, async (req, res) => {
   console.log(req.body)
   const business_registration_number = req.user.registrationNumber;
   console.log(business_registration_number)
   const accountNumberData = req.body;
   try {
-    const result = await businessDatabase.accountNumber(accountNumberData ,business_registration_number);
+    const result = await businessDatabase.accountNumber(accountNumberData, business_registration_number);
 
     res.status(201).json({ result });
   } catch (error) {
@@ -468,4 +456,32 @@ router.post('/business/account/number', authMiddlewareSession,  async (req, res)
     res.status(500).json({ error: error.message });
   }
 });
+
+router.post('/business/style/accountNumberGet', async (req, res) => {
+
+  const business_registration_number = req.body.business_registration_number;
+
+  try {
+    const userGetAuthority = await businessDatabase.accountNumberGet(business_registration_number);
+    res.json(userGetAuthority);
+  } catch (error) {
+    console.error('Failed to fetch authority request error: ', error);
+    res.status(500).json({ message: 'Failed to fetch authority request.' });
+  }
+})
+
+router.get('/business/desinger/list',authMiddlewareSession, async (req, res) => {
+
+  console.log(req.user.registrationNumber)
+
+  const business_registration_number = req.user.registrationNumber;
+  try {
+    const result = await businessDatabase.desingerList(business_registration_number);
+    res.json(result);
+  } catch (error) {
+    console.error('Failed to fetch authority request error: ', error);
+    res.status(500).json({ message: 'Failed to fetch authority request.' });
+  }
+
+})
 module.exports = router;

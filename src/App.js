@@ -49,6 +49,12 @@ import EditInformation from "./BusinessPage/EditInformation";
 import BusinessBeautyEditOption from "./BusinessPage/BusinessBeautyEditOption";
 import ReservationDetail from "./Page/MyPage/ReservationDetail";
 import AccountNumber from "./BusinessPage/AccountNumber";
+import Notice from "./Page/MyPage/Notice";
+import NoticeDetail from "./Page/MyPage/NoticeDetail";
+import DesingerList from "./BusinessPage/DesingerList";
+import DesingerClosedDays from "./BusinessPage/DesingerClosedDays";
+import Authority from "./Page/User/Authority";
+
 
 function App() {
   const [imageFiles, setImageFiles] = useState({
@@ -114,10 +120,11 @@ function App() {
             <Route path="/edit-address" element={<EditAddressPage />} />
             <Route path="/user/edit" element={<UserEdit />} />
             <Route path="/reservation" element={<Reservation />} />
-            <Route
-              path="/reservation/detail/:id"
-              element={<ReservationDetail />}
-            />
+            <Route path="/reservation/detail/:id" element={<ReservationDetail />} />
+            
+            <Route path="/notice" element={<Notice />} />
+            <Route path="/notice/:id" element={<NoticeDetail />} />
+            <Route path="/authority/management" element={<Authority />}/>
 
             <Route path="/business">
               <Route path="login" element={<Login />} />
@@ -153,6 +160,9 @@ function App() {
               <Route path="day-on-off/edit" element={<DayOnOffEdit />} />
               <Route path="edit/option" element={<BusinessBeautyEditOption />}/>
               <Route path="account/number" element={<AccountNumber />}/>
+              <Route path="list/desinger" element={<DesingerList />}/>
+              <Route path="write/ClosedDays" element={<DesingerClosedDays />}/>
+              
             </Route>
           </Routes>
         </ImageProvider>

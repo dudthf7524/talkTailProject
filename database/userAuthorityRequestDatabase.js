@@ -22,7 +22,7 @@ const userAuthority = async (userAuthorityData, platform_id) => {
 };
 const userGetAuthority = async (business_registration_number) => {
   console.log("database userAuthorityData")
-
+  console.log(business_registration_number)
   try {
     let sql ="";
     sql += "select user_authority_request_id, business_registration_number, authority_is_available, authority_state ,user_name, user_phone  ";
@@ -36,19 +36,18 @@ const userGetAuthority = async (business_registration_number) => {
 
       {
         replacements: { business_registration_number: business_registration_number }, // 바인딩 파라미터
-        type: sequelize.QueryTypes.SELECT, // 쿼리 유형
+        type: sequelize.QueryTypes.SELECTALL, // 쿼리 유형
         logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
       }
 
     );
     console.log(metadata);
+    console.log('나오는 데이터')
     console.log(result)
+    console.log('나오는 데이터')
+   
 
-    if(result === undefined){
-      return null
-    }
-
-    return Array.isArray(result) ? result : [result];
+    return result;
 
   } catch (error) {
     throw new Error(`Failed to userGetAuthority : ${error.message}`);
@@ -117,10 +116,42 @@ const authorityDefense = async (platform_id, business_registration_number) => {
   }
 }
 
+const userAuthorityList = async (platform_id) => {
+  console.log("database authorityAvailableTrue")
+  console.log(platform_id)
+
+  try {
+    let sql ="";
+    sql += "select authority_state, business_name ";
+    sql += "from user_authority_request uar ";
+    sql += "join business_information bi ";
+    sql += "on uar.business_registration_number = bi.business_registration_number ";
+    sql += "where uar.platform_id = :platform_id ";
+
+    const [result, metadata] = await sequelize.query(
+      sql,
+
+      {
+        replacements: { platform_id: platform_id }, // 바인딩 파라미터
+        type: sequelize.QueryTypes.SELECTALL, // 쿼리 유형
+        logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
+      }
+
+    );
+    console.log(result)
+
+    return result;
+
+  } catch (error) {
+    throw new Error(`Failed to userGetAuthority : ${error.message}`);
+  }
+}
+
 module.exports = {
   userAuthority,
   userGetAuthority,
   userGetAuthorityAvailable,
   authorityAvailableTrue,
   authorityDefense,
+  userAuthorityList
 };
