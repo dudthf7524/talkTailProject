@@ -5,10 +5,8 @@ import { ko } from 'date-fns/locale';
 import { format, addMonths, getDay, isWithinInterval, parse, addMinutes } from 'date-fns';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import '../CSS/calender.css';
-import { setDate } from '../redux/reservationData';
-import { setStartTime } from '../redux/reservationData';
-import { useDispatch, useSelector } from 'react-redux';
 import api from '../Api'
+import LoginModal from "./Modal/LoginModal.js";
 
 function generateTimeSlots(start_time, end_time, intervalMinutes) {
   const start = parse(start_time, 'HH:mm', new Date());
@@ -23,6 +21,10 @@ function generateTimeSlots(start_time, end_time, intervalMinutes) {
 }
 
 const Reservation = () => {
+  const [openModal, setOpenModal] = useState(false);
+  const modalTitle = "예약이 완료되었습니다.";
+  const modalContent = "";
+
   const location = useLocation();
   const id = location.state?.id; // state로 받은 값
   console.log(id);
@@ -104,8 +106,8 @@ const Reservation = () => {
     setActiveTime((prev) => {
       if (prev.includes(time)) {
         return prev.filter((t) => t !== time); // 이미 선택된 시간 클릭 시 해제
-      } 
-  
+      }
+
       return [...prev, time].sort((a, b) => a - b); // 새로운 시간 추가 후 정렬
     });
   };
@@ -215,7 +217,7 @@ const Reservation = () => {
       timeSlots.forEach((time) => {
         const current = parse(time, 'HH:mm', new Date());
 
-        if (isWithinInterval(current, { start: new Date(start.getTime() ), end: new Date(end.getTime() - 1) })) {
+        if (isWithinInterval(current, { start: new Date(start.getTime()), end: new Date(end.getTime() - 1) })) {
           disabledTimes.push(time);
         }
 
@@ -299,20 +301,21 @@ const Reservation = () => {
   //   const dispatch = useDispatch();
 
   const handleItemClick = async () => {
-  
+
     const data = {
       date: selectDate,
-      time : activeTime,
+      time: activeTime,
       desingerId: id
     };
+    setOpenModal(true);
 
-      try {
-        const response = await api.post('/api/reservation/business', data, { withCredentials: true });
-        console.log('User authority data:', response.data);
+    //   try {
+    //     const response = await api.post('/api/reservation/business', data, { withCredentials: true });
+    //     console.log('User authority data:', response.data);
 
-    } catch (error) {
-        console.error('권한 조회 실패:', error.message);
-    }
+    // } catch (error) {
+    //     console.error('권한 조회 실패:', error.message);
+    // }
   };
 
   return (
@@ -479,6 +482,17 @@ const Reservation = () => {
       <div className="Nbutton" onClick={handleItemClick}>
         예약하기
       </div>
+      {openModal ? (
+        <LoginModal
+          openModal={() => {
+            setOpenModal(false);
+          }}
+          title={modalTitle}
+          content={modalContent}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };

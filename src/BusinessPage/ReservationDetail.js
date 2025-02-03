@@ -16,7 +16,7 @@ const ReservationDetail = () => {
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
   const { id } = useParams();
   const location = useLocation();
-
+  const [beautyPrice, setBeautyPrice] = useState(0);
   // 부모 컴포넌트에서 전달된 date 값 가져오기
   const { date } = location.state || {}; // state가 없는 경우 대비
   const [isModalOpen, setModalOpen] = useState(false);
@@ -169,7 +169,7 @@ const ReservationDetail = () => {
       const current = parse(time, 'HH:mm', new Date());
 
       // 예약된 시간 범위에 포함된 슬롯만 비활성화
-      if (isWithinInterval(current, { start: new Date(start.getTime() + 1), end: new Date(end.getTime() ) })) {
+      if (isWithinInterval(current, { start: new Date(start.getTime() + 1), end: new Date(end.getTime()) })) {
         disabledTimes.push(time);
       }
     });
@@ -265,6 +265,7 @@ const ReservationDetail = () => {
 
 
 
+  const [price, setPrice] = useState(""); // 가격을 문자열로 관리
 
 
   // 30분 단위로 순서대로 되어 있는지 확인하는 함수
@@ -282,7 +283,7 @@ const ReservationDetail = () => {
 
       if (timeDiff !== 30) {
         console.log(`Error at index ${i}: ${timeSlots[i - 1]} -> ${timeSlots[i]}`);
-        
+
         return false; // 30분 단위가 아니면 false 반환
       }
     }
@@ -355,6 +356,26 @@ const ReservationDetail = () => {
       [name]: value,
     });
   };
+
+
+
+  const priceSumButton = (price) => {
+    console.log(price)
+    setBeautyPrice(prev => prev + price);
+    console.log(beautyPrice)
+
+  }
+
+  // 숫자 버튼 클릭 시 호출되는 함수
+  const handleNumberClick = (num) => {
+    setPrice((prevPrice) => prevPrice + num); // 숫자를 문자열 뒤에 추가
+  };
+
+  // 지우기 버튼 클릭 시 호출되는 함수
+  const handleBackspace = () => {
+    setPrice((prevPrice) => prevPrice.slice(0, -1)); // 마지막 문자 지우기
+  };
+
   return (
     <div className='page-container2 reservation_total' lang='ko'>
       <div className='navigation'>
@@ -488,14 +509,41 @@ const ReservationDetail = () => {
             </div>
           ) : reservationManagementList.reservation_state === '대기' ? (
             <div className='detail-form2'>
+
               <div className='detail-title'>미용가격</div>
-              <div className='detail-info'><input
-                type="number"
-                name="beauty_price"
-                min="0"
-                step="1000" // 1000 단위로 값 증가
-                onChange={handleInputChange}
-              />
+
+              <div className='detail-info'>
+                <input
+                  type="number"
+                  name="beauty_price"
+                  min="0"
+                  step="1000" // 1000 단위로 값 증가
+                  value={beautyPrice}
+                  onChange={handleInputChange}
+                />
+
+                <div className='price-selection'>
+                  <div className='price-box' onClick={() => priceSumButton(10000)}>+1만</div>
+                  <div className='price-box' onClick={() => priceSumButton(50000)}>+5만</div>
+                  <div className='price-box' onClick={() => priceSumButton(100000)}>+10만</div>
+                </div>
+                <h3>현재 가격: {price || "0"} 원</h3> {/* 가격 표시 */}
+
+                <div className='number-selection'>
+                  <div className='number-box' onClick={() => handleNumberClick("1")}>1</div>
+                  <div className='number-box' onClick={() => handleNumberClick("2")}>2</div>
+                  <div className='number-box' onClick={() => handleNumberClick("3")}>3</div>
+                  <div className='number-box' onClick={() => handleNumberClick("4")}>4</div>
+                  <div className='number-box' onClick={() => handleNumberClick("5")}>5</div>
+                  <div className='number-box' onClick={() => handleNumberClick("6")}>6</div>
+                  <div className='number-box' onClick={() => handleNumberClick("7")}>7</div>
+                  <div className='number-box' onClick={() => handleNumberClick("8")}>8</div>
+                  <div className='number-box' onClick={() => handleNumberClick("9")}>9</div>
+                  <div className='number-box' onClick={() => handleNumberClick("00")}>00</div>
+                  <div className='number-box' onClick={() => handleNumberClick("0")}>0</div>
+                  <div className='number-box' onClick={handleBackspace}>&larr;</div>
+                </div>
+
               </div>
             </div>
           ) : (
@@ -507,19 +555,17 @@ const ReservationDetail = () => {
 
       </div>
 
-      <div
-        className="pickupBtn"
-        onClick={() => {
-          setOpenPickup(true);
-        }}
-      >
-        픽업 메시지 보내기
-      </div>
+
 
       {
         reservationManagementList.reservation_state === '완료' ? (
-          <div className='footer-button'>
-            예약이 완료되었습니다.
+          <div
+            className="pickupBtn"
+            onClick={() => {
+              setOpenPickup(true);
+            }}
+          >
+            픽업 메시지 보내기
           </div>
         ) : reservationManagementList.reservation_state === '대기' ? (
           <div className='footer-button'>
