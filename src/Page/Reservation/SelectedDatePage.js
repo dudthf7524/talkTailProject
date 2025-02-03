@@ -77,13 +77,18 @@ const SelectedDatePage = () => {
   const [activeTime, setActiveTime] = useState(null);
 
   const filterDisabledDays = (date) => {
+    console.log(date)
+    console.log(hours)
     if (hours === null) {
       navigate('/list/beauty'); // hours가 null일 때 이동
       return false; // 이후 로직은 처리하지 않음
     }
     const day = getDay(date);
+    console.log(day)
+    console.log(hours[day]?.isOperatingDay)
     return hours[day]?.isOperatingDay;
   };
+  console.log(filterDisabledDays)
 
 
 
@@ -140,6 +145,7 @@ const SelectedDatePage = () => {
     const label = dateLabels[formattedDate]; // 특별한 날짜 라벨 (예: 크리스마스)
     const dayIndex = getDay(date); // 요일 정보 추출 (0: 일요일, 6: 토요일)
 
+    
     const isOperatingDay = hours?.[dayIndex]?.isOperatingDay; // 해당 요일의 영업 상태 확인
     const isSelected = startDate && format(startDate, 'yyyy-MM-dd') === formattedDate;
     const isDisabledDate = disabledDates.some((disabledDate) => format(disabledDate, 'yyyy-MM-dd') === formattedDate); // 비활성화된 날짜 확인
@@ -158,6 +164,7 @@ const SelectedDatePage = () => {
 
       </div>
     );
+
     // return (
     //   <div
     //     className={`day-content ${!isOperatingDay ? "closed" : ""} ${isSelected ? "selected" : ""}`}
