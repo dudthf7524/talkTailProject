@@ -128,6 +128,14 @@
 .loginPage_total .Nbutton2 div {
   cursor: pointer;
 }
+.loginPage_total .navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loginPage_total .navigation img {
+  width: 30%;
+}
 
 /* UserEditModal.js */
 .modal1_total {
@@ -165,7 +173,7 @@
 /* ListPage.js */
 .listPage_total .title {
   font-size: 20px;
-  color: #f0663f;
+  font-weight: 600;
 }
 .listPage_total span {
   color: #f0663f;
@@ -180,19 +188,22 @@
   margin: 0;
 }
 .listPage_total .modal-content1 .btn_box {
-  width: 60%;
-  height: 20%;
+  width: 90%;
+  height: 25%;
   display: flex;
   justify-content: space-between;
 }
 .listPage_total .modal-content1 .btn_box .btn {
-  width: 40%;
+  width: 45%;
   height: 100%;
   cursor: pointer;
-  border: 1px solid black;
+  border: 1px solid #f0663f;
   display: flex;
   align-items: center;
   justify-content: center;
+  line-height: 16px;
+  color: #f0663f;
+  border-radius: 5px;
 }
 .listPage_total .modal-content1 .btn_box .btn:nth-child(2) {
   border: none;

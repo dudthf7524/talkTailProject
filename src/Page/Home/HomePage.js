@@ -133,7 +133,11 @@ const MainPage = () => {
         </div>
         <div className="home-container1">
           <p>아직 예약내역이 없어요. 예약기능을 이용해보세요.</p>
-          <div className="btn" onClick={scrollCategory}>
+          <div
+            className="btn"
+            onClick={scrollCategory}
+            style={{ borderRadius: "5px" }}
+          >
             예약하러 가기
           </div>
         </div>
@@ -266,7 +270,7 @@ const MainPage = () => {
                 <div>514-87-03021</div>
                 <div>2025-경북경산-0073</div>
                 <div>경상북도 경산시 삼풍로 27, 309호</div>
-                <div>creamoff2021@naver.com</div>
+                <div>creamoff2021@creamoff.co.kr</div>
               </div>
             </div>
             <div className="tail-co">@TalkTail co Ltd. All rigths reserved</div>
