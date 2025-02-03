@@ -60,17 +60,24 @@ const ReservationManagement = () => {
               <div style={{ fontWeight: 'bold', color: 'gray' }}>알 수 없음</div>
             )
           }
-          <div className='reservation-item'>
-            <button
-              className="detail-button"
-              onClick={() =>
-                navigate(`/business/reservation/detail/${reservationManagement.beauty_reservation_id}`, {
-                  state: { date: reservationManagement.date },
-                })
-              }
-            >
-              상세보기
-            </button>          </div>
+          {
+            reservationManagement.platform_id === '0' ? (
+              <div>전화예약</div>
+            ) : (
+
+              <div className='reservation-item'>
+                <button
+                  className="detail-button"
+                  onClick={() =>
+                    navigate(`/business/reservation/detail/${reservationManagement.beauty_reservation_id}`, {
+                      state: { date: reservationManagement.date },
+                    })
+                  }
+                >
+                  상세보기
+                </button>          </div>
+            )
+          }
         </div>
       ))}
 

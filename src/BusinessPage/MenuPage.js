@@ -205,6 +205,20 @@ const AdminMenu = () => {
                 디자이너 등록
               </span>
             </button>
+            <button
+              className="menu-tbt-btn2"
+              onClick={() => navigate("/business/reservation/desinger")}
+            >
+              <img
+                src={customerIcon}
+                alt="customer icon"
+                className="menu-icon"
+              />
+              <span className="menu-text">
+                <br />
+                예약하기
+              </span>
+            </button>
           </>
         ) : (
           ""
