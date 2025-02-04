@@ -8,9 +8,23 @@
   left: 0;
   z-index: 2;
 }
+
+.modal-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* 모달 배경을 반투명하게 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* 페이지의 다른 요소 위에 표시 */
+}
+
 .modal_container {
   width: 300px;
-  height: 200px;
+  height: 150px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -24,6 +38,7 @@
   border-radius: 10px;
   z-index: 3;
 }
+
 .modal_container img {
   width: 20px;
   height: 20px;
@@ -32,11 +47,13 @@
   right: 10px;
   cursor: pointer;
 }
+
 .modal_container .title {
   font-size: 25px;
   font-weight: 600;
   margin: 0;
 }
+
 .modal_container .content {
   margin: 0 auto;
   display: flex;
@@ -44,6 +61,7 @@
   align-items: center;
   color: black;
 }
+
 .modal_container .btn {
   width: 70px;
   height: 30px;

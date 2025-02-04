@@ -15,7 +15,7 @@ const ReservationRejectModal = ({ isOpen, onClose, onConfirm }) => {
   };
 
   return (
-    <div className="modal-overlay">
+    <div className="business-modal-overlay">
       <div className="modal-content2">
         <div>거절사유</div>
         <textarea

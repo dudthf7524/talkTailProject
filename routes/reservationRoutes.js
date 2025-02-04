@@ -112,21 +112,26 @@ router.get('/beauty/reservation/detail/:id/:date', async (req, res) => {
 
     const id = req.params.id;
     const date = req.params.date;
-
+    const formatDate = new Date(date);
+    const dateNumber = formatDate.getDay();
+    console.log(formatDate)
+    console.log(dateNumber)
     console.log('routes')
     console.log(date)
     try {
         const result = await reservationDatabase.beautyReservationDetail(id)
-        const 요일 = 4;
         console.log()
         console.log('aaaaaaaaa')
         var hourDay;
         for (let i = 0; i < Object.keys(result.hours).length; i++) {
-            if (i == 요일) {
+            if (i == dateNumber) {
                 hourDay = result.hours[i]
             }
         }
+
         console.log(hourDay)
+        console.log('aaaaaaaaa')
+
         const resultTime = await reservationDatabase.beautyReservationTime(date)
         console.log(resultTime)
         const results = [result, resultTime, hourDay];
