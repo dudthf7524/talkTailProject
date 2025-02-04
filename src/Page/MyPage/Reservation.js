@@ -39,11 +39,7 @@ const Reservation = () => {
         <div className="navigation ">
           <div>
             <button>
-              <img
-                src={arrowButtonUrl}
-                alt=""
-                onClick={() => navigate("/my-Page")}
-              />
+              <img src={arrowButtonUrl} alt="" onClick={() => navigate(-1)} />
             </button>
           </div>
           예약내역
