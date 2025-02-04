@@ -1,10 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NButtonContainer from "../Components/NavigatorBar/NButtonContainer";
 import "../../CSS/page.css";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../modal";
 import Tos from "./tos";
 import Privacy from "./privacy";
+import api from "../../Api";
+import "../../CSS/homePage.css";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -32,6 +34,30 @@ const MainPage = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [reservationtList, setReservationtList] = useState([]);
+
+  useEffect(() => {
+    const reservationManagement = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("No token found.");
+        }
+        const response = await api.get("/api/user/reservation/bookmark", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setReservationtList(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("로그인 인증 실패:", error);
+      }
+    };
+    reservationManagement();
+  }, []);
+
+
 
   const startDrag = (e) => {
     if (containerRef.current) {
@@ -131,16 +157,57 @@ const MainPage = () => {
             </button> */}
           </div>
         </div>
-        <div className="home-container1">
-          <p>아직 예약내역이 없어요. 예약기능을 이용해보세요.</p>
-          <div
-            className="btn"
-            onClick={scrollCategory}
-            style={{ borderRadius: "5px" }}
-          >
-            예약하러 가기
-          </div>
-        </div>
+        {
+          reservationtList ? (
+            <div className="home-container1">
+              <div className="book-mark">
+                <div className="img"><img src={reservationtList.business_main_image}></img></div>
+                <div className="">방문횟수<br></br><span className="user_count">{reservationtList.user_count}</span></div>
+                <div className="">{reservationtList.business_name}</div>
+              </div>
+            </div>
+
+
+          ) : (
+            <div className="home-container1">
+              <p>아직 예약내역이 없어요. 예약기능을 이용해보세요.</p>
+              <div
+                className="btn"
+                onClick={scrollCategory}
+                style={{ borderRadius: "5px" }}
+              >
+                예약하러 가기
+              </div>
+
+              {/* <Carousel>
+                <Carousel.Item>
+                  <ExampleCarouselImage text="First slide" />
+                  <Carousel.Caption>
+                    <h3>First slide label</h3>
+                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <ExampleCarouselImage text="Second slide" />
+                  <Carousel.Caption>
+                    <h3>Second slide label</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <ExampleCarouselImage text="Third slide" />
+                  <Carousel.Caption>
+                    <h3>Third slide label</h3>
+                    <p>
+                      Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+                    </p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+              </Carousel> */}
+            </div>
+          )
+        }
+        
         <div className="home-container2"></div>
         <div
           className="home-container3"

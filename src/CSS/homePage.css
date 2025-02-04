@@ -1,0 +1,23 @@
+.book-mark {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    background-color: white;
+    width: 80%;
+    height: 80%;
+    padding: 20px;
+}
+
+.book-mark img {
+    width: 100%;
+
+}
+
+
+.book-mark .user_count{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    font-weight: bold;
+    padding: 20px;
+}
