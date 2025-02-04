@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import '../CSS/auth.css'
-import '../CSS/reservation.css'
+import '../BusinessCSS/reservation.css'
 import ReservationAcceptModal from './Modal/ReservationAccept';
 import ReservationRejectModal from './Modal/ReservationReject';
 import ReservationCheckModal from './Modal/ReservationCheck';
@@ -16,7 +16,7 @@ const ReservationDetail = () => {
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
   const { id } = useParams();
   const location = useLocation();
-
+  const [beautyPrice, setBeautyPrice] = useState(0);
   // 부모 컴포넌트에서 전달된 date 값 가져오기
   const { date } = location.state || {}; // state가 없는 경우 대비
   const [isModalOpen, setModalOpen] = useState(false);
@@ -27,7 +27,6 @@ const ReservationDetail = () => {
   const [reservationCompleteTime, setReservationCompleteTime] = useState(''); // 완료 시간 상태 추가
   const [timeList, setTimeLists] = useState([]);
   const [hourday, setHourDay] = useState([]);
-
   const [formData, setFormData] = useState({
     beauty_price: 0,
   });
@@ -43,7 +42,6 @@ const ReservationDetail = () => {
         setReservationManagementList(response.data[0]);
         setTimeLists(response.data[1]);
         setHourDay(response.data[2]);
-
 
       } catch (error) {
 
@@ -63,21 +61,16 @@ const ReservationDetail = () => {
   const closeModal = () => setModalOpen(false);
 
   console.log(hourday)
-  const handleConfirm = async () => {
 
-    console.log(reservationManagementList.business_name)
-    console.log(reservationManagementList.business_phone)
-    console.log(formData.business_no_show)
-    console.log("reservationCompleteTime")
-    console.log(reservationCompleteTime)
-    console.log("reservationCompleteTime")
-    const beauty_price = formData.beauty_price;
+  const handleConfirm = async () => {
+    const beauty_price = beautyPrice;
     const business_name = reservationManagementList.business_name;
     const business_phone = reservationManagementList.business_phone;
     const start_time = reservationManagementList.start_time;
     const date = reservationManagementList.date;
     const user_phone = reservationManagementList.user_phone;
     const paid_price = reservationManagementList.paid_price;
+
     try {
       console.log(reservationCompleteTime)
       const response = await api.put(`/api/beauty/reservation/setCompleteTime/${id}`, { reservationCompleteTime, beauty_price, business_name, business_phone, start_time, date, user_phone, paid_price }, { withCredentials: true });
@@ -104,8 +97,6 @@ const ReservationDetail = () => {
 
   const handleReject = async (rejectComment) => {
 
-    console.log('거절:', rejectComment); // 거절 사유 확인
-    console.log('거절:', rejectComment); // 거절 사유 확인
     const business_name = reservationManagementList.business_name;
     const business_phone = reservationManagementList.business_phone;
     const user_phone = reservationManagementList.user_phone;
@@ -113,7 +104,6 @@ const ReservationDetail = () => {
     try {
 
       const response = await api.put(`/api/beauty/reservation/reject/${id}`, { rejectComment, business_name, business_phone, user_phone }, { withCredentials: true });
-      console.log('수락');
       setCheckMessage('확정되었습니다.');
       setModalOpen(false);
       setCheckModalOpen(true);
@@ -136,7 +126,7 @@ const ReservationDetail = () => {
   const businessEndTime = hourday?.end_time || "18:00"; // 기본값 18:00
 
   const timeSlots = generateTimeSlots(businessStartTime, businessEndTime, 30);
-
+  console.log(timeSlots);
   function generateTimeSlots(start_time, end_time, intervalMinutes) {
     const start = parse(start_time, 'HH:mm', new Date());
     const end = parse(end_time, 'HH:mm', new Date());
@@ -169,7 +159,7 @@ const ReservationDetail = () => {
       const current = parse(time, 'HH:mm', new Date());
 
       // 예약된 시간 범위에 포함된 슬롯만 비활성화
-      if (isWithinInterval(current, { start: new Date(start.getTime() + 1), end: new Date(end.getTime() ) })) {
+      if (isWithinInterval(current, { start: new Date(start.getTime() + 1), end: new Date(end.getTime()) })) {
         disabledTimes.push(time);
       }
     });
@@ -178,7 +168,9 @@ const ReservationDetail = () => {
   var filteredTimeSlots;
 
   const completeTimeProcess = () => {
-    if (reservationManagementList.date > today) {
+    console.log(reservationManagementList.date)
+
+    if (reservationManagementList.date >= today) {
       filteredTimeSlots = timeSlots.filter((time) => {
         const current = parse(time, 'HH:mm', new Date());
         let start_time = reservationManagementList?.start_time || '00:00';
@@ -282,7 +274,7 @@ const ReservationDetail = () => {
 
       if (timeDiff !== 30) {
         console.log(`Error at index ${i}: ${timeSlots[i - 1]} -> ${timeSlots[i]}`);
-        
+
         return false; // 30분 단위가 아니면 false 반환
       }
     }
@@ -346,15 +338,42 @@ const ReservationDetail = () => {
 
   };
 
-
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const formatPrice = (price) => {
+    if (!price) return ""; // 가격이 없을 경우 0원 표시
+   
+    
+    return `${Number(price).toLocaleString()}원`;
   };
+
+  const priceSumButton = (price) => {
+    
+    setBeautyPrice(prev => Number(prev) + price + "");
+  
+
+  }
+
+  // 숫자 버튼 클릭 시 호출되는 함수
+  const handleNumberClick = (num) => {
+    setBeautyPrice((prevPrice) => prevPrice + num); // 숫자를 문자열 뒤에 추가
+   
+  };
+
+  // 지우기 버튼 클릭 시 호출되는 함수
+  const handleBackspace = () => {
+    if(beautyPrice ===''){
+     
+    }
+    setBeautyPrice((prevPrice) => prevPrice.slice(0, -1)); // 마지막 문자 지우기
+    
+   
+   
+  };
+
+  const priceStyle = {
+    
+    color: beautyPrice ? "black" : "", // beautyPrice 값이 있으면 검은색, 없으면 기본색 (빈칸)
+  };
+
   return (
     <div className='page-container2 reservation_total' lang='ko'>
       <div className='navigation'>
@@ -447,29 +466,29 @@ const ReservationDetail = () => {
                 {reservationManagementList.end_time}
               </div>
             ) : reservationManagementList.reservation_state === '대기' ? (
-              <div id="modal-body">
-                <div className="time-selection">
-                  {
-                    reservationNo ? (
-                      <div className="time-selection" style={{ color: "red", fontWeight: "bold" }}>
-                        예약불가
-                      </div>
-                    ) : (
-                      <div className="time-selection">
-                        {filteredTimeSlots?.map((time) => (
-                          <div
-                            key={time}
-                            className={`time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
-                            onClick={() => !disabledTimes.includes(time) && handleButtonClick(time)} // 비활성화된 시간 클릭 방지
-                          >
-                            {time}
-                          </div>
-                        ))}
+              <div className='detail-info'>
 
-                      </div>
-                    )
-                  }
-                </div>
+                {
+                  reservationNo ? (
+                    <div className="time-selection" style={{ color: "red", fontWeight: "bold" }}>
+                      예약불가
+                    </div>
+                  ) : (
+                    <div className="business-time-selection">
+                      {filteredTimeSlots?.map((time) => (
+                        <div
+                          key={time}
+                          className={`business-time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
+                          onClick={() => !disabledTimes.includes(time) && handleButtonClick(time)} // 비활성화된 시간 클릭 방지
+                        >
+                          {time}
+                        </div>
+                      ))}
+
+                    </div>
+                  )
+                }
+
               </div>
             ) : reservationManagementList.reservation_state === '거절' ? (
               <div className='detail-info' style={{ color: "red", fontWeight: "bold" }}>
@@ -488,14 +507,34 @@ const ReservationDetail = () => {
             </div>
           ) : reservationManagementList.reservation_state === '대기' ? (
             <div className='detail-form2'>
+
               <div className='detail-title'>미용가격</div>
-              <div className='detail-info'><input
-                type="number"
-                name="beauty_price"
-                min="0"
-                step="1000" // 1000 단위로 값 증가
-                onChange={handleInputChange}
-              />
+
+              <div className='detail-info'>
+
+                <div className='price-title' style={priceStyle}>{formatPrice(beautyPrice) || "가격을 설정해주세요"}</div> {/* 가격 표시 */}
+
+                <div className='price-selection'>
+                  <div className='price-box' onClick={() => priceSumButton(10000)}>+1만</div>
+                  <div className='price-box' onClick={() => priceSumButton(50000)}>+5만</div>
+                  <div className='price-box' onClick={() => priceSumButton(100000)}>+10만</div>
+                </div>
+
+                <div className='number-selection'>
+                  <div className='number-box' onClick={() => handleNumberClick("1")}>1</div>
+                  <div className='number-box' onClick={() => handleNumberClick("2")}>2</div>
+                  <div className='number-box' onClick={() => handleNumberClick("3")}>3</div>
+                  <div className='number-box' onClick={() => handleNumberClick("4")}>4</div>
+                  <div className='number-box' onClick={() => handleNumberClick("5")}>5</div>
+                  <div className='number-box' onClick={() => handleNumberClick("6")}>6</div>
+                  <div className='number-box' onClick={() => handleNumberClick("7")}>7</div>
+                  <div className='number-box' onClick={() => handleNumberClick("8")}>8</div>
+                  <div className='number-box' onClick={() => handleNumberClick("9")}>9</div>
+                  <div className='number-box' onClick={() => handleNumberClick("00")}>00</div>
+                  <div className='number-box' onClick={() => handleNumberClick("0")}>0</div>
+                  <div className='number-box' onClick={handleBackspace}>&larr;</div>
+                </div>
+
               </div>
             </div>
           ) : (
@@ -507,19 +546,17 @@ const ReservationDetail = () => {
 
       </div>
 
-      <div
-        className="pickupBtn"
-        onClick={() => {
-          setOpenPickup(true);
-        }}
-      >
-        픽업 메시지 보내기
-      </div>
+
 
       {
         reservationManagementList.reservation_state === '완료' ? (
-          <div className='footer-button'>
-            예약이 완료되었습니다.
+          <div
+            className="pickupBtn"
+            onClick={() => {
+              setOpenPickup(true);
+            }}
+          >
+            픽업 메시지 보내기
           </div>
         ) : reservationManagementList.reservation_state === '대기' ? (
           <div className='footer-button'>

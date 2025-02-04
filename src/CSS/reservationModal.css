@@ -1,6 +1,6 @@
 /* ReservationModal.css */
-.modal-overlay {
-    position: absolute;
+.business-modal-overlay {
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -9,11 +9,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* 페이지의 다른 요소 위에 표시 */
+
   }
   
   .modal-content1 {
-    
     background-color: #ffffff;
     padding: 20px;
     border-radius: 16px;
