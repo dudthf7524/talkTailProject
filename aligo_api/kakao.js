@@ -15,7 +15,7 @@ var AuthData = {
 // 인증용 데이터는 모든 API 호출시 필수값입니다.
 const alimtalkSend = async (req, res) => {
    
-    // req.body.testMode = 'Y';
+    req.body.testMode = 'Y';
 
     console.log(req.body)
     console.log(AuthData)
