@@ -3,12 +3,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from 'date-fns/locale';
 import { format, addMonths, getDay, isWithinInterval, parse, addMinutes } from 'date-fns';
-import { useNavigate, useParams } from 'react-router-dom';
-import '../../CSS/calender.css';
-import { setDate } from '../../redux/reservationData';
-import { setStartTime } from '../../redux/reservationData';
-import { useDispatch, useSelector } from 'react-redux';
-import api from '../../Api'
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import '../CSS/calender.css';
+import api from '../Api'
+import LoginModal from "./Modal/LoginModal.js";
 
 function generateTimeSlots(start_time, end_time, intervalMinutes) {
   const start = parse(start_time, 'HH:mm', new Date());
@@ -22,18 +20,35 @@ function generateTimeSlots(start_time, end_time, intervalMinutes) {
   });
 }
 
-const SelectedDatePage = () => {
-  const [lists, setLists] = useState([]);
-  const navigate = useNavigate();
-  
-  const hours = useSelector((state) => state.reservationData.hour); // Redux 상태 가져오기
-  console.log(hours)
+const Reservation = () => {
+  const [openModal, setOpenModal] = useState(false);
+  const modalTitle = "예약이 완료되었습니다.";
+  const modalContent = "";
 
-  console.log("Selected Designer Name:", hours); // 리덕스 상태 출력
-  if (hours === null) {
-    navigate('list/beauty')
-  }
-  const { id } = useParams();
+  const location = useLocation();
+  const id = location.state?.id; // state로 받은 값
+  console.log(id);
+  //   const [lists, setLists] = useState([]);
+
+  const navigate = useNavigate();
+  const [hours, setHours] = useState([])
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await api.get(`/api/reservation/hours`, { withCredentials: true });
+        if (response.data === 'common') {
+          navigate('/business/login')
+        }
+        setHours(response.data)
+      } catch (error) {
+        console.error('예약관리 상세보기 실패', error);
+        // navigate('/'); // 로그인 페이지로 리디렉션
+      }
+    };
+    fetchUser();
+  }, []);
+
   const [reservationDesinger, setReservationDesinger] = useState();
 
   useEffect(() => {
@@ -49,24 +64,24 @@ const SelectedDatePage = () => {
     fetchUser();
   }, []);
   if (reservationDesinger) {
-    // console.log("reservationDesinger")
-    // console.log(reservationDesinger)
+    console.log("reservationDesinger")
+    console.log(reservationDesinger)
   }
 
-  useEffect(() => {
-    console.log(id)
-    const list = async () => {
-      try {
-        const response = await api.get(`/api/desinger/day/list/${id}`, { id: id }, { withCredentials: true });
-        setLists(response.data);
-        console.log(response.data)
+  //   useEffect(() => {
+  //     console.log(id)
+  //     const list = async () => {
+  //       try {
+  //         const response = await api.get(`/api/desinger/day/list/${id}`, { id: id }, { withCredentials: true });
+  //         setLists(response.data);
+  //         console.log(response.data)
 
-      } catch (e) {
-        console.error('휴무일 리스트 오류:', e);
-      }
-    };
-    list();
-  }, []);
+  //       } catch (e) {
+  //         console.error('휴무일 리스트 오류:', e);
+  //       }
+  //     };
+  //     list();
+  //   }, []);
 
 
 
@@ -74,28 +89,27 @@ const SelectedDatePage = () => {
   const [modalData, setModalData] = useState(null);
 
 
-  const [activeTime, setActiveTime] = useState(null);
+  const [activeTime, setActiveTime] = useState([]);
 
   const filterDisabledDays = (date) => {
-    console.log(date)
-    console.log(hours)
+
     if (hours === null) {
-      navigate('/list/beauty'); // hours가 null일 때 이동
+      navigate('/business/login'); // hours가 null일 때 이동
       return false; // 이후 로직은 처리하지 않음
     }
     const day = getDay(date);
-    console.log(day)
-    console.log(hours[day]?.isOperatingDay)
     return hours[day]?.isOperatingDay;
   };
-  console.log(filterDisabledDays)
-
 
 
   const handleButtonClick = (time) => {
+    setActiveTime((prev) => {
+      if (prev.includes(time)) {
+        return prev.filter((t) => t !== time); // 이미 선택된 시간 클릭 시 해제
+      }
 
-    setActiveTime(time);
-
+      return [...prev, time].sort((a, b) => a - b); // 새로운 시간 추가 후 정렬
+    });
   };
 
   const closeModal = () => {
@@ -108,24 +122,24 @@ const SelectedDatePage = () => {
     navigate(-1);
   };
 
-  function createDate(year, month, day) {
-    // JavaScript에서 월은 0부터 시작하므로, 입력값에서 1을 빼서 월을 설정합니다.
-    return new Date(year, month - 1, day);
-  }
-  for(let i =0; i<lists.length; i++){
-    console.log(lists[i].desinger_close_day)
-  }
- 
-  // const disabledDates = [
-  //   createDate(2025, 2, 25), // 12월 31일
+  //   function createDate(year, month, day) {
+  //     // JavaScript에서 월은 0부터 시작하므로, 입력값에서 1을 빼서 월을 설정합니다.
+  //     return new Date(year, month - 1, day);
+  //   }
+  //   for(let i =0; i<lists.length; i++){
+  //     console.log(lists[i].desinger_close_day)
+  //   }
 
-  // ];
+  //   // const disabledDates = [
+  //   //   createDate(2025, 2, 25), // 12월 31일
 
-  const disabledDates = lists.map(item => createDate(
-    parseInt(item.desinger_close_day.split('-')[0]), // 년도
-    parseInt(item.desinger_close_day.split('-')[1]), // 월
-    parseInt(item.desinger_close_day.split('-')[2]) // 일
-  ));
+  //   // ];
+
+  //   const disabledDates = lists.map(item => createDate(
+  //     parseInt(item.desinger_close_day.split('-')[0]), // 년도
+  //     parseInt(item.desinger_close_day.split('-')[1]), // 월
+  //     parseInt(item.desinger_close_day.split('-')[2]) // 일
+  //   ));
 
   const dateLabels = {
     "2024-12-25": "크리스마스",
@@ -145,41 +159,39 @@ const SelectedDatePage = () => {
     const label = dateLabels[formattedDate]; // 특별한 날짜 라벨 (예: 크리스마스)
     const dayIndex = getDay(date); // 요일 정보 추출 (0: 일요일, 6: 토요일)
 
-    
     const isOperatingDay = hours?.[dayIndex]?.isOperatingDay; // 해당 요일의 영업 상태 확인
     const isSelected = startDate && format(startDate, 'yyyy-MM-dd') === formattedDate;
-    const isDisabledDate = disabledDates.some((disabledDate) => format(disabledDate, 'yyyy-MM-dd') === formattedDate); // 비활성화된 날짜 확인
+    // const isDisabledDate = disabledDates.some((disabledDate) => format(disabledDate, 'yyyy-MM-dd') === formattedDate); // 비활성화된 날짜 확인
 
     // "휴무" 라벨 적용 조건: 영업하지 않는 요일 또는 기존 라벨
     const displayLabel = isOperatingDay ? label : "휴무";
-    const disabledLabel = isDisabledDate ? "휴무일" : null;
-
-    return (
-      <div
-        className={`day-content ${!isOperatingDay ? "closed" : ""} ${isSelected ? "selected" : ""}`}
-      >
-        <div className="day-number">{day}</div>
-        {displayLabel && <div className="day-label">{displayLabel}</div>}
-        {disabledLabel && <div className="day-label disabled-label">{disabledLabel}</div>} {/* 휴무 라벨 추가 */}
-
-      </div>
-    );
+    // const disabledLabel = isDisabledDate ? "휴무일" : null;
 
     // return (
     //   <div
-    //     className={`day-content ${!isOperatingDay ? "closed" : ""} ${isSelected ? "selected" : ""}`}
-    //     style={{
-    //       border: "1px solid #ccc", // 칸막이 효과
-    //       borderRadius: "0", // 모서리 둥글기 제거 (표처럼 보이게 하기 위해)
-    //       boxSizing: "border-box", // 테두리를 포함한 박스 크기 계산
-    //       padding: "4px", // 내부 간격
-    //       backgroundColor: isSelected ? "#f0663f" : "", // 선택된 날짜 배경색
-    //     }}
+    //   className={`day-content ${!isOperatingDay ? "closed" : ""} ${isSelected ? "selected" : ""}`}
     //   >
     //     <div className="day-number">{day}</div>
     //     {displayLabel && <div className="day-label">{displayLabel}</div>}
+    //     {/* {disabledLabel && <div className="day-label disabled-label">{disabledLabel}</div>} 휴무 라벨 추가 */}
+
     //   </div>
     // );
+    return (
+      <div
+        className={`day-content ${!isOperatingDay ? "closed" : ""} ${isSelected ? "selected" : ""}`}
+        style={{
+          border: "1px solid #ccc", // 칸막이 효과
+          borderRadius: "0", // 모서리 둥글기 제거 (표처럼 보이게 하기 위해)
+          boxSizing: "border-box", // 테두리를 포함한 박스 크기 계산
+          padding: "4px", // 내부 간격
+          backgroundColor: isSelected ? "#f0663f" : "", // 선택된 날짜 배경색
+        }}
+      >
+        <div className="day-number">{day}</div>
+        {displayLabel && <div className="day-label">{displayLabel}</div>}
+      </div>
+    );
   };
 
 
@@ -205,7 +217,7 @@ const SelectedDatePage = () => {
       timeSlots.forEach((time) => {
         const current = parse(time, 'HH:mm', new Date());
 
-        if (isWithinInterval(current, { start, end: new Date(end.getTime() - 1) })) {
+        if (isWithinInterval(current, { start: new Date(start.getTime()), end: new Date(end.getTime() - 1) })) {
           disabledTimes.push(time);
         }
 
@@ -222,6 +234,9 @@ const SelectedDatePage = () => {
   };
 
   const [startDate, setStartDate] = useState('');
+
+
+
   const [selectDate, setSelectDate] = useState('')
 
 
@@ -269,6 +284,7 @@ const SelectedDatePage = () => {
       }
     }
   };
+  console.log(modalData)
 
   // const handleDateChange = (date) => {
   //   setStartDate(date);
@@ -282,29 +298,24 @@ const SelectedDatePage = () => {
   // };
   const disabledTimes = modalData?.disabledTimes || [];
 
-  const dispatch = useDispatch();
+  //   const dispatch = useDispatch();
 
   const handleItemClick = async () => {
-    console.log(selectDate)
-    console.log(activeTime)
-    const selectedDateObject = new Date(selectDate);
-    const dayOfWeek = selectedDateObject.getDay(); // 0: 일요일, 1: 월요일, ..., 6: 토요일
-    console.log("선택한 날짜의 요일(숫자):", dayOfWeek);
 
-    dispatch(setDate(selectDate));
-    dispatch(setStartTime(activeTime));
+    const data = {
+      date: selectDate,
+      time: activeTime,
+      desingerId: id
+    };
+    setOpenModal(true);
 
     //   try {
-    //     const response = await api.post('/api/beauty/reservation/timeCheck', {
-    //       activeTime: activeTime,
-    //     });
+    //     const response = await api.post('/api/reservation/business', data, { withCredentials: true });
     //     console.log('User authority data:', response.data);
 
     // } catch (error) {
     //     console.error('권한 조회 실패:', error.message);
     // }
-
-    navigate(`/pet-select/1`);
   };
 
   return (
@@ -325,7 +336,7 @@ const SelectedDatePage = () => {
                 onChange={handleDateChange}
                 inline
                 minDate={new Date()}
-                excludeDates={disabledDates}
+                // excludeDates={disabledDates}
                 filterDate={filterDisabledDays} // 특정 요일 비활성화
                 locale={ko}
                 dateFormat="yyyy-MM-dd"
@@ -456,7 +467,8 @@ const SelectedDatePage = () => {
                 {modalData?.filteredTimeSlots?.map((time) => (
                   <div
                     key={time}
-                    className={`time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
+                    className={`time-box ${activeTime.includes(time) ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''
+                      }`}
                     onClick={() => !disabledTimes.includes(time) && handleButtonClick(time)}
                   >
                     {time}
@@ -467,15 +479,22 @@ const SelectedDatePage = () => {
           )}
         </div>
       </div>
-      <div
-        className="Nbutton"
-        onClick={handleItemClick}
-        style={{ cursor: "pointer" }}
-      >
+      <div className="Nbutton" onClick={handleItemClick}>
         예약하기
       </div>
+      {openModal ? (
+        <LoginModal
+          openModal={() => {
+            setOpenModal(false);
+          }}
+          title={modalTitle}
+          content={modalContent}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };
 
-export default SelectedDatePage;
+export default Reservation;

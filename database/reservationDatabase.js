@@ -1,5 +1,8 @@
 
+
 const { BeautyReservation, sequelize } = require('../models');
+const { StoreHours } = require('../models');
+
 const dayjs = require("dayjs");
 // 사용자 생성 또는 조회 함수
 
@@ -201,7 +204,51 @@ const beautyReservationTime = async (date) => {
 
 }
 
+const businessHours = async (business_registration_number) => {
+    console.log(business_registration_number)
+  
+    try {
+        const result = await StoreHours.findOne({
+            where: { business_registration_number: business_registration_number },
+        });
+        console.log(result.hours)
+        return result.hours
+        
+    } catch (error) {
+        console.error('Failed to fetch authority request error: ', error);
+        res.status(500).json({ message: 'Failed to fetch authority request.' });
+    }
 
+
+}
+
+
+const businessReservation = async (data) => {
+    console.log("미용예약 데이터베이스")
+    console.log(data)
+    try {
+        const BeautyReservationData = await BeautyReservation.create({
+            business_registration_number: data.business_registration_number,
+            platform_id: '0',
+            pet_id: '0',
+            business_desinger_id: data.desingerId,
+            beauty_style: '0',
+            beauty_significant: '0',
+            beauty_caution: '0',
+            beauty_price: 0,
+            paid_price: 0,
+            reservation_applicationTime: data.now,
+            date: data.date,
+            start_time: data.start_time,
+            end_time: data.end_time ? data.end_time : data.start_time + 30,
+            reservation_state : '완료'
+        });
+        return BeautyReservationData;
+    } catch (error) {
+        throw new Error(`Failed to register pet: ${error.message}`);
+        
+    }
+};
 
 module.exports = {
     beautyReservation,
@@ -211,5 +258,7 @@ module.exports = {
     beautyReservationDesinger,
     beautyReservationReject,
     beautyTimeCheck,
-    beautyReservationTime
+    beautyReservationTime,
+    businessHours,
+    businessReservation
 };

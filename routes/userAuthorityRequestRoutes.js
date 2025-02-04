@@ -147,4 +147,17 @@ router.post('/user/authority/defense', authMiddleware, async (req, res) => {
     }
 })
 
+router.get('/user/authority/list', authMiddleware, async (req, res) => {
+    console.log("방어 라우트")
+    const platform_id = req.user.id;
+    try {
+        const userGetAuthority = await userAuthorityRequestDatabase.userAuthorityList(platform_id);
+        console.log(userGetAuthority)
+        res.json(userGetAuthority);
+    } catch (error) {
+        console.error('Failed to fetch authority request error: ', error);
+        res.status(500).json({ message: 'Failed to fetch authority request.' });
+    }
+})
+
 module.exports = router;

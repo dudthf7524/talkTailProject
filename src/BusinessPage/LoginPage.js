@@ -34,7 +34,7 @@ const Login = () => {
         setOpenModal(true);
         setTimeout(() => {
           navigate("/business/menu");
-        }, 2000);
+        }, 1000);
       }
     } catch (error) {
       console.error("등록 실패:", error);
@@ -45,7 +45,7 @@ const Login = () => {
   return (
     <div className="login" lang="ko">
       <div className="login-logo">
-        <img src={logoUrl} alt="logo img" style={{width : "50%",}}></img>
+        <img src={logoUrl} alt="logo img" style={{ width: "50%" }}></img>
       </div>
       <div className="login-text">관리자 로그인</div>
 

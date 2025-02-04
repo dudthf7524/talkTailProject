@@ -8,11 +8,12 @@ const kakao = require('../aligo_api/kakao');
 const authMiddlewareSession = require('../middleware/authMiddlewareSession');
 const userDatabase = require('../database/userDatabase');
 const kakaoProcess = require('../aligo_api/kakaoProcess');
+const { format, parse, addMinutes } = require('date-fns');
 
 
 router.post('/beauty/reservation', authMiddleware, async (req, res) => {
-    
-   
+
+
     const currentDateTime = dayjs();
     const formattedDateTime = currentDateTime.format('YYYY-MM-DD HH:mm');
     req.body.reservationApplicationTime = formattedDateTime;
@@ -29,13 +30,13 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
         }
     }
     // 특이사항 알고리즘
-   
+
     req.body.beauty_significant = significantSum
 
     const platform_id = req.user.id
     req.body.platform_id = platform_id;
     let user_information = {};
-    
+
     try {
         user_information = await userDatabase.getUserInformation(platform_id)
 
@@ -43,21 +44,21 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
         console.error('Error fetching userIformation:', error.message);
         res.status(500).json({ error: error.message });
     }
-    
+
     const business_owner_phone = req.body.business_owner_phone;
     const beauty_style = req.body.beauty_style;
     const star_time = req.body.startTime;
-    
+
 
     try {
         const result = await reservationDatabase.beautyReservation(req.body)
-       
+
     } catch (error) {
         console.error('Error saving reservation to database:', error.message);
         return res.status(500).json({ error: 'Database save failed' });
     }
-    
-    try{
+
+    try {
         req.body = []
         req.body.user_name = user_information.user_name;
         req.body.user_phone = user_information.user_phone;
@@ -68,7 +69,7 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
         const result = await kakaoProcess.reservationReception(req, res)
         console.log(result)
         res.status(201).json(result);
-    }catch (error){
+    } catch (error) {
         console.error('Error saving reservation to database:', error.message);
         return res.status(500).json({ error: 'Database save failed' });
     }
@@ -96,7 +97,7 @@ router.get('/beauty/reservation/detail/:id', async (req, res) => {
 
     const id = req.params.id;
     const date = req.params.date;
-    
+
     try {
         const result = await reservationDatabase.beautyReservationDetail(id)
         res.status(201).json(result);
@@ -111,22 +112,27 @@ router.get('/beauty/reservation/detail/:id/:date', async (req, res) => {
 
     const id = req.params.id;
     const date = req.params.date;
- 
+    const formatDate = new Date(date);
+    const dateNumber = formatDate.getDay();
+    console.log(formatDate)
+    console.log(dateNumber)
     console.log('routes')
     console.log(date)
     try {
         const result = await reservationDatabase.beautyReservationDetail(id)
-        const 요일 = 4;
         console.log()
         console.log('aaaaaaaaa')
-        var hourDay ;
-        for (let i = 0 ; i<Object.keys(result.hours).length; i++){
-            if(i == 요일){
+        var hourDay;
+        for (let i = 0; i < Object.keys(result.hours).length; i++) {
+            if (i == dateNumber) {
                 hourDay = result.hours[i]
             }
         }
+
         console.log(hourDay)
-        const resultTime  = await reservationDatabase.beautyReservationTime(date)
+        console.log('aaaaaaaaa')
+
+        const resultTime = await reservationDatabase.beautyReservationTime(date)
         console.log(resultTime)
         const results = [result, resultTime, hourDay];
         res.status(201).json(results);
@@ -159,29 +165,29 @@ router.put('/beauty/reservation/setCompleteTime/:id', async (req, res) => {
     console.log(user_phone)
     console.log(paid_price)
     console.log(typeof paid_price)
-    req.body.reservationDate = date+" "+start_time+"~"+reservationCompleteTime;
+    req.body.reservationDate = date + " " + start_time + "~" + reservationCompleteTime;
     const paid_prices = paid_price + beauty_price;
 
     console.log(paid_prices)
 
     try {
         const result = await reservationDatabase.setCompleteTime(id, reservationCompleteTime, beauty_price, paid_prices)
-        
+
     } catch (error) {
         console.error('Error fetching userIformation:', error.message);
         res.status(500).json({ error: error.message });
     }
 
-    
-    try{
+
+    try {
         req.body.receiver_1 = user_phone;
-        
-        
+
+
         console.log(req.body)
         const result = await kakaoProcess.reservationComplete(req, res)
         console.log(result)
         res.status(201).json(result);
-    }catch (error){
+    } catch (error) {
         console.error('Error saving reservation to database:', error.message);
         return res.status(500).json({ error: 'Database save failed' });
     }
@@ -221,25 +227,25 @@ router.put('/beauty/reservation/reject/:id', async (req, res) => {
 
     const beauty_reservation_id = req.params.id;
     const reject_content = req.body.rejectComment;
-    const user_phone  =req.body.user_phone
+    const user_phone = req.body.user_phone
     console.log(beauty_reservation_id)
     console.log(reject_content)
 
     try {
         const result = await reservationDatabase.beautyReservationReject(beauty_reservation_id, reject_content)
-       
+
     } catch (error) {
         console.error('Error fetching userIformation:', error.message);
         res.status(500).json({ error: error.message });
     }
-    
-    try{
+
+    try {
         req.body.receiver_1 = user_phone;
         console.log(req.body)
         const result = await kakaoProcess.reservationReject(req, res)
         console.log(result)
         res.status(201).json(result);
-    }catch (error){
+    } catch (error) {
         console.error('Error saving reservation to database:', error.message);
         return res.status(500).json({ error: 'Database save failed' });
     }
@@ -251,17 +257,17 @@ router.post('/beauty/reservation/timeCheck', async (req, res) => {
 
     const reservationTime = req.body.activeTime;
     console.log(reservationTime)
-   
+
     // const user_phone  =req.body.user_phone
 
     try {
         const result = await reservationDatabase.beautyTimeCheck(reservationTime)
-       
+
     } catch (error) {
         console.error('Error fetching userIformation:', error.message);
         res.status(500).json({ error: error.message });
     }
-    
+
     // try{
     //     req.body.receiver_1 = user_phone;
     //     console.log(req.body)
@@ -274,6 +280,61 @@ router.post('/beauty/reservation/timeCheck', async (req, res) => {
     // }
 
 })
+
+
+router.get('/reservation/hours', authMiddlewareSession, async (req, res) => {
+    console.log('aaaa')
+    console.log(req.user.registrationNumber)
+
+    const business_registration_number = req.user.registrationNumber
+
+
+    try {
+        const result = await reservationDatabase.businessHours(business_registration_number)
+        res.json(result)
+    } catch (error) {
+        console.error('Error fetching userIformation:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+})
+
+router.post('/reservation/business', authMiddlewareSession, async (req, res) => {
+    console.log('aaaa');
+    console.log(req.body);
+
+    const data = req.body;
+    const business_registration_number = req.user.registrationNumber;
+    console.log(business_registration_number);
+    data.business_registration_number = business_registration_number;
+
+    // 현재 시간 추가 (형식: YYYY-MM-DD HH:mm)
+    const now = format(new Date(), 'yyyy-MM-dd HH:mm');
+    console.log(now);
+    data.now = now;
+
+    for (let i = 0; i < data.time.length; i++) {
+
+        const dateObj = parse(data.time[i], "HH:mm", new Date());
+        const newTime = addMinutes(dateObj, 30);
+        const formattedTime = format(newTime, "HH:mm");
+        console.log(data.time[i])
+        console.log(formattedTime)
+
+        data.start_time = data.time[i];
+        data.end_time = formattedTime;
+
+
+        try {
+            const result = await reservationDatabase.businessReservation(data);
+           
+        } catch (error) {
+            console.error('Error fetching userInformation:', error.message);
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+
+});
 
 
 module.exports = router;

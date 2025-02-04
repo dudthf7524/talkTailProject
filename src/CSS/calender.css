@@ -225,17 +225,17 @@ li {
 
 /* react calender */
 .time-selection {
-    
+
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin: 16px ;
+    margin: 16px;
     width: 90%;
 }
 
 .time-box {
-    flex: 0 0 calc(17%);
-    max-width: calc(17%);
+    flex: 0 0 calc(30%);
+    max-width: calc(30%);
     text-align: center;
     padding: 10px;
     font-size: 14px;
@@ -243,6 +243,7 @@ li {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.2s ease, color 0.2s ease;
+
 }
 
 .time-box.clicked {
@@ -264,4 +265,10 @@ li {
 
 .pm {
     text-align: left;
+}
+
+.day-label.disabled-label {
+    font-size: 12px;
+    font-weight: bold;
+    color: gray;
 }

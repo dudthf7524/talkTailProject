@@ -53,6 +53,11 @@ import Notice from "./Page/MyPage/Notice";
 import NoticeDetail from "./Page/MyPage/NoticeDetail";
 import DesingerList from "./BusinessPage/DesingerList";
 import DesingerClosedDays from "./BusinessPage/DesingerClosedDays";
+import Authority from "./Page/User/Authority";
+import BusinessReservation from "./BusinessPage/Reservation";
+import ReservationDesinger from "./BusinessPage/ReservationDesinger";
+
+
 
 function App() {
   const [imageFiles, setImageFiles] = useState({
@@ -122,6 +127,7 @@ function App() {
             
             <Route path="/notice" element={<Notice />} />
             <Route path="/notice/:id" element={<NoticeDetail />} />
+            <Route path="/authority/management" element={<Authority />}/>
 
             <Route path="/business">
               <Route path="login" element={<Login />} />
@@ -159,7 +165,8 @@ function App() {
               <Route path="account/number" element={<AccountNumber />}/>
               <Route path="list/desinger" element={<DesingerList />}/>
               <Route path="write/ClosedDays" element={<DesingerClosedDays />}/>
-              
+              <Route path="reservation/" element={<BusinessReservation />}/>
+              <Route path="reservation/desinger" element={<ReservationDesinger />}/>
             </Route>
           </Routes>
         </ImageProvider>

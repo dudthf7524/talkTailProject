@@ -5,6 +5,7 @@ import "../../CSS/autoComplete.css";
 const Confirm = () => {
   const navigate = useNavigate();
   const petImgUrl = `${process.env.PUBLIC_URL}/PageImage/pet/pet_img2.png`;
+  const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
   const [userInformation, setUserInformation] = useState();
 
   useEffect(() => {
@@ -44,21 +45,21 @@ const Confirm = () => {
       <div lang="ko" className="loginPage_total">
         <div className="mid">
           <div className="navigation">
-            <div></div>
-            로그인 성공
-            <div></div>
+            <img src={logoUrl} alt="" />
           </div>
           <div className="review-mid">
             <div className="confirm" lang="ko">
               <h1>로그인 성공!</h1>
               <img src={petImgUrl} alt="" />
-              <p>{userInformation.user_name}님 로그인이 완료되었습니다.</p>
+              <p>
+                {userInformation.user_name}님<br /> 로그인이 완료되었습니다.
+              </p>
             </div>
           </div>
         </div>
         <div className="Nbutton2">
           <div className="Nbutton2-1" onClick={() => navigate("/user/edit")}>
-            수정하기
+            개인정보 수정하기
           </div>
           <div className="Nbutton2-2" onClick={() => navigate("/home")}>
             홈으로
