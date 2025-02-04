@@ -44,7 +44,6 @@ const ReservationDetail = () => {
         setTimeLists(response.data[1]);
         setHourDay(response.data[2]);
 
-
       } catch (error) {
 
         console.error('예약관리 상세보기 실패', error);
@@ -63,21 +62,16 @@ const ReservationDetail = () => {
   const closeModal = () => setModalOpen(false);
 
   console.log(hourday)
-  const handleConfirm = async () => {
 
-    console.log(reservationManagementList.business_name)
-    console.log(reservationManagementList.business_phone)
-    console.log(formData.business_no_show)
-    console.log("reservationCompleteTime")
-    console.log(reservationCompleteTime)
-    console.log("reservationCompleteTime")
-    const beauty_price = formData.beauty_price;
+  const handleConfirm = async () => {
+    const beauty_price = beautyPrice;
     const business_name = reservationManagementList.business_name;
     const business_phone = reservationManagementList.business_phone;
     const start_time = reservationManagementList.start_time;
     const date = reservationManagementList.date;
     const user_phone = reservationManagementList.user_phone;
     const paid_price = reservationManagementList.paid_price;
+
     try {
       console.log(reservationCompleteTime)
       const response = await api.put(`/api/beauty/reservation/setCompleteTime/${id}`, { reservationCompleteTime, beauty_price, business_name, business_phone, start_time, date, user_phone, paid_price }, { withCredentials: true });
@@ -104,8 +98,6 @@ const ReservationDetail = () => {
 
   const handleReject = async (rejectComment) => {
 
-    console.log('거절:', rejectComment); // 거절 사유 확인
-    console.log('거절:', rejectComment); // 거절 사유 확인
     const business_name = reservationManagementList.business_name;
     const business_phone = reservationManagementList.business_phone;
     const user_phone = reservationManagementList.user_phone;
@@ -113,7 +105,6 @@ const ReservationDetail = () => {
     try {
 
       const response = await api.put(`/api/beauty/reservation/reject/${id}`, { rejectComment, business_name, business_phone, user_phone }, { withCredentials: true });
-      console.log('수락');
       setCheckMessage('확정되었습니다.');
       setModalOpen(false);
       setCheckModalOpen(true);
@@ -265,7 +256,6 @@ const ReservationDetail = () => {
 
 
 
-  const [price, setPrice] = useState(""); // 가격을 문자열로 관리
 
 
   // 30분 단위로 순서대로 되어 있는지 확인하는 함수
@@ -347,33 +337,27 @@ const ReservationDetail = () => {
 
   };
 
-
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+  const formatPrice = (price) => {
+    if (!price) return ""; // 가격이 없을 경우 0원 표시
+    return `${Number(price).toLocaleString()}원`;
   };
-
-
 
   const priceSumButton = (price) => {
     console.log(price)
-    setBeautyPrice(prev => prev + price);
+    setBeautyPrice(prev => Number(prev) + price+"");
+
     console.log(beautyPrice)
 
   }
 
   // 숫자 버튼 클릭 시 호출되는 함수
   const handleNumberClick = (num) => {
-    setPrice((prevPrice) => prevPrice + num); // 숫자를 문자열 뒤에 추가
+    setBeautyPrice((prevPrice) => prevPrice + num); // 숫자를 문자열 뒤에 추가
   };
 
   // 지우기 버튼 클릭 시 호출되는 함수
   const handleBackspace = () => {
-    setPrice((prevPrice) => prevPrice.slice(0, -1)); // 마지막 문자 지우기
+    setBeautyPrice((prevPrice) => prevPrice.slice(0, -1)); // 마지막 문자 지우기
   };
 
   return (
@@ -513,21 +497,14 @@ const ReservationDetail = () => {
               <div className='detail-title'>미용가격</div>
 
               <div className='detail-info'>
-                <input
-                  type="number"
-                  name="beauty_price"
-                  min="0"
-                  step="1000" // 1000 단위로 값 증가
-                  value={beautyPrice}
-                  onChange={handleInputChange}
-                />
-
+                
+                <h3>{formatPrice(beautyPrice)|| "가격을 설정해주세요"}</h3> {/* 가격 표시 */}
+                
                 <div className='price-selection'>
                   <div className='price-box' onClick={() => priceSumButton(10000)}>+1만</div>
                   <div className='price-box' onClick={() => priceSumButton(50000)}>+5만</div>
                   <div className='price-box' onClick={() => priceSumButton(100000)}>+10만</div>
                 </div>
-                <h3>현재 가격: {price || "0"} 원</h3> {/* 가격 표시 */}
 
                 <div className='number-selection'>
                   <div className='number-box' onClick={() => handleNumberClick("1")}>1</div>
