@@ -98,7 +98,8 @@
 .detail-form2 {
     display: grid;
     grid-template-columns: 1fr 3fr;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
+    
 }
 
 .detail-title {
@@ -109,7 +110,7 @@
 
 .detail-info {
     justify-self: start;
-    margin-left: 50px;
+    padding-left: 50px;
     text-align: left;
     width: 100%;
 }
@@ -240,24 +241,22 @@
 
 
 .price-selection {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 15px;
-    width: 100%;
+    width: 95%;
     padding-top: 20px;
 
 }
 
 .price-box {
-    flex: 0 0 calc(20%);
-    max-width: calc(20%);
+    
     text-align: center;
     padding: 10px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .price-box:active {
@@ -268,7 +267,7 @@
 .number-selection {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: 70%;
+    width: 95%;
     padding-top: 20px;
     gap: 8px;
     text-align: center;
@@ -287,4 +286,44 @@
 .number-box:active {
     color: white;
     background-color: #F0663F;
+}
+
+
+.business-time-selection {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: 95%;
+    
+}
+
+.business-time-box {
+    
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+
+.business-time-box.clicked {
+    background-color: #f0663f;
+    color: white;
+
+}
+
+.business-time-box.disabled {
+    color: #ccc;
+    /* background-color: #f9f9f9; */
+    border-color: #eee;
+
+}
+
+.price-title{
+    font-size: 20px;
+    font-weight: bold;
+    
+    color: #eee;
 }
