@@ -7,6 +7,9 @@ import Tos from "./tos";
 import Privacy from "./privacy";
 import api from "../../Api";
 import "../../CSS/homePage.css";
+import Carousel from 'react-bootstrap/Carousel';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -34,7 +37,7 @@ const MainPage = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [reservationtList, setReservationtList] = useState([]);
+  const [reservationtLists, setReservationtList] = useState([]);
 
   useEffect(() => {
     const reservationManagement = async () => {
@@ -158,16 +161,49 @@ const MainPage = () => {
           </div>
         </div>
         {
-          reservationtList ? (
-            <div className="home-container1">
-              <div className="book-mark">
-                <div className="img"><img src={reservationtList.business_main_image}></img></div>
-                <div className="">방문횟수<br></br><span className="user_count">{reservationtList.user_count}</span></div>
-                <div className="">{reservationtList.business_name}</div>
-              </div>
-            </div>
+          reservationtLists ? (
+            <>
+              <h2>즐겨찾기</h2>
+              <Carousel className="Carousel" indicators={false}>
 
-
+                {
+                  reservationtLists.map((reservationtList, index) => (
+                    <Carousel.Item key={index} >
+                      <div className="img"><img style={{ width: "70%", height: "250px" }} src={reservationtList.business_main_image}></img></div>
+                      <Carousel.Caption>
+                        <h3><div className="">{reservationtList.business_name}</div></h3>
+                        <p>예약 수 {reservationtList.user_count}</p>
+                      </Carousel.Caption>
+                    </Carousel.Item>
+                  ))
+                }
+              </Carousel>
+              {/* <Carousel className="Carousel" indicators={false}>
+                <Carousel.Item >
+                  <div className="img"><img src={reservationtList.business_main_image}></img></div>
+                  <Carousel.Caption>
+                    <h3><div className="">{reservationtList.business_name}</div></h3>
+                    <p>예약 수 6</p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <div className="img"><img src={reservationtList.business_main_image}></img></div>
+                  <div className="carousel-text">
+                    <h3>{reservationtList.business_name}</h3>
+                    <p>예약 수 6</p>
+                  </div>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <div className="img"><img src={reservationtList.business_main_image}></img></div>
+                  <Carousel.Caption>
+                    <h3>Third slide label</h3>
+                    <p>
+                      Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+                    </p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+              </Carousel> */}
+            </>
           ) : (
             <div className="home-container1">
               <p>아직 예약내역이 없어요. 예약기능을 이용해보세요.</p>
@@ -179,36 +215,13 @@ const MainPage = () => {
                 예약하러 가기
               </div>
 
-              {/* <Carousel>
-                <Carousel.Item>
-                  <ExampleCarouselImage text="First slide" />
-                  <Carousel.Caption>
-                    <h3>First slide label</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                  </Carousel.Caption>
-                </Carousel.Item>
-                <Carousel.Item>
-                  <ExampleCarouselImage text="Second slide" />
-                  <Carousel.Caption>
-                    <h3>Second slide label</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  </Carousel.Caption>
-                </Carousel.Item>
-                <Carousel.Item>
-                  <ExampleCarouselImage text="Third slide" />
-                  <Carousel.Caption>
-                    <h3>Third slide label</h3>
-                    <p>
-                      Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-                    </p>
-                  </Carousel.Caption>
-                </Carousel.Item>
-              </Carousel> */}
+
             </div>
           )
         }
-        
+
         <div className="home-container2"></div>
+
         <div
           className="home-container3"
           ref={containerRef}
