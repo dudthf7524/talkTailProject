@@ -1,8 +1,8 @@
-.accountNumberList {
+.accountNumber {
     width: 100%;
 }
 
-.accountNumberList .accountNumberListNavigation {
+.accountNumber .accountNumberNavigation {
     color: #EB944D;
     /* 상단 바의 텍스트 색상 설정 */
     text-align: center;
@@ -21,8 +21,7 @@
     padding: 0 16px;
     user-select: none;
 }
-
-.accountNumberListNavigation button {
+.accountNumber button {
     background: none;
     /* 기본 버튼 배경 제거 */
     border: none;
@@ -36,36 +35,27 @@
     justify-content: center;
     align-items: center;
 }
-
-.accountNumberList .title {
+.accountNumber .accountContent {
+    
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    text-align: center;
-    padding: 10px;
-    font-size: 15px;
-    font-weight: bold;
+    grid-template-rows: repeat(2, 1fr);
+    text-align: left;
+    padding: 50px;
+   
+    
 }
 
-
-
-
-.accountNumberList-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    text-align: center;
-    padding: 10px;
+.accountNumber .accountContent input::placeholder {
+      
+    color: #C4C4C4;
 }
 
-.accountNumberList-item {
-
-    padding: 10px;
+.accountNumber .accountNumberButton{
+    width: 100%;
+    border: 1px solid;
+    padding-top : 50px;
+    background-color: #F0663F;
+    color: white;
+    
 }
 
-.accountNumberList-item button {
-    color: #EB944D;
-    background-color: white;
-    border-color: #EB944D;
-    cursor: pointer;
-
-
-}

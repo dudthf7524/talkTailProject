@@ -178,7 +178,7 @@ const AdminMenu = () => {
               </button>
               <button
                 className="menu-tbt-btn"
-                onClick={() => navigate("/business/account/number")}
+                onClick={() => navigate("/business/account/number/list")}
               >
                 <img
                   src={informationIcon}

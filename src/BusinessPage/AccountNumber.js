@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import api from '../Api';
+import '../BusinessCSS/accountNumber.css'
+import { useNavigate } from "react-router-dom";
+
 
 function AccountNumber() {
+
+  const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
+  const noteUrl = `${process.env.PUBLIC_URL}/PageImage/list/note_ic.svg`;
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     bankCode: "",
@@ -51,8 +58,8 @@ function AccountNumber() {
     console.log("Submitted account details:", formData);
 
     try {
-      const response = await api.post(`/api/business/account/number`, formData , { withCredentials: true });
-      if(response.data === 'common'){
+      const response = await api.post(`/api/business/account/number`, formData, { withCredentials: true });
+      if (response.data === 'common') {
         window.location = '/business/login';
       }
       window.location = '/business/menu';
@@ -63,55 +70,72 @@ function AccountNumber() {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "auto", textAlign: "center" }}>
-      <h2>계좌 정보 입력</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="bankCode">은행명:</label>
-          <select
-            id="bankCode"
-            name="bankCode"
-            value={formData.bankCode}
-            onChange={handleInputChange}
-            style={{ width: "100%", padding: "8px", margin: "8px 0" }}
-          >
-            <option value="">은행을 선택하세요</option>
-            {banks.map((bank) => (
-              <option key={bank.code} value={bank.code}>
-                {bank.name} ({bank.code})
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="accountHolder">예금주:</label>
-          <input
-            type="text"
-            id="accountHolder"
-            name="accountHolder"
-            value={formData.accountHolder}
-            onChange={handleInputChange}
-            placeholder="예금주 이름을 입력하세요"
-            style={{ width: "100%", padding: "8px", margin: "8px 0" }}
-          />
-        </div>
-        <div>
-          <label htmlFor="accountNumber">계좌번호:</label>
-          <input
-            type="text"
-            id="accountNumber"
-            name="accountNumber"
-            value={formData.accountNumber}
-            onChange={handleInputChange}
-            placeholder="계좌번호를 입력하세요"
-            style={{ width: "100%", padding: "8px", margin: "8px 0" }}
-          />
-        </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <button type="submit" style={{ padding: "10px 20px" }}>
-          제출
+    <div className='accountNumber'>
+      <div className='accountNumberNavigation'>
+        <button>
+          <img src={arrowButtonUrl} alt='' onClick={() => navigate('/business/menu')} />
         </button>
-      </form>
+        계좌번호 등록
+        <button onClick={() => navigate('/business/account/number')}>
+          <img src={noteUrl} alt='' />
+        </button>
+      </div>
+
+      <div>
+
+        <form onSubmit={handleSubmit}>
+
+          <div className="accountBox">
+            <div className='accountContent'>
+              <label htmlFor="bankCode">은행명</label>
+              <select
+                id="bankCode"
+                name="bankCode"
+                value={formData.bankCode}
+                onChange={handleInputChange}
+                style={{ width: "100%", padding: "10px" }}
+              >
+                <option value="">은행을 선택하세요</option>
+                {banks.map((bank) => (
+                  <option key={bank.code} value={bank.code}>
+                    {bank.name} ({bank.code})
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className='accountContent'>
+              <label htmlFor="accountHolder">예금주</label>
+              <input
+                type="text"
+                id="accountHolder"
+                name="accountHolder"
+                value={formData.accountHolder}
+                onChange={handleInputChange}
+                placeholder="예금주 이름을 입력하세요"
+                style={{ width: "100%", padding: "10px" }}
+              />
+            </div>
+            <div className='accountContent'>
+              <label htmlFor="accountNumber">계좌번호</label>
+              <input
+                type="text"
+                id="accountNumber"
+                name="accountNumber"
+                value={formData.accountNumber}
+                onChange={handleInputChange}
+                placeholder="계좌번호를 입력하세요"
+                style={{ width: "100%", padding: "10px" }}
+              />
+            </div>
+
+          </div>
+
+          {error && <p style={{ color: "red" }}>{error}</p>}
+          <button className="accountNumberButton" type="submit" style={{ padding: "10px 20px" }}>
+            등록하기
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

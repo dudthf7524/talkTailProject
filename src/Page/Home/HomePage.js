@@ -161,11 +161,10 @@ const MainPage = () => {
           </div>
         </div>
         {
-          reservationtLists ? (
+          reservationtLists.length > 0 ? (
             <>
               <h2>즐겨찾기</h2>
               <Carousel className="Carousel" indicators={false}>
-
                 {
                   reservationtLists.map((reservationtList, index) => (
                     <Carousel.Item key={index} >
