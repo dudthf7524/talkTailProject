@@ -1,0 +1,36 @@
+.Carousel {
+  width: 100%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(100%);
+  /* 흰색 → 검은색 변환 */
+}
+
+/* 화살표 버튼 위치 조정 */
+.carousel-control-prev {
+  left: -50px;
+  /* 왼쪽 바깥쪽으로 이동 */
+}
+
+.carousel-control-next {
+  right: -50px;
+  /* 오른쪽 바깥쪽으로 이동 */
+}
+
+.carousel-caption {
+  margin-top: 10px;
+  /* 이미지와의 간격 조정 */
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.carousel-text {
+  text-align: center;
+  margin-top: 10px;
+  /* 이미지와 텍스트 사이 간격 */
+  font-size: 18px;
+  font-weight: bold;
+}
+

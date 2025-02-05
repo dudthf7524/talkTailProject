@@ -12,13 +12,9 @@ const { format, parse, addMinutes } = require('date-fns');
 
 
 router.post('/beauty/reservation', authMiddleware, async (req, res) => {
-
-
     const currentDateTime = dayjs();
     const formattedDateTime = currentDateTime.format('YYYY-MM-DD HH:mm');
     req.body.reservationApplicationTime = formattedDateTime;
-
-
 
     // 특이사항 알고리즘
     let significantSum = "";
@@ -32,7 +28,6 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
     // 특이사항 알고리즘
 
     req.body.beauty_significant = significantSum
-
     const platform_id = req.user.id
     req.body.platform_id = platform_id;
     let user_information = {};
@@ -48,7 +43,6 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
     const business_owner_phone = req.body.business_owner_phone;
     const beauty_style = req.body.beauty_style;
     const star_time = req.body.startTime;
-
 
     try {
         const result = await reservationDatabase.beautyReservation(req.body)
@@ -326,7 +320,7 @@ router.post('/reservation/business', authMiddlewareSession, async (req, res) => 
 
         try {
             const result = await reservationDatabase.businessReservation(data);
-           
+
         } catch (error) {
             console.error('Error fetching userInformation:', error.message);
             res.status(500).json({ error: error.message });
@@ -334,6 +328,18 @@ router.post('/reservation/business', authMiddlewareSession, async (req, res) => 
     }
 
 
+});
+
+router.get('/user/reservation/bookmark', authMiddleware, async (req, res) => {
+    const platform_id = req.user.id;
+    console.log(platform_id)
+    try {
+        const result = await reservationDatabase.reservationBookmark(platform_id);
+        res.json(result)
+    } catch (error) {
+        console.error('Error fetching userInformation:', error.message);
+        res.status(500).json({ error: error.message });
+    }
 });
 
 

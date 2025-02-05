@@ -94,7 +94,6 @@ const authorityDefense = async (platform_id, business_registration_number) => {
 
   try {
     const authorityDefenseData = await UserAuthorityRequest.findOne(
-      { authority_is_available: true },
       {
         where:
         {

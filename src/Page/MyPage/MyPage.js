@@ -147,6 +147,12 @@ const MyPage = () => {
                 <div className="event-button-text">알림창</div>
               </div>
               <div className="event-button">
+                <button onClick={() => navigate("/authority/management")}>
+                  <img src={noteUrl} alt="" />
+                </button>
+                <div className="event-button-text">권한관리</div>
+              </div>
+              <div className="event-button">
                 <button onClick={() => navigate("/reservation")}>
                   <img src={calendarUrl} alt="" />
                 </button>

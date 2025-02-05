@@ -30,9 +30,7 @@ const Reservation = () => {
     };
     reservationManagement();
   }, []);
-  console.log("reservationtList");
-  console.log(reservationtList);
-  console.log("reservationtList");
+
   return (
     <div lang="ko">
       <div className="userReservation_total">
