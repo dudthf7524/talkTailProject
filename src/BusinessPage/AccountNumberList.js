@@ -2,27 +2,26 @@ import { useEffect } from 'react';
 import api from '../Api';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import '../BusinessCSS/accountNumberList.css'
 
 function AccountNumberList() {
     const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
     const noteUrl = `${process.env.PUBLIC_URL}/PageImage/list/note_ic.svg`;
     const navigate = useNavigate();
-    const [lists, setLists] = useState();
+    const [lists, setLists] = useState([]);
 
 
     useEffect(() => {
         const fetchAndAuthorizeUser = async () => {
             try {
-                const response = await api.get('/api/business/desinger/list', { withCredentials: true });
+                const response = await api.get('/api/business/account/number/list', { withCredentials: true });
                 setLists(response.data);
                 console.log(response.data)
 
                 if (response.data == "common") {
                     navigate('/business/login');
                 } else if (!response.data) {
-                    navigate('/business/register/designer')
+                    navigate('/business/account/number')
                 }
 
             } catch (e) {
@@ -44,28 +43,30 @@ function AccountNumberList() {
 
 
     return (
-        <div className='desingerlist'>
-            <div className='desingerlistNavigation'>
+        <div className='accountNumberList'>
+            <div className='accountNumberListNavigation'>
                 <button>
                     <img src={arrowButtonUrl} alt='' onClick={() => navigate('/business/menu')} />
                 </button>
-                디자이너 목록
-                <button onClick={()=>navigate('/business/register/desinger')}>
+                계좌번호 목록
+                <button onClick={()=>navigate('/business/account/number')}>
                     <img src={noteUrl} alt='' />
                 </button>
             </div>
 
             <div className='title'>
-                <div className='text'>이름</div>
-                <div className='text'>휴무일</div>
+                <div className='text'>은행명</div>
+                <div className='text'>예금주</div>
+                <div className='text'>계좌번호</div>
             </div>
             <div className="horizontal-line"></div>
 
             {
                 lists.map((list, index) => (
-                    <div key={index} className='desingerlist-row'>
-                        <div className='desingerlist-item'>{list.business_desinger_name}</div>
-                        <div className='desingerlist-item'><button  onClick={() => navigate('/business/write/ClosedDays', { state: { id: list.business_desinger_id } })}>휴무일 설정</button></div>
+                    <div key={index} className='accountNumberList-row'>
+                        <div className='accountNumberList-item'>{list.name}</div>
+                        <div className='accountNumberList-item'>{list.account_holder}</div>
+                        <div className='accountNumberList-item'>{list.account_number}</div>
                     </div>
 
                 )

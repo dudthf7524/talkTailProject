@@ -457,6 +457,21 @@ router.post('/business/account/number', authMiddlewareSession, async (req, res) 
   }
 });
 
+router.get('/business/account/number/list', authMiddlewareSession, async (req, res) => {
+
+  const business_registration_number = req.user.registrationNumber;
+
+
+  try {
+    const result = await businessDatabase.accountNumberList( business_registration_number);
+
+    res.status(201).json( result );
+  } catch (error) {
+    console.error('Error creating business with images:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 router.post('/business/style/accountNumberGet', async (req, res) => {
 
   const business_registration_number = req.body.business_registration_number;
