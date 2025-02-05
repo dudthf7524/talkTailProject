@@ -68,7 +68,7 @@ const CustomerManagement = () => {
                                     ?
                                     <button
                                         className='result-button-complete'
-                                        onClick={() => navigate('/business/write/notice')}
+                                        onClick={() => navigate('/business/customer/management/detail' , { state: { id: reservationManagement.beauty_reservation_id } })}
                                     >
                                         작성완료
                                     </button>

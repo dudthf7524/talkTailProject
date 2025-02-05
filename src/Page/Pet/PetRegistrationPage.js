@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../../CSS/pet.css";
 import "../../CSS/autoComplete.css";
@@ -46,8 +46,66 @@ const PetRegistration = () => {
   // 새로추가한내용
 
   const navigate = useNavigate();
-  const { id } = useParams(); // URL에서 이벤트 ID 가져오기
+  const [errors, setErrors] = useState({});
 
+  console.log(errors)
+  const nameRef = useRef(null);
+  const birthDateRef = useRef(null);
+
+  const validateForm = () => {
+    let newErrors = {};
+    const koreanRegex = /^[\uAC00-\uD7A3]+$/; // 한글 완성형 검사
+
+    if (!formData.name.trim()) {
+      newErrors.name = "이름을 입력해주세요.";
+      nameRef.current.focus();
+      
+    }
+    if (!koreanRegex.test(formData.name)) {
+      newErrors.name = "이름은 한글만 입력 가능합니다.";
+      nameRef.current.focus();
+      
+    }
+    if (!formData.birthDate.trim()) {
+      newErrors.birthDate = "태어난 날을 입력해주세요.";
+      birthDateRef.current.focus();
+     
+    }
+    console.log(newErrors)
+    // if (!selectedOption) {
+    //   newErrors.breed = "품종을 선택해주세요.";
+    // }
+    // if (!formData.birthDate.trim()) {
+    //   newErrors.birthDate = "태어난 날을 입력해주세요.";
+    // }
+    // if (!formData.weight.trim() || isNaN(formData.weight)) {
+    //   newErrors.weight = "몸무게는 숫자로 입력해주세요.";
+    // }
+    // if (!formData.gender) {
+    //   newErrors.gender = "성별을 선택해주세요.";
+    // }
+    // if (!formData.neuter) {
+    //   newErrors.neuter = "중성화 여부를 선택해주세요.";
+    // }
+
+    setErrors(newErrors);
+
+    // if (newErrors.name) {
+    //   nameRef.current.focus();
+    // } 
+    // else if (newErrors.breed) {
+    //   breedRef.current.focus();
+    // } else if (newErrors.birthDate) {
+    //   birthDateRef.current.focus();
+    // } else if (newErrors.weight) {
+    //   weightRef.current.focus();
+    // } else if (newErrors.gender) {
+    //   genderRef.current.focus();
+    // } else if (newErrors.neuter) {
+    //   neuterRef.current.focus();
+    // }
+    return Object.keys(newErrors).length === 0;
+  };
   // 이미지 URL 및 상태 변수
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
   const defaultPetImgUrl = `${process.env.PUBLIC_URL}/PageImage/pet/pet_img_L.png`;
@@ -68,6 +126,7 @@ const PetRegistration = () => {
     etc: "",
     neuter: "",
   });
+
   formData.species = selectedSpecies;
   formData.breed = selectedOption;
 
@@ -105,7 +164,14 @@ const PetRegistration = () => {
     }
   };
 
+
+  
+
+ 
+
   const handleSubmit = async () => {
+    if (!validateForm()) return;
+
     const petData = new FormData();
     petData.append("name", formData.name);
     petData.append("species", formData.species);
@@ -174,8 +240,11 @@ const PetRegistration = () => {
               placeholder="이름이 무엇인가요?"
               name="name"
               value={formData.name}
+              ref={nameRef}
               onChange={handleInputChange}
             />
+            {errors.name && <p className="error">{errors.name}</p>}
+
           </div>
           <div className="PetRegistration-img-container">
             <div className="PetRegistration-content">
@@ -366,10 +435,13 @@ const PetRegistration = () => {
                 className="textbox-gray"
                 placeholder="2025-01-31"
                 name="birthDate"
+                ref={birthDateRef}
                 value={formData.birthDate}
                 onChange={handleInputChange}
               />
+               {errors.birthDate && <p className="error">{errors.birthDate}</p>}
             </div>
+            {errors.birthDate && <p className="error">{errors.birthDate}</p>}
           </div>
           <div className="PetRegistration-container2">
             <p>몸무게</p>
