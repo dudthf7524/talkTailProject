@@ -47,6 +47,7 @@ const PetRegistration = () => {
 
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
+  const [name, setName] = useState('');
 
   console.log(errors)
   const nameRef = useRef(null);
@@ -55,21 +56,26 @@ const PetRegistration = () => {
   const validateForm = () => {
     let newErrors = {};
     const koreanRegex = /^[\uAC00-\uD7A3]+$/; // 한글 완성형 검사
-
+    console.log(formData.name)
+    console.log(newErrors)
     if (!formData.name.trim()) {
+      setName('이름을 입력해주세요.');
       newErrors.name = "이름을 입력해주세요.";
       nameRef.current.focus();
+      console.log('aaa')
+      return;
       
     }
-    if (!koreanRegex.test(formData.name)) {
+    
+    else if (!koreanRegex.test(formData.name)) {
       newErrors.name = "이름은 한글만 입력 가능합니다.";
       nameRef.current.focus();
-      
-    }
+      console.log('bbb')
+      return;    }
     if (!formData.birthDate.trim()) {
       newErrors.birthDate = "태어난 날을 입력해주세요.";
       birthDateRef.current.focus();
-     
+      return;     
     }
     console.log(newErrors)
     // if (!selectedOption) {
@@ -89,7 +95,7 @@ const PetRegistration = () => {
     // }
 
     setErrors(newErrors);
-
+    console.log(errors)
     // if (newErrors.name) {
     //   nameRef.current.focus();
     // } 
@@ -104,7 +110,7 @@ const PetRegistration = () => {
     // } else if (newErrors.neuter) {
     //   neuterRef.current.focus();
     // }
-    return Object.keys(newErrors).length === 0;
+   
   };
   // 이미지 URL 및 상태 변수
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
@@ -126,7 +132,7 @@ const PetRegistration = () => {
     etc: "",
     neuter: "",
   });
-
+  console.log(errors)
   formData.species = selectedSpecies;
   formData.breed = selectedOption;
 
@@ -243,8 +249,7 @@ const PetRegistration = () => {
               ref={nameRef}
               onChange={handleInputChange}
             />
-            {errors.name && <p className="error">{errors.name}</p>}
-
+            {name && <p className="error">{name}</p>}
           </div>
           <div className="PetRegistration-img-container">
             <div className="PetRegistration-content">
