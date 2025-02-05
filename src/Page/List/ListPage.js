@@ -132,6 +132,7 @@ const ListPage = () => {
     }
   };
 
+  console.log(listData)
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value); // 검색어 상태 업데이트
@@ -139,6 +140,7 @@ const ListPage = () => {
   };
 
   const filterListData = listData.filter(
+    
     (list) =>
       list.business_name.toLowerCase().includes(searchTerm.toLowerCase()) // 대소문자 구분 없이 검색
   );
@@ -250,10 +252,10 @@ const ListPage = () => {
         <div className="list-mid">
           {/* beautyListData 배열을 순회하여 렌더링 */}
           {filterListData &&
-            filterListData.map((list) => (
+            filterListData.map((list, index) => (
               <div
-                className="list-list-container"
-                key={list.business_information_id}
+                className="listPage-list-container"
+                key={index}
               >
                 <div className="list-image-container">
                   {/* 이미지가 있는 경우에만 렌더링 */}

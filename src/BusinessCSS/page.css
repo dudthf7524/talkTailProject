@@ -44,7 +44,6 @@
     padding: 0; /* 기본 패딩 제거 */
     cursor: pointer; /* 커서 변경 */
     width: 50px;
-    height: 50px;
     justify-content: center;
     align-items: center;
   }

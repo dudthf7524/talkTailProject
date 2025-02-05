@@ -56,7 +56,7 @@ import DesingerClosedDays from "./BusinessPage/DesingerClosedDays";
 import Authority from "./Page/User/Authority";
 import BusinessReservation from "./BusinessPage/Reservation";
 import ReservationDesinger from "./BusinessPage/ReservationDesinger";
-
+import AccountNumberList from "./BusinessPage/AccountNumberList";
 
 
 function App() {
@@ -163,10 +163,12 @@ function App() {
               <Route path="day-on-off/edit" element={<DayOnOffEdit />} />
               <Route path="edit/option" element={<BusinessBeautyEditOption />}/>
               <Route path="account/number" element={<AccountNumber />}/>
+              <Route path="account/number/list" element={<AccountNumberList />}/>
               <Route path="list/desinger" element={<DesingerList />}/>
               <Route path="write/ClosedDays" element={<DesingerClosedDays />}/>
               <Route path="reservation/" element={<BusinessReservation />}/>
               <Route path="reservation/desinger" element={<ReservationDesinger />}/>
+              
             </Route>
           </Routes>
         </ImageProvider>
