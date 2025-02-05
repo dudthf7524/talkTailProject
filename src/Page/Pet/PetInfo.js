@@ -119,6 +119,7 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
                 className={`pet-contents ${
                   selectedPetId === pet.pet_id ? "selected" : ""
                 }`}
+                onClick={() => handlePetSelect(pet)}
                 key={pet.pet_id}
               >
                 <div className="pet-contents-img">
@@ -127,7 +128,6 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
                 <div className="infoBox">
                   <div
                     className="pet-contents-info"
-                    onClick={() => handlePetSelect(pet)}
                     style={{ cursor: "pointer" }}
                   >
                     <h1>{pet.pet_name}</h1>
