@@ -1,0 +1,61 @@
+.accountNumber {
+    width: 100%;
+}
+
+.accountNumber .accountNumberNavigation {
+    color: #EB944D;
+    /* 상단 바의 텍스트 색상 설정 */
+    text-align: center;
+    /* 텍스트를 가운데 정렬 */
+    border-bottom: #EB944D 1px solid;
+    /* 상단 바의 아래쪽에 1px 두께의 테두리를 설정 */
+    height: 72px;
+    /* 상단 바의 높이와 같은 값으로 설정 */
+    font-weight: 400;
+    font-size: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    padding: 0 16px;
+    user-select: none;
+}
+.accountNumber button {
+    background: none;
+    /* 기본 버튼 배경 제거 */
+    border: none;
+    /* 기본 버튼 테두리 제거 */
+    padding: 0;
+    /* 기본 패딩 제거 */
+    cursor: pointer;
+    /* 커서 변경 */
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+}
+.accountNumber .accountContent {
+    
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    text-align: left;
+    padding: 50px;
+   
+    
+}
+
+.accountNumber .accountContent input::placeholder {
+      
+    color: #C4C4C4;
+}
+
+.accountNumber .accountNumberButton{
+    width: 100%;
+    border: 1px solid;
+    padding-top : 50px;
+    background-color: #F0663F;
+    color: white;
+    
+}
+

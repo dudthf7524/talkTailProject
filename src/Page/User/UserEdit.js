@@ -3,13 +3,19 @@ import axios from "axios";
 import { redirect, useNavigate } from "react-router-dom";
 import api from "../../Api";
 import UserEditModal from "../Components/UserEditModal";
+import UserEditOpenModal from "./UserEditOpenModal";
+import Modal from "../../modal";
 
 function UserEdit() {
   const navigate = useNavigate();
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
   const keyButtonUrl = `${process.env.PUBLIC_URL}/images/icon/keyboard_return.svg`;
   const [userInformation, setUserInformation] = useState();
-
+  const [userInforMationData, setUserInforMationData] = useState();
+  const [openModal, setOpenModal] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [alertTitle, setAlertTitle] = useState("");
+  const [alertContent, setAlertContent] = useState("");
   useEffect(() => {
     fetchUserInformation();
   }, []);
@@ -26,7 +32,7 @@ function UserEdit() {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data.user);
+      // console.log(response.data.user);
       setUserInformation(response.data.user);
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -64,7 +70,7 @@ function UserEdit() {
     });
   };
 
-  console.log(formData);
+  // console.log(formData);
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleEdit();
@@ -72,23 +78,22 @@ function UserEdit() {
   };
 
   const handleEdit = async () => {
-    console.log(userInformation.user_information_id);
-    console.log(formData);
+    // console.log("UserEidt 속 : ", userInformation.user_information_id);
+    // console.log("UserEidt 속 : ", formData);
 
     // user.id를 formData에 추가
     const userInforMationData = {
       ...formData,
       user_information_id: userInformation.user_information_id, // user.id를 formData에 추가
     };
-    console.log(userInforMationData);
+    // console.log("userInforMationData : ", userInforMationData);
+    setUserInforMationData(userInforMationData);
     try {
       // 서버로 FormData를 전송
-      const response = await api.put("/api/user/edit", userInforMationData, {});
-
-      console.log("Upload successful:", response.data);
-
+      // const response = await api.put("/api/user/edit", userInforMationData, {});
+      // console.log("Upload successful:", response.data);
       // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
-      navigate("/user/edit"); // 성공 페이지로 이동
+      // navigate("/user/edit"); // 성공 페이지로 이동
     } catch (error) {
       console.error("Error during upload:", error);
       // 오류 처리
@@ -100,17 +105,39 @@ function UserEdit() {
   const handleConfirmEdit = () => {
     handleEdit();
     setPopupMessage("내 정보 수정완료");
-    setShowPopup(true);
-    setTimeout(() => {
-      setShowPopup(false);
+    // setShowPopup(true);
+    // setTimeout(() => {
+    //   setShowPopup(false);
 
-      window.location.href = "/user/edit";
-    }, 3000);
+    //   window.location.href = "/user/edit";
+    // }, 3000);
   };
   const handleClosePopup = () => {
     setShowPopup(false);
     if (popupMessage === "You have been logged out.") {
       navigate("/"); // 로그아웃 후 홈 페이지로 이동
+    }
+  };
+  const checkForm = () => {
+    const userInforMationData = {
+      ...formData,
+      user_information_id: userInformation.user_information_id, // user.id를 formData에 추가
+    };
+    // console.log("userInforMationData : ", userInforMationData);
+    setUserInforMationData(userInforMationData);
+    setAlertTitle("입력을 확인하세요.");
+    if (!formData.user_name) {
+      setAlertContent("이름을 입력해주세요.");
+      setOpenAlert(true);
+    } else if (
+      !formData.user_phone1 ||
+      !formData.user_phone2 ||
+      !formData.user_phone3
+    ) {
+      setAlertContent("전화번호를 입력해주세요.");
+      setOpenAlert(true);
+    } else {
+      setOpenModal(true);
     }
   };
   return (
@@ -120,7 +147,11 @@ function UserEdit() {
           <img src={arrowButtonUrl} alt="" onClick={() => navigate(-1)} />
         </button>
         내 정보 수정
-        <div onClick={handleConfirmEdit} style={{ cursor: "pointer" }}>
+        <div
+          // onClick={handleConfirmEdit}
+          onClick={checkForm}
+          style={{ cursor: "pointer" }}
+        >
           수정
         </div>
       </div>
@@ -133,7 +164,7 @@ function UserEdit() {
             value={formData.user_name}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
-            placeholder="사업자 등록명"
+            placeholder="톡테일"
           />
         </div>
         <div className="input-container">
@@ -175,6 +206,28 @@ function UserEdit() {
           isWarning={popupMessage.includes("Failed")}
           children={popupMessage}
         ></UserEditModal>
+      )}
+      {openModal ? (
+        <UserEditOpenModal
+          openModal={() => {
+            setOpenModal(false);
+          }}
+          userInforMationData={userInforMationData}
+          popupMessage={popupMessage}
+        />
+      ) : (
+        ""
+      )}
+      {openAlert ? (
+        <Modal
+          openModal={() => {
+            setOpenAlert(false);
+          }}
+          title={alertTitle}
+          content={alertContent}
+        />
+      ) : (
+        ""
       )}
     </div>
   );

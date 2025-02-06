@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import NButtonContainer from "../Components/NavigatorBar/NButtonContainer";
-
 import { useNavigate, useParams } from "react-router-dom";
-
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBeautyList } from "../../redux/beautyList";
 import axios from "axios";
 import api from "../../Api";
 import AuthorityReauest from "../Components/AuthorityReauest";
 import "../../CSS/reservationModal.css";
+import Modal from "../../modal";
 
 const ListPage = () => {
   const navigate = useNavigate();
@@ -27,6 +26,10 @@ const ListPage = () => {
 
   const [selectedBusiness, setSelectedBusiness] = useState(); // 선택된 비즈니스 정보
   const [selectBusinessName, setSelectBusinessName] = useState();
+
+  const [openModal, setOpenModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalContent, setModalContent] = useState("");
   const handleAuthorityRequestClick = (
     business_registration_number,
     business_owner_phone
@@ -43,7 +46,7 @@ const ListPage = () => {
   };
 
   const handleConfirmAuthorityRequest = () => {
-    console.log(selectedBusiness)
+    console.log(selectedBusiness);
 
     if (selectedBusiness) {
       userAuthorityRequestButton(selectedBusiness); // 권한 요청 함수 호출
@@ -81,7 +84,12 @@ const ListPage = () => {
     navigate(-1);
   };
 
-  const handleItemClick = async (id, business_registration_number, business_name, business_owner_phone) => {
+  const handleItemClick = async (
+    id,
+    business_registration_number,
+    business_name,
+    business_owner_phone
+  ) => {
     console.log(business_registration_number);
     console.log(business_name);
     console.log(business_owner_phone);
@@ -104,25 +112,26 @@ const ListPage = () => {
       console.log("response.data");
       console.log(response.data);
       console.log("response.data");
-
+      setModalTitle("알림");
       if (response.data == null) {
-        setSelectBusinessName(business_name)
+        setSelectBusinessName(business_name);
         setSelectedBusiness({
           business_registration_number: business_registration_number,
           business_owner_phone: business_owner_phone,
-          
         });
         setModalMessage("권한 요청을 하시겠습니까?"); // 모달 메시지 설정
         setShowModal(true); // 모달 띄우기
       } else if (response.data.authority_state === "") {
-        setModalMessage("권한 요청 완료 후 이용 가능합니다.");
-        setAuthorityRequestModal(true);
+        // setModalMessage("권한 요청 완료 후 이용 가능합니다.");
+        // setAuthorityRequestModal(true);
+        setModalContent("권한 요청 완료 후 이용 가능합니다.");
+        setOpenModal(true);
       } else if (response.data.authority_state === "거절") {
-        setModalMessage("권한 요청 거절");
-        setAuthorityRequestModal(true);
+        setModalContent("권한 요청 거절");
+        setOpenModal(true);
       } else if (response.data.authority_state === "대기") {
-        setModalMessage("권한 요청 대기 중입니다.");
-        setAuthorityRequestModal(true);
+        setModalContent("권한 요청 대기 중입니다.");
+        setOpenModal(true);
       } else if (response.data.authority_state === "완료") {
         navigate(`/business/detail/${id}`);
       }
@@ -132,6 +141,7 @@ const ListPage = () => {
     }
   };
 
+  console.log(listData);
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value); // 검색어 상태 업데이트
@@ -190,7 +200,7 @@ const ListPage = () => {
       if (!token) {
         throw new Error("No token found.");
       }
-      console.log(business_owner_phone)
+      console.log(business_owner_phone);
       const response = await api.post(
         "/api/user/authority/request",
         {
@@ -250,10 +260,19 @@ const ListPage = () => {
         <div className="list-mid">
           {/* beautyListData 배열을 순회하여 렌더링 */}
           {filterListData &&
-            filterListData.map((list) => (
+            filterListData.map((list, index) => (
               <div
-                className="list-list-container"
-                key={list.business_information_id}
+                className="listPage-list-container"
+                key={index}
+                onClick={() =>
+                  handleItemClick(
+                    list.business_information_id,
+                    list.business_registration_number,
+                    list.business_name,
+                    list.business_owner_phone
+                  )
+                }
+                style={{ cursor: "pointer" }}
               >
                 <div className="list-image-container">
                   {/* 이미지가 있는 경우에만 렌더링 */}
@@ -262,14 +281,6 @@ const ListPage = () => {
                       src={list.business_main_image}
                       alt={list.business_name}
                       style={{ cursor: "pointer" }}
-                      onClick={() =>
-                        handleItemClick(
-                          list.business_information_id,
-                          list.business_registration_number,
-                          list.business_name,
-                          list.business_owner_phone
-                        )
-                      }
                     />
                   ) : (
                     <div>No Image Available</div> // 이미지가 없으면 대체 텍스트
@@ -368,7 +379,17 @@ const ListPage = () => {
           </div>
         </div>
       )}
-
+      {openModal ? (
+        <Modal
+          openModal={() => {
+            setOpenModal(false);
+          }}
+          title={modalTitle}
+          content={modalContent}
+        />
+      ) : (
+        ""
+      )}
       <NButtonContainer />
     </div>
   );

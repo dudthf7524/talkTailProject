@@ -250,6 +250,35 @@ const businessReservation = async (data) => {
     }
 };
 
+const reservationBookmark = async (platform_id) => {
+    console.log(platform_id)
+    try {
+        let sql = "";
+        sql += "select business_name, business_main_image, count(business_name) as user_count from beauty_reservation br ";
+        sql += "join business_information bi ";
+        sql += "on br.business_registration_number = bi.business_registration_number ";
+        sql += "where br.reservation_state='완료' and br.platform_id = :platform_id ";
+        sql += "group by bi.business_name, business_main_image ";
+
+        const [results, metadata] = await sequelize.query(
+
+            sql,
+            {
+                replacements: { platform_id: platform_id }, // 바인딩 파라미터
+                type: sequelize.QueryTypes.SELECTALL, // 쿼리 유형
+                logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
+            }
+
+        );
+        console.log(results)
+        // 나이 계산 함수 (dayjs 사용)
+        return results
+        
+    } catch (error) {
+        throw new Error(`Failed to beautyReservationDetail: ${error.message}`);
+    }
+};
+
 module.exports = {
     beautyReservation,
     beautyReservationGet,
@@ -260,5 +289,6 @@ module.exports = {
     beautyTimeCheck,
     beautyReservationTime,
     businessHours,
-    businessReservation
+    businessReservation,
+    reservationBookmark
 };

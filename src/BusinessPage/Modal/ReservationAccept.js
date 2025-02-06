@@ -5,7 +5,7 @@ const ReservationAcceptModal = ({ isOpen, onClose, onConfirm,registerInformation
     if (!isOpen) return null;
   
     return (
-      <div className="modal-overlay">
+      <div className="business-modal-overlay">
         <div className="modal-content1">
           <div>이 예약을 확정합니다.</div>
           <div className="modal-buttons">

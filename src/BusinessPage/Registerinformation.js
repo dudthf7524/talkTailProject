@@ -186,7 +186,7 @@ function RegisterInformation() {
             onClick={() => navigate("/business/menu")}
           />
         </button>
-        등록자료 올리기1
+        등록자료 올리기
         <div onClick={() => openModal("accept")}>저장</div>
       </div>
       <div className="main-mid">

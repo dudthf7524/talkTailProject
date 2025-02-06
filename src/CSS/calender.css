@@ -225,7 +225,6 @@ li {
 
 /* react calender */
 .time-selection {
-
     display: flex;
     flex-wrap: wrap;
     gap: 8px;

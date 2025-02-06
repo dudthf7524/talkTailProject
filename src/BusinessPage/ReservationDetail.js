@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import '../CSS/auth.css'
-import '../CSS/reservation.css'
+import '../BusinessCSS/reservation.css'
 import ReservationAcceptModal from './Modal/ReservationAccept';
 import ReservationRejectModal from './Modal/ReservationReject';
 import ReservationCheckModal from './Modal/ReservationCheck';
@@ -27,7 +27,6 @@ const ReservationDetail = () => {
   const [reservationCompleteTime, setReservationCompleteTime] = useState(''); // 완료 시간 상태 추가
   const [timeList, setTimeLists] = useState([]);
   const [hourday, setHourDay] = useState([]);
-
   const [formData, setFormData] = useState({
     beauty_price: 0,
   });
@@ -127,7 +126,7 @@ const ReservationDetail = () => {
   const businessEndTime = hourday?.end_time || "18:00"; // 기본값 18:00
 
   const timeSlots = generateTimeSlots(businessStartTime, businessEndTime, 30);
-
+  console.log(timeSlots);
   function generateTimeSlots(start_time, end_time, intervalMinutes) {
     const start = parse(start_time, 'HH:mm', new Date());
     const end = parse(end_time, 'HH:mm', new Date());
@@ -169,7 +168,9 @@ const ReservationDetail = () => {
   var filteredTimeSlots;
 
   const completeTimeProcess = () => {
-    if (reservationManagementList.date > today) {
+    console.log(reservationManagementList.date)
+
+    if (reservationManagementList.date >= today) {
       filteredTimeSlots = timeSlots.filter((time) => {
         const current = parse(time, 'HH:mm', new Date());
         let start_time = reservationManagementList?.start_time || '00:00';
@@ -339,25 +340,38 @@ const ReservationDetail = () => {
 
   const formatPrice = (price) => {
     if (!price) return ""; // 가격이 없을 경우 0원 표시
+   
+    
     return `${Number(price).toLocaleString()}원`;
   };
 
   const priceSumButton = (price) => {
-    console.log(price)
-    setBeautyPrice(prev => Number(prev) + price+"");
-
-    console.log(beautyPrice)
+    
+    setBeautyPrice(prev => Number(prev) + price + "");
+  
 
   }
 
   // 숫자 버튼 클릭 시 호출되는 함수
   const handleNumberClick = (num) => {
     setBeautyPrice((prevPrice) => prevPrice + num); // 숫자를 문자열 뒤에 추가
+   
   };
 
   // 지우기 버튼 클릭 시 호출되는 함수
   const handleBackspace = () => {
+    if(beautyPrice ===''){
+     
+    }
     setBeautyPrice((prevPrice) => prevPrice.slice(0, -1)); // 마지막 문자 지우기
+    
+   
+   
+  };
+
+  const priceStyle = {
+    
+    color: beautyPrice ? "black" : "", // beautyPrice 값이 있으면 검은색, 없으면 기본색 (빈칸)
   };
 
   return (
@@ -452,29 +466,29 @@ const ReservationDetail = () => {
                 {reservationManagementList.end_time}
               </div>
             ) : reservationManagementList.reservation_state === '대기' ? (
-              <div id="modal-body">
-                <div className="time-selection">
-                  {
-                    reservationNo ? (
-                      <div className="time-selection" style={{ color: "red", fontWeight: "bold" }}>
-                        예약불가
-                      </div>
-                    ) : (
-                      <div className="time-selection">
-                        {filteredTimeSlots?.map((time) => (
-                          <div
-                            key={time}
-                            className={`time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
-                            onClick={() => !disabledTimes.includes(time) && handleButtonClick(time)} // 비활성화된 시간 클릭 방지
-                          >
-                            {time}
-                          </div>
-                        ))}
+              <div className='detail-info'>
 
-                      </div>
-                    )
-                  }
-                </div>
+                {
+                  reservationNo ? (
+                    <div className="time-selection" style={{ color: "red", fontWeight: "bold" }}>
+                      예약불가
+                    </div>
+                  ) : (
+                    <div className="business-time-selection">
+                      {filteredTimeSlots?.map((time) => (
+                        <div
+                          key={time}
+                          className={`business-time-box ${activeTime === time ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''}`}
+                          onClick={() => !disabledTimes.includes(time) && handleButtonClick(time)} // 비활성화된 시간 클릭 방지
+                        >
+                          {time}
+                        </div>
+                      ))}
+
+                    </div>
+                  )
+                }
+
               </div>
             ) : reservationManagementList.reservation_state === '거절' ? (
               <div className='detail-info' style={{ color: "red", fontWeight: "bold" }}>
@@ -497,9 +511,9 @@ const ReservationDetail = () => {
               <div className='detail-title'>미용가격</div>
 
               <div className='detail-info'>
-                
-                <h3>{formatPrice(beautyPrice)|| "가격을 설정해주세요"}</h3> {/* 가격 표시 */}
-                
+
+                <div className='price-title' style={priceStyle}>{formatPrice(beautyPrice) || "가격을 설정해주세요"}</div> {/* 가격 표시 */}
+
                 <div className='price-selection'>
                   <div className='price-box' onClick={() => priceSumButton(10000)}>+1만</div>
                   <div className='price-box' onClick={() => priceSumButton(50000)}>+5만</div>

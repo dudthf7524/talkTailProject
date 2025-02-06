@@ -231,11 +231,28 @@
 .petList_total .infoBox .pet-contents-info {
   height: 33.33%;
 }
+.petList_total .infoBox .pet-contents-info p:nth-child(1) {
+  font-size: 15px;
+}
+.petList_total .infoBox .pet-contents-info p {
+  height: 25px;
+  display: flex;
+  align-items: center;
+  line-height: 15px;
+}
 .petList_total .deleteBtn {
   width: 20%;
   position: absolute;
   top: 0;
   right: 0;
+}
+.petList_total .deleteBtn button {
+  width: 100%;
+  height: 25px;
+  font-size: 13px;
+  padding: 0;
+  text-align: right;
+  padding-right: 2px;
 }
 
 /* Reservation.js  */
@@ -270,4 +287,101 @@
 /* BusinessDetailPage.js */
 .detailPage_total .writing-div {
   height: 80px;
+}
+.detailPage_total .event-button-container {
+  width: 92.33%;
+}
+
+/* SelectedDatePage.js */
+.selectedDate_total .selected {
+  border-radius: 4px;
+}
+.selectedDate_total .time-selection {
+  gap: 1.3%;
+}
+.selectedDate_total .time-box {
+  max-width: 24%;
+  margin-bottom: 1.5%;
+}
+
+/* ReservationRequestPage.js */
+.reservationRequest_total .check .reservation-contents {
+  width: 80%;
+  padding: 0;
+}
+.reservationRequest_total .check h1 {
+  padding-top: 4px;
+}
+.reservationRequest_total .check .reservation-contents h1 {
+  display: none;
+}
+.reservationRequest_total .reservation-contents h1 {
+  width: 20%;
+}
+.reservationRequest_total .reservation-contents .reservation-contents-text {
+  width: 80%;
+  padding: 0;
+}
+.reservationRequest_total .reservation-contents .reservation-contents-checkbox {
+  margin-left: 0;
+}
+.reservationRequest_total
+  .reservation-contents
+  .reservation-contents-text
+  textarea {
+  width: 100%;
+}
+.reservationRequest_total .account {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.reservationRequest_total .account .title {
+  color: #f0663f;
+  font-size: 16px;
+}
+.reservationRequest_total .account .content {
+  display: flex;
+  overflow: visible;
+  margin-top: 5px;
+}
+.reservationRequest_total .account .content p {
+  font-size: 16px;
+  margin-right: 7px;
+}
+.reservationRequest_total .account .content p:nth-child(2) {
+  margin-right: 20px;
+}
+
+/* Notice.js */
+.notice_total {
+  display: flex;
+  flex-direction: column;
+}
+.notice_total .notice-mid {
+  top: 72px;
+}
+.notice_total .notice-mid .notice-list-container {
+  height: auto;
+}
+.notice_total .notice-mid .notice-list-container .text-container {
+  height: auto;
+}
+.notice_total .notice-mid .notice-list-container .list-title-container {
+  height: auto;
+}
+
+/* MyPage.js */
+.mypage_total .mypage-info-container {
+  position: relative;
+}
+.mypage_total .changeBtn {
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.mypage_total .changeBtn .mypage-nickname p {
+  font-size: 14px;
 }

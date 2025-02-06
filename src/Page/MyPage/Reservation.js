@@ -30,20 +30,14 @@ const Reservation = () => {
     };
     reservationManagement();
   }, []);
-  console.log("reservationtList");
-  console.log(reservationtList);
-  console.log("reservationtList");
+
   return (
     <div lang="ko">
       <div className="userReservation_total">
         <div className="navigation ">
           <div>
             <button>
-              <img
-                src={arrowButtonUrl}
-                alt=""
-                onClick={() => navigate("/my-Page")}
-              />
+              <img src={arrowButtonUrl} alt="" onClick={() => navigate(-1)} />
             </button>
           </div>
           예약내역
@@ -62,7 +56,7 @@ const Reservation = () => {
               {reservation.reservation_applicationTime}
             </div>
             <div className="reservation-item">
-              {reservation.date} {reservation.start_time}~{reservation.end_time}
+              {reservation.date} {reservation.start_time}
             </div>
             {reservation.reservation_state === "완료" ? (
               <div style={{ fontWeight: "bold", color: "green" }}>예약완료</div>

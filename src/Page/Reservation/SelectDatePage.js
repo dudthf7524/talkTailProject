@@ -153,7 +153,7 @@ function SelectDatePage() {
           <button>
             <img src={arrowButtonUrl} alt="" onClick={goBack} />
           </button>
-          예약 신청서
+          예약하기
           <div></div>
         </div>
         <div className="main-mid">

@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import EventTags from "./EventTags";
 import "../../CSS/listPage.css";
 import api from "../../Api";
 import { useDispatch, useSelector } from "react-redux";
@@ -159,7 +158,6 @@ const EventDetailPage = () => {
   return (
     <div lang="ko">
       <div className="mid detailPage_total">
-        pricing
         <div className="navigation">
           <button>
             <img src={arrowButtonUrl} alt="" onClick={goBack} />
@@ -258,7 +256,7 @@ const EventDetailPage = () => {
         ) : (
           <div className="img"></div>
         )}
-        <div className="album-text">노쇼금액</div>
+        <div className="album-text">예약금액</div>
         <div className="writing-div">
           <div className="writing">
             {/* <img src={noteUrl} alt='' /> */}

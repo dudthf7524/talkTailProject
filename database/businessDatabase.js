@@ -201,12 +201,12 @@ const getBusinesses = async () => {
       "on bi.business_registration_number = bdo.business_registration_number ";
 
     const [results, metadata] = await sequelize.query(sql, {
-      type: sequelize.QueryTypes.SELECT, // 쿼리 유형
+      type: sequelize.QueryTypes.SELECTALL, // 쿼리 유형
       logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
     });
     console.log(metadata);
     console.log(results);
-    return [results];
+    return results;
   } catch (error) {
     console.error("Error fetching businesses with details:", error);
     throw new Error("Failed to fetch businesses with details");
@@ -714,6 +714,32 @@ const accountNumber = async (
   }
 };
 
+
+const accountNumberList = async (business_registration_number) => {
+  console.log("데이터베이스 저장 코드");
+  
+  console.log(business_registration_number);
+  try {
+    let sql = "";
+    sql +="select name, account_holder, account_number ";
+    sql += "from business_account_number bau ";
+    sql += "join bank_information bi ";
+    sql += "on bank_code = bi.code ";
+    sql += "where bau.business_registration_number = :business_registration_number ";
+
+    const [results, metadata] = await sequelize.query(sql, {
+      replacements: { business_registration_number: business_registration_number }, // 바인딩 파라미터
+      type: sequelize.QueryTypes.SELECT, // 쿼리 유형
+      logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
+    });
+  
+    console.log(results);
+    return [results];
+  } catch (error) {
+    throw new Error("Failed to fetch business details");
+  }
+};
+
 const significantGet = async (business_registration_number) => {
   console.log(business_registration_number);
 
@@ -774,6 +800,7 @@ module.exports = {
   updateBusinessBeautyOption,
   checkLogin,
   accountNumber,
+  accountNumberList,
   accountNumberGet,
   desingerList,
 };

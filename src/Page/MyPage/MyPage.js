@@ -122,7 +122,7 @@ const MyPage = () => {
     return <div>로딩 중 ...</div>;
   }
   return (
-    <div lang="ko">
+    <div lang="ko" className="mypage_total">
       <div className="mid">
         <div className="navigation">
           <button>
@@ -145,6 +145,12 @@ const MyPage = () => {
                   <img src={noteUrl} alt="" />
                 </button>
                 <div className="event-button-text">알림창</div>
+              </div>
+              <div className="event-button">
+                <button onClick={() => navigate("/authority/management")}>
+                  <img src={noteUrl} alt="" />
+                </button>
+                <div className="event-button-text">권한관리</div>
               </div>
               <div className="event-button">
                 <button onClick={() => navigate("/reservation")}>
@@ -175,7 +181,7 @@ const MyPage = () => {
                   <p>{userInformation.user_phone}</p>
                 </div>
               </div>
-              <div className="edit-textbox">
+              <div className="edit-textbox changeBtn">
                 <div className="edit-text">
                   <div className="mypage-nickname">
                     <p onClick={() => navigate("/user/edit")}>수정</p>
