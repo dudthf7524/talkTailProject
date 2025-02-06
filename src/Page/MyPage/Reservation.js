@@ -56,7 +56,7 @@ const Reservation = () => {
               {reservation.reservation_applicationTime}
             </div>
             <div className="reservation-item">
-              {reservation.date} {reservation.start_time}~{reservation.end_time}
+              {reservation.date} {reservation.start_time}
             </div>
             {reservation.reservation_state === "완료" ? (
               <div style={{ fontWeight: "bold", color: "green" }}>예약완료</div>
