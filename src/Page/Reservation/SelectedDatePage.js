@@ -17,6 +17,7 @@ import { setStartTime } from "../../redux/reservationData";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../Api";
 import SelectedDateModal from "./SelectedDateModal";
+import Modal from "../../modal";
 
 function generateTimeSlots(start_time, end_time, intervalMinutes) {
   const start = parse(start_time, "HH:mm", new Date());
@@ -34,6 +35,9 @@ function generateTimeSlots(start_time, end_time, intervalMinutes) {
 
 const SelectedDatePage = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [openAlertModal, setOpenAlertModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalContent, setModalContent] = useState("");
   const [lists, setLists] = useState([]);
   const navigate = useNavigate();
 
@@ -170,6 +174,7 @@ const SelectedDatePage = () => {
         className={`day-content ${!isOperatingDay ? "closed" : ""} ${
           isSelected ? "selected" : ""
         }`}
+        // style={{ backgroundColor: isSelected ? "#216ba5" : "transparent" }}
       >
         <div className="day-number">{day}</div>
         {displayLabel && <div className="day-label">{displayLabel}</div>}
@@ -334,7 +339,7 @@ const SelectedDatePage = () => {
 
   return (
     <>
-      <div className="mid" lang="ko">
+      <div className="mid selectedDate_total" lang="ko">
         <div className="navigation">
           <button>
             <img src={arrowButtonUrl} alt="" onClick={goBack} />
@@ -499,7 +504,18 @@ const SelectedDatePage = () => {
         className="Nbutton"
         // onClick={handleItemClick}
         onClick={() => {
-          setOpenModal(true);
+          setModalTitle("예약오류");
+          console.log("selectDate : ", selectDate);
+          console.log("activeTime : ", activeTime);
+          if (!selectDate) {
+            setModalContent("예약날짜를 선택해주세요.");
+            setOpenAlertModal(true);
+          } else if (!activeTime) {
+            setModalContent("예약시간을 선택해주세요.");
+            setOpenAlertModal(true);
+          } else {
+            setOpenModal(true);
+          }
           // handleItemClick();
         }}
         style={{ cursor: "pointer" }}
@@ -513,6 +529,17 @@ const SelectedDatePage = () => {
           }}
           selectDate={selectDate}
           activeTime={activeTime}
+        />
+      ) : (
+        ""
+      )}
+      {openAlertModal ? (
+        <Modal
+          openModal={() => {
+            setOpenAlertModal(false);
+          }}
+          title={modalTitle}
+          content={modalContent}
         />
       ) : (
         ""

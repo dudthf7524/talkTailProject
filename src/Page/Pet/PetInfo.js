@@ -186,7 +186,7 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
                 <img src={pet.image || petUrl} alt="" />
               </div>
               <div className="pet-contents-info">
-                <h1>{pet.pet_name}</h1>
+                <p>{pet.pet_name}</p>
                 <p>{`${pet.breedName}/${pet.pet_weight}kg/${
                   pet.pet_gender ? "남" : "여"
                 }/${calculateAge(pet.pet_birth)}살`}</p>

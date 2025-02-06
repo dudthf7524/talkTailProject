@@ -256,7 +256,7 @@ const EventDetailPage = () => {
         ) : (
           <div className="img"></div>
         )}
-        <div className="album-text">노쇼금액</div>
+        <div className="album-text">예약금액</div>
         <div className="writing-div">
           <div className="writing">
             {/* <img src={noteUrl} alt='' /> */}

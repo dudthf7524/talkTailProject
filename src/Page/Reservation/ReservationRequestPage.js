@@ -9,14 +9,18 @@ import axios from "axios";
 import api from "../../Api";
 import { setBusinessInfo } from "../../redux/reservationData.js";
 import ReservationModal from "../Components/ReservationModal.js";
+import Modal from "../../modal.js";
 
 const ReservationRequestPage = () => {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const modalTitle = "예약오류";
+  const [modalContent, setModalContent] = useState("");
   const { selectedPet } = location.state || {};
-  console.log(selectedPet);
+  // console.log(selectedPet);
   const [style, setStyle] = useState("");
   const [reviewText, setReviewText] = useState(""); // 리뷰 텍스트 상태 관리
   const textareaRef = useRef(null); // textarea 참조를 위한 ref
@@ -24,12 +28,12 @@ const ReservationRequestPage = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false); // 예약 성공 모달 상태
 
   const reservationData = useSelector((state) => state.reservationData); // Redux 상태 가져오기
-  console.log(
-    "Selected Designer Name:",
-    reservationData.businessInfo.business_no_show
-  ); // 리덕스 상태 출력
-  console.log("Selected 사업자 번호 : ", reservationData.businessInfo); // 리덕스 상태 출력
-  console.log("Selected 사업자 번호:", reservationData);
+  // console.log(
+  //   "Selected Designer Name:",
+  //   reservationData.businessInfo.business_no_show
+  // ); // 리덕스 상태 출력
+  // console.log("Selected 사업자 번호 : ", reservationData.businessInfo); // 리덕스 상태 출력
+  // console.log("Selected 사업자 번호:", reservationData);
 
   useEffect(() => {
     if (
@@ -76,7 +80,7 @@ const ReservationRequestPage = () => {
     const aaa = async () => {
       if (reservationData.businessInfo.business_registration_number) {
         const styleSignificant = async () => {
-          console.log("styleSignificant");
+          // console.log("styleSignificant");
           try {
             const response = await api.post(
               "/api/business/style/accountNumberGet",
@@ -203,8 +207,8 @@ const ReservationRequestPage = () => {
   };
 
   const sendKakaoMessage = async (userPhoneNumber, messageTemplate) => {
-    console.log(userPhoneNumber);
-    console.log(messageTemplate);
+    // console.log(userPhoneNumber);
+    // console.log(messageTemplate);
     const apiUrl = "https://kakaoapi.example.com/v1/messages"; // 카카오 메시지 API 엔드포인트
     const apiToken = "44c334c2957d5bc80dab7c6deb6d1207"; // 카카오 Admin 키
 
@@ -308,7 +312,7 @@ const ReservationRequestPage = () => {
     }
   };
   return (
-    <div lang="ko">
+    <div lang="ko" className="reservationRequest_total">
       <div className="navigation">
         <button onClick={goBack}>
           <img
@@ -345,12 +349,22 @@ const ReservationRequestPage = () => {
             />
           </div>
         </div>
-        <Checkbox
+        <div className="reservation-contents check">
+          <h1>특이사항</h1>
+          <Checkbox
+            checkboxes={thirdCheckboxes}
+            checkboxState={formData.significantIssues}
+            onChange={handleCheckboxChange3}
+            className="checkBox"
+          />
+        </div>
+        {/* <Checkbox
           groupName="특이사항"
           checkboxes={thirdCheckboxes}
           checkboxState={formData.significantIssues}
           onChange={handleCheckboxChange3}
-        />
+          className="checkBox"
+        /> */}
         <div className="reservation-contents">
           <h1>주의사항</h1>
           <div className="reservation-contents-text">
@@ -358,13 +372,13 @@ const ReservationRequestPage = () => {
               ref={textareaRef}
               value={reviewText}
               className="cautions-textarea"
-              placeholder="특이사항 이외의 주의해야 할 사항을 입력해 주세요..."
+              placeholder="주의해야 할 사항을 입력해 주세요."
               onChange={handleCautionsChange}
             />
           </div>
         </div>
         <div className="reservation-contents">
-          <div className="payment">
+          {/* <div className="payment">
             <table style={{ textAlign: "left" }}>
               <tr>
                 <td>계좌이체정보</td>
@@ -373,14 +387,26 @@ const ReservationRequestPage = () => {
                 <td>&nbsp;</td>
               </tr>
               <tr>
-                <th>{lists.name}</th>
-
-                <th>{lists.account_number}</th>
+                <th>{lists.name}KB국민은행</th>
+                <th>{lists.account_number}123-456-78954</th>
                 <th>&nbsp;</th>
                 <th>예금주</th>
-                <th>{lists.account_holder}</th>
+                <th>{lists.account_holder}홍길동</th>
               </tr>
             </table>
+          </div> */}
+          <div className="payment account">
+            <p className="title">계좌이체정보</p>
+            <div className="content">
+              <p>
+                {lists.name
+                  ? lists.name
+                  : "가게에서 계좌를 등록하지 않았습니다."}
+              </p>
+              <p>{lists.account_number}</p>
+              <p>{lists.name ? "예금주" : ""}</p>
+              <p>{lists.account_holder}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -403,7 +429,18 @@ const ReservationRequestPage = () => {
       ) : (
         <div
           className="Nbutton"
-          onClick={reservationSave}
+          onClick={() => {
+            console.log("style : ", style);
+            console.log("reviewText : ", reviewText);
+            console.log("formData : ", formData);
+            console.log("significantIssues : ", formData.significantIssues);
+            if (!style) {
+              setModalContent("스타일을 입력해주세요.");
+              setOpenModal(true);
+            } else {
+              reservationSave();
+            }
+          }}
           style={{ cursor: "pointer" }}
         >
           예약하기
@@ -424,6 +461,17 @@ const ReservationRequestPage = () => {
         />
       )}
       <ReservationModal isOpen={showSuccessModal} />
+      {openModal ? (
+        <Modal
+          openModal={() => {
+            setOpenModal(false);
+          }}
+          title={modalTitle}
+          content={modalContent}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
