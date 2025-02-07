@@ -156,8 +156,8 @@ const EventDetailPage = () => {
     return <p>로딩 중...</p>; // 로딩 중일 때 처리
   }
   return (
-    <div lang="ko">
-      <div className="mid detailPage_total">
+    <div lang="ko" className="detailPage_total">
+      <div className="mid">
         <div className="navigation">
           <button>
             <img src={arrowButtonUrl} alt="" onClick={goBack} />

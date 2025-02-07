@@ -9,7 +9,6 @@ import api from "../../Api";
 import "../../CSS/homePage.css";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
-import HomeCarousel from "./homeCarousel";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -31,6 +30,7 @@ const MainPage = () => {
   const b8Url = `${process.env.PUBLIC_URL}/PageImage/home/b8.svg`;
 
   const imageNumbers = Array.from({ length: 9 }, (_, index) => index + 1);
+  const imageArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const containerRef = useRef(null);
   const containerRef2 = useRef(null);
   const containerRef3 = useRef(null);
@@ -38,7 +38,7 @@ const MainPage = () => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [reservationtLists, setReservationtList] = useState([]);
-  const [showCategory, setShowCategory] = useState(false);
+
   useEffect(() => {
     const reservationManagement = async () => {
       try {
@@ -220,7 +220,7 @@ const MainPage = () => {
 
         <div className="home-container2"></div>
 
-        {/* <div
+        <div
           className="home-container3"
           ref={containerRef}
           onMouseDown={startDrag}
@@ -234,65 +234,76 @@ const MainPage = () => {
               <div className="img-number">{number}/9</div>
             </div>
           ))}
-        </div> */}
-
-        <HomeCarousel />
-
-        <div className="category" ref={categoryRef}>
-          <div className="text">카테고리</div>
-          <div className="item_container">
-            <div
-              className="button-item first"
-              onClick={() => handleItemClick("beauty")}
-            >
-              <img src={b1Url} alt="" />
-            </div>
-            {/* <div className="button-item" onClick={() => handleItemClick(2)}> */}
-            <div className="button-item" onClick={() => setOpenModal(true)}>
-              <img src={b2Url} alt="" />
-            </div>
-            {/* <div className="button-item" onClick={() => handleItemClick(3)}> */}
-            <div
-              className="button-item third"
-              onClick={() => setOpenModal(true)}
-            >
-              <img src={b3Url} alt="" />
-            </div>
-            <div className="more_btn">
-              <p>{showCategory ? "덜보기" : "더보기"}</p>
-            </div>
-
-            {/* <div className="button-item" onClick={() => handleItemClick(4)}> */}
-            <div
-              className="button-item first"
-              onClick={() => setOpenModal(true)}
-            >
-              <img src={b4Url} alt="" />
-            </div>
-            <div className="button-item" onClick={() => setOpenModal(true)}>
-              <img src={b5Url} alt="" />
-            </div>
-            {/* <div className="button-item" onClick={() => handleItemClick(6)}> */}
-            <div
-              className="button-item third"
-              onClick={() => setOpenModal(true)}
-            >
-              <img src={b6Url} alt="" />
-            </div>
-            {/* <div className="button-item" onClick={() => handleItemClick(7)}> */}
-            <div
-              className="button-item first"
-              onClick={() => setOpenModal(true)}
-            >
-              <img src={b7Url} alt="" />
-            </div>
-            {/* <div className="button-item" onClick={() => handleItemClick(8)}> */}
-            <div className="button-item" onClick={() => setOpenModal(true)}>
-              <img src={b8Url} alt="" />
+        </div>
+        <div className="carousel_container">
+          <div className="slide_wrapper">
+            <div className="slide_container">
+              {imageArray.map((image, index) => {
+                return (
+                  <div className="img_div" key={index}>
+                    <p>{index}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
-        {/* <div
+
+        <div className="category" ref={categoryRef}>
+          <div className="text">카테고리</div>
+          <div
+            className="button-grid"
+            ref={containerRef2}
+            onMouseDown={startDrag2}
+            onMouseLeave={stopDrag2}
+            onMouseUp={stopDrag2}
+            onMouseMove={onDrag2}
+          >
+            <div className="button-grid-con">
+              <div
+                className="button-item"
+                onClick={() => handleItemClick("beauty")}
+              >
+                <img src={b1Url} alt="" />
+              </div>
+              {/* <div className="button-item" onClick={() => handleItemClick(2)}> */}
+              <div className="button-item" onClick={() => setOpenModal(true)}>
+                {/* <br></br> */}
+                {/* 유치원 */}
+                <img src={b2Url} alt="" />
+                {/* <br></br>
+            준비중 */}
+              </div>
+              {/* <div className="button-item" onClick={() => handleItemClick(3)}> */}
+              <div className="button-item" onClick={() => setOpenModal(true)}>
+                <img src={b3Url} alt="" />
+              </div>
+              {/* <div className="button-item" onClick={() => handleItemClick(4)}> */}
+              <div className="button-item" onClick={() => setOpenModal(true)}>
+                <img src={b4Url} alt="" />
+              </div>
+            </div>
+            <div className="button-grid-con" onClick={() => setOpenModal(true)}>
+              {/* <div className="button-item" onClick={() => handleItemClick(5)}> */}
+              <div className="button-item">
+                <img src={b5Url} alt="" />
+              </div>
+              {/* <div className="button-item" onClick={() => handleItemClick(6)}> */}
+              <div className="button-item" onClick={() => setOpenModal(true)}>
+                <img src={b6Url} alt="" />
+              </div>
+              {/* <div className="button-item" onClick={() => handleItemClick(7)}> */}
+              <div className="button-item" onClick={() => setOpenModal(true)}>
+                <img src={b7Url} alt="" />
+              </div>
+              {/* <div className="button-item" onClick={() => handleItemClick(8)}> */}
+              <div className="button-item" onClick={() => setOpenModal(true)}>
+                <img src={b8Url} alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
           className="home-container4"
           ref={containerRef3}
           onMouseDown={startDrag3}
@@ -304,7 +315,7 @@ const MainPage = () => {
           <div className="home-container4-img"></div>
           <div className="home-container4-img"></div>
           <div className="home-container4-img"></div>
-        </div> */}
+        </div>
         <div className="tail-container">
           <div className="tail-item">
             <img src={logoUrl} alt="" style={{ width: "50%" }} />
