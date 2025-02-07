@@ -1,6 +1,7 @@
 /* privacy & tos */
 .homeModal {
-  width: 400px;
+  width: 90%;
+  max-width: 400px;
   max-height: 70%;
   overflow-y: scroll;
   position: fixed;

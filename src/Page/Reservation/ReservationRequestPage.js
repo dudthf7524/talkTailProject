@@ -338,7 +338,11 @@ const ReservationRequestPage = () => {
         </div>
         <div className="blank"></div>
         <div className="reservation-contents">
-          <h1>스타일</h1>
+          <div className="h1Box">
+            <h1>스타일</h1>
+            <p>(필수)</p>
+          </div>
+          {/* <h1>스타일(필수)</h1> */}
           <div className="reservation-contents-text">
             <textarea
               ref={textareaRef}

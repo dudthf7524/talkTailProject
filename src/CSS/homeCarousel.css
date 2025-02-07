@@ -1,0 +1,43 @@
+.carousel_container {
+  width: 100%;
+  height: auto;
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+.slide_wrapper {
+  width: 90%;
+  overflow: hidden;
+  border: 1px solid blue;
+}
+.slide_container {
+  display: flex;
+  border: 1px solid red;
+  overflow-x: scroll;
+  scrollbar-width: none;
+}
+.slide_container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge, Opera용 */
+}
+
+.slide_container .img_div {
+  width: 90vw;
+  max-width: 400px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid red;
+  margin-right: 20px;
+}
+.slide_container .img_div:last-child {
+  margin-right: 0;
+}
+.slide_container .img_div p {
+  font-size: 40px;
+}

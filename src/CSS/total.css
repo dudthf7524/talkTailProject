@@ -9,10 +9,19 @@
 .user_information_total .input_box input {
   width: 28%;
 }
+.user_information_total .navigation {
+  width: 100%;
+}
+.user_information_total .input-container {
+  width: 88.89%;
+}
 
 /* HomePage.js */
 .main_container {
   border: 1px solid red;
+}
+.home_total {
+  height: auto !important;
 }
 .home_total .button-item {
   cursor: pointer;
@@ -42,7 +51,44 @@
   justify-content: center;
   cursor: pointer;
 }
-
+.home_total .tail-container {
+  margin-bottom: 56px;
+}
+.home_total .category .item_container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+.home_total .category .item_container .button-item {
+  width: 30%;
+  height: auto;
+  margin-bottom: 20px;
+  margin-right: 3%;
+}
+.home_total .category .item_container .more_btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.home_total .category .item_container .more_btn p {
+  font-size: 16px;
+  width: 15%;
+  border: 1px solid #f0663f;
+  margin-left: auto;
+  margin-right: 3%;
+  line-height: 30px;
+  cursor: pointer;
+}
+.home_total .category .item_container .first {
+  margin-left: 2%;
+}
+.home_total .category .item_container .third {
+  margin-right: 0;
+}
 /* UserEdit.js */
 .user_edit_total .input_box {
   display: flex;
@@ -210,6 +256,17 @@
   background-color: #f0663f;
   color: white;
 }
+.listPage_total .listPage-list-container .list-title-container {
+}
+.listPage_total .listPage-list-container .list-tag-container {
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+}
+.listPage_total .listPage-list-container .list-tag {
+  width: 17%;
+  margin-right: 0;
+}
 
 /* PetInfo.js */
 .petList_total .event-accordion {
@@ -291,6 +348,11 @@
 .detailPage_total .event-button-container {
   width: 92.33%;
 }
+.detailPage_total .Nbutton {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
 
 /* SelectedDatePage.js */
 .selectedDate_total .selected {
@@ -303,6 +365,11 @@
   max-width: 24%;
   margin-bottom: 1.5%;
 }
+.selectedDate_btn {
+  position: fixed !important;
+  bottom: 0;
+  left: 0;
+}
 
 /* ReservationRequestPage.js */
 .reservationRequest_total .check .reservation-contents {
@@ -314,6 +381,20 @@
 }
 .reservationRequest_total .check .reservation-contents h1 {
   display: none;
+}
+.reservationRequest_total .reservation-contents .h1Box {
+  width: 20%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.reservationRequest_total .reservation-contents .h1Box h1 {
+  width: 100%;
+}
+.reservationRequest_total .reservation-contents .h1Box p {
+  font-size: 13px;
+  color: red;
 }
 .reservationRequest_total .reservation-contents h1 {
   width: 20%;
@@ -352,6 +433,9 @@
 .reservationRequest_total .account .content p:nth-child(2) {
   margin-right: 20px;
 }
+.reservationRequest_total .Nbutton {
+  position: fixed;
+}
 
 /* Notice.js */
 .notice_total {
@@ -384,4 +468,15 @@
 }
 .mypage_total .changeBtn .mypage-nickname p {
   font-size: 14px;
+}
+
+/* PetSelectPage.js */
+.petSelectPage_total .Nbutton {
+  position: fixed;
+}
+
+/* ReservationModal.js */
+.reservationModal_total .modal-content1 p:nth-child(1) {
+  font-size: 20px;
+  font-weight: 600;
 }

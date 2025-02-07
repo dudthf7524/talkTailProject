@@ -57,8 +57,8 @@ import Authority from "./Page/User/Authority";
 import BusinessReservation from "./BusinessPage/Reservation";
 import ReservationDesinger from "./BusinessPage/ReservationDesinger";
 import AccountNumberList from "./BusinessPage/AccountNumberList";
-import CustomerManagementDetail from "./BusinessPage/CustomerManagementDetail";
-
+import Tos from "./Page/Home/tos";
+import Privacy from "./Page/Home/privacy";
 
 function App() {
   const [imageFiles, setImageFiles] = useState({
@@ -124,7 +124,12 @@ function App() {
             <Route path="/edit-address" element={<EditAddressPage />} />
             <Route path="/user/edit" element={<UserEdit />} />
             <Route path="/reservation" element={<Reservation />} />
-            <Route path="/reservation/detail/:id" element={<ReservationDetail />} />
+            <Route path="/tos" element={<Tos />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route
+              path="/reservation/detail/:id"
+              element={<ReservationDetail />}
+            />
 
             <Route path="/notice" element={<Notice />} />
             <Route path="/notice/:id" element={<NoticeDetail />} />
@@ -144,7 +149,10 @@ function App() {
                 element={<ImgUpload setImageFiles={handleSetImageFiles} />}
               />
               <Route path="register/desinger" element={<RegisterDesinger />} />
-              <Route path="authority/management" element={<AuthorityManagement />} />
+              <Route
+                path="authority/management"
+                element={<AuthorityManagement />}
+              />
               <Route path="register/style" element={<RegisterStyle />} />
               <Route
                 path="reservation/management"
@@ -158,23 +166,26 @@ function App() {
                 path="customer/management"
                 element={<CustomerManagement />}
               />
-
-              <Route
-                path="customer/management/detail"
-                element={<CustomerManagementDetail />}
-              />
               <Route path="write/notice/:id" element={<WriteNotice />} />
               <Route path="date/register" element={<DateRegister />} />
               <Route path="date/edit" element={<DateEdit />} />
               <Route path="day-on-off/edit" element={<DayOnOffEdit />} />
-              <Route path="edit/option" element={<BusinessBeautyEditOption />} />
+              <Route
+                path="edit/option"
+                element={<BusinessBeautyEditOption />}
+              />
               <Route path="account/number" element={<AccountNumber />} />
-              <Route path="account/number/list" element={<AccountNumberList />} />
+              <Route
+                path="account/number/list"
+                element={<AccountNumberList />}
+              />
               <Route path="list/desinger" element={<DesingerList />} />
               <Route path="write/ClosedDays" element={<DesingerClosedDays />} />
               <Route path="reservation/" element={<BusinessReservation />} />
-              <Route path="reservation/desinger" element={<ReservationDesinger />} />
-
+              <Route
+                path="reservation/desinger"
+                element={<ReservationDesinger />}
+              />
             </Route>
           </Routes>
         </ImageProvider>

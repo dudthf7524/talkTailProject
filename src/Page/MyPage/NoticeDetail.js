@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../Api";
+import { useLocation } from "react-router-dom";
 
 const NoticeDetail = () => {
+  const location = useLocation();
+  const date = location.state?.date;
   const navigate = useNavigate();
   const { id } = useParams(); // URL에서 이벤트 ID 가져오기
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
@@ -75,6 +78,7 @@ const NoticeDetail = () => {
           <div className="view-head">
             <div className="view-head-textbox">
               <h1>알림장</h1>
+              <p>{date}</p>
             </div>
           </div>
           <div className="view-pet">

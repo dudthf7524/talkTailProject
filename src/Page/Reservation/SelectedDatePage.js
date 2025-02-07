@@ -238,12 +238,15 @@ const SelectedDatePage = () => {
 
   const [startDate, setStartDate] = useState("");
   const [selectDate, setSelectDate] = useState("");
+  const [selectDay, setSelectDay] = useState("");
+  const daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"];
 
   const handleDateChange = (date) => {
     const formatDate = format(date, "yyyy-MM-dd");
     setStartDate(date);
     setSelectDate(formatDate);
-
+    const dayIndex = getDay(date);
+    setSelectDay(daysOfWeek[dayIndex]);
     if (date) {
       // console.log(date);
       const day = getDay(date);
@@ -501,7 +504,7 @@ const SelectedDatePage = () => {
         </div>
       </div>
       <div
-        className="Nbutton"
+        className="selectedDate_btn Nbutton"
         // onClick={handleItemClick}
         onClick={() => {
           setModalTitle("예약오류");
@@ -529,6 +532,7 @@ const SelectedDatePage = () => {
           }}
           selectDate={selectDate}
           activeTime={activeTime}
+          selectDay={selectDay}
         />
       ) : (
         ""

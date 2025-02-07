@@ -233,7 +233,7 @@ const ListPage = () => {
   if (error) return <div>에러 발생: {error}</div>;
 
   return (
-    <div lang="ko">
+    <div lang="ko" className="listPage_total">
       <div className="navigation">
         <button>
           <img src={arrowButtonUrl} alt="" onClick={goBack} />
@@ -356,7 +356,7 @@ const ListPage = () => {
         )}
       </div>
       {showModal && (
-        <div className="modal-overlay listPage_total">
+        <div className="modal-overlay">
           <div className="modal-content1">
             <p className="title">권한요청</p>
             <p>
