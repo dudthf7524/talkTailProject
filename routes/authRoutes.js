@@ -81,10 +81,6 @@ router.get('/auth/kakao', async (req, res) => {
 
         const user = await findOrCreateUser({
             platform_id: userInfo.id.toString(),
-            user_email: userInfo.kakao_account.email || '', // 이메일 정보가 없으면 빈 문자열로 설정
-            user_phone: userInfo.kakao_account.phone_number || '', // 전화번호 정보가 없으면 빈 문자열로 설정
-            user_name: userInfo.kakao_account.name,
-            user_nickname: userInfo.kakao_account.profile.nickname,
             platform: 'kakao',
         });
 
