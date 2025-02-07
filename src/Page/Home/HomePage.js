@@ -259,37 +259,48 @@ const MainPage = () => {
               <img src={b3Url} alt="" />
             </div>
             <div className="more_btn">
-              <p>{showCategory ? "덜보기" : "더보기"}</p>
+              <p
+                onClick={() => {
+                  setShowCategory(!showCategory);
+                }}
+              >
+                {showCategory ? "▲" : "+더보기"}
+              </p>
             </div>
-
+            {showCategory ? (
+              <>
+                <div
+                  className="button-item first"
+                  onClick={() => setOpenModal(true)}
+                >
+                  <img src={b4Url} alt="" />
+                </div>
+                <div className="button-item" onClick={() => setOpenModal(true)}>
+                  <img src={b5Url} alt="" />
+                </div>
+                {/* <div className="button-item" onClick={() => handleItemClick(6)}> */}
+                <div
+                  className="button-item third"
+                  onClick={() => setOpenModal(true)}
+                >
+                  <img src={b6Url} alt="" />
+                </div>
+                {/* <div className="button-item" onClick={() => handleItemClick(7)}> */}
+                <div
+                  className="button-item first"
+                  onClick={() => setOpenModal(true)}
+                >
+                  <img src={b7Url} alt="" />
+                </div>
+                {/* <div className="button-item" onClick={() => handleItemClick(8)}> */}
+                <div className="button-item" onClick={() => setOpenModal(true)}>
+                  <img src={b8Url} alt="" />
+                </div>
+              </>
+            ) : (
+              ""
+            )}
             {/* <div className="button-item" onClick={() => handleItemClick(4)}> */}
-            <div
-              className="button-item first"
-              onClick={() => setOpenModal(true)}
-            >
-              <img src={b4Url} alt="" />
-            </div>
-            <div className="button-item" onClick={() => setOpenModal(true)}>
-              <img src={b5Url} alt="" />
-            </div>
-            {/* <div className="button-item" onClick={() => handleItemClick(6)}> */}
-            <div
-              className="button-item third"
-              onClick={() => setOpenModal(true)}
-            >
-              <img src={b6Url} alt="" />
-            </div>
-            {/* <div className="button-item" onClick={() => handleItemClick(7)}> */}
-            <div
-              className="button-item first"
-              onClick={() => setOpenModal(true)}
-            >
-              <img src={b7Url} alt="" />
-            </div>
-            {/* <div className="button-item" onClick={() => handleItemClick(8)}> */}
-            <div className="button-item" onClick={() => setOpenModal(true)}>
-              <img src={b8Url} alt="" />
-            </div>
           </div>
         </div>
         {/* <div
