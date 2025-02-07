@@ -90,7 +90,11 @@ const NoticePage = () => {
             <button
               className="notice-button"
               style={{ cursor: "pointer" }}
-              onClick={() => navigate(`/notice/${list.beauty_notice_id}/`)}
+              onClick={() =>
+                navigate(`/notice/${list.beauty_notice_id}/`, {
+                  state: { date: list.date },
+                })
+              }
             >
               알림장 보기
             </button>

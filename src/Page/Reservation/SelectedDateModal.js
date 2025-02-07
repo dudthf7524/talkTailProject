@@ -5,7 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { setDate } from "../../redux/reservationData";
 import { setStartTime } from "../../redux/reservationData";
 
-const SelectedDateModal = ({ openModal, selectDate, activeTime }) => {
+const SelectedDateModal = ({
+  openModal,
+  selectDate,
+  activeTime,
+  selectDay,
+}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleItemClick = async () => {
@@ -24,7 +29,7 @@ const SelectedDateModal = ({ openModal, selectDate, activeTime }) => {
         <img onClick={openModal} src="/PageImage/components/X.svg" alt="" />
         <p className="title">예약</p>
         <p className="content">
-          일시 : {selectDate}
+          날짜 : {selectDate}({selectDay})
           <br />
           시간 : {activeTime} <br />위 내용으로 예약을 진행하겠습니까?
         </p>

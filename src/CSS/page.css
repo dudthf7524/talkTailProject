@@ -149,6 +149,7 @@ a {
   background-color: #fff; /* 배경색 설정 (필요시) */
   justify-content: space-evenly;
   overflow: hidden;
+  z-index: 10;
 }
 .floating-button {
   position: absolute;
@@ -318,7 +319,7 @@ a {
   left: 0;
   right: 0;
   top: 0;
-  
+
   /*overflow-y: auto; /* 세로 스크롤 활성화 */
 }
 

@@ -48,7 +48,7 @@ const PetSelectPage = () => {
   };
 
   return (
-    <div lang="ko">
+    <div lang="ko" className="petSelectPage_total">
       <div className="navigation">
         <button onClick={goBack}>
           <img src={arrowButtonUrl} alt="뒤로가기" />
