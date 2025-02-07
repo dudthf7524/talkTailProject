@@ -21,7 +21,7 @@ const kakaoApiRoutes = require('./routes/kakaoApiRoutes');
 
 const BankDatabase = require('./models/BankDatabase'); // BankDatabase 함수 가져오기
 
-const port = 3000;
+const port = 3060;
 app.listen(port, () => {
   console.log(`http://localhost:${port} 에서 서버 실행중`)
 })
