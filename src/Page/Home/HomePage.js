@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import HomeCarousel from "./homeCarousel";
 
 const MainPage = () => {
+  const landline_phone = '070-4571-7580';
   const navigate = useNavigate();
   const categoryRef = useRef(null);
   const locationUrl = `${process.env.PUBLIC_URL}/PageImage/home/location.svg`;
@@ -259,37 +260,48 @@ const MainPage = () => {
               <img src={b3Url} alt="" />
             </div>
             <div className="more_btn">
-              <p>{showCategory ? "덜보기" : "더보기"}</p>
+              <p
+                onClick={() => {
+                  setShowCategory(!showCategory);
+                }}
+              >
+                {showCategory ? "▲" : "+더보기"}
+              </p>
             </div>
-
+            {showCategory ? (
+              <>
+                <div
+                  className="button-item first"
+                  onClick={() => setOpenModal(true)}
+                >
+                  <img src={b4Url} alt="" />
+                </div>
+                <div className="button-item" onClick={() => setOpenModal(true)}>
+                  <img src={b5Url} alt="" />
+                </div>
+                {/* <div className="button-item" onClick={() => handleItemClick(6)}> */}
+                <div
+                  className="button-item third"
+                  onClick={() => setOpenModal(true)}
+                >
+                  <img src={b6Url} alt="" />
+                </div>
+                {/* <div className="button-item" onClick={() => handleItemClick(7)}> */}
+                <div
+                  className="button-item first"
+                  onClick={() => setOpenModal(true)}
+                >
+                  <img src={b7Url} alt="" />
+                </div>
+                {/* <div className="button-item" onClick={() => handleItemClick(8)}> */}
+                <div className="button-item" onClick={() => setOpenModal(true)}>
+                  <img src={b8Url} alt="" />
+                </div>
+              </>
+            ) : (
+              ""
+            )}
             {/* <div className="button-item" onClick={() => handleItemClick(4)}> */}
-            <div
-              className="button-item first"
-              onClick={() => setOpenModal(true)}
-            >
-              <img src={b4Url} alt="" />
-            </div>
-            <div className="button-item" onClick={() => setOpenModal(true)}>
-              <img src={b5Url} alt="" />
-            </div>
-            {/* <div className="button-item" onClick={() => handleItemClick(6)}> */}
-            <div
-              className="button-item third"
-              onClick={() => setOpenModal(true)}
-            >
-              <img src={b6Url} alt="" />
-            </div>
-            {/* <div className="button-item" onClick={() => handleItemClick(7)}> */}
-            <div
-              className="button-item first"
-              onClick={() => setOpenModal(true)}
-            >
-              <img src={b7Url} alt="" />
-            </div>
-            {/* <div className="button-item" onClick={() => handleItemClick(8)}> */}
-            <div className="button-item" onClick={() => setOpenModal(true)}>
-              <img src={b8Url} alt="" />
-            </div>
           </div>
         </div>
         {/* <div
@@ -312,7 +324,9 @@ const MainPage = () => {
             <div className="tail-text">
               애견미용샵 ｜상품입점｜제휴문의｜상담문의
             </div>
-            <div className="tail-number">070-4571-7580</div>
+            <div className="tail-number">
+              <a style={{textDecoration : "none", color : "black"}} href={`tel:${landline_phone}`}>070-4571-7580</a>
+            </div>
             <div className="tail-a">
               <span
                 onClick={() => {
