@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import HomeCarousel from "./homeCarousel";
 
 const MainPage = () => {
+  const landline_phone = '070-4571-7580';
   const navigate = useNavigate();
   const categoryRef = useRef(null);
   const locationUrl = `${process.env.PUBLIC_URL}/PageImage/home/location.svg`;
@@ -323,7 +324,9 @@ const MainPage = () => {
             <div className="tail-text">
               애견미용샵 ｜상품입점｜제휴문의｜상담문의
             </div>
-            <div className="tail-number">070-4571-7580</div>
+            <div className="tail-number">
+              <a style={{textDecoration : "none", color : "black"}} href={`tel:${landline_phone}`}>070-4571-7580</a>
+            </div>
             <div className="tail-a">
               <span
                 onClick={() => {
