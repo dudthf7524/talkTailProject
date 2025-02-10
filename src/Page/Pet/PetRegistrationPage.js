@@ -89,6 +89,7 @@ const PetRegistration = () => {
     setGender('');
     setNeuter('');
     setEtc('');
+
     if (!formData.name.trim()) {
       setName('이름을 입력해주세요.');
       nameRef.current.focus();
@@ -117,7 +118,7 @@ const PetRegistration = () => {
     }
     if (!dateRegex.test(formData.birthDate)) {
       setBirthDate('태어난 날을 2000-01-01 형식으로 입력해주세요');
-      nameRef.current.focus();
+      birthDateRef.current.focus();
       return;
     }
     if (!formData.weight.trim()) {
@@ -131,12 +132,12 @@ const PetRegistration = () => {
       return;
     }
     if (!formData.gender.trim()) {
-      setGender('성별을 입력해주세요');
+      setGender('성별을 선택해주세요');
       genderRef.current.focus();
       return;
     }
     if (!formData.neuter.trim()) {
-      setNeuter('성별을 입력해주세요');
+      setNeuter('중성화 여부를 선택해주세요');
       neuterRef.current.focus();
       return;
     }
@@ -215,9 +216,9 @@ const PetRegistration = () => {
 
 
   const handleSubmit = async () => {
-    // if (!validateForm()) return;
+    if (!validateForm()) return;
     
-    validateForm();
+    
 
     const petData = new FormData();
     petData.append("name", formData.name);

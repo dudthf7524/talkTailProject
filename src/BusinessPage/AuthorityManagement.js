@@ -10,7 +10,7 @@ import api from '../Api'
 function AuthorityManagement() {
     const location = useLocation();
     const navigate = useNavigate();
-    const arrowButtonUrl = `${process.env.PUBLIC_URL}/images/button/arrow_left.svg`;
+    const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
     const [lists, setLists] = useState();
 
     useEffect(() => {
