@@ -89,6 +89,15 @@
 .home_total .category .item_container .third {
   margin-right: 0;
 }
+.home_total .home-container2 {
+  border: 1px solid red;
+  width: 387px;
+}
+@media (max-width: 500px) {
+  .home_total .home-container2 {
+    width: 90%;
+  }
+}
 /* UserEdit.js */
 .user_edit_total .input_box {
   display: flex;
