@@ -13,7 +13,7 @@
   width: 100%;
 }
 .user_information_total .input-container {
-  width: 88.89%;
+  width: 90%;
 }
 
 /* HomePage.js */
@@ -99,6 +99,9 @@
   }
 }
 /* UserEdit.js */
+.user_edit_total .main-mid .input-container {
+  width: 90%;
+}
 .user_edit_total .input_box {
   display: flex;
   align-items: center;
