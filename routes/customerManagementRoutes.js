@@ -52,7 +52,7 @@ router.get('/customer/notice/list',authMiddleware, async (req, res) => {
 
 })
 
-router.get('/customer/notice/detail/:id',authMiddleware, async (req, res) => {
+router.get('/customer/notice/detail/:id',authMiddlewareSession, async (req, res) => {
     const platform_id = req.user.id;
     console.log(platform_id)
 

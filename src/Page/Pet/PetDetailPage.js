@@ -186,7 +186,7 @@ const PetDetail = () => {
                     </div>
                 
                     <div className='PetRegistration-container2'>
-                        <p>기타 추가 사항이</p>
+                        <p>기타 추가 사항</p>
                         <input
                             type="text"
                             className="textbox-gray2"
