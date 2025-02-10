@@ -348,10 +348,19 @@
 .detailPage_total .event-button-container {
   width: 92.33%;
 }
-.detailPage_total .Nbutton {
+
+.Nbutton {
+  margin: 0 auto;
   position: fixed;
   bottom: 0;
-  left: 0;
+  /* left: 50%;
+  transform: translate(0, -50%); */
+  width: 430px;
+}
+@media (max-width: 500px) {
+  .Nbutton {
+    width: 100%;
+  }
 }
 
 /* SelectedDatePage.js */
@@ -372,6 +381,12 @@
 }
 
 /* ReservationRequestPage.js */
+.reservationRequest_total .reservation-mid {
+  height: auto;
+}
+.reservationRequest_total .payment-container {
+  width: 100%;
+}
 .reservationRequest_total .check .reservation-contents {
   width: 80%;
   padding: 0;

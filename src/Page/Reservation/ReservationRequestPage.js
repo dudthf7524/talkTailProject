@@ -413,19 +413,19 @@ const ReservationRequestPage = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="payment-container">
-        <div className="payment">
-          <h2>예약금</h2>
-
-          <div className="row">
-            <h1>
-              {formatCurrency(reservationData.businessInfo.business_no_show)} 원
-            </h1>
+        <div className="payment-container">
+          <div className="payment">
+            <h2>예약금</h2>
+            <div className="row">
+              <h1>
+                {formatCurrency(reservationData.businessInfo.business_no_show)}{" "}
+                원
+              </h1>
+            </div>
           </div>
         </div>
       </div>
+
       {reservationData.businessInfo.business_no_show ? (
         <div className="Nbutton" onClick={openPaymentModal}>
           예약 및 결제하기
