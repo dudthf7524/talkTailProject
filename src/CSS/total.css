@@ -280,8 +280,6 @@
   background-color: #f0663f;
   color: white;
 }
-.listPage_total .listPage-list-container .list-title-container {
-}
 .listPage_total .listPage-list-container .list-tag-container {
   height: auto;
   display: flex;
@@ -290,6 +288,10 @@
 .listPage_total .listPage-list-container .list-tag {
   width: 17%;
   margin-right: 0;
+}
+.listPage_total .list-tag {
+  padding: 2px 0;
+  font-size: 11px;
 }
 
 /* PetInfo.js */

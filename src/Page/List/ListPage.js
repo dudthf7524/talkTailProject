@@ -360,7 +360,7 @@ const ListPage = () => {
           <div className="modal-content1">
             <p className="title">권한요청</p>
             <p>
-              <span>{selectBusinessName}</span>에 {modalMessage}
+              <span>{selectBusinessName}</span>에<br /> {modalMessage}
             </p>
             <div className="btn_box">
               <div
