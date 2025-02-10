@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "../../CSS/auth.css";
-import Tos from "../Home/tos";
-import Privacy from "../Home/privacy";
+
+import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
+  const navigate = useNavigate();
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
   const googleUrl = `${process.env.PUBLIC_URL}/PageImage/auth/google logo.svg`;
   const kakaoUrl = `${process.env.PUBLIC_URL}/PageImage/auth/KAKAO logo.svg`;
@@ -12,8 +13,6 @@ const LoginPage = () => {
   const image3Url = `${process.env.PUBLIC_URL}/PageImage/auth/pictures/img (3).png`;
   const image4Url = `${process.env.PUBLIC_URL}/PageImage/auth/pictures/img (4).png`;
   const image5Url = `${process.env.PUBLIC_URL}/PageImage/auth/pictures/img (5).png`;
-  const [openTos, setOpenTos] = useState(false);
-  const [openPrivacy, setOpenPrivacy] = useState(false);
 
   const kakao_key = process.env.REACT_APP_KAKAO_CLIENT_ID;
   const redirect_uri_kakao = process.env.REACT_APP_KAKAO_REDIRECT_URI;
@@ -112,7 +111,7 @@ const LoginPage = () => {
       <div className="btn_box">
         <p
           onClick={() => {
-            setOpenTos(true);
+            navigate("/tos");
           }}
         >
           이용약관
@@ -120,30 +119,12 @@ const LoginPage = () => {
         <p>｜</p>
         <p
           onClick={() => {
-            setOpenPrivacy(true);
+            navigate("/privacy");
           }}
         >
           개인정보 처리방침
         </p>
       </div>
-      {openTos ? (
-        <Tos
-          openModal={() => {
-            setOpenTos(false);
-          }}
-        />
-      ) : (
-        ""
-      )}
-      {openPrivacy ? (
-        <Privacy
-          openModal={() => {
-            setOpenPrivacy(false);
-          }}
-        />
-      ) : (
-        ""
-      )}
     </div>
   );
 };
