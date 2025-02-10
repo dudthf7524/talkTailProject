@@ -24,7 +24,7 @@ const SelectedDateModal = ({
   };
   return (
     <>
-      <div className="back"></div>
+      <div className="back" onClick={openModal}></div>
       <div className="modal_container selectedDateModal">
         <img onClick={openModal} src="/PageImage/components/X.svg" alt="" />
         <p className="title">예약</p>

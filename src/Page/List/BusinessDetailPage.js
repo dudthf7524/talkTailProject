@@ -5,7 +5,7 @@ import api from "../../Api";
 import { useDispatch, useSelector } from "react-redux";
 import { setBusinessInfo } from "../../redux/reservationData";
 import { setHour } from "../../redux/reservationData";
-
+import AcceptModal from "./AcceptModal";
 const EventDetailPage = () => {
   const { id } = useParams();
   console.log(id);
@@ -28,6 +28,7 @@ const EventDetailPage = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [openAcceptModal, setOpenAcceptModal] = useState(false);
   const dispatch = useDispatch();
 
   const handleButtonClick = () => {
@@ -98,10 +99,10 @@ const EventDetailPage = () => {
   };
 
   const handleItemClick = (business) => {
-    console.log(business.business_name);
-    console.log(business.business_registration_number);
-    console.log(business.business_no_show);
-    console.log(hours);
+    // console.log(business.business_name);
+    // console.log(business.business_registration_number);
+    // console.log(business.business_no_show);
+    // console.log(hours);
     dispatch(
       setBusinessInfo({
         business_name: business.business_name,
@@ -110,7 +111,7 @@ const EventDetailPage = () => {
       })
     );
     dispatch(setHour(hours));
-    navigate(`/designer/list`);
+    // navigate(`/designer/list`);
   };
 
   useEffect(() => {
@@ -266,11 +267,23 @@ const EventDetailPage = () => {
       </div>
       <div
         className="Nbutton"
-        onClick={() => handleItemClick(business)}
+        onClick={() => {
+          handleItemClick(business);
+          setOpenAcceptModal(true);
+        }}
         style={{ cursor: "pointer" }}
       >
         예약하기
       </div>
+      {openAcceptModal ? (
+        <AcceptModal
+          openModal={() => {
+            setOpenAcceptModal(false);
+          }}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
