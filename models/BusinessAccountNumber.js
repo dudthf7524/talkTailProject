@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
             bank_code: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                unique: true,
             },
             account_holder: {
                 type: DataTypes.STRING(50),

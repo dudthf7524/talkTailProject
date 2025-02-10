@@ -83,6 +83,16 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: '',
       },
+      accept_time: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+        defaultValue: '',
+      },
+      accept_old_time: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+        defaultValue: '',
+      },
       
     },
     {

@@ -320,12 +320,15 @@ router.post('/reservation/business', authMiddlewareSession, async (req, res) => 
 
         try {
             const result = await reservationDatabase.businessReservation(data);
+            
 
         } catch (error) {
             console.error('Error fetching userInformation:', error.message);
             res.status(500).json({ error: error.message });
         }
     }
+
+    res.json(1)
 
 
 });

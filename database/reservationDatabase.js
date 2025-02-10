@@ -24,7 +24,9 @@ const beautyReservation = async (beautyReservationData) => {
             date: beautyReservationData.date,
             start_time: beautyReservationData.startTime,
             end_time: beautyReservationData.startTime,
-            reservation_state : '대기'
+            reservation_state : '대기',
+            accept_time : beautyReservationData.acceptTime,
+            accept_old_time : beautyReservationData.acceptOldTime
         });
         return BeautyReservationData;
     } catch (error) {
@@ -53,7 +55,7 @@ const beautyReservationDetail = async (id) => {
     console.log(id)
     try {
         let sql = "";
-        sql += "select business_name, business_phone, date, start_time, end_time, business_desinger_name, user_phone, pet_name, pet_species, pet_breed, pet_birth, pet_weight, pet_gender, pet_neuter, beauty_style, beauty_significant, beauty_caution, end_time, reservation_state, reject_content ,beauty_price, paid_price, hours ";
+        sql += "select business_name, business_phone, date, start_time, end_time, business_desinger_name, user_phone, pet_name, pet_species, pet_breed, pet_birth, pet_weight, pet_gender, pet_neuter, beauty_style, beauty_significant, beauty_caution, end_time, reservation_state, reject_content ,beauty_price, paid_price, hours ,accept_time, accept_old_time ";
         sql += "from beauty_reservation br ";
         sql += "join user_information ui ";
         sql += "on br.platform_id = ui.platform_id ";

@@ -3,7 +3,6 @@ import api from '../Api';
 import '../BusinessCSS/accountNumber.css'
 import { useNavigate } from "react-router-dom";
 
-
 function AccountNumber() {
 
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
@@ -76,15 +75,11 @@ function AccountNumber() {
           <img src={arrowButtonUrl} alt='' onClick={() => navigate('/business/menu')} />
         </button>
         계좌번호 등록
-        <button onClick={() => navigate('/business/account/number')}>
-          <img src={noteUrl} alt='' />
-        </button>
+        <button onClick={handleSubmit}>저장</button>
       </div>
 
       <div>
-
-        <form onSubmit={handleSubmit}>
-
+        <form>
           <div className="accountBox">
             <div className='accountContent'>
               <label htmlFor="bankCode">은행명</label>
@@ -127,13 +122,9 @@ function AccountNumber() {
                 style={{ width: "100%", padding: "10px" }}
               />
             </div>
-
           </div>
 
           {error && <p style={{ color: "red" }}>{error}</p>}
-          <button className="accountNumberButton" type="submit" style={{ padding: "10px 20px" }}>
-            등록하기
-          </button>
         </form>
       </div>
     </div>

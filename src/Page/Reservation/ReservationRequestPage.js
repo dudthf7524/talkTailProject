@@ -28,12 +28,18 @@ const ReservationRequestPage = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false); // 예약 성공 모달 상태
 
   const reservationData = useSelector((state) => state.reservationData); // Redux 상태 가져오기
+  console.log(reservationData.acceptTime)
+  console.log(reservationData.acceptOldTime)
+
   // console.log(
   //   "Selected Designer Name:",
   //   reservationData.businessInfo.business_no_show
   // ); // 리덕스 상태 출력
   // console.log("Selected 사업자 번호 : ", reservationData.businessInfo); // 리덕스 상태 출력
   // console.log("Selected 사업자 번호:", reservationData);
+  // if (!reservationData.acceptTime || !reservationData.acceptOldTime) {
+  //   navigate('/list/beauty');
+  // }
 
   useEffect(() => {
     if (
@@ -252,9 +258,12 @@ const ReservationRequestPage = () => {
     date: reservationData.date || "",
     startTime: reservationData.startTime || "",
     business_owner_phone: "",
+    acceptTime : reservationData.acceptTime || "",
+    acceptOldTime : reservationData.acceptOldTime || "",
   });
   console.log("reservationData : ", reservationData);
   const dispatch = useDispatch();
+
 
   const reservationSave = async () => {
     dispatch(
@@ -273,6 +282,9 @@ const ReservationRequestPage = () => {
       date: formData.date || "",
       startTime: formData.startTime || "",
       business_owner_phone: formData.business_owner_phone || "",
+      acceptTime: formData.acceptTime || "",
+      acceptOldTime: formData.acceptOldTime || "",
+
     };
     console.log(dataToSend);
 

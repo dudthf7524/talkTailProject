@@ -187,7 +187,7 @@ function RegisterInformation() {
           />
         </button>
         등록자료 올리기
-        <div onClick={() => openModal("accept")}>저장</div>
+        <div style={{cursor : "pointer"}} onClick={() => openModal("accept")}>저장</div>
       </div>
       <div className="main-mid">
         <div
@@ -341,7 +341,7 @@ function RegisterInformation() {
           </div>
         </div>
         <div className="input-container">
-          <p>노쇼 금액</p>
+          <p>예약 금액</p>
           <input
             type="text"
             name="business_no_show"
