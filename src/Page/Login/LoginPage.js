@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../CSS/auth.css";
-
+import Tos from "../Home/tos";
+import Privacy from "../Home/privacy";
 const LoginPage = () => {
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
   const googleUrl = `${process.env.PUBLIC_URL}/PageImage/auth/google logo.svg`;
@@ -11,6 +12,8 @@ const LoginPage = () => {
   const image3Url = `${process.env.PUBLIC_URL}/PageImage/auth/pictures/img (3).png`;
   const image4Url = `${process.env.PUBLIC_URL}/PageImage/auth/pictures/img (4).png`;
   const image5Url = `${process.env.PUBLIC_URL}/PageImage/auth/pictures/img (5).png`;
+  const [openTos, setOpenTos] = useState(false);
+  const [openPrivacy, setOpenPrivacy] = useState(false);
 
   const kakao_key = process.env.REACT_APP_KAKAO_CLIENT_ID;
   const redirect_uri_kakao = process.env.REACT_APP_KAKAO_REDIRECT_URI;
@@ -106,7 +109,41 @@ const LoginPage = () => {
           <img src={naverUrl} alt="naver" />
         </button>
       </div>
-      {/* <p>간편로그인</p> */}
+      <div className="btn_box">
+        <p
+          onClick={() => {
+            setOpenTos(true);
+          }}
+        >
+          이용약관
+        </p>
+        <p>｜</p>
+        <p
+          onClick={() => {
+            setOpenPrivacy(true);
+          }}
+        >
+          개인정보 처리방침
+        </p>
+      </div>
+      {openTos ? (
+        <Tos
+          openModal={() => {
+            setOpenTos(false);
+          }}
+        />
+      ) : (
+        ""
+      )}
+      {openPrivacy ? (
+        <Privacy
+          openModal={() => {
+            setOpenPrivacy(false);
+          }}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
