@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import axios from "axios";
 import { redirect, useNavigate } from "react-router-dom";
 import api from "../../Api";
@@ -69,6 +69,7 @@ function UserEdit() {
       [name]: value,
     });
   };
+  console.log(formData.user_name)
 
   // console.log(formData);
   const handleKeyDown = (e) => {
@@ -77,11 +78,11 @@ function UserEdit() {
     }
   };
 
-  const handleEdit = async () => {
-    // console.log("UserEidt 속 : ", userInformation.user_information_id);
-    // console.log("UserEidt 속 : ", formData);
+  
 
-    // user.id를 formData에 추가
+
+  const handleEdit = async () => {
+
     const userInforMationData = {
       ...formData,
       user_information_id: userInformation.user_information_id, // user.id를 formData에 추가
@@ -119,6 +120,12 @@ function UserEdit() {
     }
   };
   const checkForm = () => {
+
+    const koreanRegex = /^[\uAC00-\uD7A3]{1,5}$/; // 한글만 5자
+
+    const numberRegexThree = /^\d{3}$/;
+    const numberRegexFour = /^\d{4}$/;
+
     const userInforMationData = {
       ...formData,
       user_information_id: userInformation.user_information_id, // user.id를 formData에 추가
@@ -126,8 +133,13 @@ function UserEdit() {
     // console.log("userInforMationData : ", userInforMationData);
     setUserInforMationData(userInforMationData);
     setAlertTitle("입력을 확인하세요.");
-    if (!formData.user_name) {
+    console.log(formData.user_name)
+    if (!formData.user_name.trim()) {
       setAlertContent("이름을 입력해주세요.");
+      setOpenAlert(true);
+
+    } else if (!koreanRegex.test(formData.user_name)) {
+      setAlertContent("이름은 한글, 5글자 이하만 입력 가능합니다.");
       setOpenAlert(true);
     } else if (
       !formData.user_phone1 ||
@@ -136,10 +148,18 @@ function UserEdit() {
     ) {
       setAlertContent("전화번호를 입력해주세요.");
       setOpenAlert(true);
+    } else if (
+      !numberRegexThree.test(formData.user_phone1) ||
+      !numberRegexFour.test(formData.user_phone2) ||
+      !numberRegexFour.test(formData.user_phone3)
+    ) {
+      setAlertContent("전화번호를 정확히 입력해주세요");
+      setOpenAlert(true);
     } else {
       setOpenModal(true);
     }
   };
+
   return (
     <div className="user_edit_total" lang="ko">
       <div className="navigation">
@@ -159,18 +179,20 @@ function UserEdit() {
         <div className="input-container">
           <p>이름</p>
           <input
+            maxLength={5}
             type="text"
             name="user_name"
             value={formData.user_name}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
-            placeholder="톡테일"
+            placeholder="이름"
           />
         </div>
         <div className="input-container">
           <p>전화번호</p>
           <div className="input_box">
             <input
+              maxLength={3}
               type="text"
               name="user_phone1"
               value={formData.user_phone1}
@@ -180,6 +202,7 @@ function UserEdit() {
             />
             -
             <input
+              maxLength={4}
               type="text"
               name="user_phone2"
               value={formData.user_phone2}
@@ -189,6 +212,7 @@ function UserEdit() {
             />
             -
             <input
+              maxLength={4}
               type="text"
               name="user_phone3"
               value={formData.user_phone3}

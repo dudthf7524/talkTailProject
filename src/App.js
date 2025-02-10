@@ -59,6 +59,9 @@ import ReservationDesinger from "./BusinessPage/ReservationDesinger";
 import AccountNumberList from "./BusinessPage/AccountNumberList";
 import Tos from "./Page/Home/tos";
 import Privacy from "./Page/Home/privacy";
+import CustomerManagementDetail from "./BusinessPage/CustomerManagementDetail";
+
+
 
 function App() {
   const [imageFiles, setImageFiles] = useState({
@@ -165,6 +168,10 @@ function App() {
               <Route
                 path="customer/management"
                 element={<CustomerManagement />}
+              />
+               <Route
+                path="customer/management/detail"
+                element={<CustomerManagementDetail />}
               />
               <Route path="write/notice/:id" element={<WriteNotice />} />
               <Route path="date/register" element={<DateRegister />} />

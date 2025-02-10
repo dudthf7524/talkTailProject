@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../CSS/auth.css";
 
+import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
+  const navigate = useNavigate();
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
   const googleUrl = `${process.env.PUBLIC_URL}/PageImage/auth/google logo.svg`;
   const kakaoUrl = `${process.env.PUBLIC_URL}/PageImage/auth/KAKAO logo.svg`;
@@ -106,7 +108,23 @@ const LoginPage = () => {
           <img src={naverUrl} alt="naver" />
         </button>
       </div>
-      {/* <p>간편로그인</p> */}
+      <div className="btn_box">
+        <p
+          onClick={() => {
+            navigate("/tos");
+          }}
+        >
+          이용약관
+        </p>
+        <p>｜</p>
+        <p
+          onClick={() => {
+            navigate("/privacy");
+          }}
+        >
+          개인정보 처리방침
+        </p>
+      </div>
     </div>
   );
 };

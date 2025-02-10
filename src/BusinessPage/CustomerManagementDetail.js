@@ -17,12 +17,11 @@ const CustomerManagementDetail = () => {
                 if (!token) {
                     throw new Error('No token found.');
                 }
-                const response = await api.get(`/api/customer/notice/detail/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+                const response = await api.get(`/api/customer/notice/detail/${id}`, { withCredentials: true });
                 console.log(response.data)
+                if(response.data === 'common'){
+                    navigate('/business/login')
+                }
                 setList(response.data);
                 // console.log(response.data)
 

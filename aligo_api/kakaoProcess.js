@@ -86,9 +86,9 @@ async function authorityYesOrNo(req, res) {
 async function reservationComplete(req, res) {
     console.log(req.body)
     req.body.senderkey ='89df6266d96c0663c9263f3ff08986bcde7e4124';
-    req.body.tpl_code = 'TX_5966',
+    req.body.tpl_code = 'TX_8835',
     req.body.sender = '010-4026-5955',
-    req.body.message_1 = `test 예약이 완료되었습니다.\n\n업체명 : ${req.body.business_name}\n매장 전화번호 : ${req.body.business_phone}\n예약일자 : ${req.body.reservationDate}\n미용가격 : ${req.body.beauty_price}`,
+    req.body.message_1 = `예약이 완료되었습니다.\n\n업체명 : ${req.body.business_name}\n매장 전화번호 : ${req.body.business_phone}\n예약일자 : ${req.body.reservationDate}\n미용가격 : ${req.body.beauty_price}`,
     req.body.button_1 =  JSON.stringify( {
         "button": [
             {

@@ -34,7 +34,7 @@ const UserEditOpenModal = ({
       setShowPopup(false);
 
       window.location.href = "/my-Page";
-    }, 2000);
+    }, 1000);
   };
   const handleClosePopup = () => {
     setShowPopup(false);
