@@ -202,12 +202,37 @@
   cursor: pointer;
 }
 .loginPage_total .navigation {
+  position: inherit;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .loginPage_total .navigation img {
   width: 30%;
+}
+.loginPage_total .Nbutton2 {
+  position: fixed;
+  width: 430px;
+}
+@media (max-width: 500px) {
+  .loginPage_total .Nbutton2 {
+    width: 100%;
+    left: 0;
+  }
+}
+.loginPage_total {
+  display: flex;
+  flex-direction: column;
+}
+.loginPage_total .mid {
+  position: inherit;
+  height: 100%;
+  overflow-y: visible;
+}
+.loginPage_total .review-mid {
+  position: inherit;
+  height: auto;
+  margin-top: 72px;
 }
 
 /* UserEditModal.js */

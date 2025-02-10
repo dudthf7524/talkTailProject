@@ -227,7 +227,7 @@
 }
 
 .Nbutton2 {
-  position: absolute;
+  /* position: absolute; */
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -235,8 +235,8 @@
   font-size: 20px !important;
   font-weight: 400 !important;
   bottom: 0;
-  left: 0;
-  right: 0;
+  /* left: 0;
+  right: 0; */
   color: #ffffff;
   flex-direction: row;
   user-select: none;
