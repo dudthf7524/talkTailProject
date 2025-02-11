@@ -3,8 +3,6 @@ import NButtonContainer from "../Components/NavigatorBar/NButtonContainer";
 import "../../CSS/page.css";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../modal";
-import Tos from "./tos";
-import Privacy from "./privacy";
 import api from "../../Api";
 import "../../CSS/homePage.css";
 import Carousel from "react-bootstrap/Carousel";
@@ -129,8 +127,6 @@ const MainPage = () => {
   const modalTitle = "알림";
   const modalContent = "해당 서비스는 준비 중입니다.";
 
-  const [openTos, setOpenTos] = useState(false);
-  const [openPrivacy, setOpenPrivacy] = useState(false);
   const scrollCategory = () => {
     if (categoryRef.current) {
       categoryRef.current.scrollIntoView({
@@ -415,24 +411,6 @@ const MainPage = () => {
           }}
           title={modalTitle}
           content={modalContent}
-        />
-      ) : (
-        ""
-      )}
-      {openTos ? (
-        <Tos
-          openModal={() => {
-            setOpenTos(false);
-          }}
-        />
-      ) : (
-        ""
-      )}
-      {openPrivacy ? (
-        <Privacy
-          openModal={() => {
-            setOpenPrivacy(false);
-          }}
         />
       ) : (
         ""
