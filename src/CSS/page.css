@@ -365,7 +365,7 @@ a {
 }
 
 .mid {
-  position: absolute;
+  /* position: absolute; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -534,7 +534,6 @@ a {
   align-items: flex-start;
   padding-top: 64px;
   flex-wrap: wrap;
-  width: 100%;
   position: relative;
 }
 
@@ -548,8 +547,8 @@ a {
   position: absolute;
   left: 0;
   right: 0;
-  height: 16px; /* 보더 두께 */
-  background-color: #f5f5f5; /* 회색 */
+  height: 16px;
+  background-color: #f5f5f5;
 }
 
 .category::before {
