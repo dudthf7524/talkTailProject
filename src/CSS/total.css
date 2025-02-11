@@ -610,6 +610,16 @@
   textarea {
   width: 100%;
 }
+.reservationRequest_total .notice {
+  padding-left: 0;
+  display: flex;
+  justify-content: center;
+}
+.reservationRequest_total .notice h1 {
+  width: auto;
+  text-align: center;
+  line-height: 25px;
+}
 .reservationRequest_total .account {
   display: flex;
   flex-direction: column;

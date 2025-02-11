@@ -28,8 +28,8 @@ const ReservationRequestPage = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false); // 예약 성공 모달 상태
 
   const reservationData = useSelector((state) => state.reservationData); // Redux 상태 가져오기
-  console.log(reservationData.acceptTime)
-  console.log(reservationData.acceptOldTime)
+  console.log(reservationData.acceptTime);
+  console.log(reservationData.acceptOldTime);
 
   // console.log(
   //   "Selected Designer Name:",
@@ -258,12 +258,11 @@ const ReservationRequestPage = () => {
     date: reservationData.date || "",
     startTime: reservationData.startTime || "",
     business_owner_phone: "",
-    acceptTime : reservationData.acceptTime || "",
-    acceptOldTime : reservationData.acceptOldTime || "",
+    acceptTime: reservationData.acceptTime || "",
+    acceptOldTime: reservationData.acceptOldTime || "",
   });
   console.log("reservationData : ", reservationData);
   const dispatch = useDispatch();
-
 
   const reservationSave = async () => {
     dispatch(
@@ -284,7 +283,6 @@ const ReservationRequestPage = () => {
       business_owner_phone: formData.business_owner_phone || "",
       acceptTime: formData.acceptTime || "",
       acceptOldTime: formData.acceptOldTime || "",
-
     };
     console.log(dataToSend);
 
@@ -425,6 +423,13 @@ const ReservationRequestPage = () => {
             </div>
           </div>
         </div>
+        <div className="reservation-contents notice">
+          <h1>
+            예약금을 이체한 후 예약을 완료해주세요.
+            <br />
+            예약금이 이체되지 않으면 예약이 안될 수 있습니다.
+          </h1>
+        </div>
         <div className="payment-container">
           <div className="payment">
             <h2>예약금</h2>
@@ -440,7 +445,7 @@ const ReservationRequestPage = () => {
 
       {reservationData.businessInfo.business_no_show ? (
         <div className="Nbutton" onClick={openPaymentModal}>
-          예약 및 결제하기
+          예약하기
         </div>
       ) : (
         <div
