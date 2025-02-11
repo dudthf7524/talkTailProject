@@ -121,6 +121,10 @@
   height: auto;
 }
 /* UserEdit.js */
+.user_edit_total {
+  max-height: 100vh;
+  overflow-y: hidden;
+}
 .user_edit_total .main-mid {
   height: auto;
   position: inherit;
