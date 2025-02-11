@@ -123,6 +123,8 @@
 /* UserEdit.js */
 .user_edit_total .main-mid {
   height: auto;
+  position: inherit;
+  margin-top: 72px;
 }
 .user_edit_total .main-mid .input-container {
   width: 90%;
