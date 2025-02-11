@@ -499,13 +499,30 @@
 }
 
 /* BusinessDetailPage.js */
+.detailPage_total {
+  width: 100%;
+}
+.detailPage_total .mid {
+  height: auto;
+}
+.detailPage_total .mid .navigation {
+  width: 100%;
+  position: inherit;
+  height: 72px;
+  display: flex;
+}
 .detailPage_total .writing-div {
   height: 80px;
 }
 .detailPage_total .event-button-container {
   width: 92.33%;
 }
-
+.detailPage_total .Nbutton {
+  margin: 0 auto;
+  position: fixed;
+  bottom: 0;
+  width: 430px;
+}
 .Nbutton {
   margin: 0 auto;
   position: fixed;
@@ -516,6 +533,9 @@
 }
 @media (max-width: 500px) {
   .Nbutton {
+    width: 100%;
+  }
+  .detailPage_total .Nbutton {
     width: 100%;
   }
 }
