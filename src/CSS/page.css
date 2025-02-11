@@ -541,7 +541,7 @@ a {
   padding-left: 16px;
 }
 
-.category::before,
+/* .category::before,
 .category::after {
   content: "";
   position: absolute;
@@ -549,15 +549,15 @@ a {
   right: 0;
   height: 16px;
   background-color: #f5f5f5;
-}
+} */
 
-.category::before {
+/* .category::before {
   top: 0;
 }
 
 .category::after {
   bottom: 0;
-}
+} */
 
 .button-grid {
   position: relative;

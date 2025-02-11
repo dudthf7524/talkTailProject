@@ -61,8 +61,6 @@ import Tos from "./Page/Home/tos";
 import Privacy from "./Page/Home/privacy";
 import CustomerManagementDetail from "./BusinessPage/CustomerManagementDetail";
 
-
-
 function App() {
   const [imageFiles, setImageFiles] = useState({
     main: [],
@@ -169,7 +167,7 @@ function App() {
                 path="customer/management"
                 element={<CustomerManagement />}
               />
-               <Route
+              <Route
                 path="customer/management/detail"
                 element={<CustomerManagementDetail />}
               />
