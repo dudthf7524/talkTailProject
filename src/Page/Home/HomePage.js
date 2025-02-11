@@ -215,7 +215,11 @@ const MainPage = () => {
           </>
         ) : (
           <div className="home-container1">
-            <p>아직 예약내역이 없어요. 예약기능을 이용해보세요.</p>
+            <p>
+              아직 예약내역이 없어요.
+              <br />
+              예약기능을 이용해보세요.
+            </p>
             <div
               className="btn"
               onClick={scrollCategory}
