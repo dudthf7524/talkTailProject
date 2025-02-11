@@ -99,7 +99,7 @@ function RegisterStyle() {
           />
         </button>
         매장옵션
-        <div onClick={handleSave}>수정</div>
+        <div style={{cursor : "pointer"}} onClick={handleSave}>수정</div>
       </div>
       <div className="main-mid">
         <div className="input-container">

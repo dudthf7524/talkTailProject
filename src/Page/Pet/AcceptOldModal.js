@@ -3,9 +3,12 @@ import React, { useState } from "react";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../modal.js";
+import { setAcceptOldTime } from "../../redux/reservationData";
+import { useDispatch } from "react-redux";
 
 const AcceptOldModal = ({ openModal, id, selectedPet }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [accept, setAccept] = useState(false);
   const [openAlertModal, setOpenAlertModal] = useState(false);
   const modalTitle = "예약오류";
@@ -71,6 +74,9 @@ const AcceptOldModal = ({ openModal, id, selectedPet }) => {
                 if (accept) {
                   const acceptOldTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
                   console.log("accpetOldTime : ", acceptOldTime);
+                  dispatch(
+                    setAcceptOldTime(acceptOldTime)
+                  )
                   navigate(`/reservation-request/${id}`, {
                     state: { selectedPet },
                   });

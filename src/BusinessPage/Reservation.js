@@ -307,15 +307,25 @@ const Reservation = () => {
       time: activeTime,
       desingerId: id
     };
-    setOpenModal(true);
+    
 
-    //   try {
-    //     const response = await api.post('/api/reservation/business', data, { withCredentials: true });
-    //     console.log('User authority data:', response.data);
+      try {
+        const response = await api.post('/api/reservation/business', data, { withCredentials: true });
+        
+        if(response.data === 1){
+          setOpenModal(true);
+          setTimeout(() => {
+            window.location.href = '/business/menu';
+            
+          }, 1000);
+          
+        }
+      
+        console.log('User authority data:', response.data);
 
-    // } catch (error) {
-    //     console.error('권한 조회 실패:', error.message);
-    // }
+    } catch (error) {
+        console.error('권한 조회 실패:', error.message);
+    }
   };
 
   return (

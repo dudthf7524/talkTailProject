@@ -340,37 +340,37 @@ const ReservationDetail = () => {
 
   const formatPrice = (price) => {
     if (!price) return ""; // 가격이 없을 경우 0원 표시
-   
-    
+
+
     return `${Number(price).toLocaleString()}원`;
   };
 
   const priceSumButton = (price) => {
-    
+
     setBeautyPrice(prev => Number(prev) + price + "");
-  
+
 
   }
 
   // 숫자 버튼 클릭 시 호출되는 함수
   const handleNumberClick = (num) => {
     setBeautyPrice((prevPrice) => prevPrice + num); // 숫자를 문자열 뒤에 추가
-   
+
   };
 
   // 지우기 버튼 클릭 시 호출되는 함수
   const handleBackspace = () => {
-    if(beautyPrice ===''){
-     
+    if (beautyPrice === '') {
+
     }
     setBeautyPrice((prevPrice) => prevPrice.slice(0, -1)); // 마지막 문자 지우기
-    
-   
-   
+
+
+
   };
 
   const priceStyle = {
-    
+
     color: beautyPrice ? "black" : "", // beautyPrice 값이 있으면 검은색, 없으면 기본색 (빈칸)
   };
 
@@ -445,7 +445,20 @@ const ReservationDetail = () => {
           <div className='detail-title'>시작시간</div>
           <div className='detail-info'>{reservationManagementList.start_time}</div>
         </div>
-
+        <div className='detail-form2'>
+          <div className='detail-title'>미용 동의여부</div>
+          <div className='detail-info'>{reservationManagementList.accept_time}</div>
+        </div>
+        {
+          reservationManagementList.accept_old_time === '0' ? (
+            <div></div>
+          ) : (
+            <div className='detail-form2'>
+              <div className='detail-title'>노견 동의여부</div>
+              <div className='detail-info'>{reservationManagementList.accept_old_time}</div>
+            </div>
+          )
+        }
         <div className='detail-form2'>
           {
             reservationManagementList.reservation_state === '완료' ? (

@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../modal";
+import { useDispatch } from "react-redux";
+import { setAcceptTime } from "../../redux/reservationData";
 
 const AcceptModal = ({ openModal }) => {
   const navigate = useNavigate();
@@ -10,7 +12,7 @@ const AcceptModal = ({ openModal }) => {
   const [openAlertModal, setOpenAlertModal] = useState(false);
   const modalTitle = "예약오류";
   const modalContent = "동의 후 다음 단계로 진행이 가능합니다.";
-
+  const dispatch = useDispatch();
   const handleItemClick = () => {
     navigate(`/designer/list`);
   };
@@ -102,6 +104,9 @@ const AcceptModal = ({ openModal }) => {
               onClick={() => {
                 if (accept) {
                   const acceptTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
+                  dispatch(
+                    setAcceptTime(acceptTime)
+                  )
                   handleItemClick();
                 } else {
                   setOpenAlertModal(true);

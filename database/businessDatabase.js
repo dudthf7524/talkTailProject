@@ -700,6 +700,7 @@ const accountNumber = async (
   console.log("데이터베이스 저장 코드");
   console.log(accountNumberData);
   console.log(business_registration_number);
+  
   try {
     const business = await BusinessAccountNumber.create({
       business_registration_number: business_registration_number,
@@ -710,7 +711,8 @@ const accountNumber = async (
 
     return business;
   } catch (error) {
-    throw new Error("Failed to create business", error.message);
+    console.error("Error creating business:", error); // 전체 에러 로그 출력
+    throw new Error(`Failed to create business: ${error.message}`); // 올바르게 에러 메시지 포함
   }
 };
 

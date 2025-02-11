@@ -83,7 +83,7 @@ function Register() {
           <img src={arrowButtonUrl} alt='' onClick={() => navigate('/admin-menu')} />
         </button>
         회원가입
-        <div onClick={handleSave} disabled={!isIdValid}>저장</div>
+        <div style={{cursor : "pointer"}} onClick={handleSave} disabled={!isIdValid}>저장</div>
       </div>
       <div className='main-mid'>
         회원가입

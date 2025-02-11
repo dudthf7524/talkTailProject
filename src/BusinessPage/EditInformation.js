@@ -206,8 +206,8 @@ function EditInformation() {
                 <button>
                     <img src={arrowButtonUrl} alt='' onClick={() => navigate('/admin-menu')} />
                 </button>
-                등록자료 올리기
-                <div onClick={() => openModal('accept')}>저장</div>
+                등록자료 수정하기
+                <div style={{cursor : "pointer"}} onClick={() => openModal('accept')}>수정</div>
             </div>
             <div className='main-mid'>
                 <h2>현재 저장된 메인 이미지</h2>
@@ -357,7 +357,7 @@ function EditInformation() {
                     </div>
                 </div>
                 <div className='input-container'>
-                    <p>노쇼 금액</p>
+                    <p>예약 금액</p>
                     <input type="text" name='business_no_show' value={formData.business_no_show + " 원"} onChange={handleInputChange} />
                 </div>
             </div>

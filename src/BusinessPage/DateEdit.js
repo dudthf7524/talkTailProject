@@ -86,7 +86,7 @@ function DateEdit() {
                     <img src={arrowButtonUrl} alt='뒤로가기' onClick={() => navigate('/business/menu')} />
                 </button>
                 요일별 시간 설정
-                <div onClick={handleSave}>수정</div>
+                <div style={{cursor : "pointer"}} onClick={handleSave}>수정</div>
             </div>
 
             <div className='date-title'>
