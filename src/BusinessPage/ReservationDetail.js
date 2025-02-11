@@ -11,14 +11,12 @@ import { addMinutes, format, isWithinInterval, parse } from 'date-fns';
 import ReservationDetailModal from "./ReservationDetailModal";
 
 const ReservationDetail = () => {
-
   const navigate = useNavigate();
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
-  const { id } = useParams();
   const location = useLocation();
   const [beautyPrice, setBeautyPrice] = useState(0);
   // 부모 컴포넌트에서 전달된 date 값 가져오기
-  const { date } = location.state || {}; // state가 없는 경우 대비
+  const { id, date } = location.state || {}; // state가 없는 경우 대비
   const [isModalOpen, setModalOpen] = useState(false);
   const [isCheckModalOpen, setCheckModalOpen] = useState(false);
   const [checkMessage, setCheckMessage] = useState('');
@@ -30,8 +28,8 @@ const ReservationDetail = () => {
   const [formData, setFormData] = useState({
     beauty_price: 0,
   });
-
-
+  console.log(id)
+  console.log(date)
   useEffect(() => {
     const fetchUser = async () => {
       console.log(date)

@@ -90,6 +90,48 @@ const setPublicAcl = async (objectName) => {
 //   });
 
 // 이미지 업로드 함수
+
+// 오류 해결 코드
+
+// const { S3 } = require('@aws-sdk/client-s3');
+// const s3 = new S3({
+//     region: 'kr',
+//     credentials: {
+//         accessKeyId: process.env.AWS_ACCESS_KEY,
+//         secretAccessKey: process.env.AWS_SECRET_KEY,
+//     },
+//     endpoint: 'https://kr.object.ncloudstorage.com', // NCP S3 엔드포인트
+//     forcePathStyle: true,  // NCP 호환 경로 스타일
+// });
+
+// // 이미지 업로드 함수 예시
+// const uploadImageToBucket = async (fileBuffer, objectName, mimeType) => {
+//     const params = {
+//         Bucket: bucketName,
+//         Key: objectName,
+//         Body: fileBuffer,
+//         ContentType: mimeType || 'application/octet-stream',
+//     };
+//     await s3.putObject(params);  // v3에서는 이렇게 사용
+// };
+
+// // 이미지 공개로 설정
+// const setPublicAcl = async (objectName) => {
+//     const url = `https://${endpoint}/${bucketName}/${objectName}?acl`;
+//     const headers = {
+//         'x-amz-acl': 'public-read',
+//     };
+//     try {
+//         const response = await axios.put(url, null, { headers });
+//         console.log(`Set ${objectName} as public. Response: ${response.status}`);
+//     } catch (error) {
+//         console.error('Error setting ACL:', error);
+//         throw error;
+//     }
+// };
+
+// 오류 해결 코드
+
 const uploadImageToBucket = async (fileBuffer, objectName, mimeType) => {
     const t = new Date();
     const amzDate = t.toISOString().replace(/[:-]|\.\d{3}/g, '');

@@ -30,24 +30,22 @@ const beautyReservation = async (beautyReservationData) => {
         });
         return BeautyReservationData;
     } catch (error) {
+        console.log(error)
         throw new Error(`Failed to register pet: ${error.message}`);
         
     }
 };
 
 const beautyReservationGet = async (business_registration_number) => {
-    console.log("미용예약 데이터베이스")
-    console.log(business_registration_number)
     try {
         const BeautyReservationData = await BeautyReservation.findAll({
             where: {
                 business_registration_number: business_registration_number,
             },
         });
-        console.log(BeautyReservationData)
         return BeautyReservationData;
-
     } catch (error) {
+        console.log(error)
         throw new Error(`Failed to register pet: ${error.message}`);
     }
 };
@@ -96,6 +94,7 @@ const beautyReservationDetail = async (id) => {
         return results
 
     } catch (error) {
+        console.log(error)
         throw new Error(`Failed to beautyReservationDetail: ${error.message}`);
     }
 };

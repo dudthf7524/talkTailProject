@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import '../CSS/noticeBusiness.css';
 import '../CSS/noticeModal.css';
 import NoticeSendModal from './Modal/NoticeSend';
 import api from '../Api'
 
 const WriteNotice = () => {
-    const navigate = useNavigate();
+    
     const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
+    const navigate = useNavigate();
     const [isModalOpen, setModalOpen] = useState(false);
     const openModal = () => setModalOpen(true);
     const closeModal = () => setModalOpen(false);
-    const { id } = useParams();
-    console.log(id)
+
+    const location = useLocation();
+    const { id } = location.state || {}; // state가 없는 경우 대비
+
     const [formData, setFormData] = useState({
         notice_style: '',
         notice_etc: ''
@@ -27,7 +30,6 @@ const WriteNotice = () => {
         notice_analSac: '',
         notice_hairTangling: '',
     });
-    console.log(formData)
 
     const handleCheckboxChange = (category, value) => {
         setSelectedOptions((prev) => ({
@@ -44,7 +46,6 @@ const WriteNotice = () => {
         }));
     };
 
-    console.log(selectedOptions)
     const handleConfirm = async () => {
         try {
             const response = await api.post(`/api/customer/notice/write/${id}`,
@@ -66,7 +67,6 @@ const WriteNotice = () => {
         }
 
     };
-
 
     return (
         <div className='page-container' lang='ko'>

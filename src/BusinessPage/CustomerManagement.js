@@ -6,16 +6,14 @@ import api from '../Api'
 
 const CustomerManagement = () => {
 
-    const navigate = useNavigate();
     const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
-
-    const [reservationManagementList, setReservationManagementList] = useState([]);
+    const navigate = useNavigate();
+    const [lists, setLists] = useState([]);
 
     useEffect(() => {
         const fetchReservationManagement = async () => {
             try {
                 const response = await api.get('/api/customer/management', { withCredentials: true });
-                console.log(response.data)
                 if (response.data == 'common') {
                     navigate('/business/login'); // 로그인 페이지로 리디렉션
 
@@ -23,20 +21,15 @@ const CustomerManagement = () => {
                 if (response.data[0] === null || response.data === null) {
                     return;
                 } else {
-                    setReservationManagementList(response.data);
+                    setLists(response.data);
                 }
-                console.log(response.data)
             } catch (error) {
-
                 console.error('데이터 가져오기 실패', error);
                 navigate('/business/login'); // 로그인 페이지로 리디렉션
             }
         };
         fetchReservationManagement();
     }, []);
-
-    console.log(reservationManagementList)
-
 
     return (
         <div className='page-container' lang='ko'>
@@ -56,26 +49,26 @@ const CustomerManagement = () => {
             </div>
             <div id="horizontal-line">&nbsp;</div>
 
-            {reservationManagementList != null ? (
-                reservationManagementList.map((reservationManagement, index) => (
+            {lists != null ? (
+                lists.map((list, index) => (
                     <div key={index} className='customer-row'>
-                        <div className='customer-item'>{reservationManagement.date} {reservationManagement.start_time}</div>
-                        <div className='customer-item'>{reservationManagement.date} {reservationManagement.end_time}</div>
-                        <div className='customer-item'>{reservationManagement.pet_name}/{reservationManagement.user_name}</div>
+                        <div className='customer-item'>{list.date} {list.start_time}</div>
+                        <div className='customer-item'>{list.date} {list.end_time}</div>
+                        <div className='customer-item'>{list.pet_name}/{list.user_name}</div>
                         <div className='customer-item'>
                             {
-                                reservationManagement.beauty_notice_is_available
+                                list.beauty_notice_is_available
                                     ?
                                     <button
                                         className='result-button-complete'
-                                        onClick={() => navigate('/business/customer/management/detail' , { state: { id: reservationManagement.beauty_reservation_id } })}
+                                        onClick={() => navigate('/business/customer/management/detail', { state: { id: list.beauty_reservation_id } })}
                                     >
                                         작성완료
                                     </button>
                                     :
                                     <button
                                         className='result-button-write'
-                                        onClick={() => navigate(`/business/write/notice/${reservationManagement.beauty_reservation_id}`)}
+                                        onClick={() => navigate(`/business/write/notice`, {state: {id: list.beauty_reservation_id}})}
                                     >
                                         작성하기
                                     </button>
