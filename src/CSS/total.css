@@ -166,6 +166,10 @@
 .home_total .Carousel {
   height: auto;
 }
+.home_total .tail-number a {
+  margin: 0;
+  font-size: 16px;
+}
 /* UserEdit.js */
 .user_edit_total {
   max-height: 100vh;
