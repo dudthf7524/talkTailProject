@@ -18,8 +18,11 @@ module.exports = (sequelize, DataTypes) => {
         }
     );
 
-    BankInformation.associate = (db) => {
-        // 관계 설정이 필요한 경우 여기에 추가
+    BankInformation.associate = (models) => {
+        BankInformation.hasMany(models.BusinessAccountNumber, {
+            foreignKey: "bank_code",
+            sourceKey: "code",
+          });
     };
 
     return BankInformation;

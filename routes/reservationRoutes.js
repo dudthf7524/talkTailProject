@@ -71,20 +71,14 @@ router.post('/beauty/reservation', authMiddleware, async (req, res) => {
 })
 
 router.get('/beauty/reservation', authMiddlewareSession, async (req, res) => {
-    console.log("req.session")
-    console.log(req.session)
-    console.log("req.session")
-    console.log(req.user)
     const business_registration_number = req.user.business_registration_number;
-
     try {
         const result = await reservationDatabase.beautyReservationGet(business_registration_number)
         res.status(201).json(result);
     } catch (error) {
-        console.error('Error fetching userIformation:', error.message);
+        console.log(error);
         res.status(500).json({ error: error.message });
     }
-
 })
 
 router.get('/beauty/reservation/detail/:id', async (req, res) => {
@@ -96,7 +90,7 @@ router.get('/beauty/reservation/detail/:id', async (req, res) => {
         const result = await reservationDatabase.beautyReservationDetail(id)
         res.status(201).json(result);
     } catch (error) {
-        console.error('Error fetching userIformation:', error.message);
+        console.log(error);
         res.status(500).json({ error: error.message });
     }
 
@@ -108,30 +102,20 @@ router.get('/beauty/reservation/detail/:id/:date', async (req, res) => {
     const date = req.params.date;
     const formatDate = new Date(date);
     const dateNumber = formatDate.getDay();
-    console.log(formatDate)
-    console.log(dateNumber)
-    console.log('routes')
-    console.log(date)
+    
     try {
         const result = await reservationDatabase.beautyReservationDetail(id)
-        console.log()
-        console.log('aaaaaaaaa')
         var hourDay;
         for (let i = 0; i < Object.keys(result.hours).length; i++) {
             if (i == dateNumber) {
                 hourDay = result.hours[i]
             }
         }
-
-        console.log(hourDay)
-        console.log('aaaaaaaaa')
-
         const resultTime = await reservationDatabase.beautyReservationTime(date)
-        console.log(resultTime)
         const results = [result, resultTime, hourDay];
         res.status(201).json(results);
     } catch (error) {
-        console.error('Error fetching userIformation:', error.message);
+        console.log(error);
         res.status(500).json({ error: error.message });
     }
 

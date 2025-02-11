@@ -9,6 +9,8 @@ const { BusinessBeautySignificant } = require("../models");
 const { BusinessBeautyOption } = require("../models");
 const { BusinessAccountNumber } = require("../models");
 const { StoreHours } = require("../models");
+const { BankInformation } = require("../models");
+
 
 const createBusiness = async (businessInfo) => {
   const business_owner_phone =
@@ -718,26 +720,25 @@ const accountNumber = async (
 
 
 const accountNumberList = async (business_registration_number) => {
-  console.log("데이터베이스 저장 코드");
-  
-  console.log(business_registration_number);
+  console.log()
   try {
-    let sql = "";
-    sql +="select name, account_holder, account_number ";
-    sql += "from business_account_number bau ";
-    sql += "join bank_information bi ";
-    sql += "on bank_code = bi.code ";
-    sql += "where bau.business_registration_number = :business_registration_number ";
-
-    const [results, metadata] = await sequelize.query(sql, {
-      replacements: { business_registration_number: business_registration_number }, // 바인딩 파라미터
-      type: sequelize.QueryTypes.SELECT, // 쿼리 유형
-      logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
+    const results = await BusinessAccountNumber.findAll({
+      where: { business_registration_number },
+      attributes: ["account_holder", "account_number"],
+      include: [
+        {
+          model: BankInformation,
+          attributes: ["name"], 
+          required: true,
+        },
+      ],
+      logging: console.log, 
     });
-  
+
     console.log(results);
-    return [results];
+    return results;
   } catch (error) {
+    console.log(error)
     throw new Error("Failed to fetch business details");
   }
 };

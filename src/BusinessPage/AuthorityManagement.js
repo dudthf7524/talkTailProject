@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 import '../BusinessCSS/authorityManagement.css'
-
 import api from '../Api'
-
-
 
 function AuthorityManagement() {
     const location = useLocation();
@@ -77,10 +73,10 @@ function AuthorityManagement() {
                 lists.map((list, index) => (
                     <div key={index} className='authorityManagement-row'>
                         <div className='authorityManagement-item'>
-                            <p>{list.user_name}</p>
+                            {list.user_name}
                         </div>
                         <div className='authorityManagement-item'>
-                            <p>{list.user_phone}</p>
+                            {list.user_phone}
                         </div>
 
                         {
@@ -106,33 +102,33 @@ function AuthorityManagement() {
                                     </>
                                 ) :
                                 list.authority_state === '완료' ?
-                                    (
-                                        <>
-                                            {/* 수락완료, 거절완료 */}
-                                            <div className='authorityManagement-item'>
-                                                수락완료
-                                            </div>
-                                            <div className='authorityManagement-item'>
-                                                수락완료
-                                            </div>
-                                        </>
-                                    ) :
-                                    list.authority_state === '거절' ?
-                                        (
-                                            <>
-                                                {/* 수락완료, 거절완료 */}
-                                                <div className='authorityManagement-item'>
-                                                    수락거절
-                                                </div>
-                                                <div className='authorityManagement-item'>
-                                                    수락거절
-                                                </div>
-                                            </>
-                                        )
-                                        :
-                                        (
-                                            <div className='authorityManagement-item' style={{ fontWeight: 'bold', color: 'gray' }}>알 수 없음</div>
-                                        )
+                                (
+                                    <>
+                                        {/* 수락완료, 거절완료 */}
+                                        <div style={{color : "green", fontWeight : "bold"} } className='authorityManagement-item'>
+                                            수락완료
+                                        </div>
+                                        <div style={{color : "green", fontWeight : "bold"} } className='authorityManagement-item'>
+                                            수락완료
+                                        </div>
+                                    </>
+                                ) :
+                                list.authority_state === '거절' ?
+                                (
+                                    <>
+                                        {/* 수락완료, 거절완료 */}
+                                        <div style={{color : "red", fontWeight : "bold"} } className='authorityManagement-item'>
+                                            수락거절
+                                        </div>
+                                        <div style={{color : "red", fontWeight : "bold"} } className='authorityManagement-item'>
+                                            수락거절
+                                        </div>
+                                    </>
+                                )
+                                :
+                                (
+                                    <div className='authorityManagement-item' style={{ fontWeight: 'bold', color: 'gray' }}>알 수 없음</div>
+                                )
                         }
                     </div>
                 ))

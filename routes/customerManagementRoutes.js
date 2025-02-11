@@ -6,14 +6,12 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 router.get('/customer/management',authMiddlewareSession ,  async (req, res) => {
     const business_registration_number = req.user.business_registration_number;
-    console.log(business_registration_number)
+    
     try {
         const result = await customerManagementDatabase.customerManagementGet(business_registration_number)
-        console.log(result)
         res.status(201).json(result);
-        
     } catch (error) {
-        console.error('고객 관리 리스트 에러:', error.message);
+        console.error(error);
         res.status(500).json({ error: error.message });
     }
 
@@ -54,12 +52,7 @@ router.get('/customer/notice/list',authMiddleware, async (req, res) => {
 
 router.get('/customer/notice/detail/:id',authMiddlewareSession, async (req, res) => {
     const platform_id = req.user.id;
-    console.log(platform_id)
-
-    console.log(req.params)
-
     const id  = req.params.id;
-    console.log(id)
     
     try {
         const result = await customerManagementDatabase.customerNoticeDetail(id);
