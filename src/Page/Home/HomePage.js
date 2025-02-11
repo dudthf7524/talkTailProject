@@ -152,6 +152,13 @@ const MainPage = () => {
               <img src={arrowUrl} alt="arrow" />
             </button> */}
             <img src={logoUrl} alt="" />
+            <p
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Login
+            </p>
           </div>
           <div className="trailing">
             {/* <button>
