@@ -1,3 +1,14 @@
+.Container {
+  overflow-y: visible;
+  height: auto;
+  min-height: 100vh;
+  /* border: 1px solid red; */
+}
+@media (max-width: 500px) {
+  .Container {
+    /* min-height: auto; */
+  }
+}
 /* UserInformation.js */
 .user_information_total .input_box {
   display: flex;
@@ -13,15 +24,21 @@
   width: 100%;
 }
 .user_information_total .input-container {
-  width: 88.89%;
+  width: 90%;
 }
 
 /* HomePage.js */
 .main_container {
-  border: 1px solid red;
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
 }
 .home_total {
   height: auto !important;
+}
+.home_total .home-header {
+  /* border: 3px solid blue; */
+  z-index: 2;
 }
 .home_total .button-item {
   cursor: pointer;
@@ -54,13 +71,45 @@
 .home_total .tail-container {
   margin-bottom: 56px;
 }
+.home_total .category {
+  width: 100%;
+  height: auto;
+}
+.home_total .category .text {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  padding: 0 16px;
+}
+.home_total .category .text p {
+  width: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+.home_total .category .more_btn {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #f0663f;
+}
+.home_total .category .more_btn p {
+  font-size: 16px;
+  line-height: 30px;
+  cursor: pointer;
+  margin: 0;
+}
 .home_total .category .item_container {
   width: 100%;
   height: auto;
   display: flex;
   flex-wrap: wrap;
   margin-top: 10px;
-  margin-bottom: 30px;
 }
 .home_total .category .item_container .button-item {
   width: 30%;
@@ -68,29 +117,28 @@
   margin-bottom: 20px;
   margin-right: 3%;
 }
-.home_total .category .item_container .more_btn {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.home_total .category .item_container .more_btn p {
-  font-size: 16px;
-  width: 15%;
-  border: 1px solid #f0663f;
-  margin-left: auto;
-  margin-right: 3%;
-  line-height: 30px;
-  cursor: pointer;
-}
+
 .home_total .category .item_container .first {
   margin-left: 2%;
 }
 .home_total .category .item_container .third {
   margin-right: 0;
 }
+.home_total .category .less_btn {
+  width: 96%;
+  height: auto;
+  border: 1px solid #f0663f;
+  cursor: pointer;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  line-height: 30px;
+}
 .home_total .home-container2 {
-  border: 1px solid red;
   width: 387px;
 }
 @media (max-width: 500px) {
@@ -98,7 +146,22 @@
     width: 90%;
   }
 }
+.home_total .Carousel {
+  height: auto;
+}
 /* UserEdit.js */
+.user_edit_total {
+  max-height: 100vh;
+  overflow-y: hidden;
+}
+.user_edit_total .main-mid {
+  height: auto;
+  position: inherit;
+  margin-top: 72px;
+}
+.user_edit_total .main-mid .input-container {
+  width: 90%;
+}
 .user_edit_total .input_box {
   display: flex;
   align-items: center;
@@ -126,6 +189,23 @@
 }
 
 /* LoginPage.js */
+.login_total {
+  height: auto !important;
+  position: inherit !important;
+}
+@media (max-width: 500px) {
+  .login_total {
+    height: auto;
+    position: inherit !important;
+  }
+}
+.login_total .login-title {
+  width: 100%;
+  padding-left: 5%;
+}
+.login_total .login-text {
+  height: auto;
+}
 .login_total .login-title img {
   width: 30%;
 }
@@ -176,6 +256,9 @@
   width: 100%;
   height: 47.86%;
 }
+.login_total .login-button-container {
+  height: auto;
+}
 .login_total .btn_box {
   width: 45%;
   height: auto;
@@ -192,6 +275,10 @@
   cursor: default;
 }
 /* LoginSuccessPage.js */
+.loginPage_total .mid {
+  height: 100%;
+  min-height: 100vh;
+}
 .loginPage_total .confirm p {
   width: 100%;
 }
@@ -199,12 +286,36 @@
   cursor: pointer;
 }
 .loginPage_total .navigation {
+  position: inherit;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .loginPage_total .navigation img {
   width: 30%;
+}
+.loginPage_total .Nbutton2 {
+  position: fixed;
+  width: 430px;
+}
+@media (max-width: 500px) {
+  .loginPage_total .Nbutton2 {
+    width: 100%;
+    left: 0;
+  }
+}
+.loginPage_total {
+  display: flex;
+  flex-direction: column;
+}
+.loginPage_total .mid {
+  position: inherit;
+  height: 100%;
+  overflow-y: visible;
+}
+.loginPage_total .review-mid {
+  position: inherit;
+  height: auto;
 }
 
 /* UserEditModal.js */

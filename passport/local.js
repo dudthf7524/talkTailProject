@@ -11,13 +11,13 @@ module.exports = () => {
         passReqToCallback: true,
       },
       async (req, login_id, password, done) => {
-       
+
         try {
-        const business = await businessDatabase.businessLogin(login_id, password);
+          const business = await businessDatabase.businessLogin(login_id, password);
           if (!business) {
             return done(null, false, { reason: "존재하지 않는 사용자입니다." });
           }
-          
+
           if (business) {
             return done(null, business);
           }

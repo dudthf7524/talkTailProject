@@ -32,6 +32,7 @@ sequelize
   .sync({ force: false })
   .then(async () => {
     await BankDatabase(); // 데이터베이스 초기화 실행
+    console.log(`http://localhost:${port} 에서 서버 실행중`);
     console.log("데이터베이스 연결 성공");
   })
   .catch((err) => {
@@ -81,16 +82,10 @@ app.get("/", (req, res) => {
 });
 
 app.get("/business/auth", (req, res) => {
-  console.log("로그인된 정보");
-  console.log(req.user);
-  console.log("로그인된 정보");
   res.json(req.user);
 });
 
 app.get("/user/auth", authMiddleware, (req, res) => {
-  console.log("로그인된 정보");
-  console.log(req.user);
-  console.log("로그인된 정보");
   res.json(req.user);
 });
 

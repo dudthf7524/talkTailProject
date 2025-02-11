@@ -4,15 +4,12 @@ import "../BusinessCSS/menu.css";
 import api from "../Api";
 
 const AdminMenu = () => {
-  // const logoUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/logo/logo.svg`;
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
   const reservationIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/reservationIcon.svg`;
   const customerIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/customerIcon.png`;
   const reviewIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/reviewIcon.png`;
   const calculateIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/calculateIcon.png`;
-  const ImageIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/ImageIcon.png`;
   const informationIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/informationIcon.png`;
-  const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [user, setUser] = useState("null");
   const navigate = useNavigate();
   const [openMore, setOpenMore] = useState(false);
@@ -24,7 +21,6 @@ const AdminMenu = () => {
           withCredentials: true,
         });
         setUser(response.data);
-        console.log(response.data);
         if (!response.data) {
           navigate("/business/login"); // 로그인 페이지로 리디렉션
         }

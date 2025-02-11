@@ -119,7 +119,9 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
                 className={`pet-contents ${
                   selectedPetId === pet.pet_id ? "selected" : ""
                 }`}
-                onClick={() => handlePetSelect(pet)}
+                onClick={() => {
+                  handlePetSelect(pet);
+                }}
                 key={pet.pet_id}
               >
                 <div className="pet-contents-img">
@@ -147,13 +149,11 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
                   <div className="pet-accordion-content deleteBtn">
                     <button
                       className="petDeleteButton"
-                      //   onClick={() => {
-                      //     petDeleteButton(pet.pet_id, pet.petimage);
-                      //   }}
-                      onClick={() => {
+                      onClick={(e) => {
                         setOpenModal(true);
                         setPetId(pet.pet_id);
                         setPetImage(pet.petimage);
+                        e.stopPropagation();
                       }}
                     >
                       펫 삭제하기

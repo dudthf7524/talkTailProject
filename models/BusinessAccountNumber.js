@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
             bank_code: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                unique: true,
             },
             account_holder: {
                 type: DataTypes.STRING(50),
@@ -33,8 +32,11 @@ module.exports = (sequelize, DataTypes) => {
         }
     );
 
-    BusinessAccountNumber.associate = (db) => {
-        // 관계 설정이 필요한 경우 여기에 추가
+    BusinessAccountNumber.associate = (models) => {
+        BusinessAccountNumber.belongsTo(models.BankInformation, {
+            foreignKey: "bank_code",
+            targetKey: "code",
+        });
     };
 
     return BusinessAccountNumber;

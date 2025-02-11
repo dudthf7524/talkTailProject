@@ -94,9 +94,12 @@
   align-items: center;
   justify-content: center;
   margin: 0;
-  border: 1px solid black;
+  border: 1px solid #f0663f;
+  border-radius: 5px;
   cursor: pointer;
+  color: #f0663f;
 }
 .petInfo_modal .btn_box p:last-child {
-  color: red;
+  background-color: #f0663f;
+  color: white;
 }

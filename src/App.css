@@ -1,8 +1,11 @@
 .App {
   width: 100%;
+  height: 100%;
+  min-height: 100vh;
   text-align: center;
   align-items: center;
   background-color: #a3a3a3;
+  /* border: 3px solid blue; */
 }
 
 .Container {
@@ -10,14 +13,15 @@
   flex-direction: column;
   align-items: center;
   width: 430px;
+  height: 100%;
   min-height: 100vh;
-  height: auto;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
   background-color: #ffffff;
   position: relative;
   margin: 0 auto;
+  border: 1px solid white;
 }
 @media (max-width: 500px) {
   .Container {

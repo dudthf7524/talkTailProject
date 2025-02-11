@@ -61,7 +61,7 @@ function AccountNumberList() {
 
       {lists.map((list, index) => (
         <div key={index} className="accountNumberList-row">
-          <div className="accountNumberList-item">{list?.name}</div>
+          <div className="accountNumberList-item">{list?.bank_information.name}</div>
           <div className="accountNumberList-item">{list?.account_holder}</div>
           <div className="accountNumberList-item">{list?.account_number}</div>
         </div>

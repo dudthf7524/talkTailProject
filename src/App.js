@@ -61,8 +61,6 @@ import Tos from "./Page/Home/tos";
 import Privacy from "./Page/Home/privacy";
 import CustomerManagementDetail from "./BusinessPage/CustomerManagementDetail";
 
-
-
 function App() {
   const [imageFiles, setImageFiles] = useState({
     main: [],
@@ -77,19 +75,6 @@ function App() {
       [imageType]: files,
     }));
   };
-  // const [user, setUser] = useState(null);
-  // useEffect(() => {
-  //   axios
-  //     .get('http://localhost:8383/user/auth')
-  //     .then((response) => {
-  //       console.log(response.data)
-  //       setUser(response.data); // Set the users state with the response data
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching users:", error); // Handle errors
-  //     })
-  // }, []);
-  // console.log(user)
 
   return (
     <div className="App">
@@ -162,18 +147,18 @@ function App() {
                 element={<ReservationManagement />}
               />
               <Route
-                path="reservation/detail/:id"
+                path="reservation/detail"
                 element={<BusinessReservationDetail />}
               />
               <Route
                 path="customer/management"
                 element={<CustomerManagement />}
               />
-               <Route
+              <Route
                 path="customer/management/detail"
                 element={<CustomerManagementDetail />}
               />
-              <Route path="write/notice/:id" element={<WriteNotice />} />
+              <Route path="write/notice" element={<WriteNotice />} />
               <Route path="date/register" element={<DateRegister />} />
               <Route path="date/edit" element={<DateEdit />} />
               <Route path="day-on-off/edit" element={<DayOnOffEdit />} />

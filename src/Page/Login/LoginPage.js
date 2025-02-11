@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../../CSS/total.css";
 import "../../CSS/auth.css";
 
 import { useNavigate } from "react-router-dom";
@@ -48,7 +49,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login login_total" lang="ko">
+    <div className="login_total login" lang="ko">
       <div className="login-title">
         <img src={logoUrl} alt="logo" />
       </div>

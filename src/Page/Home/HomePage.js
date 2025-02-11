@@ -240,7 +240,22 @@ const MainPage = () => {
         <HomeCarousel />
 
         <div className="category" ref={categoryRef}>
-          <div className="text">카테고리</div>
+          <div className="text">
+            <p>카테고리</p>
+            {showCategory ? (
+              ""
+            ) : (
+              <div className="more_btn">
+                <p
+                  onClick={() => {
+                    setShowCategory(true);
+                  }}
+                >
+                  +더보기
+                </p>
+              </div>
+            )}
+          </div>
           <div className="item_container">
             <div
               className="button-item first"
@@ -259,15 +274,7 @@ const MainPage = () => {
             >
               <img src={b3Url} alt="" />
             </div>
-            <div className="more_btn">
-              <p
-                onClick={() => {
-                  setShowCategory(!showCategory);
-                }}
-              >
-                {showCategory ? "▲" : "+더보기"}
-              </p>
-            </div>
+
             {showCategory ? (
               <>
                 <div
@@ -301,8 +308,21 @@ const MainPage = () => {
             ) : (
               ""
             )}
+
             {/* <div className="button-item" onClick={() => handleItemClick(4)}> */}
           </div>
+          {showCategory ? (
+            <div
+              className="less_btn"
+              onClick={() => {
+                setShowCategory(false);
+              }}
+            >
+              ▲
+            </div>
+          ) : (
+            ""
+          )}
         </div>
         {/* <div
           className="home-container4"

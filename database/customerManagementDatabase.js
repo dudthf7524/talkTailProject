@@ -22,20 +22,17 @@ const customerManagementGet = async (business_registration_number) => {
         logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
       }
     );
-    console.log(results);
     return results;
   } catch (error) {
+    console.error(error)
     throw new Error(`Failed to register pet: ${error.message}`);
   }
 };
 
 const customerNoticeWrite = async (id, data) => {
-  console.log(id);
 
   const style = data.formData;
-  console.log(style);
   const selectedOptions = data.selectedOptions;
-  console.log(selectedOptions);
 
   try {
     const BeautyNoticeData = await BeautyNotice.create({
@@ -50,9 +47,9 @@ const customerNoticeWrite = async (id, data) => {
       notice_hairTangling: selectedOptions.notice_hairTangling,
       notice_etc: style.notice_etc,
     });
-
     return BeautyNoticeData;
   } catch (error) {
+    console.error(error)
     throw new Error("Failed to create customerNoticeWrite", error.message);
   }
 };
@@ -71,8 +68,7 @@ const customerNoticeTrue = async (id) => {
     );
     return BeautyReservationData;
   } catch (error) {
-    // 오류를 더욱 상세하게 로깅
-
+    console.error(error)
     throw new Error("Failed to update BeautyReservationData: " + error.message);
   }
 };
@@ -101,20 +97,14 @@ const customerNoticeList = async (platform_id) => {
       }
     );
 
-    console.log(metadata);
-    console.log("results");
-    console.log("Results:", results);
-    console.log("Results Length:", results.length);
-    console.log("Metadata:", metadata);
-    console.log("results");
     return results;
   } catch (error) {
+    console.error(error)
     throw new Error(`Failed to register pet: ${error.message}`);
   }
 };
 
 const customerNoticeDetail = async (id) => {
-  console.log(id);
 
   try {
     let sql = "";
@@ -136,15 +126,9 @@ const customerNoticeDetail = async (id) => {
         logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
       }
     );
-
-    console.log(metadata);
-    console.log("results");
-    console.log("Results:", results);
-    console.log("Results Length:", results.length);
-    console.log("Metadata:", metadata);
-    console.log("results");
     return results;
   } catch (error) {
+    console.error(error)
     throw new Error(`Failed to register pet: ${error.message}`);
   }
 };

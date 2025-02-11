@@ -24,28 +24,28 @@ const beautyReservation = async (beautyReservationData) => {
             date: beautyReservationData.date,
             start_time: beautyReservationData.startTime,
             end_time: beautyReservationData.startTime,
-            reservation_state : '대기'
+            reservation_state : '대기',
+            accept_time : beautyReservationData.acceptTime,
+            accept_old_time : beautyReservationData.acceptOldTime
         });
         return BeautyReservationData;
     } catch (error) {
+        console.log(error)
         throw new Error(`Failed to register pet: ${error.message}`);
         
     }
 };
 
 const beautyReservationGet = async (business_registration_number) => {
-    console.log("미용예약 데이터베이스")
-    console.log(business_registration_number)
     try {
         const BeautyReservationData = await BeautyReservation.findAll({
             where: {
                 business_registration_number: business_registration_number,
             },
         });
-        console.log(BeautyReservationData)
         return BeautyReservationData;
-
     } catch (error) {
+        console.log(error)
         throw new Error(`Failed to register pet: ${error.message}`);
     }
 };
@@ -53,7 +53,7 @@ const beautyReservationDetail = async (id) => {
     console.log(id)
     try {
         let sql = "";
-        sql += "select business_name, business_phone, date, start_time, end_time, business_desinger_name, user_phone, pet_name, pet_species, pet_breed, pet_birth, pet_weight, pet_gender, pet_neuter, beauty_style, beauty_significant, beauty_caution, end_time, reservation_state, reject_content ,beauty_price, paid_price, hours ";
+        sql += "select business_name, business_phone, date, start_time, end_time, business_desinger_name, user_phone, pet_name, pet_species, pet_breed, pet_birth, pet_weight, pet_gender, pet_neuter, beauty_style, beauty_significant, beauty_caution, end_time, reservation_state, reject_content ,beauty_price, paid_price, hours ,accept_time, accept_old_time ";
         sql += "from beauty_reservation br ";
         sql += "join user_information ui ";
         sql += "on br.platform_id = ui.platform_id ";
@@ -94,6 +94,7 @@ const beautyReservationDetail = async (id) => {
         return results
 
     } catch (error) {
+        console.log(error)
         throw new Error(`Failed to beautyReservationDetail: ${error.message}`);
     }
 };
