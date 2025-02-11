@@ -1,11 +1,24 @@
 import "../../CSS/home.css";
-
-const Privacy = ({ openModal }) => {
+import React from "react";
+import { useNavigate } from "react-router-dom";
+const Privacy = () => {
+  const navigate = useNavigate();
   return (
     <>
-      <div className="back" onClick={openModal}></div>
+      <div
+        className="back"
+        onClick={() => {
+          navigate(-1);
+        }}
+      ></div>
       <div className="privacy homeModal">
-        <img onClick={openModal} src="/PageImage/components/X.svg" alt="" />
+        <img
+          onClick={() => {
+            navigate(-1);
+          }}
+          src="/PageImage/components/X.svg"
+          alt=""
+        />
         <p className="title">개인정보 처리방침</p>
         <p className="content">
           개정 일 : 2024년 12월 1일

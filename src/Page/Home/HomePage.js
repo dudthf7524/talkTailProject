@@ -362,7 +362,7 @@ const MainPage = () => {
             <div className="tail-a">
               <span
                 onClick={() => {
-                  setOpenTos(true);
+                  navigate("/tos");
                 }}
               >
                 이용약관
@@ -370,7 +370,7 @@ const MainPage = () => {
               ｜
               <span
                 onClick={() => {
-                  setOpenPrivacy(true);
+                  navigate("/privacy");
                 }}
               >
                 개인정보 처리방침

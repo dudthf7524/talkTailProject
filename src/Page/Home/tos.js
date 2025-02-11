@@ -1,10 +1,25 @@
 import "../../CSS/home.css";
-const Tos = ({ openModal }) => {
+import React from "react";
+import { useNavigate } from "react-router-dom";
+const Tos = () => {
+  const navigate = useNavigate();
+
   return (
     <>
-      <div className="back" onClick={openModal}></div>
+      <div
+        className="back"
+        onClick={() => {
+          navigate(-1);
+        }}
+      ></div>
       <div className="tos homeModal">
-        <img onClick={openModal} src="/PageImage/components/X.svg" alt="" />
+        <img
+          onClick={() => {
+            navigate(-1);
+          }}
+          src="/PageImage/components/X.svg"
+          alt=""
+        />
         <p className="title">이용약관</p>
         <p className="content">
           ㈜크림오프가 제공하는 크림오프 서비스를 이용해 주셔서 감사합니다.

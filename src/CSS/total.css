@@ -282,9 +282,14 @@
   margin-bottom: 50px;
 }
 .login_total .btn_box p {
+  width: auto;
   font-size: 14px;
   margin: 0;
   cursor: pointer;
+  letter-spacing: -0.01vw;
+}
+.login_total .btn_box p:hover {
+  background-color: white;
 }
 .login_total .btn_box p:nth-child(2) {
   cursor: default;
