@@ -1,6 +1,34 @@
 const { sequelize, BeautyNotice, BeautyReservation } = require("../models");
+const {Pet} = require("../models")
 
 const customerManagementGet = async (business_registration_number) => {
+  
+  // try {
+  //     const results = await BeautyReservation.findAll({
+  //       where: { 
+  //         business_registration_number, 
+  //         reservation_state : "완료",
+  //       },
+        
+  //       attributes: ["beauty_reservation_id",],
+  //       include: [
+  //         {
+  //           model: Pet,
+  //           attributes: ["pet_name"], 
+  //           required: true,
+  //         },
+  //       ],
+  //       logging: console.log, 
+  //     });
+  
+  //     console.log(results);
+  //     return results;
+  //   } catch (error) {
+  //     console.error(error)
+  //     throw new Error("Failed to fetch business details");
+  //   }
+
+
   try {
     let sql = "";
     sql +=
