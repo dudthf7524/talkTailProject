@@ -77,17 +77,17 @@ function App() {
       [imageType]: files,
     }));
   };
-
+  
   return (
     <div className="App">
       <div className="Container">
         <ImageProvider>
           <Routes>
-            <Route path="/" element={<LoginPage />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/auth/*" element={<Redirection />} />
             <Route path="/login-success" element={<LoginSuccess />} />
             <Route path="/user/detail" element={<UserDetailPage />} />
-            <Route path="/home" element={<HomePage />} />
+            <Route path="/home" element={<LoginPage />} />
             <Route path="/list/:id" element={<ListPage />} />
             <Route
               path="/business/detail/:id"
