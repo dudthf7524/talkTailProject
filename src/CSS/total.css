@@ -6,7 +6,7 @@
 }
 @media (max-width: 500px) {
   .Container {
-    min-height: auto;
+    /* min-height: auto; */
   }
 }
 /* UserInformation.js */
