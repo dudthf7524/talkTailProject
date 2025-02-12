@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../BusinessCSS/menu.css";
 import api from "../Api";
-
+import Tos from "../Page/Home/tos";
+import Privacy from "../Page/Home/privacy";
 const AdminMenu = () => {
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
   const reservationIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/reservationIcon.svg`;
@@ -10,9 +11,15 @@ const AdminMenu = () => {
   const reviewIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/reviewIcon.png`;
   const calculateIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/calculateIcon.png`;
   const informationIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/informationIcon.png`;
+  const footArrowUrl = `${process.env.PUBLIC_URL}/PageImage/home/footArrow.svg`;
+
   const [user, setUser] = useState("null");
   const navigate = useNavigate();
   const [openMore, setOpenMore] = useState(false);
+  const landline_phone = "070-4571-7580";
+  const [openTos, setOpenTos] = useState(false);
+  const [openPrivacy, setOpenPrivacy] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -34,6 +41,10 @@ const AdminMenu = () => {
   if (!user) {
     return <div>로딩 중...</div>;
   }
+
+  const toggleAccordion = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className="page-container menuPage_total">
@@ -92,7 +103,7 @@ const AdminMenu = () => {
           </button>
         </div>
         <button
-          className="more_btn"
+          className="more_business-btn"
           onClick={() => {
             setOpenMore(!openMore);
           }}
@@ -220,8 +231,83 @@ const AdminMenu = () => {
           ""
         )}
 
-        <img src={logoUrl} alt="logo img" className="logo-img"></img>
       </div>
+      <div className="tail-container">
+        <div className="tail-item">
+          <img src={logoUrl} alt="" style={{ width: "50%" }} />
+
+          <div className="tail-text">
+            애견미용샵 ｜상품입점｜제휴문의｜상담문의
+          </div>
+          <div className="tail-business-number">
+            <a
+              style={{ textDecoration: "none", color: "black" }}
+              href={`tel:${landline_phone}`}
+            >
+              070-4571-7580
+            </a>
+          </div>
+          <div className="tail-a">
+            <span
+              onClick={() => {
+                setOpenTos(true);
+              }}
+            >
+              이용약관
+            </span>
+            ｜
+            <span
+              onClick={() => {
+                setOpenPrivacy(true);
+              }}
+            >
+              개인정보 처리방침
+            </span>
+          </div>
+          <div
+            className={`tail-accordion ${isOpen ? "open" : ""}`}
+            onClick={toggleAccordion}
+          >
+            사업자 정보
+            <img src={footArrowUrl} alt="arrow" />
+          </div>
+          <div className={`hidden-content ${isOpen ? "open" : ""}`}>
+            <div className="hidden-item">
+              <div>대표</div>
+              <div>사업자등록번호</div>
+              <div>통신판매업</div>
+              <div>주소</div>
+              <div>이메일</div>
+            </div>
+            <div className="hidden-item2">
+              <div>권도혁</div>
+              <div>514-87-03021</div>
+              <div>2025-경북경산-0073</div>
+              <div>경상북도 경산시 삼풍로 27, 309호</div>
+              <div>creamoff2021@creamoff.co.kr</div>
+            </div>
+          </div>
+          <div className="tail-co">@TalkTail co Ltd. All rigths reserved</div>
+        </div>
+      </div>
+      {openTos ? (
+        <Tos
+          openModal={() => {
+            setOpenTos(false);
+          }}
+        />
+      ) : (
+        ""
+      )}
+      {openPrivacy ? (
+        <Privacy
+          openModal={() => {
+            setOpenPrivacy(false);
+          }}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
