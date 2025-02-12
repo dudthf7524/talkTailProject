@@ -120,8 +120,16 @@ const HomeCarousel = () => {
       setCurrentIndex(newIndex);
     };
 
+    if (sliderRef.current) {
+      sliderRef.current.addEventListener("scroll", handleScroll);
+    }
+
     sliderRef.current.addEventListener("scroll", handleScroll);
-    return () => sliderRef.current.removeEventListener("scroll", handleScroll);
+    return () => {
+      if (sliderRef.current) {
+        sliderRef.current.removeEventListener("scroll", handleScroll);
+      }
+    };
   }, []);
   return (
     <div className="home_carousel_section">
