@@ -151,6 +151,8 @@ const PetRegistration = () => {
       etcRef.current.focus();
       return;
     }
+
+    return true;
   };
   // 이미지 URL 및 상태 변수
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;

@@ -103,7 +103,7 @@ const AdminMenu = () => {
           </button>
         </div>
         <button
-          className="more_business-btn"
+          className="more-business-btn"
           onClick={() => {
             setOpenMore(!openMore);
           }}

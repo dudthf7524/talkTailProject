@@ -60,7 +60,7 @@ app.use(passport.initialize());
 app.use(
   session({
     secret: "암호화에 쓸 비번", // 세션 암호화 키
-
+    
     resave: false,
     saveUninitialized: false,
     credentials: true,
@@ -89,6 +89,18 @@ app.get("/user/auth", authMiddleware, (req, res) => {
   res.json(req.user);
 });
 
+// app.get('/business/logout', (request, response) => {
+//   console.log('aaaa')
+//   request.logout((err) => { // request.logout()으로 세션 삭제
+//       console.log(err)
+//       if (err) { return response.status(500).send("로그아웃 오류"); }
+//       request.session.destroy(() => { // 세션 완전히 파기
+//           response.clearCookie('connect.sid'); // 세션 쿠키 삭제
+//           response.redirect('/'); // 홈 또는 로그인 페이지로 리디렉션
+//       });
+//   });
+// });
+
 app.use(router);
 
 app.use("/api", businessRoutes);
@@ -104,3 +116,5 @@ app.use("/api", kakaoApiRoutes);
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./build/index.html"));
 });
+
+
