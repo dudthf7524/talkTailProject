@@ -30,25 +30,32 @@ const HomeCarousel = () => {
   };
 
   const getWindowWidth = () => window.innerWidth;
+
   const handleSlide = (direction) => {
     if (!sliderRef.current) return;
+    setCurrentIndex(currentIndex - 1);
     const windowWidth = getWindowWidth();
-    let slideAmount = windowWidth > 500 ? 387 + 8.6 : windowWidth * 0.92;
-
-    // Update currentIndex based on direction
-    if (direction === "left" && currentIndex > 1) {
-      setCurrentIndex(currentIndex - 1);
-    } else if (direction === "right" && currentIndex < imageArray.length) {
-      setCurrentIndex(currentIndex + 1);
+    let slideAmount = 0;
+    if (windowWidth > 500) {
+      slideAmount = 387 + 8.6;
+    } else {
+      slideAmount = windowWidth * 0.92;
     }
-
-    sliderRef.current.scrollTo({
-      left: slideAmount * (currentIndex - 1),
-      behavior: "smooth",
-    });
+    if (direction === "left") {
+      sliderRef.current.scrollTo({
+        left: slideAmount * (currentIndex - 1),
+        behavior: "smooth",
+      });
+    } else {
+      sliderRef.current.scrollTo({
+        left: slideAmount * currentIndex,
+        behavior: "smooth",
+      });
+    }
   };
   const moveCircle = (index) => {
     setIsPlaying(false);
+    if (index === imageArray.length) console.log("함수 속 index : ", index);
     setCurrentIndex(Math.min(index + 1, imageArray.length));
     // console.log("currentIndex : ", currentIndex);
 
@@ -153,13 +160,13 @@ const HomeCarousel = () => {
       <div className="btn_box">
         <p
           onClick={() => {
-            if (currentIndex !== 1) {
+            if (currentIndex !== 0) {
               handleSlide("left");
             }
           }}
           style={{
-            color: currentIndex !== 1 ? "black" : "gray",
-            cursor: currentIndex !== 1 ? "pointer" : "default",
+            color: currentIndex !== 0 ? "black" : "gray",
+            cursor: currentIndex !== 0 ? "pointer" : "default",
           }}
         >
           {"<"}
@@ -183,13 +190,14 @@ const HomeCarousel = () => {
         )}
         <p
           onClick={() => {
-            if (currentIndex !== imageArray.length) {
+            if (currentIndex !== imageArray.length - 1) {
               handleSlide("right");
             }
           }}
           style={{
-            color: currentIndex !== imageArray.length ? "black" : "gray",
-            cursor: currentIndex !== imageArray.length ? "pointer" : "default",
+            color: currentIndex !== imageArray.length - 1 ? "black" : "gray",
+            cursor:
+              currentIndex !== imageArray.length - 1 ? "pointer" : "default",
           }}
         >
           {">"}

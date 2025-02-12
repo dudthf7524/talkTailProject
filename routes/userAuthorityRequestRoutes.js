@@ -56,8 +56,7 @@ router.get('/user/authority', authMiddlewareSession, async (req, res) => {
 
     try {
         const userGetAuthority = await userAuthorityRequestDatabase.userGetAuthority(business_registration_number);
-        console.log('aaaa');
-        console.log(userGetAuthority)
+      
         res.json(userGetAuthority);
     } catch (error) {
         console.error('Failed to fetch authority request error: ', error);

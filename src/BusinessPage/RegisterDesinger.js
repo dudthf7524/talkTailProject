@@ -55,15 +55,13 @@ function RegisterDesinger() {
   return (
     <div className="mid" lang="ko">
       <div className="navigation">
-        <button>
-          <img
+          <img style={{cursor : "pointer"}}
             src={arrowButtonUrl}
             alt=""
-            onClick={() => navigate("/business/menu")}
+            onClick={() => navigate("/business/list/desinger")}
           />
-        </button>
         디자이너 등록
-        <div onClick={handleSave}>저장</div>
+        <div style={{cursor : "pointer"}} onClick={handleSave}>저장</div>
       </div>
       <div className="main-mid">
         <div className="input-container">

@@ -27,10 +27,7 @@ const NButtonContainer = () => {
       >
         <img src={noticeUrl} alt="notice" />
       </button>
-      <button
-        className="header-nickname-button"
-        onClick={() => navigate("/home")}
-      >
+      <button className="header-nickname-button" onClick={() => navigate("/")}>
         <img src={homeUrl} alt="home" />
       </button>
       {/* <button className='header-nickname-button' onClick={() => navigate('/community')}> */}

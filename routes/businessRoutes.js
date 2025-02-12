@@ -221,9 +221,7 @@ router.get('/business/style/significantGet', authMiddlewareSession, async (req, 
 })
 
 router.get('/business/date/edit', authMiddlewareSession, async (req, res) => {
-  console.log("라우터")
-  console.log(req.user.registrationNumber)
-  console.log("라우터")
+
 
   const business_registration_number = req.user.registrationNumber
 
@@ -231,7 +229,7 @@ router.get('/business/date/edit', authMiddlewareSession, async (req, res) => {
     const getDateEditData = await businessDatabase.getDateEdit(business_registration_number);
     res.json(getDateEditData);
   } catch (error) {
-    console.error('Failed to fetch authority request error: ', error);
+    console.error(error);
     res.status(500).json({ message: 'Failed to fetch authority request.' });
   }
 

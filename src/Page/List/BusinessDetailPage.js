@@ -166,8 +166,6 @@ const EventDetailPage = () => {
           상세보기
           <div></div>
         </div>
-        <div className="blank"></div>
-        <div className="blank"></div>
         <div className="event-img">
           {business.business_main_image ? (
             <img

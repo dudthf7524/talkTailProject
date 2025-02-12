@@ -43,9 +43,24 @@
 .home_total .button-item {
   cursor: pointer;
 }
+.home_total .home-location {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .home_total .home-location img {
   height: 70%;
 }
+.home_total .home-location p {
+  width: auto;
+  height: auto;
+  margin: 0;
+  color: #f0663f;
+  cursor: pointer;
+  font-size: 20px;
+}
+
 .home_total .home-container1 {
   display: flex;
   flex-direction: column;
@@ -56,6 +71,7 @@
 .home_total .home-container1 p {
   font-size: 18px;
   color: white;
+  line-height: 30px;
 }
 .home_total .home-container1 .btn {
   width: 30%;
@@ -67,6 +83,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  padding: 0;
 }
 .home_total .tail-container {
   margin-bottom: 56px;
@@ -148,6 +165,10 @@
 }
 .home_total .Carousel {
   height: auto;
+}
+.home_total .tail-number a {
+  margin: 0;
+  font-size: 16px;
 }
 /* UserEdit.js */
 .user_edit_total {
@@ -267,9 +288,14 @@
   margin-bottom: 50px;
 }
 .login_total .btn_box p {
+  width: auto;
   font-size: 14px;
   margin: 0;
   cursor: pointer;
+  letter-spacing: -0.01vw;
+}
+.login_total .btn_box p:hover {
+  background-color: white;
 }
 .login_total .btn_box p:nth-child(2) {
   cursor: default;
@@ -479,13 +505,30 @@
 }
 
 /* BusinessDetailPage.js */
+.detailPage_total {
+  width: 100%;
+}
+.detailPage_total .mid {
+  height: auto;
+}
+.detailPage_total .mid .navigation {
+  width: 100%;
+  position: inherit;
+  height: 72px;
+  display: flex;
+}
 .detailPage_total .writing-div {
   height: 80px;
 }
 .detailPage_total .event-button-container {
   width: 92.33%;
 }
-
+.detailPage_total .Nbutton {
+  margin: 0 auto;
+  position: fixed;
+  bottom: 0;
+  width: 430px;
+}
 .Nbutton {
   margin: 0 auto;
   position: fixed;
@@ -496,6 +539,9 @@
 }
 @media (max-width: 500px) {
   .Nbutton {
+    width: 100%;
+  }
+  .detailPage_total .Nbutton {
     width: 100%;
   }
 }
@@ -563,6 +609,16 @@
   .reservation-contents-text
   textarea {
   width: 100%;
+}
+.reservationRequest_total .notice {
+  padding-left: 0;
+  display: flex;
+  justify-content: center;
+}
+.reservationRequest_total .notice h1 {
+  width: auto;
+  text-align: center;
+  line-height: 25px;
 }
 .reservationRequest_total .account {
   display: flex;

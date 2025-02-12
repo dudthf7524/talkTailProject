@@ -3,8 +3,6 @@ import NButtonContainer from "../Components/NavigatorBar/NButtonContainer";
 import "../../CSS/page.css";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../modal";
-import Tos from "./tos";
-import Privacy from "./privacy";
 import api from "../../Api";
 import "../../CSS/homePage.css";
 import Carousel from "react-bootstrap/Carousel";
@@ -129,8 +127,6 @@ const MainPage = () => {
   const modalTitle = "알림";
   const modalContent = "해당 서비스는 준비 중입니다.";
 
-  const [openTos, setOpenTos] = useState(false);
-  const [openPrivacy, setOpenPrivacy] = useState(false);
   const scrollCategory = () => {
     if (categoryRef.current) {
       categoryRef.current.scrollIntoView({
@@ -152,6 +148,13 @@ const MainPage = () => {
               <img src={arrowUrl} alt="arrow" />
             </button> */}
             <img src={logoUrl} alt="" />
+            <p
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Login
+            </p>
           </div>
           <div className="trailing">
             {/* <button>
@@ -208,7 +211,11 @@ const MainPage = () => {
           </>
         ) : (
           <div className="home-container1">
-            <p>아직 예약내역이 없어요. 예약기능을 이용해보세요.</p>
+            <p>
+              아직 예약내역이 없어요.
+              <br />
+              예약기능을 이용해보세요.
+            </p>
             <div
               className="btn"
               onClick={scrollCategory}
@@ -355,7 +362,7 @@ const MainPage = () => {
             <div className="tail-a">
               <span
                 onClick={() => {
-                  setOpenTos(true);
+                  navigate("/tos");
                 }}
               >
                 이용약관
@@ -363,7 +370,7 @@ const MainPage = () => {
               ｜
               <span
                 onClick={() => {
-                  setOpenPrivacy(true);
+                  navigate("/privacy");
                 }}
               >
                 개인정보 처리방침
@@ -404,24 +411,6 @@ const MainPage = () => {
           }}
           title={modalTitle}
           content={modalContent}
-        />
-      ) : (
-        ""
-      )}
-      {openTos ? (
-        <Tos
-          openModal={() => {
-            setOpenTos(false);
-          }}
-        />
-      ) : (
-        ""
-      )}
-      {openPrivacy ? (
-        <Privacy
-          openModal={() => {
-            setOpenPrivacy(false);
-          }}
         />
       ) : (
         ""

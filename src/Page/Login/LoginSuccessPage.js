@@ -61,7 +61,7 @@ const Confirm = () => {
           <div className="Nbutton2-1" onClick={() => navigate("/user/edit")}>
             개인정보 수정하기
           </div>
-          <div className="Nbutton2-2" onClick={() => navigate("/home")}>
+          <div className="Nbutton2-2" onClick={() => navigate("/")}>
             홈으로
           </div>
         </div>

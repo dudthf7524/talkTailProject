@@ -18,7 +18,7 @@ function EditInformation() {
     const apiUrl = process.env.REACT_APP_API_BASE_URL;
     const { imageFiles } = useContext(ImageContext);
     const navigate = useNavigate();
-    const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessImage/button/arrow_left.svg`;
+    const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
     const keyButtonUrl = `${process.env.PUBLIC_URL}/BusinessImage/icon/keyboard_return.svg`;
     const defaultImage = `${process.env.PUBLIC_URL}/PageImage/pet/pet_img_L.png`;
 
@@ -204,9 +204,9 @@ function EditInformation() {
         <div className='mid' lang='ko'>
             <div className='navigation'>
                 <button>
-                    <img src={arrowButtonUrl} alt='' onClick={() => navigate('/admin-menu')} />
+                    <img src={arrowButtonUrl} alt='' onClick={() => navigate('/business/menu')} />
                 </button>
-                등록자료 수정하기
+                등록자료 수정
                 <div style={{cursor : "pointer"}} onClick={() => openModal('accept')}>수정</div>
             </div>
             <div className='main-mid'>

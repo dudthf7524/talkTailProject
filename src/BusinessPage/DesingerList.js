@@ -44,13 +44,13 @@ function DesingerList() {
     return (
         <div className='desingerlist'>
             <div className='desingerlistNavigation'>
-                <button>
-                    <img src={arrowButtonUrl} alt='' onClick={() => navigate('/business/menu')} />
-                </button>
+
+                <img style={{cursor : "pointer"}} src={arrowButtonUrl} alt='' onClick={() => navigate('/business/menu')} />
+
                 디자이너 목록
-                <button onClick={()=>navigate('/business/register/desinger')}>
-                    <img src={noteUrl} alt='' />
-                </button>
+
+                <img style={{cursor : "pointer"}} src={noteUrl} alt='' onClick={() => navigate('/business/register/desinger')} />
+
             </div>
 
             <div className='title'>
@@ -63,7 +63,7 @@ function DesingerList() {
                 lists.map((list, index) => (
                     <div key={index} className='desingerlist-row'>
                         <div className='desingerlist-item'>{list.business_desinger_name}</div>
-                        <div className='desingerlist-item'><button  onClick={() => navigate('/business/write/ClosedDays', { state: { id: list.business_desinger_id } })}>휴무일 설정</button></div>
+                        <div className='desingerlist-item'><button onClick={() => navigate('/business/write/ClosedDays', { state: { id: list.business_desinger_id } })}>휴무일 설정</button></div>
                     </div>
 
                 )
