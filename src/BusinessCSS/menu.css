@@ -72,7 +72,7 @@
     margin-bottom: 10%;
 }
 
-.more_business-btn {
+.more-business-btn {
     width: 370px;
     height: 100px;
     background-color: #ffffff;
@@ -81,4 +81,5 @@
     font-size: 20px;
     margin-top: 20px;
     cursor: pointer;
+    color: black;
 }
