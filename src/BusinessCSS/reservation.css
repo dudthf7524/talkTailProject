@@ -104,14 +104,15 @@
 
 .detail-title {
     justify-self: start;
+    text-align: left;
     margin-left: 20px;
-
+    width: 100%;
 }
 
 .detail-info {
     justify-self: start;
-    padding-left: 50px;
-    text-align: left;
+    padding-right: 50px;
+    text-align: right;
     width: 100%;
 }
 
