@@ -6,7 +6,7 @@ const HomeCarousel = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(1);
 
   const handleMouseDown = (e) => {
@@ -32,25 +32,35 @@ const HomeCarousel = () => {
   const getWindowWidth = () => window.innerWidth;
   const handleSlide = (direction) => {
     if (!sliderRef.current) return;
+    const { scrollLeft, clientWidth } = sliderRef.current;
     const windowWidth = getWindowWidth();
     let slideAmount = windowWidth > 500 ? 387 + 8.6 : windowWidth * 0.92;
 
-    // Update currentIndex based on direction
     if (direction === "left" && currentIndex > 1) {
       setCurrentIndex(currentIndex - 1);
+      sliderRef.current.scrollTo({
+        left: scrollLeft - slideAmount,
+        behavior: "smooth",
+      });
     } else if (direction === "right" && currentIndex < imageArray.length) {
+      console.log("CC");
+      sliderRef.current.scrollTo({
+        left: scrollLeft + slideAmount,
+        behavior: "smooth",
+      });
+      console.log("scrollLeft : ", scrollLeft);
+      console.log("slideAmount : ", slideAmount);
       setCurrentIndex(currentIndex + 1);
     }
-
-    sliderRef.current.scrollTo({
-      left: slideAmount * (currentIndex - 1),
-      behavior: "smooth",
-    });
+    // sliderRef.current.scrollTo({
+    //   left: slideAmount * (currentIndex - 1),
+    //   behavior: "smooth",
+    // });
   };
+
   const moveCircle = (index) => {
     setIsPlaying(false);
     setCurrentIndex(Math.min(index + 1, imageArray.length));
-    // console.log("currentIndex : ", currentIndex);
 
     if (!sliderRef.current) return;
 
@@ -78,16 +88,23 @@ const HomeCarousel = () => {
 
   useEffect(() => {
     if (!isPlaying) return;
-
     const interval = setInterval(() => {
       if (!sliderRef.current) return;
       const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
-
+      const windowWidth = getWindowWidth();
+      let slideAmount = 0;
+      if (windowWidth > 500) {
+        slideAmount = 387 + 8.6;
+      } else {
+        slideAmount = windowWidth * 0.92;
+      }
       if (scrollLeft + clientWidth >= scrollWidth) {
-        // 마지막까지 가면 처음으로 이동
         sliderRef.current.scrollTo({ left: 0, behavior: "smooth" });
       } else {
-        handleSlide("right");
+        sliderRef.current.scrollTo({
+          left: scrollLeft + slideAmount,
+          behavior: "smooth",
+        });
       }
     }, 2000); // 2초마다 이동
 
@@ -144,7 +161,6 @@ const HomeCarousel = () => {
               onClick={() => {
                 console.log("index : ", index);
                 moveCircle(index);
-                // moveTest();
               }}
             ></div>
           );
@@ -154,6 +170,7 @@ const HomeCarousel = () => {
         <p
           onClick={() => {
             if (currentIndex !== 1) {
+              console.log("currentIndex : ", currentIndex);
               handleSlide("left");
             }
           }}
@@ -184,6 +201,7 @@ const HomeCarousel = () => {
         <p
           onClick={() => {
             if (currentIndex !== imageArray.length) {
+              console.log("BB");
               handleSlide("right");
             }
           }}
