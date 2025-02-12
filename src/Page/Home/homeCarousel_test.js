@@ -6,8 +6,8 @@ const HomeCarousel = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [currentIndex, setCurrentIndex] = useState(1);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleMouseDown = (e) => {
     if (!sliderRef.current) return;
@@ -30,30 +30,60 @@ const HomeCarousel = () => {
   };
 
   const getWindowWidth = () => window.innerWidth;
+
   const handleSlide = (direction) => {
     if (!sliderRef.current) return;
+    setCurrentIndex(currentIndex - 1);
     const windowWidth = getWindowWidth();
-    let slideAmount = windowWidth > 500 ? 387 + 8.6 : windowWidth * 0.92;
-
-    // Update currentIndex based on direction
-    if (direction === "left" && currentIndex > 1) {
-      setCurrentIndex(currentIndex - 1);
-    } else if (direction === "right" && currentIndex < imageArray.length) {
-      setCurrentIndex(currentIndex + 1);
+    let slideAmount = 0;
+    if (windowWidth > 500) {
+      slideAmount = 387 + 8.6;
+    } else {
+      slideAmount = windowWidth * 0.92;
     }
-
-    sliderRef.current.scrollTo({
-      left: slideAmount * (currentIndex - 1),
-      behavior: "smooth",
-    });
+    if (direction === "left") {
+      sliderRef.current.scrollTo({
+        left: slideAmount * (currentIndex - 1),
+        behavior: "smooth",
+      });
+    } else {
+      sliderRef.current.scrollTo({
+        left: slideAmount * currentIndex,
+        behavior: "smooth",
+      });
+    }
   };
   const moveCircle = (index) => {
     setIsPlaying(false);
-    setCurrentIndex(Math.min(index + 1, imageArray.length));
+    setCurrentIndex(Math.min(index, imageArray.length - 1));
     // console.log("currentIndex : ", currentIndex);
 
     if (!sliderRef.current) return;
 
+    // const windowWidth = getWindowWidth();
+
+    // let slideAmount = 0;
+    // if (windowWidth > 500) {
+    //   slideAmount = 387 + 8.6;
+    // } else {
+    //   slideAmount = windowWidth * 0.92;
+    // }
+
+    // if (index === imageArray.length) {
+    //   sliderRef.current.scrollTo({
+    //     right: 0,
+    //     behavior: "smooth",
+    //   });
+    // } else {
+    //   sliderRef.current.scrollTo({
+    //     left: slideAmount * index,
+    //     behavior: "smooth",
+    //   });
+    // }
+  };
+
+  useEffect(() => {
+    console.log("useEffect 속 currentIndex : ", currentIndex);
     const windowWidth = getWindowWidth();
 
     let slideAmount = 0;
@@ -63,18 +93,18 @@ const HomeCarousel = () => {
       slideAmount = windowWidth * 0.92;
     }
 
-    if (index === imageArray.length) {
+    if (currentIndex === imageArray.length) {
       sliderRef.current.scrollTo({
         right: 0,
         behavior: "smooth",
       });
     } else {
       sliderRef.current.scrollTo({
-        left: slideAmount * index,
+        left: slideAmount * currentIndex,
         behavior: "smooth",
       });
     }
-  };
+  }, [currentIndex]);
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -121,7 +151,7 @@ const HomeCarousel = () => {
             {imageArray.map((image, index) => {
               return (
                 <div className="img_div" key={index}>
-                  <p>{index + 1}</p>
+                  <p>{index}</p>
                 </div>
               );
             })}
@@ -138,11 +168,9 @@ const HomeCarousel = () => {
               className="circle"
               key={index}
               style={{
-                backgroundColor:
-                  currentIndex === index + 1 ? "#f0663f" : "gray",
+                backgroundColor: currentIndex === index ? "#f0663f" : "gray",
               }}
               onClick={() => {
-                console.log("index : ", index);
                 moveCircle(index);
                 // moveTest();
               }}
@@ -153,13 +181,13 @@ const HomeCarousel = () => {
       <div className="btn_box">
         <p
           onClick={() => {
-            if (currentIndex !== 1) {
+            if (currentIndex !== 0) {
               handleSlide("left");
             }
           }}
           style={{
-            color: currentIndex !== 1 ? "black" : "gray",
-            cursor: currentIndex !== 1 ? "pointer" : "default",
+            color: currentIndex !== 0 ? "black" : "gray",
+            cursor: currentIndex !== 0 ? "pointer" : "default",
           }}
         >
           {"<"}
@@ -183,13 +211,14 @@ const HomeCarousel = () => {
         )}
         <p
           onClick={() => {
-            if (currentIndex !== imageArray.length) {
+            if (currentIndex !== imageArray.length - 1) {
               handleSlide("right");
             }
           }}
           style={{
-            color: currentIndex !== imageArray.length ? "black" : "gray",
-            cursor: currentIndex !== imageArray.length ? "pointer" : "default",
+            color: currentIndex !== imageArray.length - 1 ? "black" : "gray",
+            cursor:
+              currentIndex !== imageArray.length - 1 ? "pointer" : "default",
           }}
         >
           {">"}

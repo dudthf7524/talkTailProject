@@ -76,6 +76,30 @@
 .home_carousel_section .carousel_container .slide_container .img_div p {
   font-size: 40px;
 }
+.home_carousel_section .carousel_container .index_box {
+  width: auto;
+  height: auto;
+  font-size: 15px;
+  position: absolute;
+  bottom: 0;
+  margin: 0 auto;
+  color: #f0663f;
+}
+.home_carousel_section .circle_box {
+  width: auto;
+  height: 20px;
+  border: 1px solid red;
+  margin: 0 auto;
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+.home_carousel_section .circle_box .circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  cursor: pointer;
+}
 .home_carousel_section .btn_box {
   width: 100%;
   height: 30px;
