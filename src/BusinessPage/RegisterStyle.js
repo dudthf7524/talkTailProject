@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import api from "../Api";
+import "../BusinessCSS/registerStyle.css";
 
 function RegisterStyle() {
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -113,61 +114,64 @@ function RegisterStyle() {
           />
         </button>
         특이사항
-        <div style={{cursor : "pointer"}} onClick={handleSave}>수정</div>
+        <div style={{ cursor: "pointer" }} onClick={handleSave}>수정</div>
       </div>
-      <div className="main-mid">
-        <div className="input-container">
-          <p>특이사항 step1</p>
-          <input
-            type="text"
-            name="business_beauty_significant1"
-            value={formData.business_beauty_significant1}
-            onChange={handleInputChange}
-            placeholder="특이사항 step1"
-          />
-        </div>
-        <div className="input-container">
-          <p>특이사항 step2</p>
-          <input
-            type="text"
-            name="business_beauty_significant2"
-            value={formData.business_beauty_significant2}
-            onChange={handleInputChange}
-            placeholder="특이사항 step2"
-          />
-        </div>
+     
+        <div className="main-mid">
+        <div className="registerStyle">
+          <div className="input-container">
+            <p>특이사항 step1</p>
+            <input
+              type="text"
+              name="business_beauty_significant1"
+              value={formData.business_beauty_significant1}
+              onChange={handleInputChange}
+              placeholder="특이사항 step1"
+            />
+          </div>
+          <div className="input-container">
+            <p>특이사항 step2</p>
+            <input
+              type="text"
+              name="business_beauty_significant2"
+              value={formData.business_beauty_significant2}
+              onChange={handleInputChange}
+              placeholder="특이사항 step2"
+            />
+          </div>
 
-        <div className="input-container">
-          <p>특이사항 step3</p>
-          <input
-            type="text"
-            name="business_beauty_significant3"
-            value={formData.business_beauty_significant3}
-            onChange={handleInputChange}
-            placeholder="특이사항 step3"
-          />
-        </div>
+          <div className="input-container">
+            <p>특이사항 step3</p>
+            <input
+              type="text"
+              name="business_beauty_significant3"
+              value={formData.business_beauty_significant3}
+              onChange={handleInputChange}
+              placeholder="특이사항 step3"
+            />
+          </div>
 
-        <div className="input-container">
-          <p>특이사항 step4</p>
-          <input
-            type="text"
-            name="business_beauty_significant4"
-            value={formData.business_beauty_significant4}
-            onChange={handleInputChange}
-            placeholder="특이사항 step4"
-          />
-        </div>
+          <div className="input-container">
+            <p>특이사항 step4</p>
+            <input
+              type="text"
+              name="business_beauty_significant4"
+              value={formData.business_beauty_significant4}
+              onChange={handleInputChange}
+              placeholder="특이사항 step4"
+            />
+          </div>
 
-        <div className="input-container">
-          <p>특이사항 step5</p>
-          <input
-            type="text"
-            name="business_beauty_significant5"
-            value={formData.business_beauty_significant5}
-            onChange={handleInputChange}
-            placeholder="특이사항 step5"
-          />
+          <div className="input-container">
+            <p>특이사항 step5</p>
+            <input
+              type="text"
+              name="business_beauty_significant5"
+              value={formData.business_beauty_significant5}
+              onChange={handleInputChange}
+              placeholder="특이사항 step5"
+            />
+          </div>
         </div>
       </div>
     </div>

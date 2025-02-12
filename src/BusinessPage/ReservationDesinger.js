@@ -44,9 +44,7 @@ function DesingerList() {
     return (
         <div className='desingerlist'>
             <div className='desingerlistNavigation'>
-                <button>
-                    <img src={arrowButtonUrl} alt='' onClick={() => navigate('/business/menu')} />
-                </button>
+                    <img style={{cursor : "pointer"}} src={arrowButtonUrl} alt='' onClick={() => navigate('/business/menu')} />
                 디자이너 선택
                 <button>
                   
