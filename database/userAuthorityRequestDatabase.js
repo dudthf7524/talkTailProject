@@ -21,8 +21,6 @@ const userAuthority = async (userAuthorityData, platform_id) => {
   }
 };
 const userGetAuthority = async (business_registration_number) => {
-  console.log("database userAuthorityData")
-  console.log(business_registration_number)
   try {
     let sql ="";
     sql += "select user_authority_request_id, business_registration_number, authority_is_available, authority_state ,user_name, user_phone  ";
@@ -41,12 +39,6 @@ const userGetAuthority = async (business_registration_number) => {
       }
 
     );
-    console.log(metadata);
-    console.log('나오는 데이터')
-    console.log(result)
-    console.log('나오는 데이터')
-   
-
     return result;
 
   } catch (error) {

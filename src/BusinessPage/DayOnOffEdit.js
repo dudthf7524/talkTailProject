@@ -5,12 +5,11 @@ import '../BusinessCSS/auth.css';
 import api from '../Api';
 
 function DateEdit() {
-    const [dateList, setDateLists] = useState({});
-    const location = useLocation();
-    const navigate = useNavigate();
     const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
 
-    // 요일 매핑
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [dateList, setDateLists] = useState({});
     const dayNames = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
 
     useEffect(() => {

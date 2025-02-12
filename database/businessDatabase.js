@@ -19,8 +19,6 @@ const createBusiness = async (businessInfo) => {
     businessInfo.business_owner_phone2 +
     "-" +
     businessInfo.business_owner_phone3;
-  console.log("데이터베이스 저장 코드");
-  console.log(businessInfo);
   try {
     const business = await Business.create({
       business_registration_number: businessInfo.business_registration_number,
@@ -37,13 +35,13 @@ const createBusiness = async (businessInfo) => {
 
     return business;
   } catch (error) {
+    console.error(error)
     throw new Error("Failed to create business", error.message);
   }
 };
 
 const createBusinessInformation = async (businessInformationInfo) => {
-  console.log("serverce");
-  console.log(businessInformationInfo);
+  
   const business_phone =
     businessInformationInfo.business_phone1 +
     "-" +
@@ -57,7 +55,7 @@ const createBusinessInformation = async (businessInformationInfo) => {
     const businessInformation = await BusinessInformation.create(
       {
         business_registration_number:
-          businessInformationInfo.business_registration_number,
+        businessInformationInfo.business_registration_number,
         business_main_image: businessInformationInfo.business_main_image,
         business_price_image1: businessInformationInfo.business_price_image1,
         business_price_image2: businessInformationInfo.business_price_image2,
@@ -104,6 +102,7 @@ const createBusinessInformation = async (businessInformationInfo) => {
       beautyOption,
     };
   } catch (error) {
+    console.error(error)
     // 오류 발생 시 롤백
     await t.rollback();
     throw new Error(
@@ -114,8 +113,7 @@ const createBusinessInformation = async (businessInformationInfo) => {
 };
 
 const createBusinessDesinger = async (businessInfo) => {
-  console.log("데이터베이스 저장 코드");
-  console.log(businessInfo);
+  
   try {
     const business = await BusinessDesinger.create({
       business_registration_number: businessInfo.business_registration_number,
@@ -127,19 +125,19 @@ const createBusinessDesinger = async (businessInfo) => {
 
     return business;
   } catch (error) {
+    console.log(error)
     throw new Error("Failed to create business", error.message);
   }
 };
 
 const businessLogin = async (login_id, login_password) => {
   try {
-    // business 테이블에서 login_id (business_id)에 해당하는 사업자 정보 조회
     const business = await Business.findOne({
-      where: { login_id: login_id }, // login_id는 business_id에 해당
+      where: { login_id: login_id }, 
     });
 
     if (!business) {
-      // 해당 사업자가 존재하지 않으면 null 반환
+     
       return null;
     }
     // bcrypt를 사용하여 비밀번호 비교
@@ -155,7 +153,7 @@ const businessLogin = async (login_id, login_password) => {
     // 사업자가 존재하면 해당 사업자 객체 반환
     return business;
   } catch (error) {
-    console.error("Error in business login:", error);
+    console.error(error);
     throw new Error("Failed to fetch business data");
   }
 };
@@ -178,7 +176,7 @@ const checkLogin = async (login_id) => {
     console.log(business);
     // 사업자가 존재하면 해당 사업자 객체 반환
   } catch (error) {
-    console.error("Error in business login:", error);
+    console.error(error);
     throw new Error("Failed to fetch business data");
   }
 };
@@ -210,7 +208,7 @@ const getBusinesses = async () => {
     console.log(results);
     return results;
   } catch (error) {
-    console.error("Error fetching businesses with details:", error);
+    console.error(error);
     throw new Error("Failed to fetch businesses with details");
   }
 };
@@ -238,6 +236,7 @@ const getBusinessDetailsById = async (id) => {
     console.log(results);
     return results;
   } catch (error) {
+    console.error(error);
     throw new Error("Failed to fetch business details");
   }
 };
@@ -268,10 +267,7 @@ const updateBusinessBeautySignificant = async (RegisterBeautySignificant) => {
     );
     return BeautySignificant;
   } catch (error) {
-    // 오류를 더욱 상세하게 로깅
-    console.error("Error creating BusinessBeautySignificant:", error);
-    console.error("Error message:", error.message);
-    console.error("Error stack:", error.stack);
+    console.error(error);
     throw new Error(
       "Failed to create RegisterBeautySignificant: " + error.message
     );
@@ -306,10 +302,7 @@ const accountNumberGet = async (business_registration_number) => {
     console.log(results);
     return results;
   } catch (error) {
-    // 오류를 더욱 상세하게 로깅
-    console.error("Error creating BusinessBeautySignificant:", error);
-    console.error("Error message:", error.message);
-    console.error("Error stack:", error.stack);
+    console.error(error);
     throw new Error(
       "Failed to create RegisterBeautySignificant: " + error.message
     );
@@ -317,8 +310,6 @@ const accountNumberGet = async (business_registration_number) => {
 };
 
 const getDateEdit = async (business_registration_number) => {
-  console.log(business_registration_number);
-
   try {
     let sql = "";
     sql += "select * from store_hours ";
@@ -332,17 +323,10 @@ const getDateEdit = async (business_registration_number) => {
       type: sequelize.QueryTypes.SELECT, // 쿼리 유형
       logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
     });
-    console.log(metadata);
-    console.log(results);
     return results;
   } catch (error) {
-    // 오류를 더욱 상세하게 로깅
-    console.error("Error creating BusinessBeautySignificant:", error);
-    console.error("Error message:", error.message);
-    console.error("Error stack:", error.stack);
-    throw new Error(
-      "Failed to create RegisterBeautySignificant: " + error.message
-    );
+    console.error(error)
+    throw new Error("Failed to create RegisterBeautySignificant: " + error.message);
   }
 };
 
@@ -364,7 +348,7 @@ const dateRegister = async (business_registration_number, dateRegisterData) => {
 
     return business;
   } catch (error) {
-    console.error("Failed to create business hours:", error);
+    console.error(error)
     throw new Error("Failed to create business hours");
   }
 };
@@ -406,10 +390,7 @@ const dayOnOffEdit = async (business_registration_number, dateRegisterData) => {
     console.log(results); // 실행 결과 확인
     return results;
   } catch (error) {
-    // 오류를 상세히 로깅
-    console.error("Error updating Business hours:", error);
-    console.error("Error message:", error.message);
-    console.error("Error stack:", error.stack);
+    console.error(error)
     throw new Error("Failed to update business hours: " + error.message);
   }
 };
@@ -452,15 +433,9 @@ const dateEdit = async (business_registration_number, dateRegisterData) => {
       type: sequelize.QueryTypes.UPDATE, // UPDATE 쿼리 실행
       logging: console.log, // 쿼리 로그 출력
     });
-
-    console.log(metadata); // 메타데이터 확인
-    console.log(results); // 실행 결과 확인
     return results;
   } catch (error) {
-    // 오류를 상세히 로깅
-    console.error("Error updating Business hours:", error);
-    console.error("Error message:", error.message);
-    console.error("Error stack:", error.stack);
+    console.error(error)
     throw new Error("Failed to update business hours: " + error.message);
   }
 };
@@ -475,9 +450,7 @@ const informationEditGet = async (business_registration_number) => {
     return BeautySignificant;
   } catch (error) {
     // 오류를 더욱 상세하게 로깅
-    console.error("Error creating BusinessBeautySignificant:", error);
-    console.error("Error message:", error.message);
-    console.error("Error stack:", error.stack);
+    console.error(error)
     throw new Error(
       "Failed to create RegisterBeautySignificant: " + error.message
     );
@@ -517,6 +490,7 @@ const informationEditUpdateNoFile = async (
     );
     return result;
   } catch (error) {
+    console.error(error)
     throw new Error(`Failed to fetch pet updateNoFile: ${error.message}`);
   }
 };
@@ -525,9 +499,6 @@ const informationUpdateYesMainFile = async (
   informationData,
   business_information_id
 ) => {
-  console.log("informationUpdateYesMainFile");
-  console.log(business_information_id);
-
   const business_phone =
     informationData.business_phone1 +
     "-" +
@@ -557,6 +528,7 @@ const informationUpdateYesMainFile = async (
     );
     return result;
   } catch (error) {
+    console.error(error)
     throw new Error(`Failed to fetch pet updateNoFile: ${error.message}`);
   }
 };
@@ -599,6 +571,7 @@ const informationUpdateYesPricingFile = async (
     );
     return result;
   } catch (error) {
+    console.error(error)
     throw new Error(`Failed to fetch pet updateNoFile: ${error.message}`);
   }
 };
@@ -607,9 +580,6 @@ const informationUpdateYesMainAndPricingFile = async (
   informationData,
   business_information_id
 ) => {
-  console.log("informationUpdateYesMainFile");
-  console.log(business_information_id);
-
   const business_phone =
     informationData.business_phone1 +
     "-" +
@@ -642,13 +612,12 @@ const informationUpdateYesMainAndPricingFile = async (
     );
     return result;
   } catch (error) {
+    console.error(error)
     throw new Error(`Failed to fetch pet updateNoFile: ${error.message}`);
   }
 };
 
 const beautyOptionGet = async (business_registration_number) => {
-  console.log(business_registration_number);
-
   try {
     const BeautySignificant = await BusinessBeautyOption.findOne({
       where: { business_registration_number: business_registration_number },
@@ -656,10 +625,7 @@ const beautyOptionGet = async (business_registration_number) => {
     console.log(BeautySignificant);
     return BeautySignificant;
   } catch (error) {
-    // 오류를 더욱 상세하게 로깅
-    console.error("Error creating BusinessBeautySignificant:", error);
-    console.error("Error message:", error.message);
-    console.error("Error stack:", error.stack);
+    console.error(error)
     throw new Error(
       "Failed to create RegisterBeautySignificant: " + error.message
     );
@@ -686,9 +652,7 @@ const updateBusinessBeautyOption = async (
     return result;
   } catch (error) {
     // 오류를 더욱 상세하게 로깅
-    console.error("Error creating BusinessBeautySignificant:", error);
-    console.error("Error message:", error.message);
-    console.error("Error stack:", error.stack);
+    console.error(error)
     throw new Error(
       "Failed to create RegisterBeautySignificant: " + error.message
     );
@@ -699,10 +663,6 @@ const accountNumber = async (
   accountNumberData,
   business_registration_number
 ) => {
-  console.log("데이터베이스 저장 코드");
-  console.log(accountNumberData);
-  console.log(business_registration_number);
-  
   try {
     const business = await BusinessAccountNumber.create({
       business_registration_number: business_registration_number,
@@ -713,14 +673,13 @@ const accountNumber = async (
 
     return business;
   } catch (error) {
-    console.error("Error creating business:", error); // 전체 에러 로그 출력
-    throw new Error(`Failed to create business: ${error.message}`); // 올바르게 에러 메시지 포함
+    console.error(error)
+    throw new Error(`Failed to create business: ${error.message}`);
   }
 };
 
 
 const accountNumberList = async (business_registration_number) => {
-  console.log()
   try {
     const results = await BusinessAccountNumber.findAll({
       where: { business_registration_number },
@@ -738,13 +697,12 @@ const accountNumberList = async (business_registration_number) => {
     console.log(results);
     return results;
   } catch (error) {
-    console.log(error)
+    console.error(error)
     throw new Error("Failed to fetch business details");
   }
 };
 
 const significantGet = async (business_registration_number) => {
-  console.log(business_registration_number);
 
   try {
     const BeautySignificant = await BusinessBeautySignificant.findOne({
@@ -752,10 +710,7 @@ const significantGet = async (business_registration_number) => {
     });
     return BeautySignificant;
   } catch (error) {
-    // 오류를 더욱 상세하게 로깅
-    console.error("Error creating BusinessBeautySignificant:", error);
-    console.error("Error message:", error.message);
-    console.error("Error stack:", error.stack);
+    console.error(error)
     throw new Error(
       "Failed to create RegisterBeautySignificant: " + error.message
     );
@@ -763,7 +718,6 @@ const significantGet = async (business_registration_number) => {
 };
 
 const desingerList = async (business_registration_number) => {
-  console.log(business_registration_number);
 
   try {
     const result = await BusinessDesinger.findAll({
@@ -771,10 +725,7 @@ const desingerList = async (business_registration_number) => {
     });
     return result;
   } catch (error) {
-    // 오류를 더욱 상세하게 로깅
-    console.error("Error creating BusinessBeautySignificant:", error);
-    console.error("Error message:", error.message);
-    console.error("Error stack:", error.stack);
+    console.error(error)
     throw new Error(
       "Failed to create RegisterBeautySignificant: " + error.message
     );

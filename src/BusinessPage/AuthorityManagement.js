@@ -51,7 +51,6 @@ function AuthorityManagement() {
             console.log('요청 수락 에러', error.message)
         }
     }
-    console.log(lists)
 
     return (
         <div className='page-container' lang='ko'>
