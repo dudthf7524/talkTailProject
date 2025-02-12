@@ -80,7 +80,6 @@ const PetRegistration = () => {
     console.log(selectedImageFile)
     console.log('선택된 이미지')
 
-
     setName('');
     setImage('');
     setBirthDate('');
@@ -90,6 +89,11 @@ const PetRegistration = () => {
     setNeuter('');
     setEtc('');
 
+    if (selectedImageFile === null) {
+      setImage('이미지를 선택해주세요');
+      imageRef.current.focus();
+      return;
+    }
     if (!formData.name.trim()) {
       setName('이름을 입력해주세요.');
       nameRef.current.focus();
@@ -100,12 +104,6 @@ const PetRegistration = () => {
       nameRef.current.focus();
       return;
     }
-    if (selectedImageFile === null) {
-      setImage('이미지를 선택해주세요');
-      imageRef.current.focus();
-      return;
-    }
-
     if (!formData.breed.trim()) {
       setBreed('품종을 선택해주세요');
       breedRef.current.focus();
@@ -219,8 +217,8 @@ const PetRegistration = () => {
 
   const handleSubmit = async () => {
     if (!validateForm()) return;
-    
-    
+
+
 
     const petData = new FormData();
     petData.append("name", formData.name);
@@ -283,23 +281,14 @@ const PetRegistration = () => {
         </div>
         <div className="re-mid">
           <div className="PetRegistration-container"></div>
-          <div className="PetRegistration-container">
-            <input
-              type="text"
-              className="textbox"
-              placeholder="이름이 무엇인가요?"
-              name="name"
-              value={formData.name}
-              ref={nameRef}
-              onChange={handleInputChange}
-            />
-            {name && <div className="pet-registration-page-error-box">{name}</div>}
-          </div>
-          <div className="PetRegistration-img-container" ref={imageRef} tabIndex={0}>
-            <div className="PetRegistration-content">
-              <div className="upload-img">
+
+          <div className="PetRegistration-img-container">
+            <div className="PetRegistration-content"  >
+              <div className="upload-img" >
                 {/* 업로드된 이미지를 미리보기로 표시 */}
-                <img src={petImgUrl} alt="" />
+                <label htmlFor="imageUpload">
+                  <img src={petImgUrl} alt="" ref={imageRef} tabIndex={0}  style={{ cursor: "pointer" }}/>
+                </label>
               </div>
               <div className="photo">
                 <input
@@ -315,6 +304,19 @@ const PetRegistration = () => {
               </div>
             </div>
             {image && <div className="pet-registration-page-error-box">{image}</div>}
+          </div>
+
+          <div className="PetRegistration-container">
+            <input
+              type="text"
+              className="textbox"
+              placeholder="이름이 무엇인가요?"
+              name="name"
+              value={formData.name}
+              ref={nameRef}
+              onChange={handleInputChange}
+            />
+            {name && <div className="pet-registration-page-error-box">{name}</div>}
           </div>
 
           <div className="PetRegistration-container2">

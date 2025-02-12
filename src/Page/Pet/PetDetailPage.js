@@ -15,14 +15,14 @@ const PetDetail = () => {
     const photoUrl = `${process.env.PUBLIC_URL}/PageImage/pet/photo.svg`;
     // const [petData, setPetData] = useState(null);
 
-   
-   
+
+
     const dispatch = useDispatch();
 
     const { petData, loading, error } = useSelector((state) => state.pets);
-  
+
     useEffect(() => {
-      dispatch(fetchPetData(id));
+        dispatch(fetchPetData(id));
     }, [dispatch, id]);
 
     const [formData, setFormData] = useState({
@@ -32,15 +32,15 @@ const PetDetail = () => {
         if (petData) {
             console.log(petData)
             setFormData({
-                gender: petData.pet_gender ? "남자" : "여자", 
+                gender: petData.pet_gender ? "남자" : "여자",
             });
-         
+
 
         }
     }, [petData]);
-    
 
-    
+
+
 
 
     // useEffect(() => {
@@ -68,7 +68,7 @@ const PetDetail = () => {
     //     };
     //     fetchPetData();
     // }, [id]);
-  
+
     const goBack = () => {
         navigate(-1);
     };
@@ -80,7 +80,7 @@ const PetDetail = () => {
     if (!petData) {
         return <div>Loading...</div>;
     }
-  
+
     return (
         <div lang='ko'>
             <div className='r-mid'>
@@ -88,7 +88,7 @@ const PetDetail = () => {
                     <button onClick={goBack}>
                         <img src={arrowButtonUrl} alt='뒤로가기' />
                     </button>
-                    펫 등록정보
+                        마이펫 정보
                     <div>
                         <button onClick={handleEdit}>
                             <img src={noteUrl} alt='' />
@@ -130,12 +130,12 @@ const PetDetail = () => {
                     <div className='PetRegistration-container2'>
                         <p>품종</p>
                         <div className='PetRegistration-container'>
-                        <input
-                            type="text"
-                            className="textbox-gray"
-                            value={petData.pet_breed || ''}
-                            readOnly
-                        />
+                            <input
+                                type="text"
+                                className="textbox-gray"
+                                value={petData.pet_breed || ''}
+                                readOnly
+                            />
                         </div>
                     </div>
                     <div className='PetRegistration-container2'>
@@ -168,7 +168,7 @@ const PetDetail = () => {
                                 { label: '여자', value: '여자' },
                             ]}
                             selectedOption={formData.gender}
-                            onSelect={() => {}} // 선택 불가능하도록 콜백 제거
+                            onSelect={() => { }} // 선택 불가능하도록 콜백 제거
                             disabled // 비활성화하여 선택된 값 고정
                         />
                     </div>
@@ -180,11 +180,11 @@ const PetDetail = () => {
                                 { label: 'X', value: 'X' },
                             ]}
                             selectedOption={petData.pet_neuter}
-                            onSelect={() => {}} // 선택 불가능하도록 콜백 제거
+                            onSelect={() => { }} // 선택 불가능하도록 콜백 제거
                             disabled // 비활성화하여 선택된 값 고정
                         />
                     </div>
-                
+
                     <div className='PetRegistration-container2'>
                         <p>기타 추가 사항</p>
                         <input
