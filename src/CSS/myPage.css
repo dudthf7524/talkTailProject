@@ -158,11 +158,13 @@
     height: 104px;
     padding: 16px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .pet-contents.selected {
     background-color: #fdf3e2; /* 원하는 색상으로 변경 */
     border: #f0663f solid 1px;
+   
 }
 
 .pet-contents-img {

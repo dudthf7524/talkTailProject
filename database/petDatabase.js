@@ -30,7 +30,7 @@ const registerPet = async (petData) => {
       pet_name: petData.name,
       pet_species: petData.species,
       pet_breed: petData.breed,
-      pet_birth: petData.birthDate, // 날짜 형식 변환
+      pet_birth: birth, // 날짜 형식 변환
       pet_weight: petData.weight,
       pet_neuter: petData.neuter,
       pet_gender: petData.gender,

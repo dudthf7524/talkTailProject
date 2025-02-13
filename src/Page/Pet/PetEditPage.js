@@ -15,7 +15,7 @@ const PetEditPage = () => {
 
   // 새로추가한내용
   const { id } = useParams(); // URL에서 펫 ID 가져오기
-  const [selectedSpecies, setSelectedSpecies] = useState("dog"); // 기본 선택: 개
+  const [selectedSpecies, setSelectedSpecies] = useState("강아지"); // 기본 선택: 개
   const [isDropdownVisible, setIsDropdownVisible] = useState(false); // 드롭다운 표시 여부
   const [searchQuery, setSearchQuery] = useState(""); // 검색 입력값
   const [selectedOption, setSelectedOption] = useState(""); // 선택된 옵션
@@ -257,9 +257,6 @@ const PetEditPage = () => {
   const handleUpdate = async () => {
     if (!validateForm()) return;
 
-    console.log("==================================");
-    console.log(formData.breed);
-    console.log("==================================");
     const petUpdateData = new FormData();
     petUpdateData.append("name", formData.name);
     petUpdateData.append("species", selectedSpecies);
@@ -366,7 +363,7 @@ const PetEditPage = () => {
                 value={selectedSpecies}
                 onChange={handleSpeciesChange}
               >
-                <option value="dog">개</option>
+                <option value="dog">강아지</option>
                 <option value="cat">고양이</option>
               </select>
             </div>
