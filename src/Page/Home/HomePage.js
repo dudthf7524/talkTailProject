@@ -42,26 +42,50 @@ const MainPage = () => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [reservationtLists, setReservationtList] = useState([]);
   const [showCategory, setShowCategory] = useState(false);
+  const [user, setUser] = useState(false)
+
+
   useEffect(() => {
-    const reservationManagement = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          throw new Error("No token found.");
-        }
-        const response = await api.get("/api/user/reservation/bookmark", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setReservationtList(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error("로그인 인증 실패:", error);
-      }
-    };
+    userLogin();
     reservationManagement();
   }, []);
+
+  const userLogin = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return;
+
+      }
+      const response = await api.get("/api/user/login/pet", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUser(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("로그인 인증 실패:", error);
+    }
+  }
+  const reservationManagement = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return;
+      }
+      const response = await api.get("/api/user/reservation/bookmark", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setReservationtList(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("로그인 인증 실패:", error);
+    }
+  };
+
 
   const startDrag = (e) => {
     if (containerRef.current) {
@@ -123,6 +147,13 @@ const MainPage = () => {
     navigate(`/list/${id}`);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1500);
+  };
+
   const [openModal, setOpenModal] = useState(false);
   const modalTitle = "알림";
   const modalContent = "해당 서비스는 준비 중입니다.";
@@ -140,13 +171,24 @@ const MainPage = () => {
               <img src={arrowUrl} alt="arrow" />
             </button> */}
             <img src={logoUrl} alt="" />
-            <p
-              onClick={() => {
-                navigate("/login");
-              }}
-            >
-              Login
-            </p>
+            {
+              user ? (
+                <p
+                  onClick={handleLogout}
+                >
+                  Logout
+                </p>
+              ) : (
+                <p
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                >
+                  Login
+                </p>
+              )
+            }
+
           </div>
           <div className="trailing">
             {/* <button>
@@ -154,10 +196,18 @@ const MainPage = () => {
             </button> */}
           </div>
         </div>
-        <div className="customer">OOO의 견주님 반갑습니다.</div>
+        {
+          user ? (
+            <div className="customer">{user.pet_name}의 견주님 반갑습니다.</div>
+          ) : (
+            <></>
+          )
+        }
+        
         <HomeBookmarks
           reservationtLists={reservationtLists}
           categoryRef={categoryRef}
+          user={user}
         />
         <div
           className="home-container2"

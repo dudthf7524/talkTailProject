@@ -47,7 +47,7 @@ const Redirection = () => {
                 console.log(token)
                 localStorage.setItem('token', token); // 토큰 저장
 
-                navigate('/login/success');
+                navigate('/');
             } catch (error) {
                 console.error(`${authProvider} login error:`, error);
                 // 오류 처리 로직 추가

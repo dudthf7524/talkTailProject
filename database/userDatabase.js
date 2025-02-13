@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 
-const { UserInformation, BeautyReservation } = require('../models');
+const { UserInformation, BeautyReservation, Pet } = require('../models');
 const { User } = require('../models');
 // 사용자 ID를 기반으로 사용자 정보를 조회하는 함수
 const getUserById = async (platform_id, platform) => {
@@ -149,10 +149,29 @@ const userReservation = async (platform_id) => {
         platform_id: platform_id,
       },
     });
-  
+
     return reservationData;
 
   } catch (error) {
+    throw new Error(`Failed to register pet: ${error.message}`);
+  }
+};
+
+const userLoginPet = async (platform_id) => {
+  console.log("데이터베이스 코드")
+  console.log(platform_id)
+  try {
+    const result = await Pet.findOne({
+      where: {
+        platform_id: platform_id,
+      },
+      attributes: ["pet_name"],
+    });
+
+    return result;
+
+  } catch (error) {
+    console.error(error)
     throw new Error(`Failed to register pet: ${error.message}`);
   }
 };
@@ -165,4 +184,5 @@ module.exports = {
   createUserInformation,
   userEidt,
   userReservation,
+  userLoginPet,
 };
