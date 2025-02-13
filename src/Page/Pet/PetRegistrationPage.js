@@ -14,9 +14,11 @@ const PetRegistration = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false); // 드롭다운 표시 여부
   const [searchQuery, setSearchQuery] = useState(""); // 검색 입력값
   const [selectedOption, setSelectedOption] = useState(""); // 선택된 옵션
-  console.log("bbb");
 
-  console.log(selectedSpecies);
+
+  const male = `${process.env.PUBLIC_URL}/gender/male.png`;
+  const female = `${process.env.PUBLIC_URL}/gender/female.png`;
+
 
   // 현재 선택된 종의 데이터 가져오기
   const currentSpeciesData = speciesData[selectedSpecies];
@@ -60,7 +62,9 @@ const PetRegistration = () => {
   const nameRef = useRef(null);
   const imageRef = useRef(null);
   const breedRef = useRef(null);
-  const birthDateRef = useRef(null);
+  const yearRef = useRef(null);
+  const montheRef = useRef(null);
+  const dayRef = useRef(null);
   const weightRef = useRef(null);
   const genderRef = useRef(null);
   const neuterRef = useRef(null);
@@ -72,6 +76,11 @@ const PetRegistration = () => {
     const dateRegex = /^(19[0-9]{2}|20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
     const weightRegex = /^\d+(\.\d{1})?$/;
     const etcRegex = /^[\uAC00-\uD7A3]{1,20}$/
+
+    const yearRegex = /^\d{4}$/;
+    const monthRegex = /^\d{2}$/;
+    const dayRegex = /^\d{2}$/;
+
 
     console.log(formData.name)
     console.log(formData.breed)
@@ -109,14 +118,37 @@ const PetRegistration = () => {
       breedRef.current.focus();
       return;
     }
-    if (!formData.birthDate.trim()) {
-      setBirthDate('태어난 날을 입력해주세요');
-      birthDateRef.current.focus();
+    if (!formData.year.trim()) {
+      setBirthDate('태어난 년도를 입력해주세요');
+      yearRef.current.focus();
       return;
     }
-    if (!dateRegex.test(formData.birthDate)) {
-      setBirthDate('태어난 날을 2000-01-01 형식으로 입력해주세요');
-      birthDateRef.current.focus();
+
+    if (!yearRegex.test(formData.year)) {
+      setBirthDate('태어난 년도를 2000 형식으로 입력해주세요');
+      yearRef.current.focus();
+      return;
+    }
+
+    if (!formData.month.trim()) {
+      setBirthDate('태어난 월을 입력해주세요');
+      montheRef.current.focus();
+      return;
+    }
+    if (!monthRegex.test(formData.month)) {
+      setBirthDate('태어난 월을 05 형식으로 입력해주세요');
+      montheRef.current.focus();
+      return;
+    }
+
+    if (!formData.day.trim()) {
+      setBirthDate('태어난 일을 입력해주세요');
+      dayRef.current.focus();
+      return;
+    }
+    if (!dayRegex.test(formData.day)) {
+      setBirthDate('태어난 일을 31 형식으로 입력해주세요');
+      dayRef.current.focus();
       return;
     }
     if (!formData.weight.trim()) {
@@ -165,7 +197,9 @@ const PetRegistration = () => {
     speciesId: "",
     breed: "",
     breedId: "",
-    birthDate: "",
+    year: "",
+    month: "",
+    day: "",
     weight: "",
     gender: "",
     additionalInfo: "",
@@ -189,7 +223,7 @@ const PetRegistration = () => {
       [name]: value,
     });
   };
-
+  console.log(formData)
   const handleRadioSelect = (key, value) => {
     setFormData({
       ...formData,
@@ -224,12 +258,13 @@ const PetRegistration = () => {
     petData.append("name", formData.name);
     petData.append("species", formData.species);
     petData.append("breed", formData.breed);
-    petData.append("birthDate", formData.birthDate);
+    petData.append("year", formData.year);
+    petData.append("month", formData.month);
+    petData.append("day", formData.day);
     petData.append("weight", formData.weight);
     petData.append("gender", formData.gender === "남자" ? 1 : 0);
-    petData.append(
-      "etc",
-      formData.additionalInfo === "true" ? formData.etc : ""
+    petData.append("etc",
+      formData.etc
     );
     petData.append("neuter", formData.neuter);
     console.log(petData);
@@ -263,7 +298,9 @@ const PetRegistration = () => {
         },
       });
       console.log("Upload successful", response.data);
-      navigate("/pet/list");
+      if(response.data){
+        navigate("/pet/list");
+      }
     } catch (error) {
       console.error("펫 정보 저장 에러: ", error);
     }
@@ -287,7 +324,7 @@ const PetRegistration = () => {
               <div className="upload-img" >
                 {/* 업로드된 이미지를 미리보기로 표시 */}
                 <label htmlFor="imageUpload">
-                  <img src={petImgUrl} alt="" ref={imageRef} tabIndex={0}  style={{ cursor: "pointer" }}/>
+                  <img src={petImgUrl} alt="" ref={imageRef} tabIndex={0} style={{ cursor: "pointer" }} />
                 </label>
               </div>
               <div className="photo">
@@ -348,6 +385,7 @@ const PetRegistration = () => {
                 className="textbox-gray"
                 onClick={() => setIsDropdownVisible(!isDropdownVisible)}
               >
+
                 {selectedOption || <div ref={breedRef} tabIndex={0}>품종을 선택해주세요</div>}
               </div>
 
@@ -399,7 +437,7 @@ const PetRegistration = () => {
                     {/* TOP1 옵션 */}
                     {filteredTopOptions.length > 0 && (
                       <>
-                        
+
                         {filteredTopOptions.map((option, index) => (
                           <li
                             key={`top-${index}`}
@@ -459,22 +497,42 @@ const PetRegistration = () => {
           </div>
           <div className="PetRegistration-container2">
             <p>태어난 날</p>
-            <div className="PetRegistration-container">
+            <div className="birth-box">
               <input
                 type="text"
-                className="textbox-gray"
-                placeholder="YYYY-MM-DD"
-                name="birthDate"
-                ref={birthDateRef}
-                value={formData.birthDate}
+                className="birth-box-input"
+                placeholder="YYYY"
+                name="year"
+                max={4}
+                ref={yearRef}
+                value={formData.year}
                 onChange={handleInputChange}
               />
-              {birthDate && <div className="pet-registration-page-error-box">{birthDate}</div>}
+              -
+              <input
+                type="text"
+                className="birth-box-input"
+                placeholder="MM"
+                name="month"
+                ref={montheRef}
+                value={formData.month}
+                onChange={handleInputChange}
+              />
+              -
+              <input
+                type="text"
+                className="birth-box-input"
+                placeholder="DD"
+                name="day"
+                ref={dayRef}
+                value={formData.day}
+                onChange={handleInputChange}
+              />
             </div>
-
+            {birthDate && <div className="pet-registration-page-error-box">{birthDate}</div>}
           </div>
           <div className="PetRegistration-container2">
-            <p>몸무게</p>
+            <p>몸무게(kg)</p>
             <div className="PetRegistration-container">
               <input
                 type="text"
@@ -493,8 +551,8 @@ const PetRegistration = () => {
               <p>성별</p>
               <RadioButton
                 options={[
-                  { label: "남자", value: "남자" },
-                  { label: "여자", value: "여자" },
+                  { label: <img style={{ width: "17%" }} src={male}></img>, value: "남자" },
+                  { label: <img style={{ width: "17%" }} src={female}></img>, value: "여자" },
                 ]}
                 selectedOption={formData.gender}
                 onSelect={(value) => handleRadioSelect("gender", value)}
@@ -520,6 +578,7 @@ const PetRegistration = () => {
                 options={[
                   { label: "O", value: "O" },
                   { label: "X", value: "X" },
+                  { label: "모름", value: "모름" },
                 ]}
                 selectedOption={formData.neuter}
                 onSelect={(value) => handleRadioSelect("neuter", value)}
@@ -540,10 +599,10 @@ const PetRegistration = () => {
               </div>
             ))}
             <div className="PetRegistration-container2 text_area">
-              <p>기타 추가 사항</p>
+              <p>기타 사항</p>
               <textarea
                 className="textbox-gray2"
-                placeholder="예) 피부병, 심장질환, 마킹, 마운팅 등"
+                placeholder="예) 피부병, 심장질환, 마킹, 마운팅 (기타 사항이 없다면 '없음' 이라고 작성)"
                 name="etc"
                 ref={etcRef}
                 value={formData.etc}

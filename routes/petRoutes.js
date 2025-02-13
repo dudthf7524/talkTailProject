@@ -10,7 +10,7 @@ const petDatabase = require('../database/petDatabase');
 router.post('/pet/register', upload.single('image'), authMiddleware, async (req, res) => {
     const { id, platform } = req.user;
     const petData = req.body;
-    
+    console.log(petData)
     if (req.file) {
         console.log('Uploaded file info:', req.file); // 업로드된 파일의 정보 출력
         petData.image = {

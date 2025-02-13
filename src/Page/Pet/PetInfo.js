@@ -55,7 +55,7 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
   // const dogPets = myPet.filter(pet => pet.pet_species === 1);
   // const catPets = myPet.filter(pet => pet.pet_species === 2);
 
-  const dogPets = myPet.filter((pet) => pet.pet_species === "dog");
+  const dogPets = myPet.filter((pet) => pet.pet_species === "강아지");
   const catPets = myPet.filter((pet) => pet.pet_species === "cat");
 
   const [accordionState, setAccordionState] = useState({
@@ -108,93 +108,89 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
   return (
     <div className="pet-list-mid petList_total">
       <div className="event-accordion" onClick={() => toggleAccordion("dog")}>
-        강아지 {accordionState.dog ? "∧" : "∨"}
+        강아지
       </div>
       <div className="border"></div>
-      {accordionState.dog && (
-        <>
-          <div className="pet-accordion-content">
-            {dogPets.map((pet) => (
-              <div
-                className={`pet-contents ${
-                  selectedPetId === pet.pet_id ? "selected" : ""
-                }`}
-                onClick={() => {
-                  handlePetSelect(pet);
-                }}
-                key={pet.pet_id}
-              >
-                <div className="pet-contents-img">
-                  <img src={pet.petimage || petUrl} alt="" />
-                </div>
-                <div className="infoBox">
-                  <div
-                    className="pet-contents-info"
-                    style={{ cursor: "pointer" }}
-                  >
-                    <h1>{pet.pet_name}</h1>
-                  </div>
-                  <div className="pet-contents-info">
-                    <p>{`${pet.pet_breed}/${pet.pet_weight}kg/${
-                      pet.pet_gender ? "남" : "여"
-                    }/${calculateAge(pet.pet_birth)}살`}</p>
-                  </div>
 
-                  <div className="pet-contents-info">
-                    <p>중성화 {pet.pet_neuter} </p>
-                  </div>
-                </div>
-
-                {fileName === "list" ? (
-                  <div className="pet-accordion-content deleteBtn">
-                    <button
-                      className="petDeleteButton"
-                      onClick={(e) => {
-                        setOpenModal(true);
-                        setPetId(pet.pet_id);
-                        setPetImage(pet.petimage);
-                        e.stopPropagation();
-                      }}
-                    >
-                      펫 삭제하기
-                    </button>
-                  </div>
-                ) : (
-                  <></>
-                )}
-              </div>
-            ))}
-          </div>
-        </>
-      )}
-
-      <div className="event-accordion" onClick={() => toggleAccordion("cat")}>
-        고양이 {accordionState.cat ? "∧" : "∨"}
-      </div>
-      <div className="border"></div>
-      {accordionState.cat && (
+      <>
         <div className="pet-accordion-content">
-          {catPets.map((pet) => (
+          {dogPets.map((pet) => (
             <div
-              className={`pet-contents ${
-                selectedPetId === pet.pet_id ? "selected" : ""
-              }`}
+              className={`pet-contents ${selectedPetId === pet.pet_id ? "selected" : ""
+                }`}
+              onClick={() => {
+                handlePetSelect(pet);
+              }}
               key={pet.pet_id}
-              onClick={() => handlePetSelect(pet)}
             >
               <div className="pet-contents-img">
-                <img src={pet.image || petUrl} alt="" />
+                <img src={pet.petimage || petUrl} alt="" />
               </div>
-              <div className="pet-contents-info">
-                <p>{pet.pet_name}</p>
-                <p>{`${pet.breedName}/${pet.pet_weight}kg/${
-                  pet.pet_gender ? "남" : "여"
-                }/${calculateAge(pet.pet_birth)}살`}</p>
+              <div className="infoBox">
+                <div
+                  className="pet-contents-info"
+                  style={{ cursor: "pointer" }}
+                >
+                  <h1>{pet.pet_name}</h1>
+                </div>
+                <div className="pet-contents-info">
+                  <p>{`${pet.pet_breed}/${pet.pet_weight}kg/${pet.pet_gender ? "남" : "여"
+                    }/${calculateAge(pet.pet_birth)}살`}</p>
+                </div>
+
+                <div className="pet-contents-info">
+                  <p>중성화 {pet.pet_neuter} </p>
+                </div>
               </div>
+
+              {fileName === "list" ? (
+                <div className="pet-accordion-content deleteBtn">
+                  <button
+                    className="petDeleteButton"
+                    onClick={(e) => {
+                      setOpenModal(true);
+                      setPetId(pet.pet_id);
+                      setPetImage(pet.petimage);
+                      e.stopPropagation();
+                    }}
+                  >
+                    펫 삭제하기
+                  </button>
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
           ))}
         </div>
-      )}
+      </>
+
+
+      <div className="event-accordion" onClick={() => toggleAccordion("cat")}>
+        고양이
+      </div>
+      <div className="border"></div>
+
+      <div className="pet-accordion-content">
+        {catPets.map((pet) => (
+          <div
+            className={`pet-contents ${selectedPetId === pet.pet_id ? "selected" : ""
+              }`}
+            key={pet.pet_id}
+            onClick={() => handlePetSelect(pet)}
+          >
+            <div className="pet-contents-img">
+              <img src={pet.image || petUrl} alt="" />
+            </div>
+            <div className="pet-contents-info">
+              <p>{pet.pet_name}</p>
+              <p>{`${pet.breedName}/${pet.pet_weight}kg/${pet.pet_gender ? "남" : "여"
+                }/${calculateAge(pet.pet_birth)}살`}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
       {openModal ? (
         <PetInfoModal
           openModal={() => {

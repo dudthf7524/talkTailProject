@@ -9,14 +9,15 @@ const registerPet = async (petData) => {
 
   try {
     // 생일 파싱 - YY/MM/DD 형식으로 가정
-    // const [year, month, day] = petData.birthDate.split('/');
-    // const parsedYear = parseInt(year, 10) < 50 ? `20${year}` : `19${year}`; // 50년 이전은 2000년대, 이후는 1900년대
-    // const birthDate = new Date(`${parsedYear}-${month}-${day}`);
-    // console.log('Parsed birth date:', birthDate);
-    // console.log(petData.image)
-    // console.log("여기까지")
-    // // 이미지 처리
-    // let petImg = null;
+    
+    const birth = petData.year+"-"+petData.month+"-"+petData.day;
+    
+    console.log(birth)
+   
+   
+  
+    // 이미지 처리
+    let petImg = null;
     if (petData.image) {
       petImg = await imgNaverCloud.uploadPetImage(petData.image, "pet");
     }
@@ -36,7 +37,7 @@ const registerPet = async (petData) => {
       pet_etc: petData.etc,
     });
 
-    // const petId = pet.pet_id;
+    const petId = pet.pet_id;
 
     return { pet, petImg };
   } catch (error) {
