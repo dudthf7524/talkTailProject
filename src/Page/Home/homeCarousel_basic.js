@@ -16,7 +16,7 @@ const HomeCarousel = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(1);
 
   const handleMouseDown = (e) => {
@@ -185,6 +185,53 @@ const HomeCarousel = () => {
             ></div>
           );
         })}
+      </div>
+      <div className="btn_box">
+        <p
+          onClick={() => {
+            if (currentIndex !== 1) {
+              console.log("currentIndex : ", currentIndex);
+              handleSlide("left");
+            }
+          }}
+          style={{
+            color: currentIndex !== 1 ? "black" : "gray",
+            cursor: currentIndex !== 1 ? "pointer" : "default",
+          }}
+        >
+          {"<"}
+        </p>
+        {!isPlaying ? (
+          <p
+            onClick={() => {
+              setIsPlaying(true);
+            }}
+          >
+            ▶
+          </p>
+        ) : (
+          <p
+            onClick={() => {
+              setIsPlaying(false);
+            }}
+          >
+            ⏸
+          </p>
+        )}
+        <p
+          onClick={() => {
+            if (currentIndex !== imageArray.length) {
+              console.log("BB");
+              handleSlide("right");
+            }
+          }}
+          style={{
+            color: currentIndex !== imageArray.length ? "black" : "gray",
+            cursor: currentIndex !== imageArray.length ? "pointer" : "default",
+          }}
+        >
+          {">"}
+        </p>
       </div>
     </div>
   );
