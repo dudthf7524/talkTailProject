@@ -9,6 +9,7 @@ import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeCarousel from "./homeCarousel";
 import HomeBookmarks from "./homeBookmarks";
+import HomeGuide from "./homeGuide";
 import Footer from "./footer";
 
 const MainPage = () => {
@@ -18,8 +19,6 @@ const MainPage = () => {
   const arrowUrl = `${process.env.PUBLIC_URL}/PageImage/home/arrow.svg`;
   const footArrowUrl = `${process.env.PUBLIC_URL}/PageImage/home/footArrow.svg`;
   const trailingUrl = `${process.env.PUBLIC_URL}/PageImage/home/trailing.svg`;
-
-  const talktailuser = `${process.env.PUBLIC_URL}/image/talktailuser.png`;
 
   // const logoUrl = `${process.env.PUBLIC_URL}/PageImage/home/logo.svg`;
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
@@ -42,8 +41,7 @@ const MainPage = () => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [reservationtLists, setReservationtList] = useState([]);
   const [showCategory, setShowCategory] = useState(false);
-  const [user, setUser] = useState(false)
-
+  const [user, setUser] = useState(false);
 
   useEffect(() => {
     userLogin();
@@ -55,7 +53,6 @@ const MainPage = () => {
       const token = localStorage.getItem("token");
       if (!token) {
         return;
-
       }
       const response = await api.get("/api/user/login/pet", {
         headers: {
@@ -67,7 +64,7 @@ const MainPage = () => {
     } catch (error) {
       console.error("로그인 인증 실패:", error);
     }
-  }
+  };
   const reservationManagement = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -85,7 +82,6 @@ const MainPage = () => {
       console.error("로그인 인증 실패:", error);
     }
   };
-
 
   const startDrag = (e) => {
     if (containerRef.current) {
@@ -171,24 +167,17 @@ const MainPage = () => {
               <img src={arrowUrl} alt="arrow" />
             </button> */}
             <img src={logoUrl} alt="" />
-            {
-              user ? (
-                <p
-                  onClick={handleLogout}
-                >
-                  Logout
-                </p>
-              ) : (
-                <p
-                  onClick={() => {
-                    navigate("/login");
-                  }}
-                >
-                  Login
-                </p>
-              )
-            }
-
+            {user ? (
+              <p onClick={handleLogout}>Logout</p>
+            ) : (
+              <p
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                Login
+              </p>
+            )}
           </div>
           <div className="trailing">
             {/* <button>
@@ -196,30 +185,18 @@ const MainPage = () => {
             </button> */}
           </div>
         </div>
-        {
-          user ? (
-            <div className="customer">{user.pet_name}의 견주님 반갑습니다.</div>
-          ) : (
-            <></>
-          )
-        }
-        
+        {user ? (
+          <div className="customer">{user.pet_name}의 견주님 반갑습니다.</div>
+        ) : (
+          <></>
+        )}
+
         <HomeBookmarks
           reservationtLists={reservationtLists}
           categoryRef={categoryRef}
           user={user}
         />
-        <div
-          className="home-container2"
-          style={{ justifyContent: "center", alignItems: "center" }}
-        >
-          <img style={{ width: "90%", height: "90%" }} src={talktailuser}></img>
-        </div>
-        <div style={{ fontSize: "20px" }}>
-          <a href="/talktailuser.pdf" download>
-            talktail 이용가이드 다운로드
-          </a>
-        </div>
+        <HomeGuide />
         {/* <div
           className="home-container3"
           ref={containerRef}

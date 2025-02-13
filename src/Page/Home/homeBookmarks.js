@@ -1,9 +1,9 @@
 import "../../CSS/homeBookmarks.css";
 import "../../CSS/homeCarousel.css";
 import React, { useState } from "react";
-import Carousel from "react-bootstrap/Carousel";
 
 const HomeBookmarks = ({ reservationtLists, categoryRef, user }) => {
+  console.log("user : ", user);
   const [openBanner, setOpenBanner] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollCategory = () => {
@@ -27,8 +27,9 @@ const HomeBookmarks = ({ reservationtLists, categoryRef, user }) => {
         <>
           <p>즐겨찾기</p>
           <div
-            className={`home_carousel_section ${openBanner ? "" : "small_section"
-              }`}
+            className={`home_carousel_section ${
+              openBanner ? "" : "small_section"
+            }`}
           >
             <div
               className="btn"
@@ -77,7 +78,9 @@ const HomeBookmarks = ({ reservationtLists, categoryRef, user }) => {
           <p className="content">
             단골 내역이 없어요.😂
             <br />
-            {user.pet_name}의 단골가게를 만들어 주세요.😊
+            {user.pet_name
+              ? `${user.pet_name}의 단골가게를 만들어 주세요.😊`
+              : "펫 등록 후 예약을 진행해주세요."}
           </p>
           {openBanner ? (
             <div
@@ -101,9 +104,7 @@ const HomeBookmarks = ({ reservationtLists, categoryRef, user }) => {
         </div>
       ) : (
         <div className="home-container1 homeBookmarks">
-          <p className="content">
-            로그인 해주세요.
-          </p>
+          <p className="content">로그인 해주세요.</p>
         </div>
       )}
     </div>
