@@ -91,7 +91,7 @@ const PetDetail = () => {
                     </button>
                     마이펫 정보
                     <div>
-                        <button style={{color : "#f0663f;"}} onClick={handleEdit}>
+                        <button style={{color : "#f0663f"}} onClick={handleEdit}>
                             수정
                         </button>
                     </div>

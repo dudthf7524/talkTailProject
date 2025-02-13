@@ -30,6 +30,7 @@ const PetEditPage = () => {
     etc: "",
     neuter: "",
   });
+
   useEffect(() => {
     dispatch(fetchPetData(id));
   }, [dispatch, id]);
@@ -170,7 +171,7 @@ const PetEditPage = () => {
       console.log('a')
       setName('이름을 입력해주세요.');
       nameRef.current.focus();
-     
+
       return;
     }
     if (!koreanEnglishNumberMaxFiveCharRegex.test(formData.name)) {
@@ -317,19 +318,6 @@ const PetEditPage = () => {
           <div></div>
         </div>
         <div className="re-mid">
-          <div className="PetRegistration-container"></div>
-          <div className="PetRegistration-container">
-            <input
-              type="text"
-              className="textbox"
-              placeholder="이름이 무엇인가요?"
-              name="name"
-              value={formData.name}
-              ref={nameRef}
-              onChange={handleInputChange}
-            />
-            {name && <div className="pet-registration-page-error-box">{name}</div>}
-          </div>
           <div className="PetRegistration-img-container" ref={imageRef} tabIndex={0}>
             <div className="PetRegistration-content">
               <div className="upload-img">
@@ -351,6 +339,18 @@ const PetEditPage = () => {
             </div>
             {image && <div className="pet-registration-page-error-box">{image}</div>}
           </div>
+          <div className="PetRegistration-container">
+            <input
+              type="text"
+              className="textbox"
+              placeholder="이름이 무엇인가요?"
+              name="name"
+              value={formData.name}
+              ref={nameRef}
+              onChange={handleInputChange}
+            />
+            {name && <div className="pet-registration-page-error-box">{name}</div>}
+          </div>
           <div className="PetRegistration-container2">
             <p>종류</p>
 
@@ -363,8 +363,8 @@ const PetEditPage = () => {
                 value={selectedSpecies}
                 onChange={handleSpeciesChange}
               >
-                <option value="dog">강아지</option>
-                <option value="cat">고양이</option>
+                <option value="강아지">강아지</option>
+                <option value="고양이">고양이</option>
               </select>
             </div>
           </div>
@@ -380,7 +380,7 @@ const PetEditPage = () => {
                 className="textbox-gray"
                 onClick={() => setIsDropdownVisible(!isDropdownVisible)}
               >
-                {selectedOption || searchQuery}
+                {selectedOption || searchQuery || <div ref={breedRef} tabIndex={0}>품종을 선택해주세요</div>}
               </div>
 
               {/* 드롭다운 */}
@@ -510,6 +510,7 @@ const PetEditPage = () => {
                   </ul>
                 </div>
               )}
+              {breed && <div className="pet-registration-page-error-box">{breed}</div>}
             </div>
           </div>
           <div className="PetRegistration-container2">
@@ -573,6 +574,7 @@ const PetEditPage = () => {
                 options={[
                   { label: "O", value: "O" },
                   { label: "X", value: "X" },
+                  { label: "모름", value: "모름" },
                 ]}
                 selectedOption={formData.neuter}
                 onSelect={(value) => handleRadioSelect("neuter", value)}

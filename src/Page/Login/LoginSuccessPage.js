@@ -24,10 +24,8 @@ const Confirm = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("response.data");
-      console.log(response.data.user);
-      console.log("response.data");
-      if (!response.data.user) {
+     
+      if (!response.data) {
         navigate("/user/information");
       } else {
         navigate("/");

@@ -39,16 +39,36 @@ const MainPage = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [reservationtLists, setReservationtList] = useState([]);
   const [showCategory, setShowCategory] = useState(false);
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(false)
+  const [userPet, setUserPet] = useState(false);
+  const [reservationtLists, setReservationtList] = useState([]);
 
   useEffect(() => {
-    userLogin();
+    userLoginPet();
     reservationManagement();
+    userLogin();
   }, []);
 
   const userLogin = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return;
+      }
+      const response = await api.get("/api/user/information", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUser(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("로그인 인증 실패:", error);
+    }
+  };
+
+  const userLoginPet = async () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -59,7 +79,7 @@ const MainPage = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setUser(response.data);
+      setUserPet(response.data);
       console.log(response.data);
     } catch (error) {
       console.error("로그인 인증 실패:", error);
@@ -167,7 +187,7 @@ const MainPage = () => {
               <img src={arrowUrl} alt="arrow" />
             </button> */}
             <img src={logoUrl} alt="" />
-            {user ? (
+            {user || userPet ? (
               <p onClick={handleLogout}>Logout</p>
             ) : (
               <p
@@ -185,8 +205,8 @@ const MainPage = () => {
             </button> */}
           </div>
         </div>
-        {user ? (
-          <div className="customer">{user.pet_name}의 견주님 반갑습니다.</div>
+        {userPet ? (
+          <div className="customer">{userPet.pet_name}의 견주님 반갑습니다.</div>
         ) : (
           <></>
         )}
@@ -194,6 +214,7 @@ const MainPage = () => {
         <HomeBookmarks
           reservationtLists={reservationtLists}
           categoryRef={categoryRef}
+          userPet={userPet}
           user={user}
         />
         <HomeGuide />

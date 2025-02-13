@@ -33,7 +33,7 @@ router.get('/user/information' ,authMiddleware , async(req, res) => {
     const platform_id = req.user.id
     try{
         const user = await userDatabase.getUserInformation(platform_id)
-        res.status(201).json({ user });
+        res.status(201).json( user );
     }catch(error){
         console.error('Error fetching userIformation:', error.message);
         res.status(500).json({ error: error.message });

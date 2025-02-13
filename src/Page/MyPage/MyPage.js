@@ -62,7 +62,7 @@ const MyPage = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setUserInformation(response.data.user);
+      setUserInformation(response.data);
     } catch (error) {
       console.error("Error fetching user data:", error);
       // 오류 처리 로직 추가

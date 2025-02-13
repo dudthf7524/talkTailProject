@@ -32,7 +32,7 @@ function UserInformation() {
       navigate('/')
     }
   }, []);
-
+  
   const [formData, setFormData] = useState({
     user_name: "",
     user_phone1: "",

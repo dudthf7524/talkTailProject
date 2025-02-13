@@ -28,16 +28,9 @@ const getUserInformation = async (platform_id) => {
         platform_id,
       },
     });
-    console.log("user")
-    console.log(userInformation)
-    console.log("user")
-    if (!userInformation) {
-      return userInformation;
-
-    }
-
     return userInformation;
   } catch (error) {
+    console.error(error)
     throw new Error(`Error fetching user by ID: ${error.message}`);
   }
 };
@@ -176,6 +169,25 @@ const userLoginPet = async (platform_id) => {
   }
 };
 
+const userLogin = async (platform_id) => {
+  console.log("데이터베이스 코드")
+  console.log(platform_id)
+  try {
+    const result = await UserInformation.findOne({
+      where: {
+        platform_id: platform_id,
+      },
+      attributes: ["pet_name"],
+    });
+
+    return result;
+
+  } catch (error) {
+    console.error(error)
+    throw new Error(`Failed to register pet: ${error.message}`);
+  }
+};
+
 module.exports = {
   findOrCreateUser,
   getUserInformation,
@@ -185,4 +197,5 @@ module.exports = {
   userEidt,
   userReservation,
   userLoginPet,
+  userLogin,
 };
