@@ -10,7 +10,7 @@ import "../../CSS/petRegistrationPage.css";
 const PetRegistration = () => {
   // 새로추가한내용
 
-  const [selectedSpecies, setSelectedSpecies] = useState("dog"); // 기본 선택: 개
+  const [selectedSpecies, setSelectedSpecies] = useState("강아지"); // 기본 선택: 강아지
   const [isDropdownVisible, setIsDropdownVisible] = useState(false); // 드롭다운 표시 여부
   const [searchQuery, setSearchQuery] = useState(""); // 검색 입력값
   const [selectedOption, setSelectedOption] = useState(""); // 선택된 옵션
@@ -320,7 +320,7 @@ const PetRegistration = () => {
           </div>
 
           <div className="PetRegistration-container2">
-            <p>종류</p>
+            <p>종</p>
 
             <div
               style={{ position: "relative", zIndex: 1 }}
@@ -331,8 +331,8 @@ const PetRegistration = () => {
                 value={selectedSpecies}
                 onChange={handleSpeciesChange}
               >
-                <option value="dog">개</option>
-                <option value="cat">고양이</option>
+                <option value="강아지">강아지</option>
+                <option value="고양이">고양이</option>
               </select>
             </div>
           </div>
@@ -373,22 +373,12 @@ const PetRegistration = () => {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="search-box"
-
                   />
                   {/* 옵션 목록 */}
                   <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
                     {/* TOP1 옵션 */}
                     {filteredTopOptions.length > 0 && (
                       <>
-                        <li
-                          style={{
-                            fontWeight: "bold",
-                            padding: "10px",
-                            backgroundColor: "#f9f9f9",
-                          }}
-                        >
-                          TOP5
-                        </li>
                         {filteredTopOptions.map((option, index) => (
                           <li
                             key={`top-${index}`}
@@ -409,15 +399,7 @@ const PetRegistration = () => {
                     {/* TOP1 옵션 */}
                     {filteredTopOptions.length > 0 && (
                       <>
-                        <li
-                          style={{
-                            fontWeight: "bold",
-                            padding: "10px",
-                            backgroundColor: "#f9f9f9",
-                          }}
-                        >
-                          온리 원 믹스견
-                        </li>
+                        
                         {filteredTopOptions.map((option, index) => (
                           <li
                             key={`top-${index}`}
@@ -438,15 +420,6 @@ const PetRegistration = () => {
                     {/* 일반 옵션 */}
                     {filteredOtherOptions.length > 0 && (
                       <>
-                        <li
-                          style={{
-                            fontWeight: "bold",
-                            padding: "10px",
-                            backgroundColor: "#f9f9f9",
-                          }}
-                        >
-                          일반 옵션
-                        </li>
                         {filteredOtherOptions.map((option, index) => (
                           <li
                             key={`other-${index}`}

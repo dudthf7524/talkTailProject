@@ -117,7 +117,7 @@ const PetDetail = () => {
                         </div>
                     </div>
                     <div className='PetRegistration-container2'>
-                        <p>종류</p>
+                        <p>종</p>
                         <div className='PetRegistration-container'>
                             <input
                                 type="text"

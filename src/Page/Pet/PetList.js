@@ -1,7 +1,7 @@
 const speciesData = {
 
-  dog: {
-    topOptions: ['푸들', '말티즈', '진돗개', '시츄', '포메라니안'], // 개의 TOP1 리스트
+  강아지: {
+    topOptions: ['믹스견', '말티즈', '진돗개', '시츄', '포메라니안'], // 개의 TOP1 리스트
 
     otherOptions: [
       "가멜 댄스크 횐제훈트",
@@ -130,7 +130,7 @@ const speciesData = {
 
   },
 
-  cat: {
+  고양이: {
     topOptions: ['고양이1', '고양이2', '고양이3', '고양이4'], // 고양이의 TOP1 리스트
     otherOptions: [
       '코리안숏헤어', '러시안블루', '스코티쉬폴드', '먼치킨',
