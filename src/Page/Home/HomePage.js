@@ -8,6 +8,7 @@ import "../../CSS/homePage.css";
 import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeCarousel from "./homeCarousel";
+import HomeBookmarks from "./homeBookmarks";
 
 const MainPage = () => {
   const landline_phone = "070-4571-7580";
@@ -127,14 +128,6 @@ const MainPage = () => {
   const modalTitle = "알림";
   const modalContent = "해당 서비스는 준비 중입니다.";
 
-  const scrollCategory = () => {
-    if (categoryRef.current) {
-      categoryRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
   return (
     <div lang="ko" className="main_container">
       <div className="mid home_total">
@@ -162,70 +155,11 @@ const MainPage = () => {
             </button> */}
           </div>
         </div>
-        {reservationtLists.length > 0 ? (
-          <>
-            <h2>즐겨찾기</h2>
-            <Carousel className="Carousel" indicators={false}>
-              {reservationtLists.map((reservationtList, index) => (
-                <Carousel.Item key={index}>
-                  <div className="img">
-                    <img
-                      style={{ width: "70%", height: "250px" }}
-                      src={reservationtList.business_main_image}
-                    ></img>
-                  </div>
-                  <Carousel.Caption>
-                    <h3>
-                      <div className="">{reservationtList.business_name}</div>
-                    </h3>
-                    <p>예약 수 {reservationtList.user_count}</p>
-                  </Carousel.Caption>
-                </Carousel.Item>
-              ))}
-            </Carousel>
-            {/* <Carousel className="Carousel" indicators={false}>
-                <Carousel.Item >
-                  <div className="img"><img src={reservationtList.business_main_image}></img></div>
-                  <Carousel.Caption>
-                    <h3><div className="">{reservationtList.business_name}</div></h3>
-                    <p>예약 수 6</p>
-                  </Carousel.Caption>
-                </Carousel.Item>
-                <Carousel.Item>
-                  <div className="img"><img src={reservationtList.business_main_image}></img></div>
-                  <div className="carousel-text">
-                    <h3>{reservationtList.business_name}</h3>
-                    <p>예약 수 6</p>
-                  </div>
-                </Carousel.Item>
-                <Carousel.Item>
-                  <div className="img"><img src={reservationtList.business_main_image}></img></div>
-                  <Carousel.Caption>
-                    <h3>Third slide label</h3>
-                    <p>
-                      Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-                    </p>
-                  </Carousel.Caption>
-                </Carousel.Item>
-              </Carousel> */}
-          </>
-        ) : (
-          <div className="home-container1">
-            <p>
-              아직 예약내역이 없어요.
-              <br />
-              예약기능을 이용해보세요.
-            </p>
-            <div
-              className="btn"
-              onClick={scrollCategory}
-              style={{ borderRadius: "5px" }}
-            >
-              예약하러 가기
-            </div>
-          </div>
-        )}
-
+        <div className="customer">OOO의 견주님 반갑습니다.</div>
+        <HomeBookmarks
+          reservationtLists={reservationtLists}
+          categoryRef={categoryRef}
+        />
         <div className="home-container2"></div>
 
         {/* <div

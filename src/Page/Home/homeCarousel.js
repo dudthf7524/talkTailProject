@@ -1,7 +1,17 @@
 import "../../CSS/homeCarousel.css";
 import React, { useRef, useState, useEffect } from "react";
 const HomeCarousel = () => {
-  const imageArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  // const imageArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const imageArray = [
+    {
+      imgUrl: "/image/cardnews_01.png",
+      linkUrl: "https://blog.naver.com/creamoff2021/222747592370",
+    },
+    {
+      imgUrl: "/image/cardnews_02.png",
+      linkUrl: "https://blog.naver.com/creamoff2021/222744209767",
+    },
+  ];
   const sliderRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -146,7 +156,9 @@ const HomeCarousel = () => {
             {imageArray.map((image, index) => {
               return (
                 <div className="img_div" key={index}>
-                  <p>{index + 1}</p>
+                  <a href={image.linkUrl} target="_blank">
+                    <img src={image.imgUrl} alt="" />
+                  </a>
                 </div>
               );
             })}

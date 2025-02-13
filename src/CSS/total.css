@@ -88,6 +88,14 @@
 .home_total .tail-container {
   margin-bottom: 56px;
 }
+.home_total .customer {
+  width: 100%;
+  font-size: 14px;
+  color: #f0663f;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
+}
 .home_total .category {
   width: 100%;
   height: auto;
@@ -222,13 +230,27 @@
 }
 .login_total .login-title {
   width: 100%;
+  height: auto;
   padding-left: 5%;
+  /* display: flex; */
+}
+.login_total .login-title .logo_box {
+  width: 90%;
+  height: auto;
+  display: flex;
+  align-items: flex-end;
 }
 .login_total .login-text {
+  width: auto;
   height: auto;
 }
 .login_total .login-title img {
   width: 30%;
+}
+.login_total .login-title p {
+  margin: 0;
+  font-size: 12px;
+  margin-left: 20px;
 }
 .login_total .login-pictures {
   width: 90%;

@@ -51,7 +51,10 @@ const LoginPage = () => {
   return (
     <div className="login_total login" lang="ko">
       <div className="login-title">
-        <img src={logoUrl} alt="logo" />
+        <div className="logo_box">
+          <img src={logoUrl} alt="logo" />
+          <p>반려동물 토탈케어 서비스</p>
+        </div>
       </div>
       <div className="login-pictures">
         <div className="top">
@@ -95,8 +98,8 @@ const LoginPage = () => {
         </table> */}
       </div>
       <div className="login-text">
-        우리 아이를 위한 특별한 곳,<br></br>
-        여기에서 시작해요!
+        반려동물은 Tail로 소통하고<br></br>
+        우리는 "Talktail" 로 소통합니다.
       </div>
       <div className="login-button-container">
         <button>
