@@ -53,13 +53,10 @@ const HomeCarousel = () => {
         behavior: "smooth",
       });
     } else if (direction === "right" && currentIndex < imageArray.length) {
-      console.log("CC");
       sliderRef.current.scrollTo({
         left: scrollLeft + slideAmount,
         behavior: "smooth",
       });
-      console.log("scrollLeft : ", scrollLeft);
-      console.log("slideAmount : ", slideAmount);
       setCurrentIndex(currentIndex + 1);
     }
     // sliderRef.current.scrollTo({

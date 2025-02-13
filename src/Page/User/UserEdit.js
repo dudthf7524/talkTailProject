@@ -5,6 +5,7 @@ import api from "../../Api";
 import UserEditModal from "../Components/UserEditModal";
 import UserEditOpenModal from "./UserEditOpenModal";
 import Modal from "../../modal";
+import UserEditDeleteModal from "./userEidtDeleteModal";
 
 function UserEdit() {
   const navigate = useNavigate();
@@ -16,10 +17,11 @@ function UserEdit() {
   const [openAlert, setOpenAlert] = useState(false);
   const [alertTitle, setAlertTitle] = useState("");
   const [alertContent, setAlertContent] = useState("");
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   useEffect(() => {
     fetchUserInformation();
   }, []);
-
+  const userInformationId = userInformation?.user_information_id;
   const fetchUserInformation = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -69,7 +71,7 @@ function UserEdit() {
       [name]: value,
     });
   };
-  console.log(formData.user_name)
+  console.log(formData.user_name);
 
   // console.log(formData);
   const handleKeyDown = (e) => {
@@ -78,11 +80,7 @@ function UserEdit() {
     }
   };
 
-  
-
-
   const handleEdit = async () => {
-
     const userInforMationData = {
       ...formData,
       user_information_id: userInformation.user_information_id, // user.id를 formData에 추가
@@ -120,7 +118,6 @@ function UserEdit() {
     }
   };
   const checkForm = () => {
-
     const koreanRegex = /^[\uAC00-\uD7A3]{1,5}$/; // 한글만 5자
 
     const numberRegexThree = /^\d{3}$/;
@@ -133,11 +130,10 @@ function UserEdit() {
     // console.log("userInforMationData : ", userInforMationData);
     setUserInforMationData(userInforMationData);
     setAlertTitle("입력을 확인하세요.");
-    console.log(formData.user_name)
+    console.log(formData.user_name);
     if (!formData.user_name.trim()) {
       setAlertContent("이름을 입력해주세요.");
       setOpenAlert(true);
-
     } else if (!koreanRegex.test(formData.user_name)) {
       setAlertContent("이름은 한글, 5글자 이하만 입력 가능합니다.");
       setOpenAlert(true);
@@ -223,6 +219,15 @@ function UserEdit() {
           </div>
         </div>
       </div>
+      <div className="delete_box">
+        <p
+          onClick={() => {
+            setOpenDeleteModal(true);
+          }}
+        >
+          회원탈퇴
+        </p>
+      </div>
 
       {showPopup && (
         <UserEditModal
@@ -249,6 +254,16 @@ function UserEdit() {
           }}
           title={alertTitle}
           content={alertContent}
+        />
+      ) : (
+        ""
+      )}
+      {openDeleteModal ? (
+        <UserEditDeleteModal
+          openModal={() => {
+            setOpenDeleteModal(false);
+          }}
+          userInformationId={userInformationId}
         />
       ) : (
         ""

@@ -40,33 +40,6 @@ const HomeCarousel = () => {
   };
 
   const getWindowWidth = () => window.innerWidth;
-  const handleSlide = (direction) => {
-    if (!sliderRef.current) return;
-    const { scrollLeft, clientWidth } = sliderRef.current;
-    const windowWidth = getWindowWidth();
-    let slideAmount = windowWidth > 500 ? 387 + 8.6 : windowWidth * 0.92;
-
-    if (direction === "left" && currentIndex > 1) {
-      setCurrentIndex(currentIndex - 1);
-      sliderRef.current.scrollTo({
-        left: scrollLeft - slideAmount,
-        behavior: "smooth",
-      });
-    } else if (direction === "right" && currentIndex < imageArray.length) {
-      console.log("CC");
-      sliderRef.current.scrollTo({
-        left: scrollLeft + slideAmount,
-        behavior: "smooth",
-      });
-      console.log("scrollLeft : ", scrollLeft);
-      console.log("slideAmount : ", slideAmount);
-      setCurrentIndex(currentIndex + 1);
-    }
-    // sliderRef.current.scrollTo({
-    //   left: slideAmount * (currentIndex - 1),
-    //   behavior: "smooth",
-    // });
-  };
 
   const moveCircle = (index) => {
     setIsPlaying(false);
@@ -116,7 +89,7 @@ const HomeCarousel = () => {
           behavior: "smooth",
         });
       }
-    }, 2000); // 2초마다 이동
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [isPlaying]);
@@ -126,7 +99,7 @@ const HomeCarousel = () => {
 
     const handleScroll = () => {
       const { scrollLeft, clientWidth } = sliderRef.current;
-      const newIndex = Math.round(scrollLeft / clientWidth) + 1; // 1부터 시작
+      const newIndex = Math.round(scrollLeft / clientWidth) + 1;
       setCurrentIndex(newIndex);
     };
 

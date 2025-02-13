@@ -1,9 +1,11 @@
 import "../../CSS/homeBookmarks.css";
+import "../../CSS/homeCarousel.css";
 import React, { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 
 const HomeBookmarks = ({ reservationtLists, categoryRef }) => {
   const [openBanner, setOpenBanner] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const scrollCategory = () => {
     if (categoryRef.current) {
       categoryRef.current.scrollIntoView({
@@ -12,43 +14,90 @@ const HomeBookmarks = ({ reservationtLists, categoryRef }) => {
       });
     }
   };
+  const controlImg = (direction) => {
+    if (direction === "left") {
+      setCurrentIndex(currentIndex - 1);
+    } else {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
   return (
     <div className="homeBookmarks">
       {reservationtLists.length > 0 ? (
         <>
-          <h2>즐겨찾기</h2>
-          <Carousel className="Carousel" indicators={false}>
-            {reservationtLists.map((reservationtList, index) => (
-              <Carousel.Item key={index}>
-                <div className="img">
-                  <img
-                    style={{ width: "70%", height: "250px" }}
-                    src={reservationtList.business_main_image}
-                  ></img>
-                </div>
-                <Carousel.Caption>
-                  <h3>
-                    <div className="">{reservationtList.business_name}</div>
-                  </h3>
-                  <p>예약 수 {reservationtList.user_count}</p>
-                </Carousel.Caption>
-              </Carousel.Item>
-            ))}
-          </Carousel>
+          <p>즐겨찾기</p>
+          <div
+            className={`home_carousel_section ${
+              openBanner ? "" : "small_section"
+            }`}
+          >
+            <div
+              className="btn"
+              onClick={() => {
+                if (currentIndex !== 0) {
+                  controlImg("left");
+                }
+              }}
+            >
+              {"<"}
+            </div>
+            <div className="img_box">
+              <img
+                src={reservationtLists[currentIndex].business_main_image}
+                alt=""
+              />
+            </div>
+            <div
+              className="btn"
+              onClick={() => {
+                if (currentIndex !== reservationtLists.length - 1) {
+                  controlImg("right");
+                }
+              }}
+            >
+              {">"}
+            </div>
+          </div>
+          <div className="text_box">
+            <p>
+              업체명 : {reservationtLists[currentIndex].business_name} / 예약수
+              : {reservationtLists[currentIndex].user_count}
+            </p>
+            <div
+              className="control color"
+              onClick={() => {
+                setOpenBanner(!openBanner);
+              }}
+            >
+              {openBanner ? "▲" : "▼"}
+            </div>
+          </div>
         </>
       ) : (
-        <div className="home-container1">
-          <p>
+        <div className="home-container1 homeBookmarks">
+          <p className="content">
             단골 내역이 없어요.😂
             <br />
             OOO(이)의 단골가게를 만들어 주세요.😊
           </p>
+          {openBanner ? (
+            <div
+              className="btn"
+              onClick={scrollCategory}
+              style={{ borderRadius: "5px" }}
+            >
+              단골 가게 찾기🏸
+            </div>
+          ) : (
+            ""
+          )}
           <div
-            className="btn"
-            onClick={scrollCategory}
-            style={{ borderRadius: "5px" }}
+            className="control"
+            onClick={() => {
+              setOpenBanner(!openBanner);
+            }}
           >
-            단골 가게 찾기🏸
+            {openBanner ? "▲" : "▼"}
           </div>
         </div>
       )}

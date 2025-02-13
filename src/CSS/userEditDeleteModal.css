@@ -1,0 +1,7 @@
+.userEditDeleteModal {
+  height: 230px;
+}
+.userEditDeleteModal .btn_box {
+  width: 70%;
+  height: 50px;
+}

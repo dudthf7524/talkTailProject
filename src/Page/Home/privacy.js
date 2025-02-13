@@ -20,7 +20,7 @@ const Privacy = () => {
           alt=""
         />
         <p className="title">개인정보 처리방침</p>
-        <p className="content">
+        <p className="content" style={{ padding: "0 30px" }}>
           개정 일 : 2024년 12월 1일
           <br />
           ㈜크림오프(이하 “회사”라 함)는 통신비밀보호법, 전기통신사업법,

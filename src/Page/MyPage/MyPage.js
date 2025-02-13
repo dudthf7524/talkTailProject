@@ -104,7 +104,7 @@ const MyPage = () => {
   };
 
   const goBack = () => {
-    navigate(-1); // 뒤로 가기
+    navigate("/"); // 뒤로 가기
   };
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
@@ -144,13 +144,13 @@ const MyPage = () => {
                 <button onClick={() => navigate("/notice")}>
                   <img src={noteUrl} alt="" />
                 </button>
-                <div className="event-button-text">알림창</div>
+                <div className="event-button-text">알림장</div>
               </div>
               <div className="event-button">
                 <button onClick={() => navigate("/authority/management")}>
                   <img src={noteUrl} alt="" />
                 </button>
-                <div className="event-button-text">권한관리</div>
+                <div className="event-button-text">승인내역</div>
               </div>
               <div className="event-button">
                 <button onClick={() => navigate("/reservation")}>
@@ -190,11 +190,15 @@ const MyPage = () => {
               </div>
             </div>
           </div>
+          <div className="support_container">
+            <p>고객센터</p>
+            <p>070-4571-7580 | creamoff2021@creamoff.co.kr</p>
+          </div>
           <div className="mypage-info-container">
             {/* <div className="mypage-info">계정정보</div> */}
             <div className="mypage-info-contents">
               <div className="edit-textbox">
-                <div className="edit-text">
+                <div className="edit-text logout_box">
                   <p
                     onClick={handleLogout}
                     style={{ cursor: "pointer", fontWeight: 600 }}

@@ -9,9 +9,9 @@ import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeCarousel from "./homeCarousel";
 import HomeBookmarks from "./homeBookmarks";
+import Footer from "./footer";
 
 const MainPage = () => {
-  const landline_phone = "070-4571-7580";
   const navigate = useNavigate();
   const categoryRef = useRef(null);
   const locationUrl = `${process.env.PUBLIC_URL}/PageImage/home/location.svg`;
@@ -119,10 +119,6 @@ const MainPage = () => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleAccordion = () => {
-    setIsOpen(!isOpen);
-  };
-
   const handleItemClick = (id) => {
     navigate(`/list/${id}`);
   };
@@ -163,11 +159,16 @@ const MainPage = () => {
           reservationtLists={reservationtLists}
           categoryRef={categoryRef}
         />
-        <div className="home-container2" style={{justifyContent : "center", alignItems : "center"}}>
-              <img style={{width : "90%" , height : "90%"}} src={talktailuser}></img>
+        <div
+          className="home-container2"
+          style={{ justifyContent: "center", alignItems: "center" }}
+        >
+          <img style={{ width: "90%", height: "90%" }} src={talktailuser}></img>
         </div>
-        <div style={{fontSize : "20px"}}>
-          <a href="/talktailuser.pdf" download>talktail 이용가이드 다운로드</a>
+        <div style={{ fontSize: "20px" }}>
+          <a href="/talktailuser.pdf" download>
+            talktail 이용가이드 다운로드
+          </a>
         </div>
         {/* <div
           className="home-container3"
@@ -257,7 +258,7 @@ const MainPage = () => {
 
             {/* <div className="button-item" onClick={() => handleItemClick(4)}> */}
           </div>
-          
+
           {showCategory ? (
             <div
               className="less_btn"
@@ -285,65 +286,8 @@ const MainPage = () => {
           <div className="home-container4-img"></div>
           <div className="home-container4-img"></div>
         </div> */}
-        <div className="tail-container">
-          <div className="tail-item">
-            <img src={logoUrl} alt="" style={{ width: "50%" }} />
-
-            <div className="tail-text">
-              애견미용샵 ｜상품입점｜제휴문의｜상담문의
-            </div>
-            <div className="tail-number">
-              <a
-                style={{ textDecoration: "none", color: "black" }}
-                href={`tel:${landline_phone}`}
-              >
-                070-4571-7580
-              </a>
-            </div>
-            <div className="tail-a">
-              <span
-                onClick={() => {
-                  navigate("/tos");
-                }}
-              >
-                이용약관
-              </span>
-              ｜
-              <span
-                onClick={() => {
-                  navigate("/privacy");
-                }}
-              >
-                개인정보 처리방침
-              </span>
-            </div>
-            <div
-              className={`tail-accordion ${isOpen ? "open" : ""}`}
-              onClick={toggleAccordion}
-            >
-              사업자 정보
-              <img src={footArrowUrl} alt="arrow" />
-            </div>
-            <div className={`hidden-content ${isOpen ? "open" : ""}`}>
-              <div className="hidden-item">
-                <div>대표</div>
-                <div>사업자등록번호</div>
-                <div>통신판매업</div>
-                <div>주소</div>
-                <div>이메일</div>
-              </div>
-              <div className="hidden-item2">
-                <div>권도혁</div>
-                <div>514-87-03021</div>
-                <div>2025-경북경산-0073</div>
-                <div>경상북도 경산시 삼풍로 27, 309호</div>
-                <div>creamoff2021@creamoff.co.kr</div>
-              </div>
-            </div>
-            <div className="tail-co">@TalkTail co Ltd. All rigths reserved</div>
-          </div>
-        </div>
       </div>
+      <Footer />
       <NButtonContainer />
       {openModal ? (
         <Modal
