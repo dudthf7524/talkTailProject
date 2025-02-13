@@ -81,14 +81,6 @@ const PetRegistration = () => {
     const monthRegex = /^\d{2}$/;
     const dayRegex = /^\d{2}$/;
 
-
-    console.log(formData.name)
-    console.log(formData.breed)
-    console.log(formData.species)
-    console.log('선택된 이미지')
-    console.log(selectedImageFile)
-    console.log('선택된 이미지')
-
     setName('');
     setImage('');
     setBirthDate('');

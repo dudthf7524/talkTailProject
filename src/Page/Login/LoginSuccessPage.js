@@ -30,7 +30,8 @@ const Confirm = () => {
       if (!response.data.user) {
         navigate("/user/information");
       } else {
-        setUserInformation(response.data.user);
+        navigate("/");
+        // setUserInformation(response.data.user);
       }
     } catch (error) {
       console.error("Error fetching user data:", error);

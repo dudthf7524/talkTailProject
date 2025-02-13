@@ -13,7 +13,8 @@ const PetDetail = () => {
     const defaultPetImgUrl = `${process.env.PUBLIC_URL}/PageImage/pet/pet_img_L.png`;
     const noteUrl = `${process.env.PUBLIC_URL}/PageImage/list/note_ic.svg`;
     const photoUrl = `${process.env.PUBLIC_URL}/PageImage/pet/photo.svg`;
-    // const [petData, setPetData] = useState(null);
+    const male = `${process.env.PUBLIC_URL}/gender/male.png`;
+    const female = `${process.env.PUBLIC_URL}/gender/female.png`;
 
 
 
@@ -88,22 +89,14 @@ const PetDetail = () => {
                     <button onClick={goBack}>
                         <img src={arrowButtonUrl} alt='뒤로가기' />
                     </button>
-                        마이펫 정보
+                    마이펫 정보
                     <div>
-                        <button onClick={handleEdit}>
-                            <img src={noteUrl} alt='' />
+                        <button style={{color : "#f0663f;"}} onClick={handleEdit}>
+                            수정
                         </button>
                     </div>
                 </div>
                 <div className='re-mid'>
-                    <div className='PetRegistration-container'>
-                        <input
-                            type="text"
-                            className="textbox"
-                            value={petData.pet_name || ''}
-                            readOnly
-                        />
-                    </div>
                     <div className='PetRegistration-img-container'>
                         <div className='PetRegistration-content'>
                             <div className='upload-img'>
@@ -115,6 +108,14 @@ const PetDetail = () => {
                                 </label>
                             </div>
                         </div>
+                    </div>
+                    <div className='PetRegistration-container'>
+                        <input
+                            type="text"
+                            className="textbox"
+                            value={petData.pet_name || ''}
+                            readOnly
+                        />
                     </div>
                     <div className='PetRegistration-container2'>
                         <p>종</p>
@@ -164,8 +165,8 @@ const PetDetail = () => {
                         <p>성별은</p>
                         <RadioButton
                             options={[
-                                { label: '남자', value: '남자' },
-                                { label: '여자', value: '여자' },
+                                { label: <img style={{ width: "17%" }} src={male}></img>, value: '남자' },
+                                { label: <img style={{ width: "17%" }} src={female}></img>, value: '여자' },
                             ]}
                             selectedOption={formData.gender}
                             onSelect={() => { }} // 선택 불가능하도록 콜백 제거
@@ -178,6 +179,7 @@ const PetDetail = () => {
                             options={[
                                 { label: 'O', value: 'O' },
                                 { label: 'X', value: 'X' },
+                                { label: '모름', value: '모름' },
                             ]}
                             selectedOption={petData.pet_neuter}
                             onSelect={() => { }} // 선택 불가능하도록 콜백 제거
