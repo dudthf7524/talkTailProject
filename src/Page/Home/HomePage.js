@@ -18,6 +18,9 @@ const MainPage = () => {
   const arrowUrl = `${process.env.PUBLIC_URL}/PageImage/home/arrow.svg`;
   const footArrowUrl = `${process.env.PUBLIC_URL}/PageImage/home/footArrow.svg`;
   const trailingUrl = `${process.env.PUBLIC_URL}/PageImage/home/trailing.svg`;
+
+  const talktailuser = `${process.env.PUBLIC_URL}/image/talktailuser.png`;
+
   // const logoUrl = `${process.env.PUBLIC_URL}/PageImage/home/logo.svg`;
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
 
@@ -160,8 +163,12 @@ const MainPage = () => {
           reservationtLists={reservationtLists}
           categoryRef={categoryRef}
         />
-        <div className="home-container2"></div>
-
+        <div className="home-container2" style={{justifyContent : "center", alignItems : "center"}}>
+              <img style={{width : "90%" , height : "90%"}} src={talktailuser}></img>
+        </div>
+        <div style={{fontSize : "20px"}}>
+          <a href="/talktailuser.pdf" download>talktail 이용가이드 다운로드</a>
+        </div>
         {/* <div
           className="home-container3"
           ref={containerRef}
@@ -177,8 +184,6 @@ const MainPage = () => {
             </div>
           ))}
         </div> */}
-
-        <HomeCarousel />
 
         <div className="category" ref={categoryRef}>
           <div className="text">
@@ -252,6 +257,7 @@ const MainPage = () => {
 
             {/* <div className="button-item" onClick={() => handleItemClick(4)}> */}
           </div>
+          
           {showCategory ? (
             <div
               className="less_btn"
@@ -265,6 +271,7 @@ const MainPage = () => {
             ""
           )}
         </div>
+        <HomeCarousel />
         {/* <div
           className="home-container4"
           ref={containerRef3}

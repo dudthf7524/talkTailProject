@@ -10,7 +10,7 @@ import "../../CSS/petRegistrationPage.css";
 const PetRegistration = () => {
   // 새로추가한내용
 
-  const [selectedSpecies, setSelectedSpecies] = useState("dog"); // 기본 선택: 개
+  const [selectedSpecies, setSelectedSpecies] = useState("강아지"); // 기본 선택: 강아지
   const [isDropdownVisible, setIsDropdownVisible] = useState(false); // 드롭다운 표시 여부
   const [searchQuery, setSearchQuery] = useState(""); // 검색 입력값
   const [selectedOption, setSelectedOption] = useState(""); // 선택된 옵션
@@ -80,7 +80,6 @@ const PetRegistration = () => {
     console.log(selectedImageFile)
     console.log('선택된 이미지')
 
-
     setName('');
     setImage('');
     setBirthDate('');
@@ -90,6 +89,11 @@ const PetRegistration = () => {
     setNeuter('');
     setEtc('');
 
+    if (selectedImageFile === null) {
+      setImage('이미지를 선택해주세요');
+      imageRef.current.focus();
+      return;
+    }
     if (!formData.name.trim()) {
       setName('이름을 입력해주세요.');
       nameRef.current.focus();
@@ -100,12 +104,6 @@ const PetRegistration = () => {
       nameRef.current.focus();
       return;
     }
-    if (selectedImageFile === null) {
-      setImage('이미지를 선택해주세요');
-      imageRef.current.focus();
-      return;
-    }
-
     if (!formData.breed.trim()) {
       setBreed('품종을 선택해주세요');
       breedRef.current.focus();
@@ -219,8 +217,8 @@ const PetRegistration = () => {
 
   const handleSubmit = async () => {
     if (!validateForm()) return;
-    
-    
+
+
 
     const petData = new FormData();
     petData.append("name", formData.name);
@@ -283,23 +281,14 @@ const PetRegistration = () => {
         </div>
         <div className="re-mid">
           <div className="PetRegistration-container"></div>
-          <div className="PetRegistration-container">
-            <input
-              type="text"
-              className="textbox"
-              placeholder="이름이 무엇인가요?"
-              name="name"
-              value={formData.name}
-              ref={nameRef}
-              onChange={handleInputChange}
-            />
-            {name && <div className="pet-registration-page-error-box">{name}</div>}
-          </div>
-          <div className="PetRegistration-img-container" ref={imageRef} tabIndex={0}>
-            <div className="PetRegistration-content">
-              <div className="upload-img">
+
+          <div className="PetRegistration-img-container">
+            <div className="PetRegistration-content"  >
+              <div className="upload-img" >
                 {/* 업로드된 이미지를 미리보기로 표시 */}
-                <img src={petImgUrl} alt="" />
+                <label htmlFor="imageUpload">
+                  <img src={petImgUrl} alt="" ref={imageRef} tabIndex={0}  style={{ cursor: "pointer" }}/>
+                </label>
               </div>
               <div className="photo">
                 <input
@@ -317,8 +306,21 @@ const PetRegistration = () => {
             {image && <div className="pet-registration-page-error-box">{image}</div>}
           </div>
 
+          <div className="PetRegistration-container">
+            <input
+              type="text"
+              className="textbox"
+              placeholder="이름이 무엇인가요?"
+              name="name"
+              value={formData.name}
+              ref={nameRef}
+              onChange={handleInputChange}
+            />
+            {name && <div className="pet-registration-page-error-box">{name}</div>}
+          </div>
+
           <div className="PetRegistration-container2">
-            <p>종류</p>
+            <p>종</p>
 
             <div
               style={{ position: "relative", zIndex: 1 }}
@@ -329,8 +331,8 @@ const PetRegistration = () => {
                 value={selectedSpecies}
                 onChange={handleSpeciesChange}
               >
-                <option value="dog">개</option>
-                <option value="cat">고양이</option>
+                <option value="강아지">강아지</option>
+                <option value="고양이">고양이</option>
               </select>
             </div>
           </div>
@@ -371,22 +373,12 @@ const PetRegistration = () => {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="search-box"
-
                   />
                   {/* 옵션 목록 */}
                   <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
                     {/* TOP1 옵션 */}
                     {filteredTopOptions.length > 0 && (
                       <>
-                        <li
-                          style={{
-                            fontWeight: "bold",
-                            padding: "10px",
-                            backgroundColor: "#f9f9f9",
-                          }}
-                        >
-                          TOP5
-                        </li>
                         {filteredTopOptions.map((option, index) => (
                           <li
                             key={`top-${index}`}
@@ -407,15 +399,7 @@ const PetRegistration = () => {
                     {/* TOP1 옵션 */}
                     {filteredTopOptions.length > 0 && (
                       <>
-                        <li
-                          style={{
-                            fontWeight: "bold",
-                            padding: "10px",
-                            backgroundColor: "#f9f9f9",
-                          }}
-                        >
-                          온리 원 믹스견
-                        </li>
+                        
                         {filteredTopOptions.map((option, index) => (
                           <li
                             key={`top-${index}`}
@@ -436,15 +420,6 @@ const PetRegistration = () => {
                     {/* 일반 옵션 */}
                     {filteredOtherOptions.length > 0 && (
                       <>
-                        <li
-                          style={{
-                            fontWeight: "bold",
-                            padding: "10px",
-                            backgroundColor: "#f9f9f9",
-                          }}
-                        >
-                          일반 옵션
-                        </li>
                         {filteredOtherOptions.map((option, index) => (
                           <li
                             key={`other-${index}`}
