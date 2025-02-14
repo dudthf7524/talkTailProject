@@ -433,7 +433,7 @@ const PetEditPage = () => {
                   {/* 옵션 목록 */}
                   <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
                     {/* TOP1 옵션 */}
-                    {filteredTopOptions.length > 0 && (
+                   
                       <>
                         <li
                           style={{
@@ -442,37 +442,14 @@ const PetEditPage = () => {
                             backgroundColor: "#f9f9f9",
                           }}
                         >
-                          TOP
+                          {selectedSpecies} 품종 목록
                         </li>
-                        {filteredTopOptions.map((option, index) => (
-                          <li
-                            key={`top-${index}`}
-                            onClick={() => handleOptionSelect(option)}
-                            style={{
-                              padding: "10px",
-                              cursor: "pointer",
-                              borderBottom: "1px solid #f0f0f0",
-                              backgroundColor:
-                                selectedOption === option ? "#f0f8ff" : "#fff",
-                            }}
-                          >
-                            {option}
-                          </li>
-                        ))}
+                        
                       </>
-                    )}
+                    
                     {/* TOP1 옵션 */}
                     {filteredTopOptions.length > 0 && (
                       <>
-                        <li
-                          style={{
-                            fontWeight: "bold",
-                            padding: "10px",
-                            backgroundColor: "#f9f9f9",
-                          }}
-                        >
-                          온리 원 믹스견
-                        </li>
                         {filteredTopOptions.map((option, index) => (
                           <li
                             key={`top-${index}`}
@@ -493,15 +470,6 @@ const PetEditPage = () => {
                     {/* 일반 옵션 */}
                     {filteredOtherOptions.length > 0 && (
                       <>
-                        <li
-                          style={{
-                            fontWeight: "bold",
-                            padding: "10px",
-                            backgroundColor: "#f9f9f9",
-                          }}
-                        >
-                          일반 옵션
-                        </li>
                         {filteredOtherOptions.map((option, index) => (
                           <li
                             key={`other-${index}`}
@@ -598,21 +566,10 @@ const PetEditPage = () => {
                 ]}
                 selectedOption={formData.gender}
                 onSelect={(value) => handleRadioSelect("gender", value)}
+                netur={""}
               />
             </div>
-            {speciesDetails.map((detail, index) => (
-              <div key={index} className="PetRegistration-container2">
-                <p>{detail.option}</p>
-                <RadioButton
-                  options={[
-                    { label: detail.true, value: "true" },
-                    { label: detail.false, value: "false" },
-                  ]}
-                  selectedOption={formData[detail.option]}
-                  onSelect={(value) => handleRadioSelect(detail.option, value)}
-                />
-              </div>
-            ))}
+           
             <div className="PetRegistration-container2">
               <p>중성화 여부</p>
               <RadioButton
@@ -623,21 +580,10 @@ const PetEditPage = () => {
                 ]}
                 selectedOption={formData.neuter}
                 onSelect={(value) => handleRadioSelect("neuter", value)}
+                netur={"netur-"}
               />
             </div>
-            {speciesDetails.map((detail, index) => (
-              <div key={index} className="PetRegistration-container2">
-                <p>{detail.option}</p>
-                <RadioButton
-                  options={[
-                    { label: detail.true, value: "true" },
-                    { label: detail.false, value: "false" },
-                  ]}
-                  selectedOption={formData[detail.option]}
-                  onSelect={(value) => handleRadioSelect(detail.option, value)}
-                />
-              </div>
-            ))}
+            
             {/* <div className='PetRegistration-container2'>
                             <p>기타 추가 사항이</p>
                             <RadioButton

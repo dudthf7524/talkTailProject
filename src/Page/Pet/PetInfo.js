@@ -5,6 +5,9 @@ import PetInfoModal from "./PetInfoModal";
 import NButtonContainer from "../Components/NavigatorBar/NButtonContainer";
 
 const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
+  const male = `${process.env.PUBLIC_URL}/gender/male.png`;
+  const female = `${process.env.PUBLIC_URL}/gender/female.png`;
+  const deletePet = `${process.env.PUBLIC_URL}/delete/delete.png`;
   const petUrl = `${process.env.PUBLIC_URL}/images/pet/pet_img.png`;
 
   const [myPet, setMyPet] = useState([]);
@@ -57,7 +60,7 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
   // const catPets = myPet.filter(pet => pet.pet_species === 2);
 
   const dogPets = myPet.filter((pet) => pet.pet_species === "강아지");
-  const catPets = myPet.filter((pet) => pet.pet_species === "cat");
+  const catPets = myPet.filter((pet) => pet.pet_species === "고양이");
 
   const [accordionState, setAccordionState] = useState({
     dog: false,
@@ -130,33 +133,32 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
               <div className="infoBox">
                 <div
                   className="pet-contents-info"
-                  style={{ cursor: "pointer" }}
                 >
-                  <h1>{pet.pet_name}</h1>
-                </div>
-                <div className="pet-contents-info">
-                  <p>{`${pet.pet_breed}/${pet.pet_weight}kg/${pet.pet_gender ? "남" : "여"
-                    }/${calculateAge(pet.pet_birth)}살`}</p>
-                </div>
+                  <p>
 
+                    <h1>{pet.pet_name}<span style={{ fontSize: "20px" }}>({pet.pet_breed}){pet.pet_gender ? <img style={{ width: "6%" }} src={male}></img> : <img style={{ width: "8%" }} src={female}></img>}</span></h1>
+                    <span></span>
+                  </p>
+                </div>
                 <div className="pet-contents-info">
-                  <p>중성화 {pet.pet_neuter} </p>
+                </div>
+                <div className="pet-contents-info">
+                  <p>
+                    나이 : {calculateAge(pet.pet_birth)}살<br></br>
+                    몸무게 : {pet.pet_weight}kg<br></br>
+                    중성화 여부  : {pet.pet_neuter}
+                  </p>
                 </div>
               </div>
 
               {fileName === "list" ? (
-                <div className="pet-accordion-content deleteBtn">
-                  <button
-                    className="petDeleteButton"
-                    onClick={(e) => {
-                      setOpenModal(true);
-                      setPetId(pet.pet_id);
-                      setPetImage(pet.petimage);
-                      e.stopPropagation();
-                    }}
-                  >
-                    펫 삭제하기
-                  </button>
+                <div className="pet-accordion-content deleteBtn"  onClick={(e) => {
+                  setOpenModal(true);
+                  setPetId(pet.pet_id);
+                  setPetImage(pet.petimage);
+                  e.stopPropagation();
+                }}>
+                  <img style={{ width: "30%", height: "30%" }} src={deletePet}></img>
                 </div>
               ) : (
                 <></>
@@ -202,7 +204,7 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
       ) : (
         ""
       )}
-       <NButtonContainer />
+
     </div>
   );
 };

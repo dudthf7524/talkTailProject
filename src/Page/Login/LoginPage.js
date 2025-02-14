@@ -58,44 +58,9 @@ const LoginPage = () => {
       </div>
       <div className="login-pictures">
         <div className="top">
-          <img className="big" src={image1Url} alt="" />
+          <img className="big" src={image3Url} alt="" />
           <img className="small" src={image2Url} alt="" />
         </div>
-        <div className="bottom">
-          <div className="left">
-            <img src={image3Url} alt="" />
-          </div>
-          <div className="right">
-            <img src={image4Url} alt="" />
-            <img src={image5Url} alt="" />
-          </div>
-        </div>
-        {/* <table>
-          <tbody>
-            <tr>
-              <td className="big" colSpan="2" rowSpan="2">
-                <img src={image1Url} alt="" />
-              </td>
-              <td className="small" rowSpan="2">
-                <img src={image2Url} alt="" />
-              </td>
-            </tr>
-            <tr></tr>
-            <tr>
-              <td className="big" colSpan="2" rowSpan="2">
-                <img src={image3Url} alt="" />
-              </td>
-              <td className="small">
-                <img src={image4Url} alt="" />
-              </td>
-            </tr>
-            <tr>
-              <td className="small">
-                <img src={image5Url} alt="" />
-              </td>
-            </tr>
-          </tbody>
-        </table> */}
       </div>
       <div className="login-text">
         반려동물은 Tail로 소통하고<br></br>

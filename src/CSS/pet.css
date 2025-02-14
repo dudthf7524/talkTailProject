@@ -174,8 +174,8 @@
     outline: none; /* 포커스 시 보더 제거 */
 }
 
-.PetRegistration-button {
-    width: 163px;
+.PetRegistration-netur-button{
+    width: 30%;
     height: 48px;
     padding: 8px;
     box-sizing: border-box;
@@ -190,7 +190,10 @@
     align-items: center;
     outline: none; /* 포커스 시 보더 제거 */
 }
-
+.PetRegistration-netur-button.selected {
+    border: 1px solid #EB944D;
+    color: #EB944D;
+}
 .PetRegistration-button.selected {
     border: 1px solid #EB944D;
     color: #EB944D;
@@ -209,7 +212,6 @@
     display: grid;
     width: 100%;
     padding-top: 24px ;
-    padding-bottom: 24px;
     grid-template-columns: repeat(5, 1fr);
     justify-content: center;
     align-items: center;

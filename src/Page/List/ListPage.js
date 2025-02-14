@@ -3,7 +3,6 @@ import NButtonContainer from "../Components/NavigatorBar/NButtonContainer";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBeautyList } from "../../redux/beautyList";
-import axios from "axios";
 import api from "../../Api";
 import AuthorityReauest from "../Components/AuthorityReauest";
 import "../../CSS/reservationModal.css";
@@ -238,7 +237,7 @@ const ListPage = () => {
         <button>
           <img src={arrowButtonUrl} alt="" onClick={goBack} />
         </button>
-        미용
+        미용실 리스트
         <div></div>
       </div>
       <div className={`list-header`}>
@@ -246,13 +245,14 @@ const ListPage = () => {
           <input
             type="text"
             className="beautyListSearchBox"
-            placeholder="검색어를 입력해주세요."
+            placeholder="업체명/가게명을 입력해주세요."
             value={searchTerm} // 입력 값은 상태로 관리
             onChange={handleSearchChange} // 입력 값 변경 시 onChange 이벤트 발생
           />
-          <button>
+          
+          {/* <button>
             <img src={trailingUrl} alt="trailing" />
-          </button>
+          </button> */}
         </div>
       </div>
       <div className="list-mid-h"></div>

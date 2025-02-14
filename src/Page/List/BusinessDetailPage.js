@@ -30,7 +30,7 @@ const EventDetailPage = () => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [openAcceptModal, setOpenAcceptModal] = useState(false);
   const dispatch = useDispatch();
-
+  const dayNames = ["일", "월", "화", "수", "목", "금", "토"]; // 요일 배열
   const handleButtonClick = () => {
     setIsButtonClicked(!isButtonClicked);
   };
@@ -153,6 +153,7 @@ const EventDetailPage = () => {
     (day) => day.isOperatingDay === true
   );
 
+  console.log(operatingDays)
   if (!business) {
     return <p>로딩 중...</p>; // 로딩 중일 때 처리
   }
@@ -163,9 +164,11 @@ const EventDetailPage = () => {
           <button>
             <img src={arrowButtonUrl} alt="" onClick={goBack} />
           </button>
-          상세보기
+          업체정보
           <div></div>
         </div>
+        <div className="event-text-box">{business.business_comment}</div>
+
         <div className="event-img">
           {business.business_main_image ? (
             <img
@@ -183,33 +186,23 @@ const EventDetailPage = () => {
                         {EventDetailPage ? '예약대기' : '예약가능'}
                     </div> */}
         </div>
-        <div className="event-address">
-          <span>{business.location}</span>
-          {/* <div className='event-tag-container'>
-                        <EventTags tags={business.tags} />
-                    </div> */}
 
-          {operatingDays.length > 0 && (
-            <div>
-              {operatingDays.map((day, index) => {
-                const dayNames = ["일", "월", "화", "수", "목", "금", "토"]; // 요일 배열
-                return (
-                  <p key={index}>
-                    {dayNames[index]}&nbsp;&nbsp;{formatTime(day.start_time)} -{" "}
-                    {formatTime(day.end_time)}
-                  </p>
-                );
-              })}
-            </div>
-          )}
+        <div className="event-address">
+          영업시간
+          {dayNames.map((day, index) => {
+            const dayInfo = hours[index]; // 요일별 데이터 가져오기
+            return (
+              <p key={index}>
+                {day}&nbsp;&nbsp;
+                {dayInfo && dayInfo.isOperatingDay
+                  ? `${formatTime(dayInfo.start_time)} - ${formatTime(dayInfo.end_time)}`
+                  : "휴무"}
+              </p>
+            );
+          })}
         </div>
         <div className="event-button-container">
-          {/* <div className='event-button'>
-                        <button>
-                            <img src={locationUrl} alt='' />
-                        </button>
-                        <div className='event-button-text'>위치</div>
-                    </div> */}
+
           <div className="event-button">
             <a href={`tel:${business.business_phone}`}>
               <button>
@@ -218,21 +211,8 @@ const EventDetailPage = () => {
             </a>
             <div className="event-button-text">전화</div>
           </div>
-          {/* <div className='event-button'>
-                        <button>
-                            <img src={shareUrl} alt='' />
-                        </button>
-                        <div className='event-button-text'>공유</div>
-                    </div>
-                    <div className='event-button'>
-                        <button onClick={handleSavedClick}>
-                            <img src={heartUrl} alt='' />
-                        </button>
-                        <div className='event-button-text'>찜</div>
-                    </div> */}
         </div>
-        <div className="event-text-box">{business.business_comment}</div>
-        <div className="information-text">가격표</div>
+        <div className="information-text">가격정보</div>
         <div className="img">
           <img
             src={business.business_price_image1}
@@ -255,11 +235,16 @@ const EventDetailPage = () => {
         ) : (
           <div className="img"></div>
         )}
-        <div className="album-text">예약금액</div>
+        <div className="album-text"></div>
         <div className="writing-div">
           <div className="writing">
-            {/* <img src={noteUrl} alt='' /> */}
-            {business.business_no_show} 원
+            <div>
+              예약금 :
+            </div>
+            <div>
+              {business.business_no_show} 원
+            </div>
+
           </div>
         </div>
       </div>

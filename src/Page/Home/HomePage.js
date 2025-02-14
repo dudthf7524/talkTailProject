@@ -9,7 +9,7 @@ import Carousel from "react-bootstrap/Carousel";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomeCarousel from "./homeCarousel";
 import HomeBookmarks from "./homeBookmarks";
-import HomeGuide from "./homeGuide";
+import HomeAd from "./homeAd";
 import Footer from "./footer";
 
 const MainPage = () => {
@@ -40,7 +40,7 @@ const MainPage = () => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [showCategory, setShowCategory] = useState(false);
-  const [user, setUser] = useState(false)
+  const [user, setUser] = useState(false);
   const [userPet, setUserPet] = useState(false);
   const [reservationtLists, setReservationtList] = useState([]);
 
@@ -173,7 +173,7 @@ const MainPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const modalTitle = "알림";
   const modalContent = "해당 서비스는 준비 중입니다.";
-
+  console.log("user : ", user);
   return (
     <div lang="ko" className="main_container">
       <div className="mid home_total">
@@ -187,6 +187,11 @@ const MainPage = () => {
               <img src={arrowUrl} alt="arrow" />
             </button> */}
             <img src={logoUrl} alt="" />
+
+            <div className="customer" style={{ color: "black" }}>
+              {user.user_name ? `${user.user_name}님` : ""}
+            </div>
+
             {user || userPet ? (
               <p onClick={handleLogout}>Logout</p>
             ) : (
@@ -205,11 +210,7 @@ const MainPage = () => {
             </button> */}
           </div>
         </div>
-        {userPet ? (
-          <div className="customer">{userPet.pet_name}의 견주님 반갑습니다.</div>
-        ) : (
-          <></>
-        )}
+        <HomeAd />
 
         <HomeBookmarks
           reservationtLists={reservationtLists}
@@ -217,7 +218,8 @@ const MainPage = () => {
           userPet={userPet}
           user={user}
         />
-        <HomeGuide />
+        <HomeCarousel />
+        {/* <HomeGuide /> */}
         {/* <div
           className="home-container3"
           ref={containerRef}
@@ -320,20 +322,6 @@ const MainPage = () => {
             ""
           )}
         </div>
-        <HomeCarousel />
-        {/* <div
-          className="home-container4"
-          ref={containerRef3}
-          onMouseDown={startDrag3}
-          onMouseLeave={stopDrag3}
-          onMouseUp={stopDrag3}
-          onMouseMove={onDrag3}
-        >
-          <div className="margin"></div>
-          <div className="home-container4-img"></div>
-          <div className="home-container4-img"></div>
-          <div className="home-container4-img"></div>
-        </div> */}
       </div>
       <Footer />
       <NButtonContainer />

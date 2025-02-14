@@ -12,19 +12,19 @@ const PetListPage = () => {
     const goBack = () => {
         navigate(-1);
     };
-    
+
     return (
         <div lang='ko'>
             <div className='navigation'>
                 <button>
                     <img src={arrowButtonUrl} alt='' onClick={goBack} />
                 </button>
-                등록 펫 목록
-                <button className='note' onClick={()=>navigate('/pet/registration')}>
-                    <img src={noteUrl} alt='' />
+                마이펫 리스트
+                <button style={{color: "#f0663f"}} className='note' onClick={() => navigate('/pet/registration')}>
+                    등록
                 </button>
             </div>
-            <PetInfo isSelectable={false} fileName={"list"}/>
+            <PetInfo isSelectable={false} fileName={"list"} />
         </div>
     );
 };
