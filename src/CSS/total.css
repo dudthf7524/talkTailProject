@@ -99,6 +99,8 @@
 .home_total .category {
   width: 100%;
   height: auto;
+  padding: 0;
+  margin-top: 20px;
 }
 .home_total .category .text {
   width: 100%;
@@ -248,6 +250,7 @@
 .login_total .login-text {
   width: auto;
   height: auto;
+  color: black;
 }
 .login_total .login-title img {
   width: 30%;
@@ -707,19 +710,20 @@
 .mypage_total .support_container {
   width: 80%;
   height: auto;
-  border: 1px solid #f0663f;
 }
 .mypage_total .support_container p {
   margin-bottom: 0;
 }
-.mypage_total .support_container p:nth-child(1) {
+.mypage_total .support_container > p:nth-child(1) {
   font-size: 16px;
   color: #f0663f;
   margin-top: 15px;
 }
-.mypage_total .support_container p:nth-child(2) {
-  font-size: 13px;
-  margin: 10px 0;
+.mypage_total .support_container .text_box {
+  margin-top: 10px;
+}
+.mypage_total .support_container .text_box p {
+  font-size: 14px;
 }
 .mypage_total .logout_box {
   width: auto;

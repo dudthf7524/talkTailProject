@@ -16,6 +16,7 @@ const MyPage = () => {
   const [newNickname, setNewNickname] = useState("");
   const [isEditingNickname, setIsEditingNickname] = useState(false);
   const [userInformation, setUserInformation] = useState();
+  const landline_phone = "070-4571-7580";
 
   const modalTitle = "로그아웃 완료";
   const modalContent = "잠시 후 로그인 페이지로 이동합니다.";
@@ -192,7 +193,19 @@ const MyPage = () => {
           </div>
           <div className="support_container">
             <p>고객센터</p>
-            <p>070-4571-7580 | creamoff2021@creamoff.co.kr</p>
+            <div className="text_box">
+              <p>
+                유선전화 :{" "}
+                <a
+                  style={{ textDecoration: "none", color: "black" }}
+                  href={`tel:${landline_phone}`}
+                >
+                  {" "}
+                  <span style={{ cursor: "pointer" }}>070-4571-7580</span>
+                </a>
+              </p>
+              <p>이메일 : creamoff2021@creamoff.co.kr</p>
+            </div>
           </div>
           <div className="mypage-info-container">
             {/* <div className="mypage-info">계정정보</div> */}

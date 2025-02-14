@@ -21,7 +21,7 @@ const Tos = () => {
           alt=""
         />
         <p className="title">이용약관</p>
-        <p className="content" style={{ padding: "0 20px" }}>
+        <p className="content" style={{ padding: "0 30px" }}>
           ㈜크림오프가 제공하는 크림오프 서비스를 이용해 주셔서 감사합니다.
           <br /> 본 약관은 서비스 이용과 관련하여 여러분의 권리, 의무 및
           책임사항, 이용조건 및 절차 등 기본적이지만 중요한 사항을 규정하고
