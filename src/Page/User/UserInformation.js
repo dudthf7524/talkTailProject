@@ -166,7 +166,7 @@ function UserInformation() {
             onClick={() => navigate("/admin-menu")}
           />
         </button>
-        사용자 정보 등록
+        회원정보
         <div onClick={handleSave} style={{ cursor: "pointer" }}>
           저장
         </div>
