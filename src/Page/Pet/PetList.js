@@ -1,7 +1,6 @@
 const speciesData = {
   강아지: {
     topOptions: ["믹스견"], // 개의 TOP1 리스트
-
     otherOptions: [
       "가멜 댄스크 횐제훈트",
       "가스콩 생통주아",
@@ -560,9 +559,9 @@ const speciesData = {
   },
 
   고양이: {
-    topOptions: [], // 고양이의 TOP1 리스트
+    topOptions: ["믹스묘"], // 고양이의 TOP1 리스트
     otherOptions: [
-      "믹스묘",
+      
       "코리안숏헤어",
       "아비시니안",
       "아메리칸 쇼트헤어",

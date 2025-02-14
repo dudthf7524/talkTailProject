@@ -170,7 +170,8 @@ const PetDetail = () => {
                             ]}
                             selectedOption={formData.gender}
                             onSelect={() => { }} // 선택 불가능하도록 콜백 제거
-                            disabled // 비활성화하여 선택된 값 고정
+                            disabled // 비활성화하여 선택된 값 고정\
+                            netur={""}
                         />
                     </div>
                     <div className='PetRegistration-container2'>
@@ -184,6 +185,7 @@ const PetDetail = () => {
                             selectedOption={petData.pet_neuter}
                             onSelect={() => { }} // 선택 불가능하도록 콜백 제거
                             disabled // 비활성화하여 선택된 값 고정
+                            netur={"netur-"}
                         />
                     </div>
 

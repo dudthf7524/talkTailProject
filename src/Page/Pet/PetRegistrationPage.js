@@ -290,7 +290,7 @@ const PetRegistration = () => {
         },
       });
       console.log("Upload successful", response.data);
-      if(response.data){
+      if (response.data) {
         navigate("/pet/list");
       }
     } catch (error) {
@@ -407,11 +407,22 @@ const PetRegistration = () => {
                   {/* 옵션 목록 */}
                   <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
                     {/* TOP1 옵션 */}
+                    <>
+                      <li
+                        style={{
+                          fontWeight: "bold",
+                          padding: "10px",
+                          backgroundColor: "#f9f9f9",
+                        }}
+                      >
+                        {selectedSpecies} 품종 목록
+                      </li>
+                    </>
                     {filteredTopOptions.length > 0 && (
                       <>
                         {filteredTopOptions.map((option, index) => (
                           <li
-                            key={`top-${index}`}
+                            key={index}
                             onClick={() => handleOptionSelect(option)}
                             style={{
                               padding: "10px",
@@ -426,27 +437,8 @@ const PetRegistration = () => {
                         ))}
                       </>
                     )}
-                    {/* TOP1 옵션 */}
-                    {filteredTopOptions.length > 0 && (
-                      <>
 
-                        {filteredTopOptions.map((option, index) => (
-                          <li
-                            key={`top-${index}`}
-                            onClick={() => handleOptionSelect(option)}
-                            style={{
-                              padding: "10px",
-                              cursor: "pointer",
-                              borderBottom: "1px solid #f0f0f0",
-                              backgroundColor:
-                                selectedOption === option ? "#f0f8ff" : "#fff",
-                            }}
-                          >
-                            {option}
-                          </li>
-                        ))}
-                      </>
-                    )}
+
                     {/* 일반 옵션 */}
                     {filteredOtherOptions.length > 0 && (
                       <>
@@ -548,6 +540,7 @@ const PetRegistration = () => {
                 ]}
                 selectedOption={formData.gender}
                 onSelect={(value) => handleRadioSelect("gender", value)}
+                netur={""}
               />
               {gender && <div className="pet-registration-page-error-box">{gender}</div>}
             </div>
@@ -561,6 +554,7 @@ const PetRegistration = () => {
                   ]}
                   selectedOption={formData[detail.option]}
                   onSelect={(value) => handleRadioSelect(detail.option, value)}
+                  netur={""}
                 />
               </div>
             ))}
@@ -574,6 +568,7 @@ const PetRegistration = () => {
                 ]}
                 selectedOption={formData.neuter}
                 onSelect={(value) => handleRadioSelect("neuter", value)}
+                netur={"netur-"}
               />
               {neuter && <div className="pet-registration-page-error-box">{neuter}</div>}
             </div>
@@ -587,6 +582,8 @@ const PetRegistration = () => {
                   ]}
                   selectedOption={formData[detail.option]}
                   onSelect={(value) => handleRadioSelect(detail.option, value)}
+                  netur={"netur-"}
+
                 />
               </div>
             ))}

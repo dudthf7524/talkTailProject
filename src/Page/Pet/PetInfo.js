@@ -204,7 +204,7 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
       ) : (
         ""
       )}
-      <NButtonContainer />
+
     </div>
   );
 };

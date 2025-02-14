@@ -168,12 +168,12 @@ function UserInformation() {
         </button>
         회원정보
         <div onClick={handleSave} style={{ cursor: "pointer" }}>
-          저장
+          등록
         </div>
       </div>
       <div className="main-mid">
         <div className="input-container">
-          <p>이름</p>
+          <p>보호자 이름</p>
           <input
             maxLength={5}
             type="text"
@@ -182,13 +182,13 @@ function UserInformation() {
             value={formData.user_name}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
-            placeholder="이름"
+            placeholder="이름을 입력해주세요."
           />
           {name && <div className="pet-registration-page-error-box">{name}</div>}
 
         </div>
         <div className="input-container">
-          <p>전화번호</p>
+          <p>연락처</p>
           <div className="input_box">
             <input
               maxLength={3}
@@ -198,7 +198,7 @@ function UserInformation() {
               value={formData.user_phone1}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
-              placeholder="전화번호1"
+              placeholder="000"
             />
             -
             <input
@@ -209,7 +209,7 @@ function UserInformation() {
               value={formData.user_phone2}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
-              placeholder="전화번호2"
+              placeholder="1234"
             />
             -
             <input
@@ -220,7 +220,7 @@ function UserInformation() {
               value={formData.user_phone3}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
-              placeholder="전화번호3"
+              placeholder="5678"
             />
           </div>
           {user_phone && <div className="pet-registration-page-error-box">{user_phone}</div>}
