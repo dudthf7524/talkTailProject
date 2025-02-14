@@ -6,6 +6,7 @@ import "../BusinessCSS/registerInformation.css";
 import "../BusinessCSS/main.css";
 import InformationModal from "./Modal/InformationModal";
 import api from "../Api";
+
 function RegisterInformation() {
   // 주소 api
   const [postcode, setPostcode] = useState(""); // 우편번호
