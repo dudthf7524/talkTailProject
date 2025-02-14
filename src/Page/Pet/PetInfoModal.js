@@ -30,15 +30,15 @@ const PetInfoModal = ({ openModal, pet_id, pet_image }) => {
   return (
     <div className="petInfo_modal">
       <img onClick={openModal} src="/PageImage/components/X.svg" alt="" />
-      <p className="delete_text">삭제하시겠습니까?</p>
+      <p className="delete_text">지우겠습니까?</p>
       <div className="btn_box">
-        <p onClick={openModal}>취소</p>
+        <p onClick={openModal}>아니오</p>
         <p
           onClick={() => {
             petDeleteButton(pet_id, pet_image);
           }}
         >
-          삭제
+          예
         </p>
       </div>
     </div>

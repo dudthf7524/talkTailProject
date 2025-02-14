@@ -210,6 +210,7 @@
     color: #7b7b7b;
     padding: 0;
     margin: 0;
+    text-align: left;
 }
 
 .warning {
@@ -293,9 +294,9 @@
 
 .petDeleteButton{
     color: red;
-    width: 100%;
+    
     background-color: white;
-    padding: 10px;
+  
     border: none;
     cursor: pointer;
 }
@@ -305,4 +306,7 @@
     background-color: red;
     padding: 10px;
     border: none;
+}
+.pet-accordion-content deleteBtn{
+    
 }
