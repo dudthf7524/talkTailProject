@@ -44,10 +44,10 @@ const Reservation = () => {
           <div></div>
         </div>
         <div className="reservation-title">
-          <div className="reservation-text">예약신청시간</div>
-          <div className="reservation-text">예약희망시간</div>
+          <div className="reservation-text">접수일시</div>
+          <div className="reservation-text">예약일시</div>
           <div className="reservation-text">상태</div>
-          <div className="reservation-text">상세</div>
+          <div className="reservation-text">상세보기</div>
         </div>
         <div className="horizontal-line"></div>
         {reservationtList.map((reservation, index) => (

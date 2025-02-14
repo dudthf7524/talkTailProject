@@ -33,7 +33,7 @@ router.get('/user/information' ,authMiddleware , async(req, res) => {
     const platform_id = req.user.id
     try{
         const user = await userDatabase.getUserInformation(platform_id)
-        res.status(201).json({ user });
+        res.status(201).json( user );
     }catch(error){
         console.error('Error fetching userIformation:', error.message);
         res.status(500).json({ error: error.message });
@@ -69,8 +69,21 @@ router.get('/user/reservation', authMiddleware, async(req, res) => {
         console.error('Error fetching userIformation:', error.message);
         res.status(500).json({ error: error.message });
     }
+})
 
+router.get('/user/login/pet', authMiddleware, async(req, res) => {
+    console.log("useruseruser")
+    console.log(req.user)
 
+    const platform_id = req.user.id
+
+    try{
+        const result = await userDatabase.userLoginPet(platform_id)
+        res.status(201).json( result );
+    }catch(error){
+        console.error(error)
+        res.status(500).json({ error: error.message });
+    }
 })
 
 module.exports = router;

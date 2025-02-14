@@ -88,6 +88,14 @@
 .home_total .tail-container {
   margin-bottom: 56px;
 }
+.home_total .customer {
+  width: 100%;
+  font-size: 14px;
+  color: #f0663f;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
+}
 .home_total .category {
   width: 100%;
   height: auto;
@@ -196,6 +204,11 @@
 .user_edit_total .modal-content {
   display: none;
 }
+.user_edit_total .delete_box {
+  margin-top: 50px;
+  font-size: 13px;
+  cursor: pointer;
+}
 
 /* PetRegistrationPage.js */
 .registration_total .text_area {
@@ -222,13 +235,27 @@
 }
 .login_total .login-title {
   width: 100%;
+  height: auto;
   padding-left: 5%;
+  /* display: flex; */
+}
+.login_total .login-title .logo_box {
+  width: 90%;
+  height: auto;
+  display: flex;
+  align-items: flex-end;
 }
 .login_total .login-text {
+  width: auto;
   height: auto;
 }
 .login_total .login-title img {
   width: 30%;
+}
+.login_total .login-title p {
+  margin: 0;
+  font-size: 12px;
+  margin-left: 20px;
 }
 .login_total .login-pictures {
   width: 90%;
@@ -677,7 +704,37 @@
 .mypage_total .changeBtn .mypage-nickname p {
   font-size: 14px;
 }
-
+.mypage_total .support_container {
+  width: 80%;
+  height: auto;
+  border: 1px solid #f0663f;
+}
+.mypage_total .support_container p {
+  margin-bottom: 0;
+}
+.mypage_total .support_container p:nth-child(1) {
+  font-size: 16px;
+  color: #f0663f;
+  margin-top: 15px;
+}
+.mypage_total .support_container p:nth-child(2) {
+  font-size: 13px;
+  margin: 10px 0;
+}
+.mypage_total .logout_box {
+  width: auto;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0;
+  cursor: pointer;
+  margin-top: 30px;
+}
+.mypage_total .logout_box p {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
 /* PetSelectPage.js */
 .petSelectPage_total .Nbutton {
   position: fixed;

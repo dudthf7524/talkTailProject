@@ -41,6 +41,15 @@ const Login = () => {
     }
   };
 
+  const logout = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/business/logout`, {
+        withCredentials: true,
+      });
+      console.log(response);
+    } catch (error) {}
+  };
+
   return (
     <div className="login" lang="ko">
       <div className="login-logo">
@@ -68,12 +77,15 @@ const Login = () => {
           </button>
         </div>
       </form>
-      {/* <div className="find-id-pw-text">
+      <div className="find-id-pw-text">
         <Link to="/business/register">회원가입</Link>
       </div>
       <div className="find-id-pw-text">
         <Link to="/find-admin-account">아이디/비밀번호 찾기</Link>
-      </div> */}
+      </div>
+      <div className="find-id-pw-text">
+        <Link onClick={logout}>로그아웃</Link>
+      </div>
       {openModal ? (
         <LoginModal
           openModal={() => {

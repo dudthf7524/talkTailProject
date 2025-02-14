@@ -1,12 +1,22 @@
 import "../../CSS/homeCarousel.css";
 import React, { useRef, useState, useEffect } from "react";
 const HomeCarousel = () => {
-  const imageArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  // const imageArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const imageArray = [
+    {
+      imgUrl: "/image/cardnews_01.png",
+      linkUrl: "https://blog.naver.com/creamoff2021/222747592370",
+    },
+    {
+      imgUrl: "/image/cardnews_02.png",
+      linkUrl: "https://blog.naver.com/creamoff2021/222744209767",
+    },
+  ];
   const sliderRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(1);
 
   const handleMouseDown = (e) => {
@@ -30,34 +40,34 @@ const HomeCarousel = () => {
   };
 
   const getWindowWidth = () => window.innerWidth;
-
   const handleSlide = (direction) => {
     if (!sliderRef.current) return;
-    setCurrentIndex(currentIndex - 1);
+    const { scrollLeft, clientWidth } = sliderRef.current;
     const windowWidth = getWindowWidth();
-    let slideAmount = 0;
-    if (windowWidth > 500) {
-      slideAmount = 387 + 8.6;
-    } else {
-      slideAmount = windowWidth * 0.92;
-    }
-    if (direction === "left") {
+    let slideAmount = windowWidth > 500 ? 387 + 8.6 : windowWidth * 0.92;
+
+    if (direction === "left" && currentIndex > 1) {
+      setCurrentIndex(currentIndex - 1);
       sliderRef.current.scrollTo({
-        left: slideAmount * (currentIndex - 1),
+        left: scrollLeft - slideAmount,
         behavior: "smooth",
       });
-    } else {
+    } else if (direction === "right" && currentIndex < imageArray.length) {
       sliderRef.current.scrollTo({
-        left: slideAmount * currentIndex,
+        left: scrollLeft + slideAmount,
         behavior: "smooth",
       });
+      setCurrentIndex(currentIndex + 1);
     }
+    // sliderRef.current.scrollTo({
+    //   left: slideAmount * (currentIndex - 1),
+    //   behavior: "smooth",
+    // });
   };
+
   const moveCircle = (index) => {
     setIsPlaying(false);
-    if (index === imageArray.length) console.log("함수 속 index : ", index);
     setCurrentIndex(Math.min(index + 1, imageArray.length));
-    // console.log("currentIndex : ", currentIndex);
 
     if (!sliderRef.current) return;
 
@@ -85,16 +95,23 @@ const HomeCarousel = () => {
 
   useEffect(() => {
     if (!isPlaying) return;
-
     const interval = setInterval(() => {
       if (!sliderRef.current) return;
       const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
-
+      const windowWidth = getWindowWidth();
+      let slideAmount = 0;
+      if (windowWidth > 500) {
+        slideAmount = 387 + 8.6;
+      } else {
+        slideAmount = windowWidth * 0.92;
+      }
       if (scrollLeft + clientWidth >= scrollWidth) {
-        // 마지막까지 가면 처음으로 이동
         sliderRef.current.scrollTo({ left: 0, behavior: "smooth" });
       } else {
-        handleSlide("right");
+        sliderRef.current.scrollTo({
+          left: scrollLeft + slideAmount,
+          behavior: "smooth",
+        });
       }
     }, 2000); // 2초마다 이동
 
@@ -110,8 +127,16 @@ const HomeCarousel = () => {
       setCurrentIndex(newIndex);
     };
 
+    if (sliderRef.current) {
+      sliderRef.current.addEventListener("scroll", handleScroll);
+    }
+
     sliderRef.current.addEventListener("scroll", handleScroll);
-    return () => sliderRef.current.removeEventListener("scroll", handleScroll);
+    return () => {
+      if (sliderRef.current) {
+        sliderRef.current.removeEventListener("scroll", handleScroll);
+      }
+    };
   }, []);
   return (
     <div className="home_carousel_section">
@@ -128,7 +153,9 @@ const HomeCarousel = () => {
             {imageArray.map((image, index) => {
               return (
                 <div className="img_div" key={index}>
-                  <p>{index + 1}</p>
+                  <a href={image.linkUrl} target="_blank">
+                    <img src={image.imgUrl} alt="" />
+                  </a>
                 </div>
               );
             })}
@@ -151,7 +178,6 @@ const HomeCarousel = () => {
               onClick={() => {
                 console.log("index : ", index);
                 moveCircle(index);
-                // moveTest();
               }}
             ></div>
           );
@@ -160,13 +186,14 @@ const HomeCarousel = () => {
       <div className="btn_box">
         <p
           onClick={() => {
-            if (currentIndex !== 0) {
+            if (currentIndex !== 1) {
+              console.log("currentIndex : ", currentIndex);
               handleSlide("left");
             }
           }}
           style={{
-            color: currentIndex !== 0 ? "black" : "gray",
-            cursor: currentIndex !== 0 ? "pointer" : "default",
+            color: currentIndex !== 1 ? "black" : "gray",
+            cursor: currentIndex !== 1 ? "pointer" : "default",
           }}
         >
           {"<"}
@@ -190,14 +217,14 @@ const HomeCarousel = () => {
         )}
         <p
           onClick={() => {
-            if (currentIndex !== imageArray.length - 1) {
+            if (currentIndex !== imageArray.length) {
+              console.log("BB");
               handleSlide("right");
             }
           }}
           style={{
-            color: currentIndex !== imageArray.length - 1 ? "black" : "gray",
-            cursor:
-              currentIndex !== imageArray.length - 1 ? "pointer" : "default",
+            color: currentIndex !== imageArray.length ? "black" : "gray",
+            cursor: currentIndex !== imageArray.length ? "pointer" : "default",
           }}
         >
           {">"}

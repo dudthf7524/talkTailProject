@@ -8,7 +8,7 @@
   width: 100%;
   height: auto;
   position: relative;
-  height: 500px;
+  height: 483.75px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -18,10 +18,12 @@
 }
 .home_carousel_section .carousel_container .slide_wrapper {
   width: 100%;
+  height: 100%;
   display: flex;
   overflow: hidden;
 }
 .home_carousel_section .carousel_container .slide_container {
+  height: 100%;
   display: flex;
   align-items: center;
   overflow-x: auto;
@@ -34,7 +36,7 @@
 }
 .home_carousel_section .carousel_container .slide_container .img_div {
   width: 387px;
-  height: 500px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,8 +44,12 @@
   /* border: 1px solid red; */
   background-color: aqua;
   margin-right: 8.6px;
+  cursor: pointer;
 }
 @media (max-width: 500px) {
+  .home_carousel_section .carousel_container {
+    height: 112.5vw;
+  }
   .home_carousel_section .carousel_container .slide_container .img_div {
     width: 90vw;
     margin-right: 2vw;
@@ -76,6 +82,9 @@
 .home_carousel_section .carousel_container .slide_container .img_div p {
   font-size: 40px;
 }
+.home_carousel_section .carousel_container .slide_container .img_div img {
+  width: 100%;
+}
 .home_carousel_section .carousel_container .index_box {
   width: auto;
   height: auto;
@@ -88,7 +97,6 @@
 .home_carousel_section .circle_box {
   width: auto;
   height: 20px;
-  border: 1px solid red;
   margin: 0 auto;
   margin-top: 10px;
   display: flex;

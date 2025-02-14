@@ -60,6 +60,7 @@ import AccountNumberList from "./BusinessPage/AccountNumberList";
 import Tos from "./Page/Home/tos";
 import Privacy from "./Page/Home/privacy";
 import CustomerManagementDetail from "./BusinessPage/CustomerManagementDetail";
+import HomeGuideDetail from "./Page/Home/homeGuideDetail";
 
 function App() {
   const [imageFiles, setImageFiles] = useState({
@@ -75,7 +76,7 @@ function App() {
       [imageType]: files,
     }));
   };
-  
+
   return (
     <div className="App">
       <div className="Container">
@@ -114,6 +115,7 @@ function App() {
             <Route path="/reservation" element={<Reservation />} />
             <Route path="/tos" element={<Tos />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/guide_detail" element={<HomeGuideDetail />} />
             <Route
               path="/reservation/detail/:id"
               element={<ReservationDetail />}

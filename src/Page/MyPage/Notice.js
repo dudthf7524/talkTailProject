@@ -74,7 +74,7 @@ const NoticePage = () => {
                     )}
                 </div>
             </div> */}
-      <div className={`notice-mid ${isOpen ? "open" : ""}`}>
+      <div className={`notice-mid`}>
         {lists.map((list, index) => (
           <div className="notice-list-container" key={index}>
             <div className="text-container">
