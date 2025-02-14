@@ -230,7 +230,6 @@ const AdminMenu = () => {
         ) : (
           ""
         )}
-
       </div>
       <div className="tail-container">
         <div className="tail-item">

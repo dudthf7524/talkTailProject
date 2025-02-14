@@ -3,9 +3,6 @@ import "../../CSS/homeCarousel.css";
 import React, { useState } from "react";
 
 const HomeBookmarks = ({ reservationtLists, categoryRef, userPet, user }) => {
-  console.log("userPet : ", userPet);
-  console.log("user : ", user.user_name);
-
   const [openBanner, setOpenBanner] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollCategory = () => {
@@ -29,8 +26,9 @@ const HomeBookmarks = ({ reservationtLists, categoryRef, userPet, user }) => {
         <>
           <p>즐겨찾기</p>
           <div
-            className={`home_carousel_section ${openBanner ? "" : "small_section"
-              }`}
+            className={`home_carousel_section ${
+              openBanner ? "" : "small_section"
+            }`}
           >
             <div
               className="btn"
@@ -79,7 +77,7 @@ const HomeBookmarks = ({ reservationtLists, categoryRef, userPet, user }) => {
           <p className="content">
             {user.user_name}님 환영합니다.😊
             <br />
-            등록된 펫이 없습니다. <br/>
+            등록된 펫이 없습니다. <br />
             "펫 등록 후 예약을 진행해주세요."
           </p>
           {openBanner ? (
@@ -93,14 +91,14 @@ const HomeBookmarks = ({ reservationtLists, categoryRef, userPet, user }) => {
           ) : (
             ""
           )}
-          <div
+          {/* <div
             className="control"
             onClick={() => {
               setOpenBanner(!openBanner);
             }}
           >
             {openBanner ? "▲" : "▼"}
-          </div>
+          </div> */}
         </div>
       ) : user && userPet ? (
         <div className="home-container1 homeBookmarks">
@@ -108,7 +106,6 @@ const HomeBookmarks = ({ reservationtLists, categoryRef, userPet, user }) => {
             단골 내역이 없어요.😂
             <br />
             {userPet.pet_name}의 단골가게를 만들어 주세요.😊`
-
           </p>
           {openBanner ? (
             <div
@@ -121,14 +118,14 @@ const HomeBookmarks = ({ reservationtLists, categoryRef, userPet, user }) => {
           ) : (
             ""
           )}
-          <div
+          {/* <div
             className="control"
             onClick={() => {
               setOpenBanner(!openBanner);
             }}
           >
             {openBanner ? "▲" : "▼"}
-          </div>
+          </div> */}
         </div>
       ) : (
         <div className="home-container1 homeBookmarks">

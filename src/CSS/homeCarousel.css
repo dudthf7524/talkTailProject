@@ -13,7 +13,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid #f0663f;
   z-index: 10;
 }
 .home_carousel_section .carousel_container .slide_wrapper {
@@ -21,6 +20,7 @@
   height: 100%;
   display: flex;
   overflow: hidden;
+  user-select: none;
 }
 .home_carousel_section .carousel_container .slide_container {
   height: 100%;
@@ -42,7 +42,6 @@
   justify-content: center;
   flex-shrink: 0;
   /* border: 1px solid red; */
-  background-color: aqua;
   margin-right: 8.6px;
   cursor: pointer;
 }
@@ -103,8 +102,8 @@
   gap: 10px;
 }
 .home_carousel_section .circle_box .circle {
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
   cursor: pointer;
 }
