@@ -71,7 +71,7 @@ const PetDetail = () => {
     // }, [id]);
 
     const goBack = () => {
-        navigate(-1);
+        navigate('/pet/list');
     };
 
     const handleEdit = () => {

@@ -71,8 +71,7 @@ const getPetDetails = async (petId) => {
 };
 
 const updatePetUpdateYesFile = async (petId, petData) => {
-  console.log("==============database==============");
-
+  petData.birthDate = petData.year + "-" + petData.month + "-" + petData.day;
   let petUpdateImage = null;
   console.log(petData.image);
 
@@ -111,6 +110,7 @@ const updatePetUpdateYesFile = async (petId, petData) => {
 };
 
 const updatePetUpdateNoFile = async (petId, petData) => {
+  petData.birthDate = petData.year + "-" + petData.month + "-" + petData.day;
   try {
     const pet = await Pet.update(
       {
