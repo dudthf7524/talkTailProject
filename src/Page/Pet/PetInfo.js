@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // useNavigate 훅을 임포트합니다.
 import api from "../../Api";
 import PetInfoModal from "./PetInfoModal";
+import NButtonContainer from "../Components/NavigatorBar/NButtonContainer";
 
 const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
   const petUrl = `${process.env.PUBLIC_URL}/images/pet/pet_img.png`;
@@ -190,7 +191,6 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
           </div>
         ))}
       </div>
-
       {openModal ? (
         <PetInfoModal
           openModal={() => {
@@ -202,6 +202,7 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
       ) : (
         ""
       )}
+       <NButtonContainer />
     </div>
   );
 };
