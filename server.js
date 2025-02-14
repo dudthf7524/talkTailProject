@@ -43,7 +43,7 @@ passportConfig();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://www.talktail.store"], // 리액트 앱의 URL 배열로 설정
+    origin: ["http://localhost:3000", "http://www.talktail.store"], // 리액트 앱의 URL 배열로 설정
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: [
       "Content-Type",
@@ -66,9 +66,9 @@ app.use(
     credentials: true,
     cookie: {
       httpOnly: true, // 클라이언트에서 쿠키를 접근하지 못하도록
-      // secure: false, // HTTPS에서만 작동하도록 설정
-      secure: true, // HTTPS에서만 작동하도록 설정
-      sameSite: "None", // 크로스 도메인에서 세션 유지
+      secure: false, // HTTPS에서만 작동하도록 설정
+      // secure: true, // HTTPS에서만 작동하도록 설정
+      // sameSite: "None", // 크로스 도메인에서 세션 유지
       maxAge: 24 * 60 * 60 * 1000, // 쿠키 만료 시간 설정 (1일)
     },
   })
