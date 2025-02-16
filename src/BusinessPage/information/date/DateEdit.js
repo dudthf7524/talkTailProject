@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../BusinessCSS/auth.css';
-import '../BusinessCSS/reservation.css';
-import api from '../Api';
+import '../../../BusinessCSS/auth.css';
+import '../../../BusinessCSS/reservation.css';
+import api from '../../../Api';
 
 function DateEdit() {
     const [dateList, setDateLists] = useState({});

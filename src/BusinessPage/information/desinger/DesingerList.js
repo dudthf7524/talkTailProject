@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import api from '../Api';
+import api from '../../../Api';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../BusinessCSS/desingerList.css'
+import '../../../BusinessCSS/desingerList.css'
 function DesingerList() {
     const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
     const noteUrl = `${process.env.PUBLIC_URL}/PageImage/list/note_ic.svg`;

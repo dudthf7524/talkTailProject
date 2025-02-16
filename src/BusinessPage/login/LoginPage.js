@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../BusinessCSS/auth.css";
+import "../../BusinessCSS/auth.css";
 import axios from "axios";
-import LoginModal from "./Modal/LoginModal.js";
-import api from "../Api";
+import LoginModal from "../Modal/LoginModal.js";
+import api from "../../Api";
 
 const Login = () => {
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;

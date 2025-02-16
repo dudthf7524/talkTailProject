@@ -4,9 +4,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ko } from 'date-fns/locale';
 import { format, addMonths, getDay, isWithinInterval, parse, addMinutes } from 'date-fns';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import '../CSS/calender.css';
-import api from '../Api'
-import LoginModal from "./Modal/LoginModal.js";
+import '../../../CSS/calender.css';
+import api from '../../../Api'
+import LoginModal from "../../Modal/LoginModal.js";
 
 function generateTimeSlots(start_time, end_time, intervalMinutes) {
   const start = parse(start_time, 'HH:mm', new Date());

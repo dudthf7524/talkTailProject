@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import '../CSS/noticeBusiness.css';
-import '../CSS/noticeModal.css';
-import NoticeSendModal from './Modal/NoticeSend';
-import api from '../Api'
+import '../../../CSS/noticeBusiness.css';
+import '../../../CSS/noticeModal.css';
+import NoticeSendModal from '../../Modal/NoticeSend';
+import api from '../../../Api'
 
 const WriteNotice = () => {
     

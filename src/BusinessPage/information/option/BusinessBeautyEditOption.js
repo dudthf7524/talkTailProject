@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import api from "../Api";
+import api from "../../../Api";
 
-function RegisterStyle() {
+function BusinessBeautyEditOption() {
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ function RegisterStyle() {
     const dataToSend = {
       ...formData,
     };
-
+    
     try {
       // 서버로 FormData를 전송
       const response = await axios.put(
@@ -160,4 +160,4 @@ function RegisterStyle() {
   );
 }
 
-export default RegisterStyle;
+export default BusinessBeautyEditOption;

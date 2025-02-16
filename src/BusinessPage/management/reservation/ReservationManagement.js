@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../CSS/auth.css'
-import '../CSS/reservation.css'
-import api from '../Api'
+import '../../../CSS/auth.css'
+import '../../../CSS/reservation.css'
+import api from '../../../Api'
 const ReservationManagement = () => {
 
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
@@ -14,9 +14,11 @@ const ReservationManagement = () => {
       try {
         const response = await api.get('/api/beauty/reservation', { withCredentials: true });
         setReservationManagementList(response.data);
+        console.log(response.data)
         if (response.data == 'common') {
           navigate('/business/login');
         }
+      
       } catch (error) {
         console.error('로그인 인증 실패:', error);
         navigate('/business/login'); // 로그인 페이지로 리디렉션

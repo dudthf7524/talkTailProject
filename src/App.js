@@ -1,4 +1,4 @@
-import Register from "./BusinessPage/Regitser";
+import Join from "./BusinessPage/join/Join";
 import { Link, Route, Router, Routes } from "react-router-dom";
 import "./App.css";
 import "./CSS/total.css";
@@ -6,21 +6,20 @@ import "./CSS/total.css";
 // import './BusinessCSS/main.css';
 import "./BusinessFont/font.css";
 // import './CSS/components.css';
-import Login from "./BusinessPage/LoginPage";
-import BusinessMenu from "./BusinessPage/MenuPage";
-import { useEffect, useState } from "react";
-
+import Login from "./BusinessPage/login/LoginPage";
+import BusinessMenu from "./BusinessPage/menu/MenuPage";
+import { useState } from "react";
 import LoginPage from "./Page/Login/LoginPage";
-import RegisterInformation from "./BusinessPage/Registerinformation";
+import RegisterInformation from "./BusinessPage/information/business/Registerinformation";
 import { ImageProvider } from "./Contexts/ImageContext";
-import ImgUpload from "./BusinessPage/ImgUpload";
+import ImgUpload from "./BusinessPage/common/ImgUpload";
 import Redirection from "./Page/Login/Redirection";
 import LoginSuccess from "./Page/Login/LoginSuccessPage";
 import UserDetailPage from "./Page/User/UserDetailPage";
 import HomePage from "./Page/Home/HomePage";
 import ListPage from "./Page/List/ListPage";
 import BusinessDetailPage from "./Page/List/BusinessDetailPage";
-import RegisterDesinger from "./BusinessPage/RegisterDesinger";
+import RegisterDesinger from "./BusinessPage/information/desinger/RegisterDesinger";
 import PetDesigner from "./Page/List/PetDesigner";
 import SelectDatePage from "./Page/Reservation/SelectDatePage";
 import PetRegistrationPage from "./Page/Pet/PetRegistrationPage";
@@ -31,35 +30,35 @@ import ReservationRequestPage from "./Page/Reservation/ReservationRequestPage";
 import ReservatinConfirm from "./Page/Reservation/ReservationConfirmPage";
 import PetDetailPage from "./Page/Pet/PetDetailPage";
 import PetEditPage from "./Page/Pet/PetEditPage";
-import AuthorityManagement from "./BusinessPage/AuthorityManagement";
+import AuthorityManagement from "./BusinessPage/management/authority/AuthorityManagement";
 import UserInformation from "./Page/User/UserInformation";
-import RegisterStyle from "./BusinessPage/RegisterStyle";
-import ReservationManagement from "./BusinessPage/ReservationManagement";
-import BusinessReservationDetail from "./BusinessPage/ReservationDetail";
-import CustomerManagement from "./BusinessPage/CustomerManagement";
-import WriteNotice from "./BusinessPage/WriteNotice";
+import RegisterStyle from "./BusinessPage/information/significant/RegisterStyle";
+import ReservationManagement from "./BusinessPage/management/reservation/ReservationManagement";
+import BusinessReservationDetail from "./BusinessPage/information/reservation/ReservationDetail";
+import CustomerManagement from "./BusinessPage/management/customer/CustomerManagement";
+import WriteNotice from "./BusinessPage/management/customer/WriteNotice";
 import SelectedDatePage from "./Page/Reservation/SelectedDatePage";
 import EditAddressPage from "./Page/User/EditAddressPage";
 import UserEdit from "./Page/User/UserEdit";
 import Reservation from "./Page/MyPage/Reservation";
-import DateRegister from "./BusinessPage/DateRegister";
-import DateEdit from "./BusinessPage/DateEdit";
-import DayOnOffEdit from "./BusinessPage/DayOnOffEdit";
-import EditInformation from "./BusinessPage/EditInformation";
-import BusinessBeautyEditOption from "./BusinessPage/BusinessBeautyEditOption";
+import DateRegister from "./BusinessPage/information/date/DateRegister";
+import DateEdit from "./BusinessPage/information/date/DateEdit";
+import DayOnOffEdit from "./BusinessPage/information/date/DayOnOffEdit";
+import EditInformation from "./BusinessPage/information/business/EditInformation";
+import BusinessBeautyEditOption from "./BusinessPage/information/option/BusinessBeautyEditOption";
 import ReservationDetail from "./Page/MyPage/ReservationDetail";
-import AccountNumber from "./BusinessPage/AccountNumber";
+import AccountNumber from "./BusinessPage/information/account/AccountNumber";
 import Notice from "./Page/MyPage/Notice";
 import NoticeDetail from "./Page/MyPage/NoticeDetail";
-import DesingerList from "./BusinessPage/DesingerList";
-import DesingerClosedDays from "./BusinessPage/DesingerClosedDays";
+import DesingerList from "./BusinessPage/information/desinger/DesingerList";
+import DesingerClosedDays from "./BusinessPage/information/desinger/DesingerClosedDays";
 import Authority from "./Page/User/Authority";
-import BusinessReservation from "./BusinessPage/Reservation";
-import ReservationDesinger from "./BusinessPage/ReservationDesinger";
-import AccountNumberList from "./BusinessPage/AccountNumberList";
+import BusinessReservation from "./BusinessPage/information/reservation/Reservation";
+import ReservationDesinger from "./BusinessPage/information/reservation/ReservationDesinger";
+import AccountNumberList from "./BusinessPage/information/account/AccountNumberList";
 import Tos from "./Page/Home/tos";
 import Privacy from "./Page/Home/privacy";
-import CustomerManagementDetail from "./BusinessPage/CustomerManagementDetail";
+import CustomerManagementDetail from "./BusinessPage/management/customer/CustomerManagementDetail";
 import HomeGuideDetail from "./Page/Home/homeGuideDetail";
 
 function App() {
@@ -128,7 +127,7 @@ function App() {
             <Route path="/business">
               <Route path="login" element={<Login />} />
               <Route path="menu" element={<BusinessMenu />} />
-              <Route path="register" element={<Register />} />
+              <Route path="register" element={<Join />} />
               <Route
                 path="register/information"
                 element={<RegisterInformation />}
@@ -175,7 +174,7 @@ function App() {
               />
               <Route path="list/desinger" element={<DesingerList />} />
               <Route path="write/ClosedDays" element={<DesingerClosedDays />} />
-              <Route path="reservation/" element={<BusinessReservation />} />
+              <Route path="reservation" element={<BusinessReservation />} />
               <Route
                 path="reservation/desinger"
                 element={<ReservationDesinger />}

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../BusinessCSS/customerManagement.css'
+import '../../../BusinessCSS/customerManagement.css'
 import { useEffect } from 'react';
-import api from '../Api'
+import api from '../../../Api'
 
 const CustomerManagement = () => {
 
@@ -58,22 +58,21 @@ const CustomerManagement = () => {
                         <div className='customer-item'>
                             {
                                 list.beauty_notice_is_available
-                                    ?
-                                    <button
-                                        className='result-button-complete'
-                                        onClick={() => navigate('/business/customer/management/detail', { state: { id: list.beauty_reservation_id } })}
-                                    >
-                                        작성완료
-                                    </button>
-                                    :
-                                    <button
-                                        className='result-button-write'
-                                        onClick={() => navigate(`/business/write/notice`, {state: {id: list.beauty_reservation_id}})}
-                                    >
-                                        작성하기
-                                    </button>
+                                ?
+                                <button
+                                    className='result-button-complete'
+                                    onClick={() => navigate('/business/customer/management/detail', { state: { id: list.beauty_reservation_id } })}
+                                >
+                                    작성완료
+                                </button>
+                                :
+                                <button
+                                    className='result-button-write'
+                                    onClick={() => navigate(`/business/write/notice`, {state: {id: list.beauty_reservation_id}})}
+                                >
+                                    작성하기
+                                </button>
                             }
-
                         </div>
                     </div>
                 ))

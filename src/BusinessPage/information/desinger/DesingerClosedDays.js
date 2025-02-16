@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import '../BusinessCSS/desingerClosedDays.css'
+import '../../../BusinessCSS/desingerClosedDays.css'
 import { useLocation, useNavigate } from "react-router-dom";
 import { ko } from 'date-fns/locale';
-import api from "../Api";
+import api from "../../../Api";
 
 function DesingerClosedDays() {
     const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;

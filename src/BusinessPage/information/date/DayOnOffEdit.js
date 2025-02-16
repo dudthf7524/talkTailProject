@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../BusinessCSS/auth.css';
+import '../../../BusinessCSS/auth.css';
 // import '../BusinessCSS/reservation.css';
-import api from '../Api';
+import api from '../../../Api';
 
-function DateEdit() {
+function DayOnOffEdit() {
     const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
 
     const location = useLocation();
@@ -117,4 +117,4 @@ function DateEdit() {
     );
 }
 
-export default DateEdit;
+export default DayOnOffEdit;
