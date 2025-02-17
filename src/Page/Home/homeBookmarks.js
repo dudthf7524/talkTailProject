@@ -44,6 +44,7 @@ const HomeBookmarks = ({ reservationtLists, categoryRef, userPet, user }) => {
               <img
                 src={reservationtLists[currentIndex].business_main_image}
                 alt=""
+               
               />
             </div>
             <div

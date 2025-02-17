@@ -110,6 +110,7 @@ const HomeCarousel = () => {
   const handleDragStart = (e) => {
     e.preventDefault();
   };
+  
   return (
     <div className="home_carousel_section">
       <div className="carousel_container">
@@ -123,6 +124,7 @@ const HomeCarousel = () => {
                       src={image.imgUrl}
                       alt=""
                       onDragStart={handleDragStart}
+                      draggable="false"
                     />
                   </a>
                 </div>

@@ -189,7 +189,7 @@ const MainPage = () => {
             <img src={logoUrl} alt="" />
 
             <div className="customer" style={{ color: "black" }}>
-              {user.user_name ? `${user.user_name}님` : ""}
+              {user?.user_name ? `${user.user_name}님` : ""}
             </div>
 
             {user || userPet ? (
