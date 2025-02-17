@@ -55,11 +55,6 @@
   letter-spacing: -0.1px;
 }
 .acceptModal .content_container > p:nth-child(1) {
-  font-size: 24px;
-  font-weight: 600;
-  margin-top: 10px;
-}
-.acceptModal .content_container > p:nth-child(2) {
   font-size: 20px;
   font-weight: 600;
   margin-top: 10px;
@@ -69,11 +64,22 @@
   font-weight: 600;
   margin-top: 20px;
 }
+.acceptModal .content_container .sub_title span {
+  font-size: 13px;
+}
 .acceptModal .content_container .content_title {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: #f0663f;
   margin-top: 15px;
+}
+.acceptModal .content_container .text {
+  font-size: 12px;
+  /* font-size: 12px; */
+}
+.acceptModal .content_container .last_text {
+  font-size: 16px;
+  margin-top: 10px;
 }
 /* .acceptModal .content_container > p:nth-child(3) {
   font-size: 12px;
