@@ -45,3 +45,9 @@
   width: 100%;
   height: fit-content;
 }
+@media (max-width: 500px) {
+  .homeGuideDetail img {
+    width: 100vw;
+    height: 56.25vw;
+  }
+}

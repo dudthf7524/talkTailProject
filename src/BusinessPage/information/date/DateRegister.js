@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../BusinessCSS/auth.css';
-import '../BusinessCSS/reservation.css';
-import api from '../Api';
+import '../../../BusinessCSS/auth.css';
+import '../../../BusinessCSS/reservation.css';
+import api from '../../../Api';
 
 function DateRegister() {
     const [dateList, setDateLists] = useState({

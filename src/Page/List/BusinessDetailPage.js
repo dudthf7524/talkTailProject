@@ -31,6 +31,51 @@ const EventDetailPage = () => {
   const [openAcceptModal, setOpenAcceptModal] = useState(false);
   const dispatch = useDispatch();
   const dayNames = ["일", "월", "화", "수", "목", "금", "토"]; // 요일 배열
+
+
+
+
+
+  const sliderRef = useRef(null);
+
+
+  const handleDragStart = (e) => {
+    e.preventDefault();
+  };
+
+  const [currentIndex, setCurrentIndex] = useState(1);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const getWindowWidth = () => window.innerWidth;
+
+  const moveCircle = (index) => {
+    setIsPlaying(false);
+    setCurrentIndex(Math.min(index + 1, imageArray.length));
+
+    if (!sliderRef.current) return;
+
+    const windowWidth = getWindowWidth();
+
+    let slideAmount = 0;
+    if (windowWidth > 500) {
+      slideAmount = 387 + 8.6;
+    } else {
+      slideAmount = windowWidth * 0.92;
+    }
+
+    if (index === imageArray.length) {
+      sliderRef.current.scrollTo({
+        right: 0,
+        behavior: "smooth",
+      });
+    } else {
+      sliderRef.current.scrollTo({
+        left: slideAmount * index,
+        behavior: "smooth",
+      });
+    }
+  };
+
+
   const handleButtonClick = () => {
     setIsButtonClicked(!isButtonClicked);
   };
@@ -136,6 +181,25 @@ const EventDetailPage = () => {
     fetchBusiness();
   }, [id]);
 
+
+  console.log(business)
+
+  const imageArray = [];
+
+  if (business.business_price_image1) {
+    imageArray.push({ imgUrl: business.business_price_image1 });
+  }
+
+  if (business.business_price_image2) {
+    imageArray.push({ imgUrl: business.business_price_image2 });
+  }
+
+  if (business.business_price_image3) {
+    imageArray.push({ imgUrl: business.business_price_image3 });
+  }
+
+
+
   // 주어진 시간 데이터를 'HH:MM:SS' 형식에서 'HH:MM' 형식으로 변환
   const formatTime = (time) => {
     if (!time) return ""; // null 또는 undefined 처리
@@ -144,19 +208,37 @@ const EventDetailPage = () => {
   };
 
   // 사용 예시
-  const weekdayOpenTime = formatTime(business.weekday_open_time);
-  const weekdayCloseTime = formatTime(business.weekday_close_time);
-  const weekendOpenTime = formatTime(business.weekend_open_time);
-  const weekendCloseTime = formatTime(business.weekend_close_time);
 
   const operatingDays = Object.values(hours).filter(
     (day) => day.isOperatingDay === true
   );
 
-  console.log(operatingDays)
+  console.log(operatingDays);
   if (!business) {
     return <p>로딩 중...</p>; // 로딩 중일 때 처리
   }
+
+  const moveSlide = (direction) => {
+    setIsPlaying(false); 
+    const windowWidth = getWindowWidth();
+    let slideAmount = windowWidth > 500 ? 387 + 8.6 : windowWidth * 0.92;
+  
+    let newIndex = currentIndex;
+    if (direction === 'left') {
+      newIndex = currentIndex === 1 ? imageArray.length : currentIndex - 1;
+    } else if (direction === 'right') {
+      newIndex = currentIndex === imageArray.length ? 1 : currentIndex + 1;
+    }
+  
+    setCurrentIndex(newIndex);
+  
+    if (sliderRef.current) {
+      sliderRef.current.scrollTo({
+        left: slideAmount * (newIndex - 1),
+        behavior: 'smooth',
+      });
+    }
+  };
   return (
     <div lang="ko" className="detailPage_total">
       <div className="mid">
@@ -164,7 +246,7 @@ const EventDetailPage = () => {
           <button>
             <img src={arrowButtonUrl} alt="" onClick={goBack} />
           </button>
-          업체정보
+          가게정보
           <div></div>
         </div>
         <div className="event-text-box">{business.business_comment}</div>
@@ -195,14 +277,15 @@ const EventDetailPage = () => {
               <p key={index}>
                 {day}&nbsp;&nbsp;
                 {dayInfo && dayInfo.isOperatingDay
-                  ? `${formatTime(dayInfo.start_time)} - ${formatTime(dayInfo.end_time)}`
+                  ? `${formatTime(dayInfo.start_time)} - ${formatTime(
+                      dayInfo.end_time
+                    )}`
                   : "휴무"}
               </p>
             );
           })}
         </div>
         <div className="event-button-container">
-
           <div className="event-button">
             <a href={`tel:${business.business_phone}`}>
               <button>
@@ -213,7 +296,63 @@ const EventDetailPage = () => {
           </div>
         </div>
         <div className="information-text">가격정보</div>
-        <div className="img">
+
+
+
+        <div className="home_carousel_section">
+          <div className="carousel_container">
+
+            <div className="slide_wrapper">
+              <div className="left-arrow" onClick={() => moveSlide('left')}>{"<"} </div>
+
+              <div className="slide_container" ref={sliderRef}>
+
+                {imageArray.map((image, index) => {
+                  return (
+                    <div className="img_div" key={index}>
+                      <a href={image.linkUrl} target="_blank">
+                        <img
+                          src={image.imgUrl}
+                          alt=""
+                          onDragStart={handleDragStart}
+                          style={{ width: "300px", height: "300px" }}
+                        />
+                      </a>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="right-arrow" onClick={() => moveSlide('left')}>{">"}</div>
+
+            </div>
+            <div className="index_box">
+              {currentIndex} / {imageArray.length}
+            </div>
+
+          </div>
+          <div className="circle_box">
+            {imageArray.map((image, index) => {
+              return (
+                <div
+                  className="circle"
+                  key={index}
+                  style={{
+                    backgroundColor:
+                      currentIndex === index + 1 ? "#f0663f" : "gray",
+                  }}
+                  onClick={() => {
+                    console.log("index : ", index);
+                    moveCircle(index);
+                  }}
+                ></div>
+              );
+            })}
+          </div>
+        </div>
+
+
+
+        {/* <div className="img">
           <img
             src={business.business_price_image1}
             style={{ width: "300px", height: "300px" }}
@@ -234,30 +373,31 @@ const EventDetailPage = () => {
           </div>
         ) : (
           <div className="img"></div>
-        )}
-        <div className="album-text"></div>
+        )} */}
+
         <div className="writing-div">
           <div className="writing">
-            <div>
-              예약금 :
-            </div>
-            <div>
-              {business.business_no_show} 원
-            </div>
-
+            <div>예약금 :</div>
+            <div>{business.business_no_show} 원</div>
           </div>
         </div>
       </div>
-      <div
-        className="Nbutton"
-        onClick={() => {
-          handleItemClick(business);
-          setOpenAcceptModal(true);
-        }}
-        style={{ cursor: "pointer" }}
-      >
-        예약하기
+      <div className="Nbutton_box">
+        <div className="Nbtn" onClick={() => {}} style={{ cursor: "pointer" }}>
+          전화하기
+        </div>
+        <div
+          className="Nbtn"
+          onClick={() => {
+            handleItemClick(business);
+            setOpenAcceptModal(true);
+          }}
+          style={{ cursor: "pointer" }}
+        >
+          예약하기
+        </div>
       </div>
+
       {openAcceptModal ? (
         <AcceptModal
           openModal={() => {

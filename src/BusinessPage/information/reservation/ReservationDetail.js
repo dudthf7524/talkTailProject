@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import '../CSS/auth.css'
-import '../BusinessCSS/reservation.css'
-import ReservationAcceptModal from './Modal/ReservationAccept';
-import ReservationRejectModal from './Modal/ReservationReject';
-import ReservationCheckModal from './Modal/ReservationCheck';
-import '../CSS/reservationModal.css'
-import api from '../Api'
+import '../../../CSS/auth.css'
+import '../../../BusinessCSS/reservation.css'
+import ReservationAcceptModal from '../../Modal/ReservationAccept';
+import ReservationRejectModal from '../../Modal/ReservationReject';
+import ReservationCheckModal from '../../Modal/ReservationCheck';
+import '../../../CSS/reservationModal.css'
+import api from '../../../Api'
 import { addMinutes, format, isWithinInterval, parse } from 'date-fns';
-import ReservationDetailModal from "./ReservationDetailModal";
+import ReservationDetailModal from "../../Modal/ReservationDetailModal";
 
 const ReservationDetail = () => {
   const navigate = useNavigate();

@@ -1,11 +1,11 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { ImageContext } from "../Contexts/ImageContext";
-import "../BusinessCSS/registerInformation.css";
-import "../BusinessCSS/main.css";
-import InformationModal from "./Modal/InformationModal";
-import api from "../Api";
+import { ImageContext } from "../../../Contexts/ImageContext";
+import "../../../BusinessCSS/registerInformation.css";
+import "../../../BusinessCSS/main.css";
+import InformationModal from "../../Modal/InformationModal";
+import api from "../../../Api";
 
 function RegisterInformation() {
   // 주소 api

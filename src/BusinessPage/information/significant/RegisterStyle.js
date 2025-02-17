@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import api from "../Api";
-import "../BusinessCSS/registerStyle.css";
+import api from "../../../Api";
+import "../../../BusinessCSS/registerStyle.css";
 
 function RegisterStyle() {
   const apiUrl = process.env.REACT_APP_API_BASE_URL;

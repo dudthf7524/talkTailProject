@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
-function Register() {
+function Join() {
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
   const navigate = useNavigate();
@@ -144,4 +144,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Join;

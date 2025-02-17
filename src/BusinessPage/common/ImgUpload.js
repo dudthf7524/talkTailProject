@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { ImageContext } from '../Contexts/ImageContext';
+import { ImageContext } from '../../Contexts/ImageContext';
 
 function ImgUpload() {
   const { imageFiles, updateImageFiles } = useContext(ImageContext);

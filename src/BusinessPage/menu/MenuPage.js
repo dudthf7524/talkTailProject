@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../BusinessCSS/menu.css";
-import api from "../Api";
-import Tos from "../Page/Home/tos";
-import Privacy from "../Page/Home/privacy";
+import "../../BusinessCSS/menuPage.css";
+import api from "../../Api";
+import Tos from "../../Page/Home/tos";
+import Privacy from "../../Page/Home/privacy";
 const AdminMenu = () => {
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
   const reservationIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/reservationIcon.svg`;

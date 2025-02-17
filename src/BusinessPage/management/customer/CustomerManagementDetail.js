@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import api from '../Api'
+import { useNavigate, useLocation } from 'react-router-dom';
+import api from '../../../Api';
 
 const CustomerManagementDetail = () => {
     const navigate = useNavigate();
@@ -23,18 +23,12 @@ const CustomerManagementDetail = () => {
                     navigate('/business/login')
                 }
                 setList(response.data);
-                // console.log(response.data)
-
             } catch (error) {
-
                 console.error('로그인 인증 실패:', error);
-
             }
         };
         noticeDetail();
     }, []);
-
-    console.log(list)
     
     const calculateAge = (birthDate) => {
         if (!birthDate) return null; // 생년월일이 없을 경우 처리

@@ -18,10 +18,12 @@ function UserEdit() {
   const [alertTitle, setAlertTitle] = useState("");
   const [alertContent, setAlertContent] = useState("");
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
   useEffect(() => {
     fetchUserInformation();
   }, []);
   const userInformationId = userInformation?.user_information_id;
+
   const fetchUserInformation = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -35,16 +37,16 @@ function UserEdit() {
         },
       });
       // console.log(response.data.user);
-      setUserInformation(response.data.user);
+      setUserInformation(response.data);
     } catch (error) {
       console.error("Error fetching user data:", error);
       // 오류 처리 로직 추가
     }
   };
   if (userInformation) {
-    console.log(userInformation.user_name);
+    
   }
-
+  console.log()
   const [formData, setFormData] = useState({
     user_name: "",
     user_phone1: "",
@@ -71,12 +73,10 @@ function UserEdit() {
       [name]: value,
     });
   };
-  console.log(formData.user_name);
 
-  // console.log(formData);
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      handleEdit();
+      checkForm();
     }
   };
 

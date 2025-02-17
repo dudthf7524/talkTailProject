@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../BusinessCSS/authorityManagement.css'
-import api from '../Api'
+import '../../../BusinessCSS/authorityManagement.css'
+import api from '../../../Api'
 
 function AuthorityManagement() {
     const location = useLocation();
