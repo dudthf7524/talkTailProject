@@ -175,8 +175,6 @@ const EventDetailPage = () => {
     fetchBusiness();
   }, [id]);
 
-  console.log(business);
-
   const imageArray = [];
 
   if (business.business_price_image1) {
@@ -393,6 +391,7 @@ const EventDetailPage = () => {
           openModal={() => {
             setOpenAcceptModal(false);
           }}
+          businessName={business.business_name}
         />
       ) : (
         ""
