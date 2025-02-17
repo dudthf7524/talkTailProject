@@ -124,7 +124,7 @@ const HomeCarousel = () => {
                       src={image.imgUrl}
                       alt=""
                       onDragStart={handleDragStart}
-                      draggable="false"
+                     
                     />
                   </a>
                 </div>
