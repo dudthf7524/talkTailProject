@@ -158,7 +158,6 @@
     height: 104px;
     padding: 16px;
     box-sizing: border-box;
-    cursor: pointer;
 }
 
 .pet-contents.selected {
