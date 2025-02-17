@@ -153,7 +153,7 @@ const EventDetailPage = () => {
     (day) => day.isOperatingDay === true
   );
 
-  console.log(operatingDays)
+  console.log(operatingDays);
   if (!business) {
     return <p>로딩 중...</p>; // 로딩 중일 때 처리
   }
@@ -195,14 +195,15 @@ const EventDetailPage = () => {
               <p key={index}>
                 {day}&nbsp;&nbsp;
                 {dayInfo && dayInfo.isOperatingDay
-                  ? `${formatTime(dayInfo.start_time)} - ${formatTime(dayInfo.end_time)}`
+                  ? `${formatTime(dayInfo.start_time)} - ${formatTime(
+                      dayInfo.end_time
+                    )}`
                   : "휴무"}
               </p>
             );
           })}
         </div>
         <div className="event-button-container">
-
           <div className="event-button">
             <a href={`tel:${business.business_phone}`}>
               <button>
@@ -238,26 +239,27 @@ const EventDetailPage = () => {
         <div className="album-text"></div>
         <div className="writing-div">
           <div className="writing">
-            <div>
-              예약금 :
-            </div>
-            <div>
-              {business.business_no_show} 원
-            </div>
-
+            <div>예약금 :</div>
+            <div>{business.business_no_show} 원</div>
           </div>
         </div>
       </div>
-      <div
-        className="Nbutton"
-        onClick={() => {
-          handleItemClick(business);
-          setOpenAcceptModal(true);
-        }}
-        style={{ cursor: "pointer" }}
-      >
-        예약하기
+      <div className="Nbutton_box">
+        <div className="Nbtn" onClick={() => {}} style={{ cursor: "pointer" }}>
+          전화하기
+        </div>
+        <div
+          className="Nbtn"
+          onClick={() => {
+            handleItemClick(business);
+            setOpenAcceptModal(true);
+          }}
+          style={{ cursor: "pointer" }}
+        >
+          예약하기
+        </div>
       </div>
+
       {openAcceptModal ? (
         <AcceptModal
           openModal={() => {
