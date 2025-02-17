@@ -224,11 +224,18 @@ const EventDetailPage = () => {
     let slideAmount = windowWidth > 500 ? 387 + 8.6 : windowWidth * 0.92;
 
     let newIndex = currentIndex;
-    if (direction === 'left') {
-      newIndex = currentIndex === 1 ? imageArray.length : currentIndex - 1;
-    } else if (direction === 'right') {
-      newIndex = currentIndex === imageArray.length ? 1 : currentIndex + 1;
-    }
+   // 왼쪽 버튼 클릭 시
+  if (direction === 'left') {
+    // 첫 번째 슬라이드에서 왼쪽 버튼 클릭 시 아무 동작도 안함
+    if (currentIndex === 1) return; 
+    newIndex = currentIndex === 1 ? imageArray.length : currentIndex - 1;
+  } 
+  // 오른쪽 버튼 클릭 시
+  else if (direction === 'right') {
+    // 마지막 슬라이드에서 오른쪽 버튼 클릭 시 아무 동작도 안함
+    if (currentIndex === imageArray.length) return; 
+    newIndex = currentIndex === imageArray.length ? 1 : currentIndex + 1;
+  }
 
     setCurrentIndex(newIndex);
 
@@ -320,7 +327,7 @@ const EventDetailPage = () => {
                   );
                 })}
               </div>
-              <div className="right-arrow" onClick={() => moveSlide('left')}>{">"}</div>
+              <div className="right-arrow" onClick={() => moveSlide('right')}>{">"}</div>
 
             </div>
             <div className="index_box">
