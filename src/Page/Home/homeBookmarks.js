@@ -59,7 +59,7 @@ const HomeBookmarks = ({ reservationtLists, categoryRef, userPet, user }) => {
           </div>
           <div className="text_box">
             <p>
-              업체명 : {reservationtLists[currentIndex].business_name} / 예약수
+              가게명 : {reservationtLists[currentIndex].business_name} / 예약수
               : {reservationtLists[currentIndex].user_count}
             </p>
             <div
@@ -105,7 +105,7 @@ const HomeBookmarks = ({ reservationtLists, categoryRef, userPet, user }) => {
           <p className="content">
             단골 내역이 없어요.😂
             <br />
-            {userPet.pet_name}의 단골가게를 만들어 주세요.😊`
+            {userPet.pet_name}의 단골가게를 만들어 주세요.😊
           </p>
           {openBanner ? (
             <div

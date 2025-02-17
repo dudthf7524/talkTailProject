@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import api from '../../Api';
+import api from "../../Api";
 
 function UserInformation() {
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -27,12 +27,11 @@ function UserInformation() {
         .catch((error) => {
           console.error("에러 발생:", error);
         });
-    }
-    else{
-      navigate('/')
+    } else {
+      navigate("/");
     }
   }, []);
-  
+
   const [formData, setFormData] = useState({
     user_name: "",
     user_phone1: "",
@@ -60,69 +59,66 @@ function UserInformation() {
   const userPhoneRef2 = useRef(null);
   const userPhoneRef3 = useRef(null);
 
-  const [name, setName] = useState('');
-  const [user_phone, setUserPhone] = useState('');
+  const [name, setName] = useState("");
+  const [user_phone, setUserPhone] = useState("");
 
-  const [user_phone1, setUserPhone1] = useState('');
-  const [user_phone2, setUserPhone2] = useState('');
-  const [user_phone3, setUserPhone3] = useState('');
-
+  const [user_phone1, setUserPhone1] = useState("");
+  const [user_phone2, setUserPhone2] = useState("");
+  const [user_phone3, setUserPhone3] = useState("");
 
   const validateForm = () => {
     const koreanRegex = /^[\uAC00-\uD7A3]{1,5}$/; // 한글만 5자
     const numberRegexThree = /^\d{3}$/;
     const numberRegexFour = /^\d{4}$/;
 
-    setName('');
-    setUserPhone('');
+    setName("");
+    setUserPhone("");
 
     if (!formData.user_name.trim()) {
-      setName('이름을 입력해주세요.');
+      setName("이름을 입력해주세요.");
       nameRef.current.focus();
       return;
     }
     if (!koreanRegex.test(formData.user_name)) {
-      setName('이름은 한글, 5글자 이하만 입력 가능합니다.');
+      setName("이름은 한글, 5글자 이하만 입력 가능합니다.");
       nameRef.current.focus();
       return;
     }
     if (!formData.user_phone1.trim()) {
-      setUserPhone('전화번호1을 입력해주세요');
+      setUserPhone("전화번호1을 입력해주세요");
       userPhoneRef1.current.focus();
       return;
     }
     if (!numberRegexThree.test(formData.user_phone1)) {
-      setUserPhone('전화번호1은 숫자, 3글자만 입력 가능합니다.');
+      setUserPhone("전화번호1은 숫자, 3글자만 입력 가능합니다.");
       userPhoneRef1.current.focus();
       return;
     }
     if (!formData.user_phone2.trim()) {
-      setUserPhone('전화번호2을 입력해주세요');
+      setUserPhone("전화번호2을 입력해주세요");
       userPhoneRef2.current.focus();
       return;
     }
     if (!numberRegexFour.test(formData.user_phone2)) {
-      setUserPhone('전화번호2는 숫자, 4글자만 입력 가능합니다.');
+      setUserPhone("전화번호2는 숫자, 4글자만 입력 가능합니다.");
       userPhoneRef2.current.focus();
       return;
     }
 
     if (!formData.user_phone3.trim()) {
-      setUserPhone('전화번호3을 입력해주세요');
+      setUserPhone("전화번호3을 입력해주세요");
       userPhoneRef3.current.focus();
       return;
     }
     if (!numberRegexFour.test(formData.user_phone3)) {
-      setUserPhone('전화번호3은 숫자, 4글자만 입력 가능합니다.');
+      setUserPhone("전화번호3은 숫자, 4글자만 입력 가능합니다.");
       nameRef.current.focus();
       return;
     }
     return true;
-  }
-
+  };
 
   const handleSave = async () => {
-
     if (!validateForm()) return;
 
     console.log(user.id);
@@ -149,7 +145,7 @@ function UserInformation() {
       console.log("Upload successful:", response.data);
 
       // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
-      navigate("/home"); // 성공 페이지로 이동
+      navigate("/"); // 성공 페이지로 이동
     } catch (error) {
       console.error("Error during upload:", error);
       // 오류 처리
@@ -184,8 +180,9 @@ function UserInformation() {
             onKeyDown={handleKeyDown}
             placeholder="이름을 입력해주세요."
           />
-          {name && <div className="pet-registration-page-error-box">{name}</div>}
-
+          {name && (
+            <div className="pet-registration-page-error-box">{name}</div>
+          )}
         </div>
         <div className="input-container">
           <p>연락처</p>
@@ -223,7 +220,9 @@ function UserInformation() {
               placeholder="5678"
             />
           </div>
-          {user_phone && <div className="pet-registration-page-error-box">{user_phone}</div>}
+          {user_phone && (
+            <div className="pet-registration-page-error-box">{user_phone}</div>
+          )}
         </div>
       </div>
     </div>
