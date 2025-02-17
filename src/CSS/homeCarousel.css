@@ -21,7 +21,7 @@
   display: flex;
   overflow: hidden;
   user-select: none;
-
+  touch-action: none; /* 터치 이벤트 방지 */
   -webkit-user-drag: none; /* Safari 브라우저에서 드래그 방지 */
   pointer-events: auto;
 }
@@ -36,7 +36,7 @@
   scroll-behavior: smooth;
   user-select: none;
   -webkit-overflow-scrolling: touch;
-
+  touch-action: none; /* 터치 이벤트 방지 */
   -webkit-user-drag: none; /* Safari 브라우저에서 드래그 방지 */
   pointer-events: auto;
 }
@@ -54,7 +54,7 @@
   margin-right: 8.6px;
   cursor: pointer;
   user-select: none;
-  
+  touch-action: none; /* 터치 이벤트 방지 */
   -webkit-user-drag: none; /* Safari 브라우저에서 드래그 방지 */
   pointer-events: auto;
   
