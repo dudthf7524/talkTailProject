@@ -22,6 +22,9 @@
   overflow: hidden;
   user-select: none;
 }
+
+
+
 .home_carousel_section .carousel_container .slide_container {
   height: 100%;
   display: flex;
@@ -44,6 +47,7 @@
   /* border: 1px solid red; */
   margin-right: 8.6px;
   cursor: pointer;
+  user-select: none;
 }
 @media (max-width: 500px) {
   .home_carousel_section .carousel_container {
