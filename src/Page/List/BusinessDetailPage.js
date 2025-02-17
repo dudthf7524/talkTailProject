@@ -219,19 +219,19 @@ const EventDetailPage = () => {
   }
 
   const moveSlide = (direction) => {
-    setIsPlaying(false); 
+    setIsPlaying(false);
     const windowWidth = getWindowWidth();
     let slideAmount = windowWidth > 500 ? 387 + 8.6 : windowWidth * 0.92;
-  
+
     let newIndex = currentIndex;
     if (direction === 'left') {
       newIndex = currentIndex === 1 ? imageArray.length : currentIndex - 1;
     } else if (direction === 'right') {
       newIndex = currentIndex === imageArray.length ? 1 : currentIndex + 1;
     }
-  
+
     setCurrentIndex(newIndex);
-  
+
     if (sliderRef.current) {
       sliderRef.current.scrollTo({
         left: slideAmount * (newIndex - 1),
@@ -278,14 +278,14 @@ const EventDetailPage = () => {
                 {day}&nbsp;&nbsp;
                 {dayInfo && dayInfo.isOperatingDay
                   ? `${formatTime(dayInfo.start_time)} - ${formatTime(
-                      dayInfo.end_time
-                    )}`
+                    dayInfo.end_time
+                  )}`
                   : "휴무"}
               </p>
             );
           })}
         </div>
-        <div className="event-button-container">
+        {/* <div className="event-button-container">
           <div className="event-button">
             <a href={`tel:${business.business_phone}`}>
               <button>
@@ -294,11 +294,9 @@ const EventDetailPage = () => {
             </a>
             <div className="event-button-text">전화</div>
           </div>
-        </div>
+        </div> */}
+
         <div className="information-text">가격정보</div>
-
-
-
         <div className="home_carousel_section">
           <div className="carousel_container">
 
@@ -383,8 +381,8 @@ const EventDetailPage = () => {
         </div>
       </div>
       <div className="Nbutton_box">
-        <div className="Nbtn" onClick={() => {}} style={{ cursor: "pointer" }}>
-          전화하기
+        <div className="Nbtn" onClick={() => { }} style={{ cursor: "pointer" }}>
+          <a style={{ textDecoration: "none", color: "#f0663f" }} href={`tel:${business.business_phone}`}>전화하기</a>
         </div>
         <div
           className="Nbtn"

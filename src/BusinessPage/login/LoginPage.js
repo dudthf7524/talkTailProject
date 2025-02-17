@@ -4,7 +4,7 @@ import "../../BusinessCSS/auth.css";
 import axios from "axios";
 import LoginModal from "../Modal/LoginModal.js";
 import api from "../../Api";
-
+import "../../BusinessCSS/loginPage.css";
 const Login = () => {
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
