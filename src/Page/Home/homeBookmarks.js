@@ -107,17 +107,13 @@ const HomeBookmarks = ({ reservationtLists, categoryRef, userPet, user }) => {
             <br />
             {userPet.pet_name}의 단골가게를 만들어 주세요.😊
           </p>
-          {openBanner ? (
-            <div
-              className="btn"
-              onClick={scrollCategory}
-              style={{ borderRadius: "5px" }}
-            >
-              단골 가게 찾기🏸
-            </div>
-          ) : (
-            ""
-          )}
+          <div
+            className="btn"
+            onClick={scrollCategory}
+            style={{ borderRadius: "5px" }}
+          >
+            단골 가게 찾기🏸
+          </div>
           {/* <div
             className="control"
             onClick={() => {

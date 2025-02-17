@@ -14,9 +14,6 @@ const SelectedDateModal = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleItemClick = async () => {
-    console.log("모달 속 selecteDate : ", selectDate);
-    console.log("모달 속 activeTime : ", activeTime);
-
     dispatch(setDate(selectDate));
     dispatch(setStartTime(activeTime));
 

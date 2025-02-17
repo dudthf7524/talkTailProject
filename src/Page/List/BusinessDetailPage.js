@@ -32,12 +32,7 @@ const EventDetailPage = () => {
   const dispatch = useDispatch();
   const dayNames = ["일", "월", "화", "수", "목", "금", "토"]; // 요일 배열
 
-
-
-
-
   const sliderRef = useRef(null);
-
 
   const handleDragStart = (e) => {
     e.preventDefault();
@@ -65,16 +60,15 @@ const EventDetailPage = () => {
     if (index === imageArray.length) {
       sliderRef.current.scrollTo({
         right: 0,
-        behavior: "smooth",
+        behavior: "instant",
       });
     } else {
       sliderRef.current.scrollTo({
         left: slideAmount * index,
-        behavior: "smooth",
+        behavior: "instant",
       });
     }
   };
-
 
   const handleButtonClick = () => {
     setIsButtonClicked(!isButtonClicked);
@@ -181,8 +175,7 @@ const EventDetailPage = () => {
     fetchBusiness();
   }, [id]);
 
-
-  console.log(business)
+  console.log(business);
 
   const imageArray = [];
 
@@ -197,8 +190,6 @@ const EventDetailPage = () => {
   if (business.business_price_image3) {
     imageArray.push({ imgUrl: business.business_price_image3 });
   }
-
-
 
   // 주어진 시간 데이터를 'HH:MM:SS' 형식에서 'HH:MM' 형식으로 변환
   const formatTime = (time) => {
@@ -219,23 +210,23 @@ const EventDetailPage = () => {
   }
 
   const moveSlide = (direction) => {
-    setIsPlaying(false); 
+    setIsPlaying(false);
     const windowWidth = getWindowWidth();
     let slideAmount = windowWidth > 500 ? 387 + 8.6 : windowWidth * 0.92;
-  
+
     let newIndex = currentIndex;
-    if (direction === 'left') {
+    if (direction === "left") {
       newIndex = currentIndex === 1 ? imageArray.length : currentIndex - 1;
-    } else if (direction === 'right') {
+    } else if (direction === "right") {
       newIndex = currentIndex === imageArray.length ? 1 : currentIndex + 1;
     }
-  
+
     setCurrentIndex(newIndex);
-  
+
     if (sliderRef.current) {
       sliderRef.current.scrollTo({
         left: slideAmount * (newIndex - 1),
-        behavior: 'smooth',
+        behavior: "instant",
       });
     }
   };
@@ -296,17 +287,18 @@ const EventDetailPage = () => {
           </div>
         </div>
         <div className="information-text">가격정보</div>
-
-
-
         <div className="home_carousel_section">
           <div className="carousel_container">
-
             <div className="slide_wrapper">
-              <div className="left-arrow" onClick={() => moveSlide('left')}>{"<"} </div>
+              <div className="left-arrow" onClick={() => moveSlide("left")}>
+                {"<"}{" "}
+              </div>
 
-              <div className="slide_container" ref={sliderRef}>
-
+              <div
+                className="slide_container"
+                ref={sliderRef}
+                style={{ scrollBehavior: "auto !important" }}
+              >
                 {imageArray.map((image, index) => {
                   return (
                     <div className="img_div" key={index}>
@@ -322,13 +314,13 @@ const EventDetailPage = () => {
                   );
                 })}
               </div>
-              <div className="right-arrow" onClick={() => moveSlide('left')}>{">"}</div>
-
+              <div className="right-arrow" onClick={() => moveSlide("left")}>
+                {">"}
+              </div>
             </div>
             <div className="index_box">
               {currentIndex} / {imageArray.length}
             </div>
-
           </div>
           <div className="circle_box">
             {imageArray.map((image, index) => {
@@ -349,8 +341,6 @@ const EventDetailPage = () => {
             })}
           </div>
         </div>
-
-
 
         {/* <div className="img">
           <img
