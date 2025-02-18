@@ -143,7 +143,7 @@ const customerNoticeDetail = async (id) => {
     sql += "on bn.beauty_reservation_id = br.beauty_reservation_id ";
     sql += "join pet p  ";
     sql += "on br.pet_id = p.pet_id ";
-    sql += "where bn.beauty_notice_id = :id ";
+    sql += "where bn.beauty_reservation_id = :id ";
 
     const [results, metadata] = await sequelize.query(
       sql,

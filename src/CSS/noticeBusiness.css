@@ -100,8 +100,8 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-items: start;
-    gap: 30px;
-    color: #C4C4C4;
+    gap: 15px;
+    /* color: #C4C4C4; */
 }
 
 /* 기본 체크박스 숨기기 */

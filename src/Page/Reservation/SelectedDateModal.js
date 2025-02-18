@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setDate } from "../../redux/reservationData";
 import { setStartTime } from "../../redux/reservationData";
+import dayjs from "dayjs";
 
 const SelectedDateModal = ({
   openModal,
@@ -27,7 +28,7 @@ const SelectedDateModal = ({
         <p className="title">예약하기</p>
         <p className="content">
           아래 내용이 맞는지 확인해주세요<br />
-          일정 : {selectDate}({selectDay}) {activeTime}시
+          일정 : {dayjs(selectDate).format("MM월 DD일")}({selectDay}) {activeTime}시
         
         </p>
         <div className="btn_box">
