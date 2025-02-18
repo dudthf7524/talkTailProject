@@ -4,14 +4,17 @@ import "../../../CSS/auth.css";
 import "../../../CSS/reservation.css";
 import api from "../../../Api";
 import dayjs from "dayjs";
+import ReservationDetailModal from "../../Modal/ReservationDetailModal";
+
 const ReservationManagement = () => {
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
   const navigate = useNavigate();
   dayjs.locale("ko");
-  
+
   const [reservationManagementList, setReservationManagementList] = useState(
     []
   );
+  const [openPickup, setOpenPickup] = useState(false);
 
   useEffect(() => {
     const fetchReservationManagement = async () => {
@@ -58,22 +61,31 @@ const ReservationManagement = () => {
             {reservationManagement.pet_name}
           </div>
           <div className="reservation-item">
-              {dayjs(reservationManagement.date).format("YYYY년 M월 DD일 (ddd) ")}
-             {reservationManagement.start_time}
+            {dayjs(reservationManagement.date).format("YYYY년 M월 DD일 (ddd) ")}
+            {reservationManagement.start_time}
           </div>
           {reservationManagement.reservation_state === "완료" ? (
             <div
               className="reservation-item"
               style={{ fontWeight: "bold", color: "green" }}
             >
-              완료
+              <div className="reservation-item">
+                <button
+                  className="pickupBtn"
+                  onClick={() => {
+                    setOpenPickup(true);
+                  }}
+                >
+                  픽업요청
+                </button>
+              </div>
             </div>
           ) : reservationManagement.reservation_state === "대기" ? (
             <div
               className="reservation-item"
               style={{ fontWeight: "bold", color: "orange" }}
             >
-              예약대기 중
+              예약대기
             </div>
           ) : reservationManagement.reservation_state === "거절" ? (
             <div
@@ -105,12 +117,26 @@ const ReservationManagement = () => {
                   });
                 }}
               >
-                상세보기
+                예약확인
               </button>
             </div>
           )}
+          {openPickup ? (
+            <ReservationDetailModal
+              openModal={() => {
+                setOpenPickup(false);
+              }}
+              petName={reservationManagement.pet_name}
+              userPhone={reservationManagement.user_phone}
+            />
+          ) : (
+            ""
+          )}
         </div>
+
+
       ))}
+
     </div>
   );
 };
