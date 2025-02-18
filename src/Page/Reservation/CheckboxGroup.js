@@ -2,6 +2,7 @@ import React from 'react';
 import '../../CSS/checkBox.css';
 
 const CheckboxGroup = ({ groupName, checkboxes, checkboxState, onChange }) => {
+    console.log("checkboxState : " + checkboxState)
     const handleCheckboxChange = (e) => {
         const { name, checked } = e.target;
         onChange(name, checked);

@@ -481,6 +481,7 @@ const PetRegistration = () => {
           </div>
           <div className="PetRegistration-container2">
             <p>태어난 날</p>
+            <span style={{textAlign : "left"}}>(태어난 날짜를 모르시는 경우에는 추정 나이를 기준으로 입력해 주세요.)</span>
             <div className="birth-box">
               <input
                 type="text"
