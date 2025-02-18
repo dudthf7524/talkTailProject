@@ -463,12 +463,10 @@ button.verified {
 
 .view-pet {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     height: 64px;
     background-color: #fdf3e2;
     box-sizing: border-box;
-    white-space: nowrap; /* 내부 요소들이 줄 바꿈되지 않도록 설정 */
     padding: 16px 16px;
     width: 100%;
     flex-direction: row;
@@ -494,7 +492,7 @@ button.verified {
     color: #262626;
     font-size: 16px;
     font-weight: 400;
-    text-align: center;
+    text-align: left;
 }
 .view-contents-title{
     width: 30%;

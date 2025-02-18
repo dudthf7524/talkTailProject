@@ -13,10 +13,6 @@ const CustomerManagementDetail = () => {
     useEffect(() => {
         const noticeDetail = async () => {
             try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    throw new Error('No token found.');
-                }
                 const response = await api.get(`/api/customer/notice/detail/${id}`, { withCredentials: true });
                 console.log(response.data)
                 if(response.data === 'common'){

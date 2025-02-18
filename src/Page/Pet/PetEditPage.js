@@ -199,7 +199,7 @@ const PetEditPage = () => {
     }
 
     if (!yearRegex.test(formData.year)) {
-      setBirthDate('태어난 년도를 2000 형식으로 입력해주세요');
+      setBirthDate('유효하지 않은 날짜입니다. 정확한 년, 월, 일을 입력해 주세요.');
       yearRef.current.focus();
       return;
     }
@@ -221,7 +221,7 @@ const PetEditPage = () => {
       return;
     }
     if (!dayRegex.test(formData.day)) {
-      setBirthDate('태어난 일을 31 형식으로 입력해주세요');
+      setBirthDate('유효하지 않은 날짜입니다. 정확한 년, 월, 일을 입력해 주세요.');
       dayRef.current.focus();
       return;
     }

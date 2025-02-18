@@ -4,6 +4,7 @@ import "../../CSS/myPage.css";
 import { useEffect, useState } from "react";
 import api from "../../Api";
 import "../../CSS/reservation.css";
+import dayjs from "dayjs";
 const Reservation = () => {
   const navigate = useNavigate();
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
@@ -44,7 +45,7 @@ const Reservation = () => {
           <div></div>
         </div>
         <div className="reservation-title">
-          <div className="reservation-text">접수일시</div>
+          <div className="reservation-text">펫이름</div>
           <div className="reservation-text">예약일시</div>
           <div className="reservation-text">상태</div>
           <div className="reservation-text">상세보기</div>
@@ -53,16 +54,17 @@ const Reservation = () => {
         {reservationtList.map((reservation, index) => (
           <div key={index} className="reservation-row">
             <div className="reservation-item">
-              {reservation.reservation_applicationTime}
+              {reservation.pet_name}
             </div>
             <div className="reservation-item">
-              {reservation.date} {reservation.start_time}
+              {dayjs(reservation.date).format("YYYY년 M월DD일 (ddd)")}
+              {reservation.start_time}
             </div>
             {reservation.reservation_state === "완료" ? (
               <div style={{ fontWeight: "bold", color: "green" }}>예약완료</div>
             ) : reservation.reservation_state === "대기" ? (
               <div style={{ fontWeight: "bold", color: "orange" }}>
-                예약대기 중
+                예약대기
               </div>
             ) : reservation.reservation_state === "거절" ? (
               <div style={{ fontWeight: "bold", color: "red" }}>예약거절</div>

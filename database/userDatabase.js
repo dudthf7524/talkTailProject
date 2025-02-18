@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 
-const { UserInformation, BeautyReservation, Pet } = require('../models');
+const { UserInformation, BeautyReservation, Pet, sequelize } = require('../models');
 const { User } = require('../models');
 // 사용자 ID를 기반으로 사용자 정보를 조회하는 함수
 const getUserById = async (platform_id, platform) => {
@@ -134,20 +134,29 @@ const userEidt = async (userEditData) => {
 };
 
 const userReservation = async (platform_id) => {
-  console.log("데이터베이스 코드")
-  console.log(platform_id)
-  try {
-    const reservationData = await BeautyReservation.findAll({
-      where: {
-        platform_id: platform_id,
-      },
-    });
+ console.log(platform_id);
+ 
+   try {
+     let sql = "";
+     sql += "select  beauty_reservation_id, pet_name, date, start_time, reservation_state ";
+     sql += "from beauty_reservation br ";
+     sql += "join pet p ";
+     sql += "on br.pet_id = p.pet_id ";
+     sql += "where br.platform_id = :platform_id ";
+     sql += "ORDER BY date DESC, start_time DESC ";
 
-    return reservationData;
-
-  } catch (error) {
-    throw new Error(`Failed to register pet: ${error.message}`);
-  }
+ 
+     const [results, metadata] = await sequelize.query(sql, {
+       replacements: { platform_id: platform_id }, // 바인딩 파라미터
+       type: sequelize.QueryTypes.SELECTALL, // 쿼리 유형
+       logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
+     });
+     console.log(results);
+    
+     return results;
+   } catch (error) {
+     console.error(error)
+   }
 };
 
 const userLoginPet = async (platform_id) => {
