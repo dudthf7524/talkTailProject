@@ -31,8 +31,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 15px;
-  font-weight: 400;
+  font-size: 18px;
+  font-weight: 600;
   color: #f0663f;
   /* border-top: 1px solid #f0663f; */
   border-bottom: 1px solid #f0663f;
@@ -55,7 +55,7 @@
   letter-spacing: -0.1px;
 }
 .acceptModal .content_container > p:nth-child(1) {
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 600;
   margin-top: 10px;
 }

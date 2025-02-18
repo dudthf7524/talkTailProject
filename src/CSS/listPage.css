@@ -12,7 +12,7 @@
   display: flex;
   width: calc(100% - 32px);
   justify-content: space-between; /* 자식 요소들 사이의 간격 최대화 */
-  margin: 14.88% 0 5.58% 0;
+  margin: 35px 0 5.58% 0;
 }
 
 .event-title-button {
@@ -137,7 +137,7 @@
   color: #262626;
   font-size: 20px;
   font-weight: 400;
-  margin-top: 64px;
+  margin-top: 3px;
   margin-bottom: 16px;
 }
 
@@ -300,57 +300,62 @@
   justify-content: space-between;
 }
 
-
-.detailPage_total .home_carousel_section .carousel_container .slide_wrapper .left-arrow {
-
+.detailPage_total
+  .home_carousel_section
+  .carousel_container
+  .slide_wrapper
+  .left-arrow {
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 40px;
   cursor: pointer;
   color: #f0663f;
- 
 }
 
-.detailPage_total .home_carousel_section .carousel_container .slide_wrapper .right-arrow {
- 
+.detailPage_total
+  .home_carousel_section
+  .carousel_container
+  .slide_wrapper
+  .right-arrow {
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 40px;
   cursor: pointer;
   color: #f0663f;
- 
 }
 
-
-.detailPage_total .home_carousel_section .carousel_container .slide_container .img_div {
- 
+.detailPage_total
+  .home_carousel_section
+  .carousel_container
+  .slide_container
+  .img_div {
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   /* border: 1px solid red; */
- 
+
   cursor: auto;
   user-select: none;
 }
 
-
-.detailPage_total .home_carousel_section
+.detailPage_total
+  .home_carousel_section
   .carousel_container
   .slide_container
   .img_div:first-child {
   margin-left: 0px;
 }
-.detailPage_total .home_carousel_section
+.detailPage_total
+  .home_carousel_section
   .carousel_container
   .slide_container
   .img_div:last-child {
   margin-right: 0px;
 }
-
 
 .left-arrow:hover {
   font-weight: 600;

@@ -259,7 +259,7 @@ const EventDetailPage = () => {
         </div>
 
         <div className="event-address">
-          영업시간
+          <span style={{ fontSize: "20px" }}>영업시간</span>
           {dayNames.map((day, index) => {
             const dayInfo = hours[index]; // 요일별 데이터 가져오기
             return (
@@ -274,7 +274,7 @@ const EventDetailPage = () => {
             );
           })}
         </div>
-        <div className="event-button-container">
+        {/* <div className="event-button-container">
           <div className="event-button">
             <a href={`tel:${business.business_phone}`}>
               <button>
@@ -283,8 +283,10 @@ const EventDetailPage = () => {
             </a>
             <div className="event-button-text">전화</div>
           </div>
+        </div> */}
+        <div className="information-text" style={{ paddingLeft: "16px" }}>
+          가격정보
         </div>
-        <div className="information-text">가격정보</div>
         <div className="home_carousel_section">
           <div className="carousel_container">
             <div className="slide_wrapper">

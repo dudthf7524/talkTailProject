@@ -13,7 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
+  z-index: 2;
 }
 .home_carousel_section .carousel_container .slide_wrapper {
   width: 100%;
@@ -22,8 +22,6 @@
   overflow: hidden;
   user-select: none;
 }
-
-
 
 .home_carousel_section .carousel_container .slide_container {
   height: 100%;
