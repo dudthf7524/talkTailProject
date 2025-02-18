@@ -380,13 +380,13 @@ const ReservationRequestPage = () => {
           className="checkBox"
         /> */}
         <div className="reservation-contents">
-          <h1>주의사항</h1>
+          <h1>기타사항</h1>
           <div className="reservation-contents-text">
             <textarea
               ref={textareaRef}
               value={reviewText}
               className="cautions-textarea"
-              placeholder="주의해야 할 사항을 입력해 주세요."
+              placeholder="ex) 물을 무서워 해요. 발톱도 정리 부탁드려요..."
               onChange={handleCautionsChange}
             />
           </div>
@@ -424,10 +424,11 @@ const ReservationRequestPage = () => {
           </div>
         </div>
         <div className="reservation-contents notice">
-          <h1>
-            예약금을 이체한 후 예약을 완료해주세요.
-            <br />
-            예약금이 이체되지 않으면 예약이 안될 수 있습니다.
+          <h1 style={{ textAlign: "left" }}>
+            예약 확정을 위해 예약금을 이체해 주세요.
+            <br /> 미입금 시 자동 취소될 수 있으며,
+            <br /> 예약금은 최종 금액에서 차감됩니다.
+            <br /> 미용 당일에는 잔액만 결제하시면 됩니다.
           </h1>
         </div>
         <div className="payment-container">

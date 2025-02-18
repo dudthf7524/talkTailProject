@@ -194,17 +194,9 @@ const MyPage = () => {
           <div className="support_container">
             <p>고객센터</p>
             <div className="text_box">
-              <p>
-                유선전화 :{" "}
-                <a
-                  style={{ textDecoration: "none", color: "black" }}
-                  href={`tel:${landline_phone}`}
-                >
-                  {" "}
-                  <span style={{ cursor: "pointer" }}>070-4571-7580</span>
-                </a>
-              </p>
-              <p>이메일 : creamoff2021@creamoff.co.kr</p>
+              <p>카카오톡 채널 : talktail</p>
+              <p>이메일 : talktail@creamoff.co.kr</p>
+              <p>상담시간 : 평일 10:00 ~ 16:00</p>
             </div>
           </div>
           <div className="mypage-info-container">

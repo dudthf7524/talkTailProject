@@ -629,7 +629,13 @@
 
 /* ReservationRequestPage.js */
 .reservationRequest_total .reservation-mid {
+  position: inherit;
   height: auto;
+}
+.reservationRequest_total .reservation-head {
+  margin-top: 72px;
+  height: auto;
+  padding: 15px 0;
 }
 .reservationRequest_total .payment-container {
   width: 100%;
@@ -705,8 +711,19 @@
 .reservationRequest_total .account .content p:nth-child(2) {
   margin-right: 20px;
 }
+.reservationRequest_total {
+  width: 430px;
+}
+@media (max-width: 500px) {
+  .reservationRequest_total {
+    width: 100%;
+  }
+}
 .reservationRequest_total .Nbutton {
+  width: 430px;
   position: fixed;
+  margin: 0 auto;
+  left: 0;
 }
 
 /* Notice.js */

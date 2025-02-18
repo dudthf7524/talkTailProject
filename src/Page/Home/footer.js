@@ -51,7 +51,7 @@ const Footer = () => {
             <div>514-87-03021</div>
             <div>2025-경북경산-0073</div>
             <div>경상북도 경산시 삼풍로 27, 309호</div>
-            <div>creamoff2021@creamoff.co.kr</div>
+            <div>talktail@creamoff.co.kr</div>
           </div>
         </div>
         <div className="tail-co">@TalkTail co Ltd. All rigths reserved</div>
