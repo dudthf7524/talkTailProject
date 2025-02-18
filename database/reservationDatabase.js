@@ -277,6 +277,27 @@ const reservationBookmark = async (platform_id) => {
   }
 };
 
+const pickup = async (id) => {
+  console.log(id)
+  try {
+    const result = await BeautyReservation.update(
+      {
+        reservation_state: "픽업완료"
+      },
+      {
+        where: {
+          beauty_reservation_id: id,
+        },
+      });
+    return result;
+  } catch (error) {
+    console.error(error)
+    throw new Error(
+      "Failed to create RegisterBeautySignificant: " + error.message
+    );
+  }
+};
+
 module.exports = {
   beautyReservation,
   beautyReservationGet,
@@ -289,4 +310,5 @@ module.exports = {
   businessHours,
   businessReservation,
   reservationBookmark,
+  pickup,
 };

@@ -15,6 +15,9 @@ const ReservationManagement = () => {
     []
   );
   const [openPickup, setOpenPickup] = useState(false);
+  const [id, setId] = useState('');
+  const [userPhone, setUserPhone] = useState('');
+  const [petNmae, setPetName] = useState('');
 
   useEffect(() => {
     const fetchReservationManagement = async () => {
@@ -64,21 +67,24 @@ const ReservationManagement = () => {
             {dayjs(reservationManagement.date).format("YYYY년 M월 DD일 (ddd) ")}
             {reservationManagement.start_time}
           </div>
-          {reservationManagement.reservation_state === "완료" ? (
+          {reservationManagement.reservation_state === "픽업완료" ? (
             <div
               className="reservation-item"
               style={{ fontWeight: "bold", color: "green" }}
             >
-              <div className="reservation-item">
-                <button
-                  className="pickupBtn"
-                  onClick={() => {
-                    setOpenPickup(true);
-                  }}
-                >
-                  픽업요청
-                </button>
-              </div>
+              완료
+            </div>
+          ) : reservationManagement.reservation_state === "완료" ? (
+            <div className="reservation-item">
+              <button
+                className="pickupBtn"
+                onClick={() => {
+                  setOpenPickup(true);
+                  setId(reservationManagement.beauty_reservation_id)
+                }}
+              >
+                픽업요청
+              </button>
             </div>
           ) : reservationManagement.reservation_state === "대기" ? (
             <div
@@ -121,22 +127,23 @@ const ReservationManagement = () => {
               </button>
             </div>
           )}
-          {openPickup ? (
-            <ReservationDetailModal
-              openModal={() => {
-                setOpenPickup(false);
-              }}
-              petName={reservationManagement.pet_name}
-              userPhone={reservationManagement.user_phone}
-            />
-          ) : (
-            ""
-          )}
+
         </div>
 
 
       ))}
-
+      {openPickup ? (
+        <ReservationDetailModal
+          openModal={() => {
+            setOpenPickup(false);
+          }}
+          id={id}
+          petName={userPhone}
+          userPhone={petNmae}
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
