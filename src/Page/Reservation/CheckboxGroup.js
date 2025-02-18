@@ -1,4 +1,5 @@
 import React from 'react';
+import '../../CSS/checkBox.css';
 
 const CheckboxGroup = ({ groupName, checkboxes, checkboxState, onChange }) => {
     const handleCheckboxChange = (e) => {

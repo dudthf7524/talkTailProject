@@ -70,7 +70,7 @@ const PetSelectPage = () => {
         <button onClick={goBack}>
           <img src={arrowButtonUrl} alt="뒤로가기" />
         </button>
-        예약 펫 선택
+        마이펫 리스트
         <div></div>
       </div>
       <PetInfo
@@ -82,6 +82,15 @@ const PetSelectPage = () => {
       <div
         className="Nbutton"
         onClick={() => {
+        
+          if(!selectedPet){
+            setShowWarning(true);
+            setTimeout(() => {
+              setShowWarning(false);
+            }, 1000);
+            return;
+          }
+
           const petAge = calculateAge(selectedPet.pet_birth);
           console.log("petAge : ", typeof petAge);
           if (!selectedPet) {
@@ -98,7 +107,7 @@ const PetSelectPage = () => {
         }}
         style={{ cursor: "pointer" }}
       >
-        다음
+        다음 단계
       </div>
       {openModal ? (
         <AcceptOldModal

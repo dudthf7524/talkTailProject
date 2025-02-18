@@ -347,7 +347,7 @@ const SelectedDatePage = () => {
           <button>
             <img src={arrowButtonUrl} alt="" onClick={goBack} />
           </button>
-          예약하기
+          예약날짜
           <div></div>
         </div>
         <div className="main-mid">
@@ -365,6 +365,7 @@ const SelectedDatePage = () => {
                 maxDate={maxDate}
                 className="large-datepicker"
                 renderDayContents={renderDayContents}
+                 dateFormatCalendar="yyyy년 MM월"
               />
               <style>
                 {`
@@ -441,12 +442,12 @@ const SelectedDatePage = () => {
           }
           /* 왼쪽 화살표 */
           .react-datepicker__navigation--previous {
-            left: 30%; /* 월 텍스트의 왼쪽에 배치 */
+            left: 25%; /* 월 텍스트의 왼쪽에 배치 */
           }
 
           /* 오른쪽 화살표 */
           .react-datepicker__navigation--next {
-            right: 30%; /* 월 텍스트의 오른쪽에 배치 */
+            right: 25%; /* 월 텍스트의 오른쪽에 배치 */
           }
          
 
@@ -523,7 +524,7 @@ const SelectedDatePage = () => {
         }}
         style={{ cursor: "pointer" }}
       >
-        예약하기
+        다음 단계
       </div>
       {openModal ? (
         <SelectedDateModal

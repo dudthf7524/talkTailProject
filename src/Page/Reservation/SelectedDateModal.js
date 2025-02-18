@@ -24,18 +24,18 @@ const SelectedDateModal = ({
       <div className="back" onClick={openModal}></div>
       <div className="modal_container selectedDateModal">
         <img onClick={openModal} src="/PageImage/components/X.svg" alt="" />
-        <p className="title">예약</p>
+        <p className="title">예약하기</p>
         <p className="content">
-          날짜 : {selectDate}({selectDay})
-          <br />
-          시간 : {activeTime} <br />위 내용으로 예약을 진행하겠습니까?
+          아래 내용이 맞는지 확인해주세요<br />
+          일정 : {selectDate}({selectDay}) {activeTime}시
+        
         </p>
         <div className="btn_box">
           <div className="btn" onClick={openModal}>
-            취소하기
+            다시선택
           </div>
           <div className="btn" onClick={handleItemClick}>
-            예약하기
+            다음단계
           </div>
         </div>
       </div>
