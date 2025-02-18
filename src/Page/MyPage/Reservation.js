@@ -7,6 +7,7 @@ import "../../CSS/reservation.css";
 import dayjs from "dayjs";
 const Reservation = () => {
   const navigate = useNavigate();
+  dayjs.locale("ko");
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
 
   const [reservationtList, setReservationtList] = useState([]);
