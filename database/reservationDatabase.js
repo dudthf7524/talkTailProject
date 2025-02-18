@@ -36,17 +36,28 @@ const beautyReservation = async (beautyReservationData) => {
 };
 
 const beautyReservationGet = async (business_registration_number) => {
+
   try {
-    const BeautyReservationData = await BeautyReservation.findAll({
-      where: {
-        business_registration_number: business_registration_number,
-      },
-    });
-    return BeautyReservationData;
-  } catch (error) {
-    console.log(error);
-    throw new Error(`Failed to register pet: ${error.message}`);
-  }
+     let sql = "";
+     sql += "select  beauty_reservation_id, pet_name, date, start_time, reservation_state ";
+     sql += "from beauty_reservation br ";
+     sql += "join pet p ";
+     sql += "on br.pet_id = p.pet_id ";
+     sql += "where br.business_registration_number = :business_registration_number ";
+     sql += "ORDER BY date DESC, start_time DESC ";
+
+ 
+     const [results, metadata] = await sequelize.query(sql, {
+       replacements: { business_registration_number: business_registration_number }, // 바인딩 파라미터
+       type: sequelize.QueryTypes.SELECTALL, // 쿼리 유형
+       logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
+     });
+     console.log(results);
+    
+     return results;
+   } catch (error) {
+     console.error(error)
+   }
 };
 const beautyReservationDetail = async (id) => {
   try {
