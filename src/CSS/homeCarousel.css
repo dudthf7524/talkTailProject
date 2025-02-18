@@ -8,12 +8,12 @@
   width: 100%;
   height: auto;
   position: relative;
- 
+  height: 483.75px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 0;
+  z-index: 2;
 }
 .home_carousel_section .carousel_container .slide_wrapper {
   width: 100%;
@@ -21,12 +21,7 @@
   display: flex;
   overflow: hidden;
   user-select: none;
-  touch-action: pan-y; /* x축 스크롤을 막고 y축은 허용 */
-  -webkit-user-drag: none; /* Safari 브라우저에서 드래그 방지 */
-  pointer-events: auto;
 }
-
-
 
 .home_carousel_section .carousel_container .slide_container {
   height: 100%;
@@ -36,9 +31,6 @@
   scroll-behavior: smooth;
   user-select: none;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-y; /* x축 스크롤을 막고 y축은 허용 */
-  -webkit-user-drag: none; /* Safari 브라우저에서 드래그 방지 */
-  pointer-events: auto;
 }
 .home_carousel_section .carousel_container .slide_container::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge, Opera용 */
@@ -54,10 +46,6 @@
   margin-right: 8.6px;
   cursor: pointer;
   user-select: none;
-  touch-action: pan-y; /* x축 스크롤을 막고 y축은 허용 */
-  -webkit-user-drag: none; /* Safari 브라우저에서 드래그 방지 */
-  pointer-events: auto;
-  
 }
 @media (max-width: 500px) {
   .home_carousel_section .carousel_container {

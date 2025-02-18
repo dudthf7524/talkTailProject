@@ -563,6 +563,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  z-index: 3;
 }
 .detailPage_total .Nbutton_box .Nbtn {
   width: 50%;
@@ -587,8 +588,9 @@
   width: 430px;
 }
 @media (max-width: 500px) {
-  .detailPage_total .Nbutton {
+  .detailPage_total .Nbutton_box {
     width: 100%;
+    left: 0;
   }
 }
 .Nbutton {
@@ -627,7 +629,13 @@
 
 /* ReservationRequestPage.js */
 .reservationRequest_total .reservation-mid {
+  position: inherit;
   height: auto;
+}
+.reservationRequest_total .reservation-head {
+  margin-top: 72px;
+  height: auto;
+  padding: 15px 0;
 }
 .reservationRequest_total .payment-container {
   width: 100%;
@@ -703,8 +711,19 @@
 .reservationRequest_total .account .content p:nth-child(2) {
   margin-right: 20px;
 }
+.reservationRequest_total {
+  width: 430px;
+}
+@media (max-width: 500px) {
+  .reservationRequest_total {
+    width: 100%;
+  }
+}
 .reservationRequest_total .Nbutton {
+  width: 430px;
   position: fixed;
+  margin: 0 auto;
+  left: 0;
 }
 
 /* Notice.js */
@@ -780,4 +799,17 @@
 .reservationModal_total .modal-content1 p:nth-child(1) {
   font-size: 20px;
   font-weight: 600;
+}
+
+/* Authority.js */
+
+.authority_total .text_box {
+  width: 100%;
+  height: auto;
+  margin-top: auto;
+  margin-bottom: 150px;
+}
+.authority_total .text_box p {
+  font-size: 20px;
+  margin: 0;
 }

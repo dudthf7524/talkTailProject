@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // useNavigate 훅을 임포트합니다.
 import api from "../../Api";
 import PetInfoModal from "./PetInfoModal";
-import NButtonContainer from "../Components/NavigatorBar/NButtonContainer";
 
 const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
   const male = `${process.env.PUBLIC_URL}/gender/male.png`;
@@ -78,6 +77,8 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
 
   const handlePetSelect = (pet) => {
     if (isSelectable) {
+      console.log(pet.pet_id)
+      
       setSelectedPetId(pet.pet_id);
       onSelectPet(pet);
     } else {
@@ -122,9 +123,7 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
             <div
               className={`pet-contents ${selectedPetId === pet.pet_id ? "selected" : ""
                 }`}
-              onClick={() => {
-                handlePetSelect(pet);
-              }}
+            
               key={pet.pet_id}
             >
               <div className="pet-contents-img">
@@ -148,11 +147,14 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
                     몸무게 : {pet.pet_weight}kg<br></br>
                     중성화 여부  : {pet.pet_neuter}
                   </p>
+                  <button onClick={() => {
+                    handlePetSelect(pet);
+                  }} style={{ width: "50%", height: "50px", color: "white", backgroundColor: "#f0663f" }}>선택하기</button>
                 </div>
               </div>
 
               {fileName === "list" ? (
-                <div className="pet-accordion-content deleteBtn"  onClick={(e) => {
+                <div className="pet-accordion-content deleteBtn" onClick={(e) => {
                   setOpenModal(true);
                   setPetId(pet.pet_id);
                   setPetImage(pet.petimage);

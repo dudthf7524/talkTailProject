@@ -10,6 +10,7 @@ const authMiddleware = (req, res, next) => {
 
   if (!authHeader) {
     return res.status(401).json({ message: '인증 토큰을 찾을 수 없습니다.' });
+    
   }
 
   const token = authHeader.split(' ')[1];

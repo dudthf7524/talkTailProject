@@ -36,7 +36,7 @@ const PetEditPage = () => {
     month: "",
     day: "",
   });
-  
+
   useEffect(() => {
     dispatch(fetchPetData(id));
   }, [dispatch, id]);
@@ -45,11 +45,11 @@ const PetEditPage = () => {
     if (petData) {
       console.log(petData);
       const petAge = petData.pet_birth.split("-");
-      
+
       const year = petAge[0];
       const month = petAge[1];
       const day = petAge[2];
-      
+
       setFormData({
         name: petData.pet_name || "",
         species: petData.pet_species || "",
@@ -61,10 +61,10 @@ const PetEditPage = () => {
         neuter: petData.pet_neuter || "",
         image: petData.petimage || "",
         year: year || "",
-        month:month || "",
+        month: month || "",
         day: day || "",
       });
-    
+
       setPetImgUrl(petData.petimage || defaultPetImgUrl); // 기존 이미지 URL 설정
       setSelectedSpecies(petData.pet_species);
       setSelectedOption(petData.pet_breed); // breed 값 반영
@@ -108,7 +108,7 @@ const PetEditPage = () => {
   const photoUrl = `${process.env.PUBLIC_URL}/PageImage/pet/photo.svg`;
   const [petImgUrl, setPetImgUrl] = useState(defaultPetImgUrl); // 이미지 URL 상태
   const [selectedImageFile, setSelectedImageFile] = useState(null); // 선택된 이미지 파일
- 
+
   formData.species = selectedSpecies;
   formData.breed = selectedOption;
 
@@ -162,8 +162,8 @@ const PetEditPage = () => {
     const weightRegex = /^\d+(\.\d{1})?$/;
     const etcRegex = /^[\uAC00-\uD7A3]{1,20}$/
     const yearRegex = /^\d{4}$/;
-    const monthRegex = /^\d{2}$/;
-    const dayRegex = /^\d{2}$/;
+    const monthRegex = /^(0[1-9]|1[0-2])$/;
+    const dayRegex = /^(0[1-9]|[12][0-9]|3[01])$/;
 
     setName('');
     setImage('');
@@ -199,7 +199,7 @@ const PetEditPage = () => {
     }
 
     if (!yearRegex.test(formData.year)) {
-      setBirthDate('태어난 년도를 2000 형식으로 입력해주세요');
+      setBirthDate('유효하지 않은 날짜입니다. 정확한 년, 월, 일을 입력해 주세요.');
       yearRef.current.focus();
       return;
     }
@@ -210,7 +210,7 @@ const PetEditPage = () => {
       return;
     }
     if (!monthRegex.test(formData.month)) {
-      setBirthDate('태어난 월을 05 형식으로 입력해주세요');
+      setBirthDate('유효하지 않은 날짜입니다. 정확한 년, 월, 일을 입력해 주세요.');
       montheRef.current.focus();
       return;
     }
@@ -221,7 +221,7 @@ const PetEditPage = () => {
       return;
     }
     if (!dayRegex.test(formData.day)) {
-      setBirthDate('태어난 일을 31 형식으로 입력해주세요');
+      setBirthDate('유효하지 않은 날짜입니다. 정확한 년, 월, 일을 입력해 주세요.');
       dayRef.current.focus();
       return;
     }
@@ -260,6 +260,7 @@ const PetEditPage = () => {
     }
     return true;
   };
+
 
 
   // 이미지 업로드 처리
@@ -338,15 +339,17 @@ const PetEditPage = () => {
           <button>
             <img src={arrowButtonUrl} alt="" onClick={goBack} />
           </button>
-          펫 수정
+          마이펫 정보 수정
           <div></div>
         </div>
         <div className="re-mid">
-          <div className="PetRegistration-img-container" ref={imageRef} tabIndex={0}>
+          <div className="PetRegistration-img-container" ref={imageRef} tabIndex={0} style={{ cursor: "pointer" }}>
             <div className="PetRegistration-content">
               <div className="upload-img">
                 {/* 업로드된 이미지를 미리보기로 표시 */}
-                <img src={petImgUrl} alt="" />
+                <label htmlFor="imageUpload">
+                  <img src={petImgUrl} alt="" />
+                </label>
               </div>
               <div className="photo">
                 <input
@@ -376,7 +379,7 @@ const PetEditPage = () => {
             {name && <div className="pet-registration-page-error-box">{name}</div>}
           </div>
           <div className="PetRegistration-container2">
-            <p>종류</p>
+            <p>종</p>
 
             <div
               style={{ position: "relative", zIndex: 1 }}
@@ -433,20 +436,20 @@ const PetEditPage = () => {
                   {/* 옵션 목록 */}
                   <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
                     {/* TOP1 옵션 */}
-                   
-                      <>
-                        <li
-                          style={{
-                            fontWeight: "bold",
-                            padding: "10px",
-                            backgroundColor: "#f9f9f9",
-                          }}
-                        >
-                          {selectedSpecies} 품종 목록
-                        </li>
-                        
-                      </>
-                    
+
+                    <>
+                      <li
+                        style={{
+                          fontWeight: "bold",
+                          padding: "10px",
+                          backgroundColor: "#f9f9f9",
+                        }}
+                      >
+                        {selectedSpecies} 품종 목록
+                      </li>
+
+                    </>
+
                     {/* TOP1 옵션 */}
                     {filteredTopOptions.length > 0 && (
                       <>
@@ -507,6 +510,7 @@ const PetEditPage = () => {
           </div>
           <div className="PetRegistration-container2">
             <p>태어난 날</p>
+            <span style={{ textAlign: "left" }}>(태어난 날짜를 모르시는 경우에는 추정 나이를 기준으로 입력해 주세요.)</span>
             <div className="birth-box">
               <input
                 type="text"
@@ -539,10 +543,11 @@ const PetEditPage = () => {
                 onChange={handleInputChange}
               />
             </div>
+
             {birthDate && <div className="pet-registration-page-error-box">{birthDate}</div>}
           </div>
           <div className="PetRegistration-container2">
-            <p>몸무게</p>
+            <p>몸무게(kg)</p>
             <div className="PetRegistration-container">
               <input
                 type="text"
@@ -569,7 +574,7 @@ const PetEditPage = () => {
                 netur={""}
               />
             </div>
-           
+
             <div className="PetRegistration-container2">
               <p>중성화 여부</p>
               <RadioButton
@@ -583,7 +588,7 @@ const PetEditPage = () => {
                 netur={"netur-"}
               />
             </div>
-            
+
             {/* <div className='PetRegistration-container2'>
                             <p>기타 추가 사항이</p>
                             <RadioButton

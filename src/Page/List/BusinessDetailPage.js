@@ -32,12 +32,7 @@ const EventDetailPage = () => {
   const dispatch = useDispatch();
   const dayNames = ["일", "월", "화", "수", "목", "금", "토"]; // 요일 배열
 
-
-
-
-
   const sliderRef = useRef(null);
-
 
   const handleDragStart = (e) => {
     e.preventDefault();
@@ -74,7 +69,6 @@ const EventDetailPage = () => {
       });
     }
   };
-
 
   const handleButtonClick = () => {
     setIsButtonClicked(!isButtonClicked);
@@ -181,8 +175,7 @@ const EventDetailPage = () => {
     fetchBusiness();
   }, [id]);
 
-
-  console.log(business)
+  console.log(business);
 
   const imageArray = [];
 
@@ -197,8 +190,6 @@ const EventDetailPage = () => {
   if (business.business_price_image3) {
     imageArray.push({ imgUrl: business.business_price_image3 });
   }
-
-
 
   // 주어진 시간 데이터를 'HH:MM:SS' 형식에서 'HH:MM' 형식으로 변환
   const formatTime = (time) => {
@@ -224,25 +215,25 @@ const EventDetailPage = () => {
     let slideAmount = windowWidth > 500 ? 387 + 8.6 : windowWidth * 0.92;
 
     let newIndex = currentIndex;
-   // 왼쪽 버튼 클릭 시
-  if (direction === 'left') {
-    // 첫 번째 슬라이드에서 왼쪽 버튼 클릭 시 아무 동작도 안함
-    if (currentIndex === 1) return; 
-    newIndex = currentIndex === 1 ? imageArray.length : currentIndex - 1;
-  } 
-  // 오른쪽 버튼 클릭 시
-  else if (direction === 'right') {
-    // 마지막 슬라이드에서 오른쪽 버튼 클릭 시 아무 동작도 안함
-    if (currentIndex === imageArray.length) return; 
-    newIndex = currentIndex === imageArray.length ? 1 : currentIndex + 1;
-  }
+    // 왼쪽 버튼 클릭 시
+    if (direction === "left") {
+      // 첫 번째 슬라이드에서 왼쪽 버튼 클릭 시 아무 동작도 안함
+      if (currentIndex === 1) return;
+      newIndex = currentIndex === 1 ? imageArray.length : currentIndex - 1;
+    }
+    // 오른쪽 버튼 클릭 시
+    else if (direction === "right") {
+      // 마지막 슬라이드에서 오른쪽 버튼 클릭 시 아무 동작도 안함
+      if (currentIndex === imageArray.length) return;
+      newIndex = currentIndex === imageArray.length ? 1 : currentIndex + 1;
+    }
 
     setCurrentIndex(newIndex);
 
     if (sliderRef.current) {
       sliderRef.current.scrollTo({
         left: slideAmount * (newIndex - 1),
-        behavior: 'smooth',
+        behavior: "smooth",
       });
     }
   };
@@ -285,8 +276,8 @@ const EventDetailPage = () => {
                 {day}&nbsp;&nbsp;
                 {dayInfo && dayInfo.isOperatingDay
                   ? `${formatTime(dayInfo.start_time)} - ${formatTime(
-                    dayInfo.end_time
-                  )}`
+                      dayInfo.end_time
+                    )}`
                   : "휴무"}
               </p>
             );
@@ -306,12 +297,12 @@ const EventDetailPage = () => {
         <div className="information-text">가격정보</div>
         <div className="home_carousel_section">
           <div className="carousel_container">
-
             <div className="slide_wrapper">
-              <div className="left-arrow" onClick={() => moveSlide('left')}>{"<"} </div>
+              <div className="left-arrow" onClick={() => moveSlide("left")}>
+                {"<"}{" "}
+              </div>
 
               <div className="slide_container" ref={sliderRef}>
-
                 {imageArray.map((image, index) => {
                   return (
                     <div className="img_div" key={index}>
@@ -327,13 +318,13 @@ const EventDetailPage = () => {
                   );
                 })}
               </div>
-              <div className="right-arrow" onClick={() => moveSlide('right')}>{">"}</div>
-
+              <div className="right-arrow" onClick={() => moveSlide("right")}>
+                {">"}
+              </div>
             </div>
             <div className="index_box">
               {currentIndex} / {imageArray.length}
             </div>
-
           </div>
           <div className="circle_box">
             {imageArray.map((image, index) => {
@@ -354,8 +345,6 @@ const EventDetailPage = () => {
             })}
           </div>
         </div>
-
-
 
         {/* <div className="img">
           <img
@@ -388,8 +377,13 @@ const EventDetailPage = () => {
         </div>
       </div>
       <div className="Nbutton_box">
-        <div className="Nbtn" onClick={() => { }} style={{ cursor: "pointer" }}>
-          <a style={{ textDecoration: "none", color: "#f0663f" }} href={`tel:${business.business_phone}`}>전화하기</a>
+        <div className="Nbtn" onClick={() => {}} style={{ cursor: "pointer" }}>
+          <a
+            style={{ textDecoration: "none", color: "#f0663f" }}
+            href={`tel:${business.business_phone}`}
+          >
+            전화하기
+          </a>
         </div>
         <div
           className="Nbtn"

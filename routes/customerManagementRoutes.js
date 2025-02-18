@@ -50,9 +50,10 @@ router.get('/customer/notice/list',authMiddleware, async (req, res) => {
 
 })
 
-router.get('/customer/notice/detail/:id',authMiddleware, async (req, res) => {
+router.get('/customer/notice/detail/:id',authMiddlewareSession, async (req, res) => {
     const platform_id = req.user.id;
     const id  = req.params.id;
+    console.log(id)
     
     try {
         const result = await customerManagementDatabase.customerNoticeDetail(id);

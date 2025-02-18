@@ -7,6 +7,7 @@ import api from "../../Api";
 import AuthorityReauest from "../Components/AuthorityReauest";
 import "../../CSS/reservationModal.css";
 import Modal from "../../modal";
+import ModalReject from "../../modalReject";
 
 const ListPage = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const ListPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalContent, setModalContent] = useState("");
+  const [openModalReject, setOpenModalReject] = useState(false);
   const handleAuthorityRequestClick = (
     business_registration_number,
     business_owner_phone
@@ -51,6 +53,7 @@ const ListPage = () => {
       userAuthorityRequestButton(selectedBusiness); // 권한 요청 함수 호출
     }
     setShowModal(false); // 모달 닫기
+    // navigate("/authority/management");
   };
 
   // 4. 모달 닫기 버튼 클릭 시 모달 닫기
@@ -118,7 +121,7 @@ const ListPage = () => {
           business_registration_number: business_registration_number,
           business_owner_phone: business_owner_phone,
         });
-        setModalMessage("권한 요청을 하시겠습니까?"); // 모달 메시지 설정
+        setModalMessage("단골 등록하시겠어요?"); // 모달 메시지 설정
         setShowModal(true); // 모달 띄우기
       } else if (response.data.authority_state === "") {
         // setModalMessage("권한 요청 완료 후 이용 가능합니다.");
@@ -126,8 +129,7 @@ const ListPage = () => {
         setModalContent("권한 요청 완료 후 이용 가능합니다.");
         setOpenModal(true);
       } else if (response.data.authority_state === "거절") {
-        setModalContent("권한 요청 거절");
-        setOpenModal(true);
+        setOpenModalReject(true);
       } else if (response.data.authority_state === "대기") {
         setModalContent("권한 요청 대기 중입니다.");
         setOpenModal(true);
@@ -213,7 +215,7 @@ const ListPage = () => {
         }
       );
       console.log("Upload successful", response.data);
-      window.location.href = "/list/beauty";
+      window.location.href = "/authority/management";
     } catch (error) {
       console.error("Error occurred:", error);
     }
@@ -249,7 +251,7 @@ const ListPage = () => {
             value={searchTerm} // 입력 값은 상태로 관리
             onChange={handleSearchChange} // 입력 값 변경 시 onChange 이벤트 발생
           />
-          
+
           {/* <button>
             <img src={trailingUrl} alt="trailing" />
           </button> */}
@@ -358,7 +360,7 @@ const ListPage = () => {
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content1">
-            <p className="title">권한요청</p>
+            <p className="title">단골 승인</p>
             <p>
               <span>{selectBusinessName}</span>에<br /> {modalMessage}
             </p>
@@ -370,10 +372,10 @@ const ListPage = () => {
                   setShowModal(false);
                 }}
               >
-                닫기
+                아니요
               </div>
               <div className="btn" onClick={handleConfirmAuthorityRequest}>
-                확인
+                네
               </div>
             </div>
           </div>
@@ -386,6 +388,15 @@ const ListPage = () => {
           }}
           title={modalTitle}
           content={modalContent}
+        />
+      ) : (
+        ""
+      )}
+      {openModalReject ? (
+        <ModalReject
+          openModal={() => {
+            setOpenModalReject(false);
+          }}
         />
       ) : (
         ""

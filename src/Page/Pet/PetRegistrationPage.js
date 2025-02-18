@@ -78,8 +78,8 @@ const PetRegistration = () => {
     const etcRegex = /^[\uAC00-\uD7A3a-zA-Z0-9\s.!?]{1,20}$/;
 
     const yearRegex = /^\d{4}$/;
-    const monthRegex = /^\d{2}$/;
-    const dayRegex = /^\d{2}$/;
+    const monthRegex = /^(0[1-9]|1[0-2])$/;
+    const dayRegex = /^(0[1-9]|[12][0-9]|3[01])$/;
 
     setName('');
     setImage('');
@@ -117,7 +117,7 @@ const PetRegistration = () => {
     }
 
     if (!yearRegex.test(formData.year)) {
-      setBirthDate('태어난 년도를 2000 형식으로 입력해주세요');
+      setBirthDate('유효하지 않은 날짜입니다. 정확한 년, 월, 일을 입력해 주세요.');
       yearRef.current.focus();
       return;
     }
@@ -128,7 +128,7 @@ const PetRegistration = () => {
       return;
     }
     if (!monthRegex.test(formData.month)) {
-      setBirthDate('태어난 월을 05 형식으로 입력해주세요');
+      setBirthDate('유효하지 않은 날짜입니다. 정확한 년, 월, 일을 입력해 주세요.');
       montheRef.current.focus();
       return;
     }
@@ -139,7 +139,7 @@ const PetRegistration = () => {
       return;
     }
     if (!dayRegex.test(formData.day)) {
-      setBirthDate('태어난 일을 31 형식으로 입력해주세요');
+      setBirthDate('유효하지 않은 날짜입니다. 정확한 년, 월, 일을 입력해 주세요.');
       dayRef.current.focus();
       return;
     }
@@ -481,6 +481,7 @@ const PetRegistration = () => {
           </div>
           <div className="PetRegistration-container2">
             <p>태어난 날</p>
+            <span style={{textAlign : "left"}}>(태어난 날짜를 모르시는 경우에는 추정 나이를 기준으로 입력해 주세요.)</span>
             <div className="birth-box">
               <input
                 type="text"

@@ -7,8 +7,11 @@ import { useNavigate, useParams } from "react-router-dom";
 // import ReservationCheckModal from './Modal/ReservationCheck';
 // import '../CSS/reservationModal.css'
 import api from "../../Api";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
 import { addMinutes, format, isWithinInterval, parse } from "date-fns";
 const ReservationDetail = () => {
+  dayjs.locale("ko");
   const navigate = useNavigate();
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
   const { id } = useParams();
@@ -35,7 +38,6 @@ const ReservationDetail = () => {
         console.log(response.data);
       } catch (error) {
         console.error("예약관리 상세보기 실패", error);
-        navigate("/business/login"); // 로그인 페이지로 리디렉션
       }
     };
     fetchUser();
@@ -158,12 +160,12 @@ const ReservationDetail = () => {
 
       <div className="detail-form1">
         <div className="detail-form2">
-          <div className="detail-title">미용사</div>
+          <div className="detail-title">디자이너</div>
           <div className="detail-info">
             {reservationManagementList.business_desinger_name}
           </div>
         </div>
-        <div className="detail-form2">
+        {/* <div className="detail-form2">
           <div className="detail-title">보호자 연락처</div>
           <div className="detail-info">
             {reservationManagementList.user_phone}
@@ -212,14 +214,14 @@ const ReservationDetail = () => {
           <div className="detail-info">
             {reservationManagementList.pet_neuter}
           </div>
-        </div>
+        </div> */}
         <div className="detail-form2">
           <div className="detail-title">스타일</div>
           <div className="detail-info">
             {reservationManagementList.beauty_style}
           </div>
         </div>
-        <div className="detail-form2">
+        {/* <div className="detail-form2">
           <div className="detail-title">특이사항</div>
           <div className="detail-info">
             {reservationManagementList.beauty_significant}
@@ -230,10 +232,12 @@ const ReservationDetail = () => {
           <div className="detail-info">
             {reservationManagementList.beauty_caution}
           </div>
-        </div>
+        </div> */}
         <div className="detail-form2">
           <div className="detail-title">예약날짜</div>
-          <div className="detail-info">{reservationManagementList.date}</div>
+          <div className="detail-info">
+            {dayjs(reservationManagementList.date).format("M월DD일 (ddd)")}
+          </div>
         </div>
         <div className="detail-form2">
           <div className="detail-title">시작시간</div>
@@ -277,7 +281,7 @@ const ReservationDetail = () => {
           <div className="detail-form2">
             <div className="detail-title">미용금액</div>
             <div className="detail-info">
-              {reservationManagementList.beauty_price} 원
+              {reservationManagementList.beauty_price.toLocaleString()} 원
             </div>
           </div>
         ) : reservationManagementList.reservation_state === "대기" ? (
@@ -294,7 +298,7 @@ const ReservationDetail = () => {
       </div>
 
       {reservationManagementList.reservation_state === "완료" ? (
-        <div className="footer-button">예약이 완료되었습니다.</div>
+        <div className="footer-button">예약이 완료되었습니다:)</div>
       ) : reservationManagementList.reservation_state === "대기" ? (
         <div className="footer-button">
           {/* <button className='reject-btn' onClick={() => openModal('reject')}>거절</button>
