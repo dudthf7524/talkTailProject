@@ -460,17 +460,17 @@ button.verified {
 
 .view-pet {
   display: flex;
-    justify-content: space-between;
-    height: 64px;
-    background-color: #fdf3e2;
-    box-sizing: border-box;
-    padding: 16px 16px;
-    width: 100%;
-    flex-direction: row;
-    flex-shrink: 0;
-    color: #262626;
-    font-size: 20px;
-    font-weight: 700;
+  justify-content: space-between;
+  height: 64px;
+  background-color: #fdf3e2;
+  box-sizing: border-box;
+  padding: 16px 16px;
+  width: 100%;
+  flex-direction: row;
+  flex-shrink: 0;
+  color: #262626;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .view-pet p {
