@@ -171,9 +171,16 @@ const MainPage = () => {
   };
 
   const [openModal, setOpenModal] = useState(false);
-  const modalTitle = "알림";
-  const modalContent = "해당 서비스는 준비 중입니다.";
+  const [modalTitle, setModalTitle] = useState("알림");
+  const [modalContent, setModalContent] =
+    useState("해당 서비스는 준비 중입니다.");
+
   console.log("user : ", user);
+  const serviceModal = () => {
+    setModalTitle("알림");
+    setModalContent("해당 서비스는 준비 중입니다.");
+    setOpenModal(true);
+  };
   return (
     <div lang="ko" className="main_container">
       <div className="mid home_total">
@@ -256,49 +263,45 @@ const MainPage = () => {
           <div className="item_container">
             <div
               className="button-item first"
-              onClick={() => handleItemClick("beauty")}
+              onClick={() => {
+                if (!user) {
+                  setModalTitle("알림");
+                  setModalContent("로그인 후 이용해주세요.");
+                  setOpenModal(true);
+                } else {
+                  handleItemClick("beauty");
+                }
+              }}
             >
               <img src={b1Url} alt="" />
             </div>
             {/* <div className="button-item" onClick={() => handleItemClick(2)}> */}
-            <div className="button-item" onClick={() => setOpenModal(true)}>
+            <div className="button-item" onClick={serviceModal}>
               <img src={b2Url} alt="" />
             </div>
             {/* <div className="button-item" onClick={() => handleItemClick(3)}> */}
-            <div
-              className="button-item third"
-              onClick={() => setOpenModal(true)}
-            >
+            <div className="button-item third" onClick={serviceModal}>
               <img src={b3Url} alt="" />
             </div>
 
             {showCategory ? (
               <>
-                <div
-                  className="button-item first"
-                  onClick={() => setOpenModal(true)}
-                >
+                <div className="button-item first" onClick={serviceModal}>
                   <img src={b4Url} alt="" />
                 </div>
-                <div className="button-item" onClick={() => setOpenModal(true)}>
+                <div className="button-item" onClick={serviceModal}>
                   <img src={b5Url} alt="" />
                 </div>
                 {/* <div className="button-item" onClick={() => handleItemClick(6)}> */}
-                <div
-                  className="button-item third"
-                  onClick={() => setOpenModal(true)}
-                >
+                <div className="button-item third" onClick={serviceModal}>
                   <img src={b6Url} alt="" />
                 </div>
                 {/* <div className="button-item" onClick={() => handleItemClick(7)}> */}
-                <div
-                  className="button-item first"
-                  onClick={() => setOpenModal(true)}
-                >
+                <div className="button-item first" onClick={serviceModal}>
                   <img src={b7Url} alt="" />
                 </div>
                 {/* <div className="button-item" onClick={() => handleItemClick(8)}> */}
-                <div className="button-item" onClick={() => setOpenModal(true)}>
+                <div className="button-item" onClick={serviceModal}>
                   <img src={b8Url} alt="" />
                 </div>
               </>

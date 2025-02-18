@@ -563,6 +563,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  z-index: 3;
 }
 .detailPage_total .Nbutton_box .Nbtn {
   width: 50%;
@@ -781,4 +782,17 @@
 .reservationModal_total .modal-content1 p:nth-child(1) {
   font-size: 20px;
   font-weight: 600;
+}
+
+/* Authority.js */
+
+.authority_total .text_box {
+  width: 100%;
+  height: auto;
+  margin-top: auto;
+  margin-bottom: 150px;
+}
+.authority_total .text_box p {
+  font-size: 20px;
+  margin: 0;
 }

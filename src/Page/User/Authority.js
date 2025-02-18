@@ -35,7 +35,7 @@ function AuthorityManagement() {
   }, [location.pathname]);
 
   return (
-    <div className="page-container" lang="ko">
+    <div className="page-container authority_total" lang="ko">
       <div className="navigation">
         <button>
           <img
@@ -74,6 +74,10 @@ function AuthorityManagement() {
           )}
         </div>
       ))}
+      <div className="text_box">
+        <p>*승인 내역 과정*</p>
+        <p>단골신청→대기중→단골승인/단골실패</p>
+      </div>
       <NButtonContainer />
     </div>
   );
