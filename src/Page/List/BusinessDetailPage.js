@@ -60,12 +60,12 @@ const EventDetailPage = () => {
     if (index === imageArray.length) {
       sliderRef.current.scrollTo({
         right: 0,
-        behavior: "instant",
+        behavior: "smooth",
       });
     } else {
       sliderRef.current.scrollTo({
         left: slideAmount * index,
-        behavior: "instant",
+        behavior: "smooth",
       });
     }
   };
@@ -175,6 +175,8 @@ const EventDetailPage = () => {
     fetchBusiness();
   }, [id]);
 
+  console.log(business);
+
   const imageArray = [];
 
   if (business.business_price_image1) {
@@ -213,33 +215,25 @@ const EventDetailPage = () => {
     let slideAmount = windowWidth > 500 ? 387 + 8.6 : windowWidth * 0.92;
 
     let newIndex = currentIndex;
-<<<<<<< HEAD
-   // 왼쪽 버튼 클릭 시
-  if (direction === 'left') {
-    // 첫 번째 슬라이드에서 왼쪽 버튼 클릭 시 아무 동작도 안함
-    if (currentIndex === 1) return; 
-    newIndex = currentIndex === 1 ? imageArray.length : currentIndex - 1;
-  } 
-  // 오른쪽 버튼 클릭 시
-  else if (direction === 'right') {
-    // 마지막 슬라이드에서 오른쪽 버튼 클릭 시 아무 동작도 안함
-    if (currentIndex === imageArray.length) return; 
-    newIndex = currentIndex === imageArray.length ? 1 : currentIndex + 1;
-  }
-=======
+    // 왼쪽 버튼 클릭 시
     if (direction === "left") {
+      // 첫 번째 슬라이드에서 왼쪽 버튼 클릭 시 아무 동작도 안함
+      if (currentIndex === 1) return;
       newIndex = currentIndex === 1 ? imageArray.length : currentIndex - 1;
-    } else if (direction === "right") {
+    }
+    // 오른쪽 버튼 클릭 시
+    else if (direction === "right") {
+      // 마지막 슬라이드에서 오른쪽 버튼 클릭 시 아무 동작도 안함
+      if (currentIndex === imageArray.length) return;
       newIndex = currentIndex === imageArray.length ? 1 : currentIndex + 1;
     }
->>>>>>> kms
 
     setCurrentIndex(newIndex);
 
     if (sliderRef.current) {
       sliderRef.current.scrollTo({
         left: slideAmount * (newIndex - 1),
-        behavior: "instant",
+        behavior: "smooth",
       });
     }
   };
@@ -274,7 +268,7 @@ const EventDetailPage = () => {
         </div>
 
         <div className="event-address">
-          <span style={{ fontSize: "20px" }}>영업시간</span>
+          영업시간
           {dayNames.map((day, index) => {
             const dayInfo = hours[index]; // 요일별 데이터 가져오기
             return (
@@ -282,8 +276,8 @@ const EventDetailPage = () => {
                 {day}&nbsp;&nbsp;
                 {dayInfo && dayInfo.isOperatingDay
                   ? `${formatTime(dayInfo.start_time)} - ${formatTime(
-                    dayInfo.end_time
-                  )}`
+                      dayInfo.end_time
+                    )}`
                   : "휴무"}
               </p>
             );
@@ -299,14 +293,8 @@ const EventDetailPage = () => {
             <div className="event-button-text">전화</div>
           </div>
         </div> */}
-<<<<<<< HEAD
 
         <div className="information-text">가격정보</div>
-=======
-        <div className="information-text" style={{ paddingLeft: "16px" }}>
-          가격정보
-        </div>
->>>>>>> kms
         <div className="home_carousel_section">
           <div className="carousel_container">
             <div className="slide_wrapper">
@@ -314,11 +302,7 @@ const EventDetailPage = () => {
                 {"<"}{" "}
               </div>
 
-              <div
-                className="slide_container"
-                ref={sliderRef}
-                style={{ scrollBehavior: "auto !important" }}
-              >
+              <div className="slide_container" ref={sliderRef}>
                 {imageArray.map((image, index) => {
                   return (
                     <div className="img_div" key={index}>
@@ -334,14 +318,9 @@ const EventDetailPage = () => {
                   );
                 })}
               </div>
-<<<<<<< HEAD
-              <div className="right-arrow" onClick={() => moveSlide('right')}>{">"}</div>
-
-=======
-              <div className="right-arrow" onClick={() => moveSlide("left")}>
+              <div className="right-arrow" onClick={() => moveSlide("right")}>
                 {">"}
               </div>
->>>>>>> kms
             </div>
             <div className="index_box">
               {currentIndex} / {imageArray.length}
@@ -398,8 +377,13 @@ const EventDetailPage = () => {
         </div>
       </div>
       <div className="Nbutton_box">
-        <div className="Nbtn" onClick={() => { }} style={{ cursor: "pointer" }}>
-          <a style={{ textDecoration: "none", color: "#f0663f" }} href={`tel:${business.business_phone}`}>전화하기</a>
+        <div className="Nbtn" onClick={() => {}} style={{ cursor: "pointer" }}>
+          <a
+            style={{ textDecoration: "none", color: "#f0663f" }}
+            href={`tel:${business.business_phone}`}
+          >
+            전화하기
+          </a>
         </div>
         <div
           className="Nbtn"
@@ -418,7 +402,6 @@ const EventDetailPage = () => {
           openModal={() => {
             setOpenAcceptModal(false);
           }}
-          businessName={business.business_name}
         />
       ) : (
         ""
