@@ -73,11 +73,7 @@ const PetRegistration = () => {
     const dateRegex =
       /^(19[0-9]{2}|20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
     const weightRegex = /^\d+(\.\d{1})?$/;
-<<<<<<< HEAD
     const etcRegex = /^[\uAC00-\uD7A3a-zA-Z0-9\s.!?]{1,20}$/;
-=======
-    const etcRegex = /^[\uAC00-\uD7A3]{1,20}$/;
->>>>>>> kms
 
     const yearRegex = /^\d{4}$/;
     const monthRegex = /^\d{2}$/;
@@ -166,20 +162,12 @@ const PetRegistration = () => {
       return;
     }
     if (!formData.etc.trim()) {
-<<<<<<< HEAD
-      setEtc('기타 사항을 입력해주세요');
-=======
-      setEtc("기타 추가 사항을 입력해주세요");
->>>>>>> kms
+      setEtc("기타 사항을 입력해주세요");
       etcRef.current.focus();
       return;
     }
     if (!etcRegex.test(formData.etc)) {
-<<<<<<< HEAD
-      setEtc('한글, 영어, .?!조합하여 20자 이내로 입력해주세요');
-=======
-      setEtc("한글만 20자 이내 입력해주세요");
->>>>>>> kms
+      setEtc("한글, 영어, .?!조합하여 20자 이내로 입력해주세요");
       etcRef.current.focus();
       return;
     }
