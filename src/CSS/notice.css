@@ -459,23 +459,7 @@ button.verified {
 }
 
 .view-pet {
-<<<<<<< HEAD
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 64px;
-  background-color: #fdf3e2;
-  box-sizing: border-box;
-  white-space: nowrap; /* 내부 요소들이 줄 바꿈되지 않도록 설정 */
-  padding: 16px 16px;
-  width: 100%;
-  flex-direction: row;
-  flex-shrink: 0;
-  color: #262626;
-  font-size: 20px;
-  font-weight: 700;
-=======
-    display: flex;
     justify-content: space-between;
     height: 64px;
     background-color: #fdf3e2;
@@ -487,7 +471,6 @@ button.verified {
     color: #262626;
     font-size: 20px;
     font-weight: 700;
->>>>>>> client
 }
 
 .view-pet p {
@@ -497,7 +480,6 @@ button.verified {
 }
 
 .view-contents-style {
-<<<<<<< HEAD
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -507,19 +489,7 @@ button.verified {
   color: #262626;
   font-size: 16px;
   font-weight: 400;
-  text-align: center;
-=======
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    width: 100%;
-    padding: 32px 24px 16px 24px;
-    box-sizing: border-box;
-    color: #262626;
-    font-size: 16px;
-    font-weight: 400;
-    text-align: left;
->>>>>>> client
+  text-align: left;
 }
 .view-contents-title {
   width: 30%;
