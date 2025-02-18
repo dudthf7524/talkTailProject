@@ -32,12 +32,7 @@ const EventDetailPage = () => {
   const dispatch = useDispatch();
   const dayNames = ["일", "월", "화", "수", "목", "금", "토"]; // 요일 배열
 
-
-
-
-
   const sliderRef = useRef(null);
-
 
   const handleDragStart = (e) => {
     e.preventDefault();
@@ -65,16 +60,15 @@ const EventDetailPage = () => {
     if (index === imageArray.length) {
       sliderRef.current.scrollTo({
         right: 0,
-        behavior: "smooth",
+        behavior: "instant",
       });
     } else {
       sliderRef.current.scrollTo({
         left: slideAmount * index,
-        behavior: "smooth",
+        behavior: "instant",
       });
     }
   };
-
 
   const handleButtonClick = () => {
     setIsButtonClicked(!isButtonClicked);
@@ -181,9 +175,6 @@ const EventDetailPage = () => {
     fetchBusiness();
   }, [id]);
 
-
-  console.log(business)
-
   const imageArray = [];
 
   if (business.business_price_image1) {
@@ -197,8 +188,6 @@ const EventDetailPage = () => {
   if (business.business_price_image3) {
     imageArray.push({ imgUrl: business.business_price_image3 });
   }
-
-
 
   // 주어진 시간 데이터를 'HH:MM:SS' 형식에서 'HH:MM' 형식으로 변환
   const formatTime = (time) => {
@@ -224,6 +213,7 @@ const EventDetailPage = () => {
     let slideAmount = windowWidth > 500 ? 387 + 8.6 : windowWidth * 0.92;
 
     let newIndex = currentIndex;
+<<<<<<< HEAD
    // 왼쪽 버튼 클릭 시
   if (direction === 'left') {
     // 첫 번째 슬라이드에서 왼쪽 버튼 클릭 시 아무 동작도 안함
@@ -236,13 +226,20 @@ const EventDetailPage = () => {
     if (currentIndex === imageArray.length) return; 
     newIndex = currentIndex === imageArray.length ? 1 : currentIndex + 1;
   }
+=======
+    if (direction === "left") {
+      newIndex = currentIndex === 1 ? imageArray.length : currentIndex - 1;
+    } else if (direction === "right") {
+      newIndex = currentIndex === imageArray.length ? 1 : currentIndex + 1;
+    }
+>>>>>>> kms
 
     setCurrentIndex(newIndex);
 
     if (sliderRef.current) {
       sliderRef.current.scrollTo({
         left: slideAmount * (newIndex - 1),
-        behavior: 'smooth',
+        behavior: "instant",
       });
     }
   };
@@ -277,7 +274,7 @@ const EventDetailPage = () => {
         </div>
 
         <div className="event-address">
-          영업시간
+          <span style={{ fontSize: "20px" }}>영업시간</span>
           {dayNames.map((day, index) => {
             const dayInfo = hours[index]; // 요일별 데이터 가져오기
             return (
@@ -302,16 +299,26 @@ const EventDetailPage = () => {
             <div className="event-button-text">전화</div>
           </div>
         </div> */}
+<<<<<<< HEAD
 
         <div className="information-text">가격정보</div>
+=======
+        <div className="information-text" style={{ paddingLeft: "16px" }}>
+          가격정보
+        </div>
+>>>>>>> kms
         <div className="home_carousel_section">
           <div className="carousel_container">
-
             <div className="slide_wrapper">
-              <div className="left-arrow" onClick={() => moveSlide('left')}>{"<"} </div>
+              <div className="left-arrow" onClick={() => moveSlide("left")}>
+                {"<"}{" "}
+              </div>
 
-              <div className="slide_container" ref={sliderRef}>
-
+              <div
+                className="slide_container"
+                ref={sliderRef}
+                style={{ scrollBehavior: "auto !important" }}
+              >
                 {imageArray.map((image, index) => {
                   return (
                     <div className="img_div" key={index}>
@@ -327,13 +334,18 @@ const EventDetailPage = () => {
                   );
                 })}
               </div>
+<<<<<<< HEAD
               <div className="right-arrow" onClick={() => moveSlide('right')}>{">"}</div>
 
+=======
+              <div className="right-arrow" onClick={() => moveSlide("left")}>
+                {">"}
+              </div>
+>>>>>>> kms
             </div>
             <div className="index_box">
               {currentIndex} / {imageArray.length}
             </div>
-
           </div>
           <div className="circle_box">
             {imageArray.map((image, index) => {
@@ -354,8 +366,6 @@ const EventDetailPage = () => {
             })}
           </div>
         </div>
-
-
 
         {/* <div className="img">
           <img
@@ -408,6 +418,7 @@ const EventDetailPage = () => {
           openModal={() => {
             setOpenAcceptModal(false);
           }}
+          businessName={business.business_name}
         />
       ) : (
         ""

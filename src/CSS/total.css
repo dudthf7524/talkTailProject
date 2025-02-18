@@ -587,8 +587,9 @@
   width: 430px;
 }
 @media (max-width: 500px) {
-  .detailPage_total .Nbutton {
+  .detailPage_total .Nbutton_box {
     width: 100%;
+    left: 0;
   }
 }
 .Nbutton {
