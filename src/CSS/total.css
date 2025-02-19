@@ -538,6 +538,17 @@
   justify-content: center;
 }
 
+/* information/reservation/Reservation.js  */
+.reservation_worker_total .main-mid {
+  position: inherit;
+  height: auto;
+  overflow-y: scroll;
+  margin: 0;
+  margin-top: 100px;
+}
+.reservation_worker_total .time-selection {
+  margin-bottom: 40px;
+}
 /* NButtonContainer.js */
 .footer_total {
   width: 430px;

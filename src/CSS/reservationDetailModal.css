@@ -43,6 +43,14 @@
   font-size: 15px;
   text-align: center;
 }
+@media (max-width: 500px) {
+  .reservation_modal .selectBox {
+    height: 4.3vw;
+  }
+  .reservation_modal select {
+    height: 100%;
+  }
+}
 .reservation_modal .selectBox p {
   width: 25%;
   height: 100%;

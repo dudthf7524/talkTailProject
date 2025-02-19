@@ -1,28 +1,28 @@
 import "../../CSS/reservationDetailModal.css";
 import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import api from '../../Api'
+import api from "../../Api";
 
 const ReservationDetailModal = ({ openModal, id, petName, userPhone }) => {
   const [selectMinute, setSelectMinute] = useState(20);
   const [completeTime, setCompleteTime] = useState("");
 
   const sendMessage = async () => {
-    console.log("userPhone : ", userPhone);
     const calculatedTime = dayjs().add(selectMinute, "minute").format("HH:mm");
-    console.log(id)
-    console.log(petName)
-    console.log(userPhone)
+    console.log(id);
+    console.log(petName);
+    console.log(userPhone);
 
     try {
-      const response = await api.post(`/api/reservation/picup`, {id, userPhone, petName},  { withCredentials: true });
-      window.location.href = '/business/reservation/management';
-
+      const response = await api.post(
+        `/api/reservation/picup`,
+        { id, userPhone, petName },
+        { withCredentials: true }
+      );
+      window.location.href = "/business/reservation/management";
     } catch (error) {
       console.error(error);
-      
     }
-
   };
   const minutes = [10, 20, 30];
   const showMessage = (e) => {
@@ -42,7 +42,7 @@ const ReservationDetailModal = ({ openModal, id, petName, userPhone }) => {
     const [hour, minute] = time.split(":");
     return `${hour}시 ${minute}분`;
   };
-  const btnUrl = `${process.env.PUBLIC_URL}/Image/plane_btn.png`;
+  const btnUrl = `${process.env.PUBLIC_URL}/image/plane_btn.png`;
   return (
     <div className="reservation_modal">
       <img onClick={openModal} src="/PageImage/components/X.svg" alt="" />
