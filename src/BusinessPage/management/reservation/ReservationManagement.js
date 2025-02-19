@@ -15,9 +15,9 @@ const ReservationManagement = () => {
     []
   );
   const [openPickup, setOpenPickup] = useState(false);
-  const [id, setId] = useState('');
-  const [userPhone, setUserPhone] = useState('');
-  const [petNmae, setPetName] = useState('');
+  const [id, setId] = useState("");
+  const [userPhone, setUserPhone] = useState("");
+  const [petNmae, setPetName] = useState("");
 
   useEffect(() => {
     const fetchReservationManagement = async () => {
@@ -39,7 +39,7 @@ const ReservationManagement = () => {
   }, []);
 
   return (
-    <div className="page-container" lang="ko">
+    <div className="page-container reservation_management_total" lang="ko">
       <div className="navigation">
         <button>
           <img
@@ -80,9 +80,9 @@ const ReservationManagement = () => {
                 className="pickupBtn"
                 onClick={() => {
                   setOpenPickup(true);
-                  setId(reservationManagement.beauty_reservation_id)
-                  setUserPhone(reservationManagement.user_phone)
-                  setPetName(reservationManagement.pet_name)
+                  setId(reservationManagement.beauty_reservation_id);
+                  setUserPhone(reservationManagement.user_phone);
+                  setPetName(reservationManagement.pet_name);
                 }}
               >
                 픽업요청
@@ -129,10 +129,7 @@ const ReservationManagement = () => {
               </button>
             </div>
           )}
-
         </div>
-
-
       ))}
       {openPickup ? (
         <ReservationDetailModal
