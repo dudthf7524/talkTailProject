@@ -84,15 +84,11 @@ const Login = () => {
           <>
             <div className="login-text">{business.business_owner_name}님 로그인 완료</div>
             <div>
-              <button>
-              수정
-              </button>
+              <div style={{width : "100%", backgroundColor : "", color : "white"}}>  
+                메뉴가기
+              </div>
             </div>
-            <div>
-              <button>
-              관리
-              </button>
-            </div>
+            
           </>
         ) : (
           <>
