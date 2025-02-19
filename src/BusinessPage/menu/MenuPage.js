@@ -22,23 +22,23 @@ const AdminMenu = () => {
   const [openPrivacy, setOpenPrivacy] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const response = await api.get("/business/auth", {
-  //         withCredentials: true,
-  //       });
-  //       setUser(response.data);
-  //       if (!response.data) {
-  //         navigate("/business/login"); // 로그인 페이지로 리디렉션
-  //       }
-  //     } catch (error) {
-  //       console.error("로그인 인증 실패:", error);
-  //       navigate("/business/login"); // 로그인 페이지로 리디렉션
-  //     }
-  //   };
-  //   fetchUser();
-  // }, []);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await api.get("/business/auth", {
+          withCredentials: true,
+        });
+        setUser(response.data);
+        if (!response.data) {
+          navigate("/business/login"); // 로그인 페이지로 리디렉션
+        }
+      } catch (error) {
+        console.error("로그인 인증 실패:", error);
+        navigate("/business/login"); // 로그인 페이지로 리디렉션
+      }
+    };
+    fetchUser();
+  }, []);
   if (!user) {
     return <div>로딩 중...</div>;
   }

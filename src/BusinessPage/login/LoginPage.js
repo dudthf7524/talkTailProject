@@ -32,6 +32,9 @@ const Login = () => {
     };
     fetchUser();
   }, []);
+  const menu = () => {
+    navigate('/business/menu')
+  }
 
   const login = async () => {
     const form = document.querySelector(".loginform");
@@ -42,9 +45,6 @@ const Login = () => {
       password: formData.get("password"),
     };
     console.log(data);
-
-
-
 
     try {
       // axios로 데이터 전송
@@ -83,9 +83,14 @@ const Login = () => {
         business ? (
           <>
             <div className="login-text">{business.business_owner_name}님 로그인 완료</div>
-            <div>
-              <div style={{width : "100%", backgroundColor : "", color : "white"}}>  
+            <div className="login-form">
+              <button type="button"  onClick={() => {
+                    menu();
+                  }}>
                 메뉴가기
+              </button>
+              <div className="find-id-pw-text">
+                <Link onClick={logout}>로그아웃</Link>
               </div>
             </div>
             
@@ -120,7 +125,7 @@ const Login = () => {
       {
         business ? (
           <div className="find-id-pw-text">
-            <Link onClick={logout}>로그아웃</Link>
+            
           </div>
         ) : (
           <>
