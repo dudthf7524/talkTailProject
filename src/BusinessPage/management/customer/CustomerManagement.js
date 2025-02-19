@@ -69,7 +69,7 @@ const CustomerManagement = () => {
                   className="result-button-write"
                   onClick={() =>
                     navigate("/business/customer/management/detail", {
-                      state: { id: list.beauty_reservation_id },
+                      state: { id: list.beauty_notice_id },
                     })
                   }
                 >
