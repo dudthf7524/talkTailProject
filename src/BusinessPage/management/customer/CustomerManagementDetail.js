@@ -13,7 +13,7 @@ const CustomerManagementDetail = () => {
     useEffect(() => {
         const noticeDetail = async () => {
             try {
-                const response = await api.get(`/api/customer/notice/detail/${id}`, { withCredentials: true });
+                const response = await api.get(`/api/customer/business/notice/detail/${id}`, { withCredentials: true });
                 console.log(response.data)
                 if(response.data === 'common'){
                     navigate('/business/login')

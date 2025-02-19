@@ -1,12 +1,28 @@
 import "../../CSS/reservationDetailModal.css";
 import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
-const ReservationDetailModal = ({ openModal, petName, userPhone }) => {
+import api from '../../Api'
+
+const ReservationDetailModal = ({ openModal, id, petName, userPhone }) => {
   const [selectMinute, setSelectMinute] = useState(20);
   const [completeTime, setCompleteTime] = useState("");
-  const sendMessage = () => {
+
+  const sendMessage = async () => {
     console.log("userPhone : ", userPhone);
     const calculatedTime = dayjs().add(selectMinute, "minute").format("HH:mm");
+    console.log(id)
+    console.log(petName)
+    console.log(userPhone)
+
+    try {
+      const response = await api.post(`/api/reservation/picup`, {id, userPhone, petName},  { withCredentials: true });
+      window.location.href = '/business/reservation/management';
+
+    } catch (error) {
+      console.error(error);
+      
+    }
+
   };
   const minutes = [10, 20, 30];
   const showMessage = (e) => {

@@ -39,10 +39,12 @@ const beautyReservationGet = async (business_registration_number) => {
 
   try {
      let sql = "";
-     sql += "select  beauty_reservation_id, pet_name, date, start_time, reservation_state ";
+     sql += "select beauty_reservation_id, user_phone, pet_name, date, start_time, reservation_state ";
      sql += "from beauty_reservation br ";
      sql += "join pet p ";
      sql += "on br.pet_id = p.pet_id ";
+     sql += "join user_information ui ";
+     sql += "on ui.platform_id = br.platform_id ";
      sql += "where br.business_registration_number = :business_registration_number ";
      sql += "ORDER BY date DESC, start_time DESC ";
 
@@ -277,6 +279,27 @@ const reservationBookmark = async (platform_id) => {
   }
 };
 
+const pickup = async (id) => {
+  console.log(id)
+  try {
+    const result = await BeautyReservation.update(
+      {
+        reservation_state: "픽업완료"
+      },
+      {
+        where: {
+          beauty_reservation_id: id,
+        },
+      });
+    return result;
+  } catch (error) {
+    console.error(error)
+    throw new Error(
+      "Failed to create RegisterBeautySignificant: " + error.message
+    );
+  }
+};
+
 module.exports = {
   beautyReservation,
   beautyReservationGet,
@@ -289,4 +312,5 @@ module.exports = {
   businessHours,
   businessReservation,
   reservationBookmark,
+  pickup,
 };

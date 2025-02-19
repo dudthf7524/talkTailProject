@@ -41,7 +41,7 @@ const createBusiness = async (businessInfo) => {
 };
 
 const createBusinessInformation = async (businessInformationInfo) => {
-  
+
   const business_phone =
     businessInformationInfo.business_phone1 +
     "-" +
@@ -55,7 +55,7 @@ const createBusinessInformation = async (businessInformationInfo) => {
     const businessInformation = await BusinessInformation.create(
       {
         business_registration_number:
-        businessInformationInfo.business_registration_number,
+          businessInformationInfo.business_registration_number,
         business_main_image: businessInformationInfo.business_main_image,
         business_price_image1: businessInformationInfo.business_price_image1,
         business_price_image2: businessInformationInfo.business_price_image2,
@@ -113,7 +113,7 @@ const createBusinessInformation = async (businessInformationInfo) => {
 };
 
 const createBusinessDesinger = async (businessInfo) => {
-  
+
   try {
     const business = await BusinessDesinger.create({
       business_registration_number: businessInfo.business_registration_number,
@@ -133,11 +133,11 @@ const createBusinessDesinger = async (businessInfo) => {
 const businessLogin = async (login_id, login_password) => {
   try {
     const business = await Business.findOne({
-      where: { login_id: login_id }, 
+      where: { login_id: login_id },
     });
 
     if (!business) {
-     
+
       return null;
     }
     // bcrypt를 사용하여 비밀번호 비교
@@ -687,11 +687,11 @@ const accountNumberList = async (business_registration_number) => {
       include: [
         {
           model: BankInformation,
-          attributes: ["name"], 
+          attributes: ["name"],
           required: true,
         },
       ],
-      logging: console.log, 
+      logging: console.log,
     });
 
     console.log(results);
@@ -731,6 +731,8 @@ const desingerList = async (business_registration_number) => {
     );
   }
 };
+
+
 
 module.exports = {
   createBusiness,

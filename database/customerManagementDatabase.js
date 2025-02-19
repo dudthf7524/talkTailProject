@@ -32,12 +32,14 @@ const customerManagementGet = async (business_registration_number) => {
   try {
     let sql = "";
     sql +=
-      "select beauty_reservation_id, pet_name, user_name, date, start_time, end_time, beauty_notice_is_available, reservation_state ";
+      "select beauty_notice_id, pet_name, user_name, date, start_time, end_time, beauty_notice_is_available, reservation_state ";
     sql += "from beauty_reservation br ";
     sql += "join pet pi ";
     sql += "on br.pet_id = pi.pet_id ";
     sql += "join user_information ui ";
     sql += "on br.platform_id = ui.platform_id ";
+    sql += "join beauty_notice bn ";
+    sql += "on br.beauty_reservation_id = bn.beauty_reservation_id ";
     sql +=
       "where br.business_registration_number = :business_registration_number and br.reservation_state ='완료' ";
 
@@ -132,19 +134,48 @@ const customerNoticeList = async (platform_id) => {
   }
 };
 
-const customerNoticeDetail = async (id) => {
+const customerBusinessNoticeDetail = async (id) => {
 
   try {
     let sql = "";
     sql +=
-      "select notice_style, notice_skin, notice_ear, notice_eye, notice_sole, notice_claw ,notice_analSac, notice_hairTangling, notice_etc, pet_name, pet_breed, pet_birth, pet_weight ";
+      "select beauty_notice_id, notice_style, notice_skin, notice_ear, notice_eye, notice_sole, notice_claw ,notice_analSac, notice_hairTangling, notice_etc, pet_name, pet_breed, pet_birth, pet_weight ";
     sql += "from beauty_notice bn ";
     sql += "join beauty_reservation br ";
     sql += "on bn.beauty_reservation_id = br.beauty_reservation_id ";
     sql += "join pet p  ";
     sql += "on br.pet_id = p.pet_id ";
-    sql += "where bn.beauty_reservation_id = :id ";
+    sql += "where bn.beauty_notice_id = :id ";
 
+    const [results, metadata] = await sequelize.query(
+      sql,
+
+      {
+        replacements: { id }, // 바인딩 파라미터
+        type: sequelize.QueryTypes.SELECT, // 쿼리 유형
+        logging: console.log, // 이 쿼리에 대한 SQL 로그만 출력
+      }
+    );
+    return results;
+  } catch (error) {
+    console.error(error)
+    throw new Error(`Failed to register pet: ${error.message}`);
+  }
+};
+
+const customerNoticeDetail = async (id) => {
+
+  try {
+    let sql = "";
+    sql +=
+      "select beauty_notice_id, notice_style, notice_skin, notice_ear, notice_eye, notice_sole, notice_claw ,notice_analSac, notice_hairTangling, notice_etc, pet_name, pet_breed, pet_birth, pet_weight ";
+    sql += "from beauty_notice bn ";
+    sql += "join beauty_reservation br ";
+    sql += "on bn.beauty_reservation_id = br.beauty_reservation_id ";
+    sql += "join pet p  ";
+    sql += "on br.pet_id = p.pet_id ";
+    sql += "where bn.beauty_notice_id = :id ";
+  
     const [results, metadata] = await sequelize.query(
       sql,
 
@@ -166,5 +197,7 @@ module.exports = {
   customerNoticeWrite,
   customerNoticeTrue,
   customerNoticeList,
+  customerBusinessNoticeDetail,
   customerNoticeDetail,
+
 };

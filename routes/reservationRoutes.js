@@ -323,4 +323,19 @@ router.get("/user/reservation/bookmark", authMiddleware, async (req, res) => {
   }
 });
 
+router.post('/reservation/picup', authMiddlewareSession,  async (req, res) => {
+  const business_registration_number = req.user.business_registration_number;
+  console.log(business_registration_number)
+
+  console.log(req.body)
+  const id = req.body.id;
+  try {
+    const result = await reservationDatabase.pickup(id);
+    res.json(result);
+  } catch (error) {
+    console.error('Failed to fetch authority request error: ', error);
+    res.status(500).json({ message: 'Failed to fetch authority request.' });
+  }
+})
+
 module.exports = router;

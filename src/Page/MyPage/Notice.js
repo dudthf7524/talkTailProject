@@ -91,7 +91,7 @@ const NoticePage = () => {
               className="notice-button"
               style={{ cursor: "pointer" }}
               onClick={() =>
-                navigate(`/notice/${list.beauty_notice_id}/`, {
+                navigate(`/notice/${list.beauty_notice_id}`, {
                   state: { date: list.date },
                 })
               }
