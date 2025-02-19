@@ -102,6 +102,13 @@ const ReservationManagement = () => {
             >
               거절
             </div>
+          ) : reservationManagement.reservation_state === "전화" ? (
+            <div
+              className="reservation-item"
+              
+            >
+              수기예약
+            </div>
           ) : (
             <div
               className="reservation-item"
@@ -110,6 +117,7 @@ const ReservationManagement = () => {
               알 수 없음
             </div>
           )}
+
           {
             reservationManagement.reservation_state === "픽업완료" ? (
               <div className="reservation-item">
@@ -143,8 +151,8 @@ const ReservationManagement = () => {
                 싱세보기
               </button>
             </div>
-            ) : reservationManagement.platform_id === "0" ? (
-              <div className="reservation-item">수기예약</div>
+            ) : reservationManagement.reservation_state === "전화" ? (
+              <div className="reservation-item"></div>
             ) : (
               <div className="reservation-item">
               <button

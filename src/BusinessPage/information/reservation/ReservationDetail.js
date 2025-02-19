@@ -476,17 +476,23 @@ const ReservationDetail = () => {
           </div>
         )}
         <div className="detail-form2">
-          {reservationManagementList.reservation_state === "완료" ? (
+          {reservationManagementList.reservation_state === "픽업완료" ? (
+            <div className="detail-title">완료시간</div>
+          ) :reservationManagementList.reservation_state === "완료" ? (
             <div className="detail-title">완료시간</div>
           ) : reservationManagementList.reservation_state === "대기" ? (
             <div className="detail-title">완료시간</div>
           ) : reservationManagementList.reservation_state === "거절" ? (
-            <div className="detail-title">거절내용</div>
+            <div className="detail-title">사유</div>
           ) : (
             <div style={{ fontWeight: "bold", color: "gray" }}>알 수 없음</div>
           )}
 
-          {reservationManagementList.reservation_state === "완료" ? (
+          {reservationManagementList.reservation_state === "픽업완료" ? (
+            <div className="detail-info">
+              {reservationManagementList.end_time}
+            </div>
+          ) :reservationManagementList.reservation_state === "완료" ? (
             <div className="detail-info">
               {reservationManagementList.end_time}
             </div>
@@ -528,11 +534,18 @@ const ReservationDetail = () => {
             <div style={{ fontWeight: "bold", color: "gray" }}>알 수 없음</div>
           )}
         </div>
-        {reservationManagementList.reservation_state === "완료" ? (
+        {reservationManagementList.reservation_state === "픽업완료" ? (
           <div className="detail-form2">
             <div className="detail-title">미용금액</div>
             <div className="detail-info">
-              {reservationManagementList.beauty_price} 원
+              {reservationManagementList.beauty_price.toLocaleString()} 원
+            </div>
+          </div>
+        ) :reservationManagementList.reservation_state === "완료" ? (
+          <div className="detail-form2">
+            <div className="detail-title">미용금액</div>
+            <div className="detail-info">
+              {reservationManagementList.beauty_price.toLocaleString()} 원
             </div>
           </div>
         ) : reservationManagementList.reservation_state === "대기" ? (
@@ -642,16 +655,20 @@ const ReservationDetail = () => {
         )}
       </div>
 
-      {reservationManagementList.reservation_state === "완료" ? (
-        // <div
-        //   className="pickupBtn"
-        //   onClick={() => {
-        //     setOpenPickup(true);
-        //   }}
-        // >
-        //   픽업 메시지 보내기
-        // </div>
-        ""
+      {reservationManagementList.reservation_state === "픽업완료" ? (
+        <div
+        className="footer-button"
+        style={{ color: "green", fontWeight: "bold" }}
+      >
+        예약이 완료되었습니다.
+      </div>
+      ) :reservationManagementList.reservation_state === "완료" ? (
+        <div
+        className="footer-button"
+        style={{ color: "green", fontWeight: "bold" }}
+      >
+        예약이 완료되었습니다.
+      </div>
       ) : reservationManagementList.reservation_state === "대기" ? (
         <div className="footer-button">
           <button className="reject-btn" onClick={() => openModal("reject")}>
