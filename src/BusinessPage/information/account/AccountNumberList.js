@@ -46,7 +46,7 @@ function AccountNumberList() {
             onClick={() => navigate("/business/menu")}
           />
         </button>
-        계좌번호 목록
+        계좌번호
         <button onClick={() => navigate("/business/account/number")}>
           <img src={noteUrl} alt="" />
         </button>
@@ -61,7 +61,9 @@ function AccountNumberList() {
 
       {lists.map((list, index) => (
         <div key={index} className="accountNumberList-row">
-          <div className="accountNumberList-item">{list?.bank_information.name}</div>
+          <div className="accountNumberList-item">
+            {list?.bank_information.name}
+          </div>
           <div className="accountNumberList-item">{list?.account_holder}</div>
           <div className="accountNumberList-item">{list?.account_number}</div>
         </div>

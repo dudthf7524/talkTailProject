@@ -53,7 +53,7 @@ function BusinessBeautyEditOption() {
     const dataToSend = {
       ...formData,
     };
-    
+
     try {
       // 서버로 FormData를 전송
       const response = await axios.put(
@@ -98,12 +98,14 @@ function BusinessBeautyEditOption() {
             onClick={() => navigate("/business/menu")}
           />
         </button>
-        매장옵션
-        <div style={{cursor : "pointer"}} onClick={handleSave}>수정</div>
+        가게옵션수정
+        <div style={{ cursor: "pointer" }} onClick={handleSave}>
+          수정
+        </div>
       </div>
       <div className="main-mid">
         <div className="input-container">
-          <p>옵션 step1</p>
+          <p>옵션 1</p>
           <input
             type="text"
             name="business_beauty_option1"
@@ -113,7 +115,7 @@ function BusinessBeautyEditOption() {
           />
         </div>
         <div className="input-container">
-          <p>옵션 step2</p>
+          <p>옵션 2</p>
           <input
             type="text"
             name="business_beauty_option2"
@@ -124,7 +126,7 @@ function BusinessBeautyEditOption() {
         </div>
 
         <div className="input-container">
-          <p>옵션 step3</p>
+          <p>옵션 3</p>
           <input
             type="text"
             name="business_beauty_option3"
@@ -135,7 +137,7 @@ function BusinessBeautyEditOption() {
         </div>
 
         <div className="input-container">
-          <p>옵션 step4</p>
+          <p>옵션 4</p>
           <input
             type="text"
             name="business_beauty_option4"
@@ -146,7 +148,7 @@ function BusinessBeautyEditOption() {
         </div>
 
         <div className="input-container">
-          <p>옵션 step5</p>
+          <p>옵션 5</p>
           <input
             type="text"
             name="business_beauty_option5"

@@ -1,75 +1,67 @@
-.input-container select{
-    width: 100%;
-    padding: 15px;
-    text-align: center;
-    font-size: 15px;
-    border-radius: 10px;
-    
+.input-container select {
+  width: 100%;
+  padding: 15px;
+  text-align: center;
+  font-size: 15px;
+  border-radius: 10px;
 }
-.input-container button{
-    width: 100%;
-    padding: 20px;
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    background-color: #F0663F;
-    color: white;
-    border-style: none;
-    border-radius: 50px;
+.input-container button {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #f0663f;
+  color: white;
+  border-style: none;
+  border-radius: 50px;
 }
-.input-container-id .checkLogin{
-    width: 100%;
-    padding: 15px;
-    text-align: center;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-    background-color: #F0663F;
-    color: white;
-    border-style: none;
-
+.input-container-id .checkLogin {
+  width: 100%;
+  padding: 15px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #f0663f;
+  color: white;
+  border-style: none;
 }
-
 
 .input-container-inline {
-  
-    
-    width: 400px;
-    height: 136px;
-    margin: 16px 0;
-    color: #262626;
-    box-sizing: border-box;
-   
-    
+  padding: 0 20px;
+  width: 400px;
+  height: 136px;
+  margin: 16px 0;
+  color: #262626;
+  box-sizing: border-box;
 }
 
 .input-container-inline p {
-    font-size: 20px;
-    font-weight: 400;
-    text-align: left;
-    margin: 0;
-    padding: 0;
+  font-size: 20px;
+  font-weight: 400;
+  text-align: left;
+  margin: 0;
+  padding: 0;
 }
 
 .input-container-inline .phone {
-    width : 27%;
-    padding: 15px;
+  width: 27%;
+  padding: 13px;
 }
 
-.input-container-inline input{
-
-    width: 100%;
-    height: auto;
-    margin: 8px 0;
-    padding: 8px;
-    text-align: center;
-    border-radius: 16px;
-    box-sizing: border-box;
-    background-color: #f5f5f5;
-    color: #262626;
-    border: none;
-    outline: none;
-    font-size: 20px;
-
+.input-container-inline input {
+  width: 100%;
+  height: auto;
+  margin: 8px 0;
+  padding: 8px;
+  text-align: center;
+  border-radius: 16px;
+  box-sizing: border-box;
+  background-color: #f5f5f5;
+  color: #262626;
+  border: none;
+  outline: none;
+  font-size: 20px;
 }

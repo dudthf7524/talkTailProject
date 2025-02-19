@@ -113,14 +113,16 @@ function RegisterStyle() {
             onClick={() => navigate("/business/menu")}
           />
         </button>
-        특이사항
-        <div style={{ cursor: "pointer" }} onClick={handleSave}>수정</div>
+        신청서 관리
+        <div style={{ cursor: "pointer" }} onClick={handleSave}>
+          수정
+        </div>
       </div>
-     
-        <div className="main-mid">
+
+      <div className="main-mid">
         <div className="registerStyle">
           <div className="input-container">
-            <p>특이사항 step1</p>
+            <p>특이사항 1</p>
             <input
               type="text"
               name="business_beauty_significant1"
@@ -130,7 +132,7 @@ function RegisterStyle() {
             />
           </div>
           <div className="input-container">
-            <p>특이사항 step2</p>
+            <p>특이사항 2</p>
             <input
               type="text"
               name="business_beauty_significant2"
@@ -141,7 +143,7 @@ function RegisterStyle() {
           </div>
 
           <div className="input-container">
-            <p>특이사항 step3</p>
+            <p>특이사항 3</p>
             <input
               type="text"
               name="business_beauty_significant3"
@@ -152,7 +154,7 @@ function RegisterStyle() {
           </div>
 
           <div className="input-container">
-            <p>특이사항 step4</p>
+            <p>특이사항 4</p>
             <input
               type="text"
               name="business_beauty_significant4"
@@ -163,7 +165,7 @@ function RegisterStyle() {
           </div>
 
           <div className="input-container">
-            <p>특이사항 step5</p>
+            <p>특이사항 5</p>
             <input
               type="text"
               name="business_beauty_significant5"

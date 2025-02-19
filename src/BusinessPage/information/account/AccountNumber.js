@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import api from '../../../Api';
-import '../../../BusinessCSS/accountNumber.css'
+import api from "../../../Api";
+import "../../../BusinessCSS/accountNumber.css";
 import { useNavigate } from "react-router-dom";
 
 function AccountNumber() {
-
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
   const noteUrl = `${process.env.PUBLIC_URL}/PageImage/list/note_ic.svg`;
   const navigate = useNavigate();
@@ -57,11 +56,15 @@ function AccountNumber() {
     console.log("Submitted account details:", formData);
 
     try {
-      const response = await api.post(`/api/business/account/number`, formData, { withCredentials: true });
-      if (response.data === 'common') {
-        window.location = '/business/login';
+      const response = await api.post(
+        `/api/business/account/number`,
+        formData,
+        { withCredentials: true }
+      );
+      if (response.data === "common") {
+        window.location = "/business/login";
       }
-      window.location = '/business/menu';
+      window.location = "/business/menu";
     } catch (error) {
       console.error("Error during account submission:", error);
       setError("서버 요청 중 오류가 발생했습니다.");
@@ -69,19 +72,25 @@ function AccountNumber() {
   };
 
   return (
-    <div className='accountNumber'>
-      <div className='accountNumberNavigation'>
+    <div className="accountNumber">
+      <div className="accountNumberNavigation">
         <button>
-          <img src={arrowButtonUrl} alt='' onClick={() => navigate('/business/menu')} />
+          <img
+            src={arrowButtonUrl}
+            alt=""
+            onClick={() => navigate("/business/menu")}
+          />
         </button>
-        계좌번호 등록
-        <button onClick={handleSubmit}>저장</button>
+        계좌번호
+        <button onClick={handleSubmit} style={{ color: "#f0663f" }}>
+          등록
+        </button>
       </div>
 
       <div>
         <form>
           <div className="accountBox">
-            <div className='accountContent'>
+            <div className="accountContent">
               <label htmlFor="bankCode">은행명</label>
               <select
                 id="bankCode"
@@ -93,12 +102,12 @@ function AccountNumber() {
                 <option value="">은행을 선택하세요</option>
                 {banks.map((bank) => (
                   <option key={bank.code} value={bank.code}>
-                    {bank.name} ({bank.code})
+                    {bank.name}
                   </option>
                 ))}
               </select>
             </div>
-            <div className='accountContent'>
+            <div className="accountContent">
               <label htmlFor="accountHolder">예금주</label>
               <input
                 type="text"
@@ -110,7 +119,7 @@ function AccountNumber() {
                 style={{ width: "100%", padding: "10px" }}
               />
             </div>
-            <div className='accountContent'>
+            <div className="accountContent">
               <label htmlFor="accountNumber">계좌번호</label>
               <input
                 type="text"
