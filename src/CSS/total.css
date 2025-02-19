@@ -420,6 +420,19 @@
   cursor: pointer;
 }
 
+/* ReservationManagement.js */
+.reservation_management_total .pickupBtn {
+  width: auto;
+  background-color: #f0663f;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  opacity: 1;
+}
+.reservation_management_total .pickupBtn:hover {
+  background-color: white;
+  color: #f0663f;
+}
 /* ListPage.js */
 .listPage_total .title {
   font-size: 20px;
