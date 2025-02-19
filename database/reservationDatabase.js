@@ -39,10 +39,12 @@ const beautyReservationGet = async (business_registration_number) => {
 
   try {
      let sql = "";
-     sql += "select  beauty_reservation_id, pet_name, date, start_time, reservation_state ";
+     sql += "select beauty_reservation_id, user_phone, pet_name, date, start_time, reservation_state ";
      sql += "from beauty_reservation br ";
      sql += "join pet p ";
      sql += "on br.pet_id = p.pet_id ";
+     sql += "join user_information ui ";
+     sql += "on ui.platform_id = br.platform_id ";
      sql += "where br.business_registration_number = :business_registration_number ";
      sql += "ORDER BY date DESC, start_time DESC ";
 

@@ -81,6 +81,8 @@ const ReservationManagement = () => {
                 onClick={() => {
                   setOpenPickup(true);
                   setId(reservationManagement.beauty_reservation_id)
+                  setUserPhone(reservationManagement.user_phone)
+                  setPetName(reservationManagement.pet_name)
                 }}
               >
                 픽업요청

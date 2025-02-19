@@ -11,9 +11,11 @@ const ReservationDetailModal = ({ openModal, id, petName, userPhone }) => {
     console.log("userPhone : ", userPhone);
     const calculatedTime = dayjs().add(selectMinute, "minute").format("HH:mm");
     console.log(id)
+    console.log(petName)
+    console.log(userPhone)
 
     try {
-      const response = await api.post(`/api/reservation/picup`, {id},  { withCredentials: true });
+      const response = await api.post(`/api/reservation/picup`, {id, userPhone, petName},  { withCredentials: true });
       window.location.href = '/business/reservation/management';
 
     } catch (error) {
