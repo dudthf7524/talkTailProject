@@ -43,7 +43,7 @@ function DesingerClosedDays() {
   };
 
   const writeDesingerClosedDays = async () => {
-    console.log(selectedDate);
+    console.log("선택한 날짜는 : ", selectedDate);
     try {
       const response = await api.post(
         "/api/designer/day",
@@ -64,7 +64,7 @@ function DesingerClosedDays() {
   };
 
   return (
-    <div className="desingerClosedDays">
+    <div className="desingerClosedDays designer_closed_total">
       <div className="desingerClosedDaysNavigation">
         <button>
           <img

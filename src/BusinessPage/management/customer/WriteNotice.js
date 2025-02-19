@@ -67,7 +67,7 @@ const WriteNotice = () => {
   };
 
   return (
-    <div className="page-container" lang="ko">
+    <div className="page-container write_notice_total" lang="ko">
       <div className="page-container2">
         <div className="navigation">
           <button>
@@ -99,7 +99,12 @@ const WriteNotice = () => {
         <div className="notice-row">
           <div className="notice-title">피부</div>
           <div className="notice-checkboxes">
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_skin === "좋음" ? "black" : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_skin"
@@ -109,7 +114,12 @@ const WriteNotice = () => {
               />
               좋음
             </label>
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_skin === "건조" ? "black" : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_skin"
@@ -119,7 +129,12 @@ const WriteNotice = () => {
               />
               건조
             </label>
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_skin === "민감" ? "black" : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_skin"
@@ -136,7 +151,12 @@ const WriteNotice = () => {
         <div className="notice-row">
           <div className="notice-title">귀</div>
           <div className="notice-checkboxes">
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_ear === "깨끗함" ? "black" : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_ear"
@@ -146,7 +166,14 @@ const WriteNotice = () => {
               />
               깨끗함
             </label>
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_ear === "노란귀지"
+                    ? "black"
+                    : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_ear"
@@ -156,7 +183,14 @@ const WriteNotice = () => {
               />
               노란귀지
             </label>
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_ear === "갈색귀지"
+                    ? "black"
+                    : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_ear"
@@ -173,7 +207,12 @@ const WriteNotice = () => {
         <div className="notice-row">
           <div className="notice-title">눈</div>
           <div className="notice-checkboxes">
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_eye === "깨끗함" ? "black" : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_eye"
@@ -183,7 +222,12 @@ const WriteNotice = () => {
               />
               깨끗함
             </label>
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_eye === "눈꼽" ? "black" : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_eye"
@@ -193,7 +237,12 @@ const WriteNotice = () => {
               />
               눈꼽
             </label>
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_eye === "충혈" ? "black" : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_eye"
@@ -210,7 +259,12 @@ const WriteNotice = () => {
         <div className="notice-row">
           <div className="notice-title">발바닥</div>
           <div className="notice-checkboxes">
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_sole === "좋음" ? "black" : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_sole"
@@ -220,7 +274,12 @@ const WriteNotice = () => {
               />
               좋음
             </label>
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_sole === "습진" ? "black" : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_sole"
@@ -230,7 +289,12 @@ const WriteNotice = () => {
               />
               습진
             </label>
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_sole === "건조" ? "black" : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_sole"
@@ -247,7 +311,14 @@ const WriteNotice = () => {
         <div className="notice-row">
           <div className="notice-title">발톱</div>
           <div className="notice-checkboxes">
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_claw === "적당함"
+                    ? "black"
+                    : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_claw"
@@ -257,7 +328,12 @@ const WriteNotice = () => {
               />
               적당함
             </label>
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_claw === "짧음" ? "black" : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_claw"
@@ -267,7 +343,14 @@ const WriteNotice = () => {
               />
               짧음
             </label>
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_claw === "관리필요"
+                    ? "black"
+                    : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_claw"
@@ -284,7 +367,14 @@ const WriteNotice = () => {
         <div className="notice-row">
           <div className="notice-title">항문낭</div>
           <div className="notice-checkboxes">
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_analSac === "적당함"
+                    ? "black"
+                    : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_analSac"
@@ -296,7 +386,14 @@ const WriteNotice = () => {
               />
               적당함
             </label>
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_analSac === "많음"
+                    ? "black"
+                    : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_analSac"
@@ -306,7 +403,14 @@ const WriteNotice = () => {
               />
               많음
             </label>
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_analSac === "안나옴"
+                    ? "black"
+                    : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_analSac"
@@ -325,7 +429,14 @@ const WriteNotice = () => {
         <div className="notice-row">
           <div className="notice-title">털엉킴</div>
           <div className="notice-checkboxes">
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_hairTangling === "유"
+                    ? "black"
+                    : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_hairTangling"
@@ -337,7 +448,14 @@ const WriteNotice = () => {
               />
               유
             </label>
-            <label>
+            <label
+              style={{
+                color:
+                  selectedOptions.notice_hairTangling === "무"
+                    ? "black"
+                    : "#C4C4C4",
+              }}
+            >
               <input
                 type="radio"
                 name="notice_hairTangling"
@@ -353,9 +471,9 @@ const WriteNotice = () => {
         </div>
 
         <div className="notice-row">
-          <div className="notice-title2">기타 전달사항</div>
+          <div className="notice-title2">기타사항</div>
         </div>
-        <div className="notice-row">
+        <div className="notice-row notice_row_textarea">
           <textarea
             className="notice-textbox2"
             type="text"

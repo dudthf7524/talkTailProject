@@ -69,7 +69,7 @@ function AuthorityManagement() {
             onClick={() => navigate("/business/menu")}
           />
         </button>
-        고객등록
+        권한관리
         <div> </div>
       </div>
       <div className="authorityManagement-title">
@@ -100,6 +100,8 @@ function AuthorityManagement() {
                   >
                     요청승인
                   </button>
+                </div>
+                <div className="authorityManagement-item">
                   <button
                     id="refuse-button"
                     onClick={() =>
@@ -123,10 +125,22 @@ function AuthorityManagement() {
                 >
                   승인완료
                 </div>
+                <div
+                  style={{ color: "green", fontWeight: "bold" }}
+                  className="authorityManagement-item"
+                >
+                  승인완료
+                </div>
               </>
             ) : list.authority_state === "거절" ? (
               <>
                 {/* 수락완료, 거절완료 */}
+                <div
+                  style={{ color: "red", fontWeight: "bold" }}
+                  className="authorityManagement-item"
+                >
+                  승인거절
+                </div>
                 <div
                   style={{ color: "red", fontWeight: "bold" }}
                   className="authorityManagement-item"
