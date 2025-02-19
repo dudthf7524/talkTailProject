@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
             beauty_reservation_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
+                unique: true,
             },
             notice_style: {
                 type: DataTypes.STRING(30),

@@ -110,10 +110,43 @@ const ReservationManagement = () => {
               알 수 없음
             </div>
           )}
-          {reservationManagement.platform_id === "0" ? (
-            <div>수기예약</div>
-          ) : (
-            <div className="reservation-item">
+          {
+            reservationManagement.reservation_state === "픽업완료" ? (
+              <div className="reservation-item">
+              <button
+                className="detail-button"
+                onClick={() => {
+                  navigate(`/business/reservation/detail`, {
+                    state: {
+                      date: reservationManagement.date,
+                      id: reservationManagement.beauty_reservation_id, // 추가
+                    },
+                  });
+                }}
+              >
+                싱세보기
+              </button>
+            </div>
+            ) : reservationManagement.reservation_state === "완료" ? (
+              <div className="reservation-item">
+              <button
+                className="detail-button"
+                onClick={() => {
+                  navigate(`/business/reservation/detail`, {
+                    state: {
+                      date: reservationManagement.date,
+                      id: reservationManagement.beauty_reservation_id, // 추가
+                    },
+                  });
+                }}
+              >
+                싱세보기
+              </button>
+            </div>
+            ) : reservationManagement.platform_id === "0" ? (
+              <div className="reservation-item">수기예약</div>
+            ) : (
+              <div className="reservation-item">
               <button
                 className="detail-button"
                 onClick={() => {
@@ -128,7 +161,8 @@ const ReservationManagement = () => {
                 예약확인
               </button>
             </div>
-          )}
+            )
+          }
         </div>
       ))}
       {openPickup ? (
