@@ -22,6 +22,10 @@ function EditInformation() {
   const keyButtonUrl = `${process.env.PUBLIC_URL}/BusinessImage/icon/keyboard_return.svg`;
   const defaultImage = `${process.env.PUBLIC_URL}/PageImage/pet/pet_img_L.png`;
 
+  console.log(imageFiles.main.length)
+  console.log(imageFiles)
+  console.log(list.business_main_image)
+
   const [formData, setFormData] = useState({
     business_name: "",
     address_postcode: "",
@@ -33,6 +37,7 @@ function EditInformation() {
     business_phone3: "",
     business_comment: "",
   });
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -83,9 +88,10 @@ function EditInformation() {
         console.error("Failed to fetch business information:", error);
       }
     };
-
     fetchData();
   }, [navigate]);
+
+
   useEffect(() => {
     const textarea = document.getElementById("greetingTextarea");
     if (textarea) {
@@ -230,13 +236,32 @@ function EditInformation() {
         </div>
       </div>
       <div className="main-mid">
-        <h2>현재 저장된 메인 이미지</h2>
-        <div style={{ position: "relative", display: "inline-block" }}>
-          <img
-            src={list.business_main_image}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
+        <div className="input-container">
+          <p>썸네일</p>
         </div>
+        {
+          imageFiles.main.length > 0 ? (
+            <>
+              {imageFiles.main.map((file, index) => (
+                <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt={`preview ${index}`}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', marginBottom: "20px" }}
+                  />
+                </div>
+              ))}
+            </>
+          ) : (
+            <div style={{ position: "relative", display: "inline-block" }}>
+              <img
+                src={list.business_main_image}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </div>
+          )
+        }
+
         <div
           className="upload-box"
           onClick={() => handleUploadClick("edit", "main")}
@@ -248,40 +273,63 @@ function EditInformation() {
             메인 이미지 수정
           </div>
         </div>
-        <h2>현재 저장된 가격표 이미지</h2>
-        {list.business_price_image1 ? (
-          <div style={{ position: "relative", display: "inline-block" }}>
-            <img
-              src={list.business_price_image1}
-              alt="Business Price"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-        ) : (
-          <div style={{ position: "relative", display: "inline-block" }}></div>
-        )}
-        {list.business_price_image2 ? (
-          <div style={{ position: "relative", display: "inline-block" }}>
-            <img
-              src={list.business_price_image2}
-              alt="Business Price"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-        ) : (
-          <div style={{ position: "relative", display: "inline-block" }}></div>
-        )}
-        {list.business_price_image3 ? (
-          <div style={{ position: "relative", display: "inline-block" }}>
-            <img
-              src={list.business_price_image3}
-              alt="Business Price"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-        ) : (
-          <div style={{ position: "relative", display: "inline-block" }}></div>
-        )}
+        <div className="input-container">
+          <p>가격표 이미지</p>
+        </div>
+
+
+        {
+          imageFiles.pricing.length > 0 ? (
+            <>
+              {imageFiles.pricing.map((file, index) => (
+                <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt={`preview ${index}`}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', marginBottom: "20px" }}
+                  />
+                </div>
+              ))}
+            </>
+          ) : (
+            <>
+              {list.business_price_image1 ? (
+                <div style={{ position: "relative", display: "inline-block" }}>
+                  <img
+                    src={list.business_price_image1}
+                    alt="Business Price"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                </div>
+              ) : (
+                <div style={{ position: "relative", display: "inline-block" }}></div>
+              )}
+              {list.business_price_image2 ? (
+                <div style={{ position: "relative", display: "inline-block" }}>
+                  <img
+                    src={list.business_price_image2}
+                    alt="Business Price"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                </div>
+              ) : (
+                <div style={{ position: "relative", display: "inline-block" }}></div>
+              )}
+              {list.business_price_image3 ? (
+                <div style={{ position: "relative", display: "inline-block" }}>
+                  <img
+                    src={list.business_price_image3}
+                    alt="Business Price"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                </div>
+              ) : (
+                <div style={{ position: "relative", display: "inline-block" }}></div>
+              )}
+            </>
+          )
+        }
+
         <div
           className="upload-box"
           onClick={() => handleUploadClick("edit", "pricing")}
