@@ -50,7 +50,22 @@ router.get('/customer/notice/list',authMiddleware, async (req, res) => {
 
 })
 
-router.get('/customer/notice/detail/:id',authMiddlewareSession, async (req, res) => {
+router.get('/customer/business/notice/detail/:id',authMiddlewareSession, async (req, res) => {
+    const platform_id = req.user.id;
+    const id  = req.params.id;
+    console.log(id)
+    
+    try {
+        const result = await customerManagementDatabase.customerBusinessNoticeDetail(id);
+        res.status(201).json(result);
+    } catch (error) {
+        console.error('Error fetching userIformation:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+
+})
+
+router.get('/customer/notice/detail/:id',authMiddleware, async (req, res) => {
     const platform_id = req.user.id;
     const id  = req.params.id;
     console.log(id)

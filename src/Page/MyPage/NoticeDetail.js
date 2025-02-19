@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import dayjs from "dayjs";
 
 const NoticeDetail = () => {
+  dayjs.locale("ko");
   const location = useLocation();
   const date = location.state?.date;
   const navigate = useNavigate();
