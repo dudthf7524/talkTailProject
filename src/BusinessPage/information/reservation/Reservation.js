@@ -1,22 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ko } from 'date-fns/locale';
-import { format, addMonths, getDay, isWithinInterval, parse, addMinutes } from 'date-fns';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import '../../../CSS/calender.css';
-import api from '../../../Api'
+import { ko } from "date-fns/locale";
+import {
+  format,
+  addMonths,
+  getDay,
+  isWithinInterval,
+  parse,
+  addMinutes,
+} from "date-fns";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import "../../../CSS/calender.css";
+import api from "../../../Api";
 import LoginModal from "../../Modal/LoginModal.js";
 
 function generateTimeSlots(start_time, end_time, intervalMinutes) {
-  const start = parse(start_time, 'HH:mm', new Date());
-  const end = parse(end_time, 'HH:mm', new Date());
+  const start = parse(start_time, "HH:mm", new Date());
+  const end = parse(end_time, "HH:mm", new Date());
 
-  const totalIntervals = Math.floor((end - start) / (intervalMinutes * 60 * 1000)); // 총 간격 수 계산
+  const totalIntervals = Math.floor(
+    (end - start) / (intervalMinutes * 60 * 1000)
+  ); // 총 간격 수 계산
 
   return Array.from({ length: totalIntervals + 1 }, (_, index) => {
     const newTime = addMinutes(start, intervalMinutes * index);
-    return format(newTime, 'HH:mm');
+    return format(newTime, "HH:mm");
   });
 }
 
@@ -31,18 +40,20 @@ const Reservation = () => {
   //   const [lists, setLists] = useState([]);
 
   const navigate = useNavigate();
-  const [hours, setHours] = useState([])
+  const [hours, setHours] = useState([]);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await api.get(`/api/reservation/hours`, { withCredentials: true });
-        if (response.data === 'common') {
-          navigate('/business/login')
+        const response = await api.get(`/api/reservation/hours`, {
+          withCredentials: true,
+        });
+        if (response.data === "common") {
+          navigate("/business/login");
         }
-        setHours(response.data)
+        setHours(response.data);
       } catch (error) {
-        console.error('예약관리 상세보기 실패', error);
+        console.error("예약관리 상세보기 실패", error);
         // navigate('/'); // 로그인 페이지로 리디렉션
       }
     };
@@ -54,18 +65,21 @@ const Reservation = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await api.get(`/api/beauty/reservation/desinger/${id}`, { withCredentials: true });
+        const response = await api.get(
+          `/api/beauty/reservation/desinger/${id}`,
+          { withCredentials: true }
+        );
         setReservationDesinger(response.data);
       } catch (error) {
-        console.error('예약관리 상세보기 실패', error);
+        console.error("예약관리 상세보기 실패", error);
         // navigate('/'); // 로그인 페이지로 리디렉션
       }
     };
     fetchUser();
   }, []);
   if (reservationDesinger) {
-    console.log("reservationDesinger")
-    console.log(reservationDesinger)
+    console.log("reservationDesinger");
+    console.log(reservationDesinger);
   }
 
   //   useEffect(() => {
@@ -83,24 +97,19 @@ const Reservation = () => {
   //     list();
   //   }, []);
 
-
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
-
 
   const [activeTime, setActiveTime] = useState([]);
 
   const filterDisabledDays = (date) => {
-
     if (hours === null) {
-      navigate('/business/login'); // hours가 null일 때 이동
+      navigate("/business/login"); // hours가 null일 때 이동
       return false; // 이후 로직은 처리하지 않음
     }
     const day = getDay(date);
     return hours[day]?.isOperatingDay;
   };
-
 
   const handleButtonClick = (time) => {
     setActiveTime((prev) => {
@@ -148,19 +157,17 @@ const Reservation = () => {
     "2025-03-14": "화이트데이",
   };
 
-
   const monthsAhead = 3;
   const maxDate = addMonths(new Date(), monthsAhead);
 
-
-
   const renderDayContents = (day, date) => {
-    const formattedDate = format(date, 'yyyy-MM-dd');
+    const formattedDate = format(date, "yyyy-MM-dd");
     const label = dateLabels[formattedDate]; // 특별한 날짜 라벨 (예: 크리스마스)
     const dayIndex = getDay(date); // 요일 정보 추출 (0: 일요일, 6: 토요일)
 
     const isOperatingDay = hours?.[dayIndex]?.isOperatingDay; // 해당 요일의 영업 상태 확인
-    const isSelected = startDate && format(startDate, 'yyyy-MM-dd') === formattedDate;
+    const isSelected =
+      startDate && format(startDate, "yyyy-MM-dd") === formattedDate;
     // const isDisabledDate = disabledDates.some((disabledDate) => format(disabledDate, 'yyyy-MM-dd') === formattedDate); // 비활성화된 날짜 확인
 
     // "휴무" 라벨 적용 조건: 영업하지 않는 요일 또는 기존 라벨
@@ -179,7 +186,9 @@ const Reservation = () => {
     // );
     return (
       <div
-        className={`day-content ${!isOperatingDay ? "closed" : ""} ${isSelected ? "selected" : ""}`}
+        className={`day-content ${!isOperatingDay ? "closed" : ""} ${
+          isSelected ? "selected" : ""
+        }`}
         style={{
           border: "1px solid #ccc", // 칸막이 효과
           borderRadius: "0", // 모서리 둥글기 제거 (표처럼 보이게 하기 위해)
@@ -194,97 +203,108 @@ const Reservation = () => {
     );
   };
 
-
-
   const getDisabledTimesByDate = (selectedDate, st, dt) => {
     if (!selectedDate) return [];
 
-    const formattedDate = format(selectedDate, 'yyyy-MM-dd');
-    const reservations = reservationDesinger?.filter((item) => item.date === formattedDate) || [];
-    console.log(reservations)
+    const formattedDate = format(selectedDate, "yyyy-MM-dd");
+    const reservations =
+      reservationDesinger?.filter((item) => item.date === formattedDate) || [];
+    console.log(reservations);
     const disabledTimes = [];
-    console.log(disabledTimes)
-
+    console.log(disabledTimes);
 
     reservations.forEach(({ start_time, end_time }) => {
-      const start = parse(start_time, 'HH:mm', new Date());
-      const end = parse(end_time, 'HH:mm', new Date());
+      const start = parse(start_time, "HH:mm", new Date());
+      const end = parse(end_time, "HH:mm", new Date());
 
       // 현재 날짜의 모든 가능한 시간 슬롯을 생성하고 예약된 시간만 비활성화합니다.
       const timeSlots = generateTimeSlots(st, dt, 30);
-      console.log(timeSlots)
+      console.log(timeSlots);
 
       timeSlots.forEach((time) => {
-        const current = parse(time, 'HH:mm', new Date());
+        const current = parse(time, "HH:mm", new Date());
 
-        if (isWithinInterval(current, { start: new Date(start.getTime()), end: new Date(end.getTime() - 1) })) {
+        if (
+          isWithinInterval(current, {
+            start: new Date(start.getTime()),
+            end: new Date(end.getTime() - 1),
+          })
+        ) {
           disabledTimes.push(time);
         }
-
       });
     });
 
-
-    console.log(disabledTimes)
-
+    console.log(disabledTimes);
 
     return disabledTimes;
-
-
   };
 
-  const [startDate, setStartDate] = useState('');
+  const [startDate, setStartDate] = useState("");
 
-
-
-  const [selectDate, setSelectDate] = useState('')
-
+  const [selectDate, setSelectDate] = useState("");
 
   const handleDateChange = (date) => {
-    const formatDate = format(date, 'yyyy-MM-dd');
+    const formatDate = format(date, "yyyy-MM-dd");
     setStartDate(date);
     setSelectDate(formatDate);
 
     if (date) {
-      console.log(date)
+      console.log(date);
       const day = getDay(date);
       const dayHours = hours[day];
 
-      console.log(day)
-      console.log("dayHours")
-      console.log(dayHours)
+      console.log(day);
+      console.log("dayHours");
+      console.log(dayHours);
 
       if (dayHours?.isOperatingDay) {
-        const timeSlots = generateTimeSlots(dayHours.start_time, dayHours.end_time, 30);
-        console.log("timeSlots")
-        console.log(timeSlots)
+        const timeSlots = generateTimeSlots(
+          dayHours.start_time,
+          dayHours.end_time,
+          30
+        );
+        console.log("timeSlots");
+        console.log(timeSlots);
 
-        const disabledTimesForDate = getDisabledTimesByDate(date, dayHours.start_time, dayHours.end_time);
+        const disabledTimesForDate = getDisabledTimesByDate(
+          date,
+          dayHours.start_time,
+          dayHours.end_time
+        );
 
-        console.log("disabledTimesForDate")
-        console.log(disabledTimesForDate)
+        console.log("disabledTimesForDate");
+        console.log(disabledTimesForDate);
 
         // 오늘 날짜 처리
-        if (format(date, 'yyyy-MM-dd') === format(new Date(), 'yyyy-MM-dd')) {
+        if (format(date, "yyyy-MM-dd") === format(new Date(), "yyyy-MM-dd")) {
           const now = new Date();
-          console.log(now)
+          console.log(now);
 
           const filteredTimeSlots = timeSlots.filter((time) => {
-            const timeObj = parse(time, 'HH:mm', new Date());
-            console.log(timeObj)
+            const timeObj = parse(time, "HH:mm", new Date());
+            console.log(timeObj);
             return timeObj >= now;
           });
 
-          console.log(filteredTimeSlots)
-          setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate, filteredTimeSlots: filteredTimeSlots });
+          console.log(filteredTimeSlots);
+          setModalData({
+            date: format(date, "yyyy-MM-dd"),
+            disabledTimes: disabledTimesForDate,
+            filteredTimeSlots: filteredTimeSlots,
+          });
         } else {
-          setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate, filteredTimeSlots: timeSlots });
+          setModalData({
+            date: format(date, "yyyy-MM-dd"),
+            disabledTimes: disabledTimesForDate,
+            filteredTimeSlots: timeSlots,
+          });
         }
         setIsModalOpen(true);
       }
     }
   };
-  console.log(modalData)
+  console.log(modalData);
 
   // const handleDateChange = (date) => {
   //   setStartDate(date);
@@ -301,41 +321,38 @@ const Reservation = () => {
   //   const dispatch = useDispatch();
 
   const handleItemClick = async () => {
-
     const data = {
       date: selectDate,
       time: activeTime,
-      desingerId: id
+      desingerId: id,
     };
-    
 
-      try {
-        const response = await api.post('/api/reservation/business', data, { withCredentials: true });
-        
-        if(response.data === 1){
-          setOpenModal(true);
-          setTimeout(() => {
-            window.location.href = '/business/menu';
-            
-          }, 1000);
-          
-        }
-      
-        console.log('User authority data:', response.data);
+    try {
+      const response = await api.post("/api/reservation/business", data, {
+        withCredentials: true,
+      });
 
+      if (response.data === 1) {
+        setOpenModal(true);
+        setTimeout(() => {
+          window.location.href = "/business/menu";
+        }, 1000);
+      }
+
+      console.log("User authority data:", response.data);
     } catch (error) {
-        console.error('권한 조회 실패:', error.message);
+      console.error("권한 조회 실패:", error.message);
     }
   };
 
   return (
     <>
-      <div className="mid" lang="ko">
+      <div className="mid reservation_worker_total" lang="ko">
         <div className="navigation">
           <button>
             <img src={arrowButtonUrl} alt="" onClick={goBack} />
           </button>
-          예약 신청서
+          예약시간관리
           <div></div>
         </div>
         <div className="main-mid">
@@ -468,7 +485,6 @@ const Reservation = () => {
           }
         `}
               </style>
-
             </div>
           </div>
           {isModalOpen && (
@@ -477,9 +493,12 @@ const Reservation = () => {
                 {modalData?.filteredTimeSlots?.map((time) => (
                   <div
                     key={time}
-                    className={`time-box ${activeTime.includes(time) ? 'clicked' : ''} ${disabledTimes.includes(time) ? 'disabled' : ''
-                      }`}
-                    onClick={() => !disabledTimes.includes(time) && handleButtonClick(time)}
+                    className={`time-box ${
+                      activeTime.includes(time) ? "clicked" : ""
+                    } ${disabledTimes.includes(time) ? "disabled" : ""}`}
+                    onClick={() =>
+                      !disabledTimes.includes(time) && handleButtonClick(time)
+                    }
                   >
                     {time}
                   </div>
