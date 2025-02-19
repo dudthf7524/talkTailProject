@@ -352,7 +352,7 @@ const Reservation = () => {
           <button>
             <img src={arrowButtonUrl} alt="" onClick={goBack} />
           </button>
-          예약시간관리
+          수기관리
           <div></div>
         </div>
         <div className="main-mid">

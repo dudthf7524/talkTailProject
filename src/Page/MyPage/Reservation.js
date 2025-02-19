@@ -61,7 +61,9 @@ const Reservation = () => {
               {dayjs(reservation.date).format("YYYY년 M월DD일 (ddd)")}
               {reservation.start_time}
             </div>
-            {reservation.reservation_state === "완료" ? (
+            {reservation.reservation_state === "픽업완료" ? (
+              <div style={{ fontWeight: "bold", color: "green" }}>예약완료</div>
+            ) :reservation.reservation_state === "완료" ? (
               <div style={{ fontWeight: "bold", color: "green" }}>예약완료</div>
             ) : reservation.reservation_state === "대기" ? (
               <div style={{ fontWeight: "bold", color: "orange" }}>

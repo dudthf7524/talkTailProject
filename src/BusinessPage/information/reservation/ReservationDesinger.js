@@ -46,7 +46,7 @@ function ReservationDesinger() {
         <div className='desingerlist'>
             <div className='desingerlistNavigation'>
                     <img style={{cursor : "pointer"}} src={arrowButtonUrl} alt='' onClick={() => navigate('/business/menu')} />
-                예약시간관리
+                수기관리
                 <button>
                   
                 </button>

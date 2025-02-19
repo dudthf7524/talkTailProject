@@ -55,6 +55,21 @@ router.get('/desinger/day/list/:id', async (req, res) => {
 
 });
 
+router.post('/designer/day/remove', async (req, res) => {
+  console.log(req.body)
+  console.log(req.body.closeId)
+  const id = req.body.closeId
+
+  try {
+      const result = await designerDatabase.DesignerDayRemove(id);
+      console.log(result)
+      res.json(result);
+  } catch (error) {
+      res.status(500).json({ error: error.message });
+  }
+
+});
+
 
 
 module.exports = router;

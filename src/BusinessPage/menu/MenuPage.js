@@ -153,7 +153,7 @@ const AdminMenu = () => {
                 />
                 <span className="menu-text">
                   <br />
-                  예약 시간 관리
+                  수기 관리
                 </span>
               </button>
               <button

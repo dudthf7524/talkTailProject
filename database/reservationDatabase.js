@@ -245,7 +245,7 @@ const businessReservation = async (data) => {
       date: data.date,
       start_time: data.start_time,
       end_time: data.end_time ? data.end_time : data.start_time + 30,
-      reservation_state: "완료",
+      reservation_state: "전화",
     });
     return BeautyReservationData;
   } catch (error) {
