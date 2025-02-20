@@ -60,7 +60,7 @@ import Tos from "./Page/Home/tos";
 import Privacy from "./Page/Home/privacy";
 import CustomerManagementDetail from "./BusinessPage/management/customer/CustomerManagementDetail";
 import HomeGuideDetail from "./Page/Home/homeGuideDetail";
-
+import MasterLogin from "./master/Login";
 function App() {
   const [imageFiles, setImageFiles] = useState({
     main: [],
@@ -82,6 +82,7 @@ function App() {
         <ImageProvider>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/aaa" element={<MasterLogin />} />
             <Route path="/auth/*" element={<Redirection />} />
             <Route path="/login/success" element={<LoginSuccess />} />
             <Route path="/user/detail" element={<UserDetailPage />} />

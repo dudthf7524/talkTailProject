@@ -1,9 +1,10 @@
+import "../masterCss/login.css";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../BusinessCSS/auth.css";
 import axios from "axios";
 
-const Login = () => {
+const MasterLogin = () => {
   const logoUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/logo/logo.svg`;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login" lang="ko">
+    <div className="master_login" lang="ko">
       <div className="login-logo">
         <img src={logoUrl} alt="logo img"></img>
       </div>
@@ -63,7 +64,7 @@ const Login = () => {
         </div>
       </form>
       <div className="find-id-pw-text">
-        <Link to="/business/register">회원가입</Link>
+        <Link to="/business/register">회원가입11</Link>
       </div>
       <div className="find-id-pw-text">
         <Link to="/find-admin-account">아이디/비밀번호 찾기</Link>
@@ -72,4 +73,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default MasterLogin;
