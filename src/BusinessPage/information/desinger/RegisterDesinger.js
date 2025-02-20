@@ -68,9 +68,11 @@ function RegisterDesinger() {
       <div className="main-mid">
         <div className="upload-img" >
           {/* 업로드된 이미지를 미리보기로 표시 */}
-          프로필
           <label htmlFor="imageUpload">
-            <img src={petImgUrl} alt="" tabIndex={0} style={{ cursor: "pointer" }} />
+            <img src={`${process.env.PUBLIC_URL}/profile/desinger1.png`} alt="" tabIndex={0} style={{ cursor: "pointer" }} />
+
+            <img src={`${process.env.PUBLIC_URL}/PageImage/pet/pet_img_L.png`} alt="" tabIndex={0} style={{ cursor: "pointer" }} />
+            프로필 이미지 선택
           </label>
         </div>
         <div className="input-container">
