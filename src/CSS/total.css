@@ -988,12 +988,12 @@
 .business_information_total {
 }
 .business_information_total .main-mid {
+  width: 90%;
   height: auto;
   position: inherit;
   overflow-y: scroll;
   overflow-x: hidden;
   margin-top: 72px;
-  padding: 0 5%;
 }
 .business_information_total .input-container {
   width: 100%;
