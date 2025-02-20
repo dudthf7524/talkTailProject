@@ -971,5 +971,16 @@
   grid-template-columns: 1fr 2fr 2fr;
 }
 .authorityManagement_total .authorityManagement-row {
+  height: 46px;
   grid-template-columns: 1fr 2fr 2fr;
+}
+.authorityManagement_total #detail-button {
+  height: 100%;
+  width: 34%;
+  padding: 0;
+}
+.authorityManagement_total #refuse-button {
+  height: 100%;
+  width: 34%;
+  padding: 0;
 }
