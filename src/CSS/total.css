@@ -962,3 +962,14 @@
   width: 100%;
   padding: 0;
 }
+
+/* AuthorityManagement.js */
+.authorityManagement_total .authorityManagement-item {
+  gap: 10px;
+}
+.authorityManagement_total .authorityManagement-title {
+  grid-template-columns: 1fr 2fr 2fr;
+}
+.authorityManagement_total .authorityManagement-row {
+  grid-template-columns: 1fr 2fr 2fr;
+}
