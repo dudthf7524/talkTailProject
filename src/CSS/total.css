@@ -448,6 +448,7 @@
   height: 100%;
   margin: 0;
 }
+
 /* ReservationManagement.js */
 .reservation_management_total .pickupBtn {
   width: auto;
@@ -460,6 +461,9 @@
 .reservation_management_total .pickupBtn:hover {
   background-color: white;
   color: #f0663f;
+}
+.reservation_management_total .reservation-item {
+  padding: 0;
 }
 /* ListPage.js */
 .listPage_total .title {
