@@ -1,5 +1,5 @@
 .reservation_modal {
-  width: 360px;
+  width: 75%;
   height: auto;
   background-color: white;
   position: fixed;
@@ -10,6 +10,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 10;
 }
 .reservation_modal > img {
   position: absolute;
@@ -45,7 +46,7 @@
 }
 @media (max-width: 500px) {
   .reservation_modal .selectBox {
-    height: 4.3vw;
+    height: 6vw;
   }
   .reservation_modal select {
     height: 100%;
