@@ -16,12 +16,21 @@ const NoticeDetail = () => {
 
   console.log(id);
 
-  const notice_skin_option = ["좋음", "건조", "민감", "붉음", "탈모", "딱지", "종기", "각질"]
-  const notice_ear_option = ["깨끗함", "노란귀지", "갈색귀지", "귓턻많음"]
-  const notice_eye_option = ["깨끗함", "눈꼽", "충혈"]
-  const notice_sole_option = ["좋음", "습진", "건조"]
-  const notice_claw_option = ["적당함", "짧음", "관리필요"]
-  const notice_analSac_option = ["많음", "적당", "안나옴"]
+  const notice_skin_option = [
+    "좋음",
+    "건조",
+    "민감",
+    "붉음",
+    "탈모",
+    "딱지",
+    "종기",
+    "각질",
+  ];
+  const notice_ear_option = ["깨끗함", "노란귀지", "갈색귀지", "귓턻많음"];
+  const notice_eye_option = ["깨끗함", "눈꼽", "충혈"];
+  const notice_sole_option = ["좋음", "습진", "건조"];
+  const notice_claw_option = ["적당함", "짧음", "관리필요"];
+  const notice_analSac_option = ["많음", "적당", "안나옴"];
 
   const [selectedMultipleOptions, setSelectedMultipleOptions] = useState({
     notice_skin: [], // 여러 개 선택 가능하도록 배열 사용
@@ -30,8 +39,7 @@ const NoticeDetail = () => {
     notice_sole: [],
     notice_claw: [],
   });
-  console.log(selectedMultipleOptions)
-
+  console.log(selectedMultipleOptions);
 
   const handleCheckboxMultipleChange = (category, value) => {
     setSelectedMultipleOptions((prev) => {
@@ -39,14 +47,16 @@ const NoticeDetail = () => {
 
       if (currentValues.includes(value)) {
         // 이미 선택된 경우 -> 제거
-        return { ...prev, [category]: currentValues.filter((v) => v !== value) };
+        return {
+          ...prev,
+          [category]: currentValues.filter((v) => v !== value),
+        };
       } else {
         // 새로 선택된 경우 -> 추가
         return { ...prev, [category]: [...currentValues, value] };
       }
     });
   };
-
 
   useEffect(() => {
     const noticeDetail = async () => {
@@ -90,25 +100,25 @@ const NoticeDetail = () => {
   console.log(list);
 
   const [selectedOptions, setSelectedOptions] = useState({
-    notice_skin: '', // list가 없으면 기본값으로 빈 문자열
-    notice_ear: '',
-    notice_eye: '',
-    notice_sole: '',
-    notice_claw: '',
-    notice_analSac: '',
-    notice_hairTangling: '',
+    notice_skin: "", // list가 없으면 기본값으로 빈 문자열
+    notice_ear: "",
+    notice_eye: "",
+    notice_sole: "",
+    notice_claw: "",
+    notice_analSac: "",
+    notice_hairTangling: "",
   });
   useEffect(() => {
     if (list) {
       // list가 업데이트되면 selectedOptions을 업데이트
       setSelectedOptions({
-        notice_skin: list.notice_skin || '',
-        notice_ear: list.notice_ear || '',
-        notice_eye: list.notice_eye || '',
-        notice_sole: list.notice_sole || '',
-        notice_claw: list.notice_claw || '',
-        notice_analSac: list.notice_analSac || '',
-        notice_hairTangling: list.notice_hairTangling || '',
+        notice_skin: list.notice_skin || "",
+        notice_ear: list.notice_ear || "",
+        notice_eye: list.notice_eye || "",
+        notice_sole: list.notice_sole || "",
+        notice_claw: list.notice_claw || "",
+        notice_analSac: list.notice_analSac || "",
+        notice_hairTangling: list.notice_hairTangling || "",
       });
     }
   }, [list]); // list가 업데이트되면 실행
@@ -138,14 +148,12 @@ const NoticeDetail = () => {
     navigate(-1); // 뒤로 가기
   };
 
-
-
   if (!list) {
     return <div>로딩 중....</div>;
   }
 
   return (
-    <div lang="ko">
+    <div lang="ko" className="notice_detail_total">
       <div className="mid">
         <div className="navigation">
           <button>
@@ -195,13 +203,17 @@ const NoticeDetail = () => {
                 <label
                   key={option}
                   style={{
-                    color: selectedMultipleOptions.notice_skin.includes(option) ? "black" : "#C4C4C4",
+                    color: selectedMultipleOptions.notice_skin.includes(option)
+                      ? "black"
+                      : "#C4C4C4",
                   }}
                 >
                   <input
                     type="checkbox"
                     value={option}
-                    checked={selectedMultipleOptions.notice_skin.includes(option)}
+                    checked={selectedMultipleOptions.notice_skin.includes(
+                      option
+                    )}
                     readOnly
                   />
                   &nbsp;
@@ -221,13 +233,17 @@ const NoticeDetail = () => {
                 <label
                   key={option}
                   style={{
-                    color: selectedMultipleOptions.notice_ear.includes(option) ? "black" : "#C4C4C4",
+                    color: selectedMultipleOptions.notice_ear.includes(option)
+                      ? "black"
+                      : "#C4C4C4",
                   }}
                 >
                   <input
                     type="checkbox"
                     value={option}
-                    checked={selectedMultipleOptions.notice_ear.includes(option)}
+                    checked={selectedMultipleOptions.notice_ear.includes(
+                      option
+                    )}
                     readOnly
                   />
                   &nbsp;
@@ -236,7 +252,6 @@ const NoticeDetail = () => {
               ))}
             </div>
           </div>
-
 
           {/* 눈 */}
           <div className="view-contents-style">
@@ -248,13 +263,17 @@ const NoticeDetail = () => {
                 <label
                   key={option}
                   style={{
-                    color: selectedMultipleOptions.notice_eye.includes(option) ? "black" : "#C4C4C4",
+                    color: selectedMultipleOptions.notice_eye.includes(option)
+                      ? "black"
+                      : "#C4C4C4",
                   }}
                 >
                   <input
                     type="checkbox"
                     value={option}
-                    checked={selectedMultipleOptions.notice_eye.includes(option)}
+                    checked={selectedMultipleOptions.notice_eye.includes(
+                      option
+                    )}
                     readOnly
                   />
                   &nbsp;
@@ -273,13 +292,17 @@ const NoticeDetail = () => {
                 <label
                   key={option}
                   style={{
-                    color: selectedMultipleOptions.notice_sole.includes(option) ? "black" : "#C4C4C4",
+                    color: selectedMultipleOptions.notice_sole.includes(option)
+                      ? "black"
+                      : "#C4C4C4",
                   }}
                 >
                   <input
                     type="checkbox"
                     value={option}
-                    checked={selectedMultipleOptions.notice_sole.includes(option)}
+                    checked={selectedMultipleOptions.notice_sole.includes(
+                      option
+                    )}
                     readOnly
                   />
                   &nbsp;
@@ -288,8 +311,6 @@ const NoticeDetail = () => {
               ))}
             </div>
           </div>
-
-
 
           <div className="view-contents-style">
             <div className="view-contents-title">
@@ -300,13 +321,17 @@ const NoticeDetail = () => {
                 <label
                   key={option}
                   style={{
-                    color: selectedMultipleOptions.notice_claw.includes(option) ? "black" : "#C4C4C4",
+                    color: selectedMultipleOptions.notice_claw.includes(option)
+                      ? "black"
+                      : "#C4C4C4",
                   }}
                 >
                   <input
                     type="checkbox"
                     value={option}
-                    checked={selectedMultipleOptions.notice_claw.includes(option)}
+                    checked={selectedMultipleOptions.notice_claw.includes(
+                      option
+                    )}
                     readOnly
                   />
                   &nbsp;
@@ -325,7 +350,9 @@ const NoticeDetail = () => {
                 <label
                   key={option}
                   style={{
-                    color: selectedOptions.notice_analSac.includes(option) ? "black" : "#C4C4C4",
+                    color: selectedOptions.notice_analSac.includes(option)
+                      ? "black"
+                      : "#C4C4C4",
                   }}
                 >
                   <input
@@ -364,7 +391,6 @@ const NoticeDetail = () => {
                 readOnly
               />
             </div>
-
           </div>
         </div>
       </div>

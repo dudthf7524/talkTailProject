@@ -240,6 +240,22 @@ const AdminMenu = () => {
                   계좌번호
                 </span>
               </button>
+              <button
+                className="menu-tbt-btn"
+                onClick={() =>
+                  window.open("http://pf.kakao.com/_CSDxln", "_blank")
+                }
+              >
+                <img
+                  src={informationIcon}
+                  alt="information icon"
+                  className="menu-icon"
+                />
+                <span className="menu-text">
+                  <br />
+                  애로사항 접수
+                </span>
+              </button>
             </div>
             {/* {openMore ? (
               <button
