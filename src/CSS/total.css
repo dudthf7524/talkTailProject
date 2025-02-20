@@ -958,3 +958,7 @@
 .registerStyle_total .registerStyle {
   width: 83.33%;
 }
+.registerStyle_total .input-container {
+  width: 100%;
+  padding: 0;
+}
