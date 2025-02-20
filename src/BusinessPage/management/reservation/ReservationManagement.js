@@ -48,7 +48,7 @@ const ReservationManagement = () => {
             onClick={() => navigate("/business/menu")}
           />
         </button>
-        예약내역1
+        예약내역
         <div> </div>
       </div>
       <div className="reservation-title">

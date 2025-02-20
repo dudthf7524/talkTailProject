@@ -465,6 +465,7 @@
 .reservation_management_total .reservation-item {
   padding: 0;
 }
+
 /* ListPage.js */
 .listPage_total .title {
   font-size: 20px;
@@ -930,4 +931,20 @@
   margin: 0;
   padding: 0;
   display: flex;
+}
+
+/* CustomerManagement.js */
+.note_page_total .customer-item {
+  padding: 0;
+}
+.note_page_total .customerManagement-text {
+  padding: 0;
+}
+.note_page_total .customer-row {
+  height: 52px;
+}
+.note_page_total .result-button-write {
+  width: 57%;
+  height: 100%;
+  padding: 0;
 }
