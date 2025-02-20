@@ -9,6 +9,8 @@ function RegisterDesinger() {
   const navigate = useNavigate();
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
   const keyButtonUrl = `${process.env.PUBLIC_URL}/BusinessImage/icon/keyboard_return.svg`;
+  const defaultPetImgUrl = `${process.env.PUBLIC_URL}/PageImage/pet/pet_img_L.png`;
+  const [petImgUrl, setPetImgUrl] = useState(defaultPetImgUrl);
 
   useEffect(() => {
     const textarea = document.getElementById("greetingTextarea");
@@ -40,7 +42,7 @@ function RegisterDesinger() {
         formData,
         { withCredentials: true }
       );
-      if(response.data === 'common'){
+      if (response.data === 'common') {
         navigate('/business/login')
       }
       console.log("Upload successful:", response.data);
@@ -55,15 +57,22 @@ function RegisterDesinger() {
   return (
     <div className="mid" lang="ko">
       <div className="navigation">
-          <img style={{cursor : "pointer"}}
-            src={arrowButtonUrl}
-            alt=""
-            onClick={() => navigate("/business/list/desinger")}
-          />
+        <img style={{ cursor: "pointer" }}
+          src={arrowButtonUrl}
+          alt=""
+          onClick={() => navigate("/business/list/desinger")}
+        />
         디자이너 등록
-        <div style={{cursor : "pointer"}} onClick={handleSave}>저장</div>
+        <div style={{ cursor: "pointer" }} onClick={handleSave}>저장</div>
       </div>
       <div className="main-mid">
+        <div className="upload-img" >
+          {/* 업로드된 이미지를 미리보기로 표시 */}
+          프로필
+          <label htmlFor="imageUpload">
+            <img src={petImgUrl} alt="" tabIndex={0} style={{ cursor: "pointer" }} />
+          </label>
+        </div>
         <div className="input-container">
           <p>디자이너 이름</p>
           <input

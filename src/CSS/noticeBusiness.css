@@ -38,10 +38,9 @@
 .notice-row {
     display: grid;
     grid-template-columns: 1fr 3fr;
-    align-items: center;
-    text-align: center;
+    padding-top: 50px;
     background-color: white;
-    min-height: 9vh;
+   
 }
 
 .notice-row2 {
@@ -117,7 +116,7 @@ input[type="checkbox"] {
     background-color: transparent;
     box-sizing: border-box;
     margin: 0;
-    padding: 0;
+    padding-right:7px ;
 }
 
 /* 체크박스가 체크되었을 때의 스타일 */

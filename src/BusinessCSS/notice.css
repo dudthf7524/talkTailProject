@@ -104,7 +104,7 @@ input[type="checkbox"] {
     background-color: transparent;
     box-sizing: border-box;
     margin: 0;
-    padding: 0;
+    padding-right:7px ;
 }
   
   /* 체크박스가 체크되었을 때의 스타일 */

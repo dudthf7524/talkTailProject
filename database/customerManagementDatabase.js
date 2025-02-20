@@ -58,21 +58,23 @@ const customerManagementGet = async (business_registration_number) => {
 };
 
 const customerNoticeWrite = async (id, data) => {
-
+ 
   const style = data.formData;
   const selectedOptions = data.selectedOptions;
+  const selectedMultipleOptions = data.selectedMultipleOptions;
 
   try {
     const BeautyNoticeData = await BeautyNotice.create({
       beauty_reservation_id: id,
       notice_style: style.notice_style,
-      notice_skin: selectedOptions.notice_skin,
-      notice_ear: selectedOptions.notice_ear,
-      notice_eye: selectedOptions.notice_eye,
-      notice_sole: selectedOptions.notice_sole,
-      notice_claw: selectedOptions.notice_claw,
+      notice_pet_weight: style.notice_pet_weight,
+      notice_skin: selectedMultipleOptions.notice_skin,
+      notice_ear: selectedMultipleOptions.notice_ear,
+      notice_eye: selectedMultipleOptions.notice_eye,
+      notice_sole: selectedMultipleOptions.notice_sole,
+      notice_claw: selectedMultipleOptions.notice_claw,
       notice_analSac: selectedOptions.notice_analSac,
-      notice_hairTangling: selectedOptions.notice_hairTangling,
+      notice_hairTangling: style.notice_hairTangling,
       notice_etc: style.notice_etc,
     });
     return BeautyNoticeData;
@@ -137,7 +139,7 @@ const customerBusinessNoticeDetail = async (id) => {
   try {
     let sql = "";
     sql +=
-      "select notice_style, notice_skin, notice_ear, notice_eye, notice_sole, notice_claw ,notice_analSac, notice_hairTangling, notice_etc, pet_name, pet_breed, pet_birth, pet_weight ";
+      "select notice_style, notice_pet_weight, notice_skin, notice_ear, notice_eye, notice_sole, notice_claw ,notice_analSac, notice_hairTangling, notice_etc, pet_name, pet_breed, pet_birth, pet_weight ";
     sql += "from beauty_notice bn ";
     sql += "join beauty_reservation br ";
     sql += "on bn.beauty_reservation_id = br.beauty_reservation_id ";
@@ -166,7 +168,7 @@ const customerNoticeDetail = async (id) => {
   try {
     let sql = "";
     sql +=
-      "select beauty_notice_id, notice_style, notice_skin, notice_ear, notice_eye, notice_sole, notice_claw ,notice_analSac, notice_hairTangling, notice_etc, pet_name, pet_breed, pet_birth, pet_weight ";
+      "select beauty_notice_id, notice_style, notice_pet_weight, notice_skin, notice_ear, notice_eye, notice_sole, notice_claw ,notice_analSac, notice_hairTangling, notice_etc, pet_name, pet_breed, pet_birth, pet_weight ";
     sql += "from beauty_notice bn ";
     sql += "join beauty_reservation br ";
     sql += "on bn.beauty_reservation_id = br.beauty_reservation_id ";

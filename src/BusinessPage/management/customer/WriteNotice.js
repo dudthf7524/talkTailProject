@@ -4,6 +4,7 @@ import "../../../CSS/noticeBusiness.css";
 import "../../../CSS/noticeModal.css";
 import NoticeSendModal from "../../Modal/NoticeSend";
 import api from "../../../Api";
+import { flatMap } from "lodash";
 
 const WriteNotice = () => {
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
@@ -14,25 +15,60 @@ const WriteNotice = () => {
 
   const location = useLocation();
   const { id } = location.state || {}; // state가 없는 경우 대비
-
   const [formData, setFormData] = useState({
     notice_style: "",
     notice_etc: "",
+    notice_pet_weight: "",
+    notice_hairTangling: ""
   });
   const [selectedOptions, setSelectedOptions] = useState({
-    notice_skin: "",
-    notice_ear: "",
-    notice_eye: "",
-    notice_sole: "",
-    notice_claw: "",
     notice_analSac: "",
-    notice_hairTangling: "",
+    notice_hairTangling_tf: null,
   });
+
+  console.log(selectedOptions)
+
+  const notice_skin_option = ["좋음", "건조", "민감", "붉음", "탈모", "딱지", "종기", "각질"]
+  const notice_ear_option = ["깨끗함", "노란귀지", "갈색귀지", "귓턻많음"]
+  const notice_eye_option = ["깨끗함", "눈꼽", "충혈"]
+  const notice_sole_option = ["좋음", "습진", "건조"]
+  const notice_claw_option = ["적당함", "짧음", "관리필요"]
+  const notice_analSac_option = ["많음", "적당", "안나옴"]
+  const notice_hairTangling_option = ["유", "무"]
+
+  const [selectedMultipleOptions, setSelectedMultipleOptions] = useState({
+    notice_skin: [], // 여러 개 선택 가능하도록 배열 사용
+    notice_ear: [],
+    notice_eye: [],
+    notice_sole: [],
+    notice_claw: [],
+  });
+
+  const handleCheckboxMultipleChange = (category, value) => {
+    setSelectedMultipleOptions((prev) => {
+      const currentValues = prev[category] || [];
+
+      if (currentValues.includes(value)) {
+        // 이미 선택된 경우 -> 제거
+        return { ...prev, [category]: currentValues.filter((v) => v !== value) };
+      } else {
+        // 새로 선택된 경우 -> 추가
+        return { ...prev, [category]: [...currentValues, value] };
+      }
+    });
+  };
 
   const handleCheckboxChange = (category, value) => {
     setSelectedOptions((prev) => ({
       ...prev,
       [category]: value,
+    }));
+  };
+
+  const handleTrueFalseChange = () => {
+    setSelectedOptions((prev) => ({
+      ...prev,
+      notice_hairTangling_tf: prev.notice_hairTangling_tf === true ? false : true, 
     }));
   };
 
@@ -45,12 +81,14 @@ const WriteNotice = () => {
   };
 
   const handleConfirm = async () => {
+    
     try {
       const response = await api.post(
         `/api/customer/notice/write/${id}`,
         {
           formData,
           selectedOptions,
+          selectedMultipleOptions,
         },
         { withCredentials: true }
       );
@@ -95,55 +133,38 @@ const WriteNotice = () => {
             placeholder="스타일을 입력해 주세요."
           />
         </div>
+        <div className="notice-row">
+          <div className="notice-title">몸무게(kg)</div>
+          <input
+            className="notice-textbox"
+            type="text"
+            name="notice_pet_weight"
+            value={formData.notice_pet_weight}
+            onChange={handleInputChange}
+            placeholder="체중을 입력해 주세요."
+          />
+        </div>
         {/* 피부 */}
         <div className="notice-row">
           <div className="notice-title">피부</div>
           <div className="notice-checkboxes">
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_skin === "좋음" ? "black" : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_skin"
-                value="good"
-                checked={selectedOptions.notice_skin === "좋음"}
-                onChange={() => handleCheckboxChange("notice_skin", "좋음")}
-              />
-              좋음
-            </label>
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_skin === "건조" ? "black" : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_skin"
-                value="dry"
-                checked={selectedOptions.notice_skin === "건조"}
-                onChange={() => handleCheckboxChange("notice_skin", "건조")}
-              />
-              건조
-            </label>
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_skin === "민감" ? "black" : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_skin"
-                value="sensitive"
-                checked={selectedOptions.notice_skin === "민감"}
-                onChange={() => handleCheckboxChange("notice_skin", "민감")}
-              />
-              민감
-            </label>
+            {notice_skin_option.map((option) => (
+              <label
+                key={option}
+                style={{
+                  color: selectedMultipleOptions.notice_skin.includes(option) ? "black" : "#C4C4C4",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  value={option}
+                  checked={selectedMultipleOptions.notice_skin.includes(option)}
+                  onChange={() => handleCheckboxMultipleChange("notice_skin", option)}
+                />
+                &nbsp;
+                {option}
+              </label>
+            ))}
           </div>
         </div>
 
@@ -151,55 +172,23 @@ const WriteNotice = () => {
         <div className="notice-row">
           <div className="notice-title">귀</div>
           <div className="notice-checkboxes">
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_ear === "깨끗함" ? "black" : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_ear"
-                value="clear"
-                checked={selectedOptions.notice_ear === "깨끗함"}
-                onChange={() => handleCheckboxChange("notice_ear", "깨끗함")}
-              />
-              깨끗함
-            </label>
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_ear === "노란귀지"
-                    ? "black"
-                    : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_ear"
-                value="yellow-ear"
-                checked={selectedOptions.notice_ear === "노란귀지"}
-                onChange={() => handleCheckboxChange("notice_ear", "노란귀지")}
-              />
-              노란귀지
-            </label>
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_ear === "갈색귀지"
-                    ? "black"
-                    : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_ear"
-                value="brown-ear"
-                checked={selectedOptions.notice_ear === "갈색귀지"}
-                onChange={() => handleCheckboxChange("notice_ear", "갈색귀지")}
-              />
-              갈색귀지
-            </label>
+            {notice_ear_option.map((option) => (
+              <label
+                key={option}
+                style={{
+                  color: selectedMultipleOptions.notice_ear.includes(option) ? "black" : "#C4C4C4",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  value={option}
+                  checked={selectedMultipleOptions.notice_ear.includes(option)}
+                  onChange={() => handleCheckboxMultipleChange("notice_ear", option)}
+                />
+                &nbsp;
+                {option}
+              </label>
+            ))}
           </div>
         </div>
 
@@ -207,51 +196,23 @@ const WriteNotice = () => {
         <div className="notice-row">
           <div className="notice-title">눈</div>
           <div className="notice-checkboxes">
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_eye === "깨끗함" ? "black" : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_eye"
-                value="clear"
-                checked={selectedOptions.notice_eye === "깨끗함"}
-                onChange={() => handleCheckboxChange("notice_eye", "깨끗함")}
-              />
-              깨끗함
-            </label>
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_eye === "눈꼽" ? "black" : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_eye"
-                value="eyelid"
-                checked={selectedOptions.notice_eye === "눈꼽"}
-                onChange={() => handleCheckboxChange("notice_eye", "눈꼽")}
-              />
-              눈꼽
-            </label>
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_eye === "충혈" ? "black" : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_eye"
-                value="congestion"
-                checked={selectedOptions.notice_eye === "충혈"}
-                onChange={() => handleCheckboxChange("notice_eye", "충혈")}
-              />
-              충혈
-            </label>
+            {notice_eye_option.map((option) => (
+              <label
+                key={option}
+                style={{
+                  color: selectedMultipleOptions.notice_eye.includes(option) ? "black" : "#C4C4C4",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  value={option}
+                  checked={selectedMultipleOptions.notice_eye.includes(option)}
+                  onChange={() => handleCheckboxMultipleChange("notice_eye", option)}
+                />
+                &nbsp;
+                {option}
+              </label>
+            ))}
           </div>
         </div>
 
@@ -259,51 +220,23 @@ const WriteNotice = () => {
         <div className="notice-row">
           <div className="notice-title">발바닥</div>
           <div className="notice-checkboxes">
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_sole === "좋음" ? "black" : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_sole"
-                value="good"
-                checked={selectedOptions.notice_sole === "좋음"}
-                onChange={() => handleCheckboxChange("notice_sole", "좋음")}
-              />
-              좋음
-            </label>
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_sole === "습진" ? "black" : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_sole"
-                value="eczema"
-                checked={selectedOptions.notice_sole === "습진"}
-                onChange={() => handleCheckboxChange("notice_sole", "습진")}
-              />
-              습진
-            </label>
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_sole === "건조" ? "black" : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_sole"
-                value="dry"
-                checked={selectedOptions.notice_sole === "건조"}
-                onChange={() => handleCheckboxChange("notice_sole", "건조")}
-              />
-              건조
-            </label>
+            {notice_sole_option.map((option) => (
+              <label
+                key={option}
+                style={{
+                  color: selectedMultipleOptions.notice_sole.includes(option) ? "black" : "#C4C4C4",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  value={option}
+                  checked={selectedMultipleOptions.notice_sole.includes(option)}
+                  onChange={() => handleCheckboxMultipleChange("notice_sole", option)}
+                />
+                &nbsp;
+                {option}
+              </label>
+            ))}
           </div>
         </div>
 
@@ -311,55 +244,23 @@ const WriteNotice = () => {
         <div className="notice-row">
           <div className="notice-title">발톱</div>
           <div className="notice-checkboxes">
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_claw === "적당함"
-                    ? "black"
-                    : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_claw"
-                value="good"
-                checked={selectedOptions.notice_claw === "적당함"}
-                onChange={() => handleCheckboxChange("notice_claw", "적당함")}
-              />
-              적당함
-            </label>
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_claw === "짧음" ? "black" : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_claw"
-                value="short"
-                checked={selectedOptions.notice_claw === "짧음"}
-                onChange={() => handleCheckboxChange("notice_claw", "짧음")}
-              />
-              짧음
-            </label>
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_claw === "관리필요"
-                    ? "black"
-                    : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_claw"
-                value="management"
-                checked={selectedOptions.notice_claw === "관리필요"}
-                onChange={() => handleCheckboxChange("notice_claw", "관리필요")}
-              />
-              관리필요
-            </label>
+            {notice_claw_option.map((option) => (
+              <label
+                key={option}
+                style={{
+                  color: selectedMultipleOptions.notice_claw.includes(option) ? "black" : "#C4C4C4",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  value={option}
+                  checked={selectedMultipleOptions.notice_claw.includes(option)}
+                  onChange={() => handleCheckboxMultipleChange("notice_claw", option)}
+                />
+                &nbsp;
+                {option}
+              </label>
+            ))}
           </div>
         </div>
 
@@ -367,61 +268,23 @@ const WriteNotice = () => {
         <div className="notice-row">
           <div className="notice-title">항문낭</div>
           <div className="notice-checkboxes">
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_analSac === "적당함"
-                    ? "black"
-                    : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_analSac"
-                value="good"
-                checked={selectedOptions.notice_analSac === "적당함"}
-                onChange={() =>
-                  handleCheckboxChange("notice_analSac", "적당함")
-                }
-              />
-              적당함
-            </label>
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_analSac === "많음"
-                    ? "black"
-                    : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_analSac"
-                value="many"
-                checked={selectedOptions.notice_analSac === "많음"}
-                onChange={() => handleCheckboxChange("notice_analSac", "많음")}
-              />
-              많음
-            </label>
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_analSac === "안나옴"
-                    ? "black"
-                    : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_analSac"
-                value="none"
-                checked={selectedOptions.notice_analSac === "안나옴"}
-                onChange={() =>
-                  handleCheckboxChange("notice_analSac", "안나옴")
-                }
-              />
-              안나옴
-            </label>
+            {notice_analSac_option.map((option) => (
+              <label
+                key={option}
+                style={{
+                  color: selectedOptions.notice_analSac.includes(option) ? "black" : "#C4C4C4",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  value={option}
+                  checked={selectedOptions.notice_analSac.includes(option)}
+                  onChange={() => handleCheckboxChange("notice_analSac", option)}
+                />
+                &nbsp;
+                {option}
+              </label>
+            ))}
           </div>
         </div>
 
@@ -429,46 +292,47 @@ const WriteNotice = () => {
         <div className="notice-row">
           <div className="notice-title">털엉킴</div>
           <div className="notice-checkboxes">
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_hairTangling === "유"
-                    ? "black"
-                    : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_hairTangling"
-                value="yes"
-                checked={selectedOptions.notice_hairTangling === "유"}
-                onChange={() =>
-                  handleCheckboxChange("notice_hairTangling", "유")
-                }
-              />
-              유
-            </label>
-            <label
-              style={{
-                color:
-                  selectedOptions.notice_hairTangling === "무"
-                    ? "black"
-                    : "#C4C4C4",
-              }}
-            >
-              <input
-                type="radio"
-                name="notice_hairTangling"
-                value="no"
-                checked={selectedOptions.notice_hairTangling === "무"}
-                onChange={() =>
-                  handleCheckboxChange("notice_hairTangling", "무")
-                }
-              />
-              무
-            </label>
+            {notice_hairTangling_option.map((option) => (
+              <label
+                key={option}
+                style={{
+                  color: (selectedOptions.notice_hairTangling_tf === true && option === "유") ||
+                    (selectedOptions.notice_hairTangling_tf === false && option === "무")
+                    ? "black" : "#C4C4C4",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  value={option}
+                  checked={(selectedOptions.notice_hairTangling_tf === true && option === "유") ||
+                    (selectedOptions.notice_hairTangling_tf === false && option === "무")}
+                  onChange={handleTrueFalseChange}
+                />
+                &nbsp;
+                {option}
+              </label>
+            ))}
           </div>
         </div>
+
+        {/* 털엉킴 부위 */}
+        {
+          selectedOptions.notice_hairTangling_tf ? (
+            <div className="notice-row">
+              <div className="notice-title">털엉킴 부위</div>
+              <input
+                className="notice-textbox"
+                type="text"
+                name="notice_hairTangling"
+                value={formData.notice_hairTangling}
+                onChange={handleInputChange}
+                placeholder="털엉킴 부위를 입력해 주세요."
+              />
+            </div>
+          ) : (
+            <></>
+          )
+        }
 
         <div className="notice-row">
           <div className="notice-title2">기타사항</div>

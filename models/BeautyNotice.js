@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING(30),
                 allowNull: false,
             },
+            notice_pet_weight: {
+                type: DataTypes.FLOAT,
+                allowNull: false,
+                defaultValue: 0.0,
+            },
             notice_skin: {
                 type: DataTypes.STRING(30),
                 allowNull: false,
@@ -54,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
                 defaultValue: '',
             },
 
-          
+
         },
         {
             timestamps: false,

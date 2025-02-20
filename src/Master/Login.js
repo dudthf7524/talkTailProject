@@ -8,6 +8,7 @@ const MasterLogin = () => {
   const logoUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/logo/logo.svg`;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
+  
   const login = async () => {
     const form = document.querySelector(".loginform");
     const formData = new FormData(form);

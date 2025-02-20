@@ -87,6 +87,15 @@ const CustomerManagementDetail = () => {
                     </div>
                     <div className='view-contents-style'>
                         <div className='view-contents-title'>
+                            <h1>몸무게</h1>
+                        </div>
+                        <div className='view-contents-option'>
+
+                            <p>{list.notice_pet_weight}kg</p>
+                        </div>
+                    </div>
+                    <div className='view-contents-style'>
+                        <div className='view-contents-title'>
                             <h1>피부</h1>
                         </div>
                         <div className='view-contents-option'>

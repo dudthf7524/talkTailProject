@@ -754,3 +754,14 @@ input[type="checkbox"]:focus {
   padding: 0;
   margin: 0;
 }
+.view-contents-style textarea {
+  border: 1px solid #f0663f;
+  margin: 0 auto;
+  padding: 10px;
+  overflow-y: scroll;
+  height: auto;
+  width: 290px;
+  max-height: 500px;
+  min-height: 150px;
+  /* border: 1px solid red; */
+}
