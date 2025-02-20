@@ -948,3 +948,13 @@
   height: 100%;
   padding: 0;
 }
+.note_page_total .result-button-complete {
+  width: 57%;
+  height: 100%;
+  padding: 0;
+}
+
+/* RegisterStyle.js */
+.registerStyle_total .registerStyle {
+  width: 83.33%;
+}

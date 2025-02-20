@@ -104,7 +104,7 @@ function RegisterStyle() {
   // }
 
   return (
-    <div className="mid" lang="ko">
+    <div className="mid registerStyle_total" lang="ko">
       <div className="navigation">
         <button>
           <img
