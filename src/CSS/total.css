@@ -984,3 +984,18 @@
   width: 40%;
   padding: 0;
 }
+/* EditInformation.js */
+.business_information_total {
+}
+.business_information_total .main-mid {
+  height: auto;
+  position: inherit;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin-top: 72px;
+  padding: 0 5%;
+}
+.business_information_total .input-container {
+  width: 100%;
+  padding: 0;
+}
