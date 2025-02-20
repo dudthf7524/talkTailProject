@@ -22,9 +22,9 @@ function EditInformation() {
   const keyButtonUrl = `${process.env.PUBLIC_URL}/BusinessImage/icon/keyboard_return.svg`;
   const defaultImage = `${process.env.PUBLIC_URL}/PageImage/pet/pet_img_L.png`;
 
-  console.log(imageFiles.main.length)
-  console.log(imageFiles)
-  console.log(list.business_main_image)
+  console.log(imageFiles.main.length);
+  console.log(imageFiles);
+  console.log(list.business_main_image);
 
   const [formData, setFormData] = useState({
     business_name: "",
@@ -90,7 +90,6 @@ function EditInformation() {
     };
     fetchData();
   }, [navigate]);
-
 
   useEffect(() => {
     const textarea = document.getElementById("greetingTextarea");
@@ -221,7 +220,7 @@ function EditInformation() {
     return <div>로딩 중...</div>;
   }
   return (
-    <div className="mid" lang="ko">
+    <div className="mid business_information_total" lang="ko">
       <div className="navigation">
         <button>
           <img
@@ -239,28 +238,34 @@ function EditInformation() {
         <div className="input-container">
           <p>썸네일</p>
         </div>
-        {
-          imageFiles.main.length > 0 ? (
-            <>
-              {imageFiles.main.map((file, index) => (
-                <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
-                  <img
-                    src={URL.createObjectURL(file)}
-                    alt={`preview ${index}`}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', marginBottom: "20px" }}
-                  />
-                </div>
-              ))}
-            </>
-          ) : (
-            <div style={{ position: "relative", display: "inline-block" }}>
-              <img
-                src={list.business_main_image}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
-            </div>
-          )
-        }
+        {imageFiles.main.length > 0 ? (
+          <>
+            {imageFiles.main.map((file, index) => (
+              <div
+                key={index}
+                style={{ position: "relative", display: "inline-block" }}
+              >
+                <img
+                  src={URL.createObjectURL(file)}
+                  alt={`preview ${index}`}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    marginBottom: "20px",
+                  }}
+                />
+              </div>
+            ))}
+          </>
+        ) : (
+          <div style={{ position: "relative", display: "inline-block" }}>
+            <img
+              src={list.business_main_image}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          </div>
+        )}
 
         <div
           className="upload-box"
@@ -277,58 +282,69 @@ function EditInformation() {
           <p>가격표 이미지</p>
         </div>
 
-
-        {
-          imageFiles.pricing.length > 0 ? (
-            <>
-              {imageFiles.pricing.map((file, index) => (
-                <div key={index} style={{ position: 'relative', display: 'inline-block' }}>
-                  <img
-                    src={URL.createObjectURL(file)}
-                    alt={`preview ${index}`}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', marginBottom: "20px" }}
-                  />
-                </div>
-              ))}
-            </>
-          ) : (
-            <>
-              {list.business_price_image1 ? (
-                <div style={{ position: "relative", display: "inline-block" }}>
-                  <img
-                    src={list.business_price_image1}
-                    alt="Business Price"
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                </div>
-              ) : (
-                <div style={{ position: "relative", display: "inline-block" }}></div>
-              )}
-              {list.business_price_image2 ? (
-                <div style={{ position: "relative", display: "inline-block" }}>
-                  <img
-                    src={list.business_price_image2}
-                    alt="Business Price"
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                </div>
-              ) : (
-                <div style={{ position: "relative", display: "inline-block" }}></div>
-              )}
-              {list.business_price_image3 ? (
-                <div style={{ position: "relative", display: "inline-block" }}>
-                  <img
-                    src={list.business_price_image3}
-                    alt="Business Price"
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                </div>
-              ) : (
-                <div style={{ position: "relative", display: "inline-block" }}></div>
-              )}
-            </>
-          )
-        }
+        {imageFiles.pricing.length > 0 ? (
+          <>
+            {imageFiles.pricing.map((file, index) => (
+              <div
+                key={index}
+                style={{ position: "relative", display: "inline-block" }}
+              >
+                <img
+                  src={URL.createObjectURL(file)}
+                  alt={`preview ${index}`}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    marginBottom: "20px",
+                  }}
+                />
+              </div>
+            ))}
+          </>
+        ) : (
+          <>
+            {list.business_price_image1 ? (
+              <div style={{ position: "relative", display: "inline-block" }}>
+                <img
+                  src={list.business_price_image1}
+                  alt="Business Price"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </div>
+            ) : (
+              <div
+                style={{ position: "relative", display: "inline-block" }}
+              ></div>
+            )}
+            {list.business_price_image2 ? (
+              <div style={{ position: "relative", display: "inline-block" }}>
+                <img
+                  src={list.business_price_image2}
+                  alt="Business Price"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </div>
+            ) : (
+              <div
+                style={{ position: "relative", display: "inline-block" }}
+              ></div>
+            )}
+            {list.business_price_image3 ? (
+              <div style={{ position: "relative", display: "inline-block" }}>
+                <img
+                  src={list.business_price_image3}
+                  alt="Business Price"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </div>
+            ) : (
+              <div
+                style={{ position: "relative", display: "inline-block" }}
+              ></div>
+            )}
+          </>
+        )}
 
         <div
           className="upload-box"

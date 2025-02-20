@@ -89,7 +89,7 @@ function BusinessBeautyEditOption() {
   // }
 
   return (
-    <div className="mid" lang="ko">
+    <div className="mid edit_option_total" lang="ko">
       <div className="navigation">
         <button>
           <img

@@ -34,7 +34,7 @@ const CustomerManagement = () => {
   }, []);
 
   return (
-    <div className="page-container note_page" lang="ko">
+    <div className="page-container note_page note_page_total" lang="ko">
       <div className="navigation">
         <button>
           <img

@@ -64,7 +64,9 @@ const ReservationManagement = () => {
             {reservationManagement.pet_name}
           </div>
           <div className="reservation-item">
-            {dayjs(reservationManagement.date).format("YYYY년 M월 DD일 (ddd) ")}
+            {dayjs(reservationManagement.date).format("YYYY년 M월 DD일")}
+            <br />
+            {dayjs(reservationManagement.date).format("(ddd) ")}
             {reservationManagement.start_time}
           </div>
           {reservationManagement.reservation_state === "픽업완료" ? (
@@ -103,12 +105,7 @@ const ReservationManagement = () => {
               거절
             </div>
           ) : reservationManagement.reservation_state === "전화" ? (
-            <div
-              className="reservation-item"
-              
-            >
-              수기예약
-            </div>
+            <div className="reservation-item">수기예약</div>
           ) : (
             <div
               className="reservation-item"
@@ -118,9 +115,8 @@ const ReservationManagement = () => {
             </div>
           )}
 
-          {
-            reservationManagement.reservation_state === "픽업완료" ? (
-              <div className="reservation-item">
+          {reservationManagement.reservation_state === "픽업완료" ? (
+            <div className="reservation-item">
               <button
                 className="detail-button"
                 onClick={() => {
@@ -135,8 +131,8 @@ const ReservationManagement = () => {
                 싱세보기
               </button>
             </div>
-            ) : reservationManagement.reservation_state === "완료" ? (
-              <div className="reservation-item">
+          ) : reservationManagement.reservation_state === "완료" ? (
+            <div className="reservation-item">
               <button
                 className="detail-button"
                 onClick={() => {
@@ -151,10 +147,10 @@ const ReservationManagement = () => {
                 싱세보기
               </button>
             </div>
-            ) : reservationManagement.reservation_state === "전화" ? (
-              <div className="reservation-item"></div>
-            ) : (
-              <div className="reservation-item">
+          ) : reservationManagement.reservation_state === "전화" ? (
+            <div className="reservation-item"></div>
+          ) : (
+            <div className="reservation-item">
               <button
                 className="detail-button"
                 onClick={() => {
@@ -169,8 +165,7 @@ const ReservationManagement = () => {
                 예약확인
               </button>
             </div>
-            )
-          }
+          )}
         </div>
       ))}
       {openPickup ? (

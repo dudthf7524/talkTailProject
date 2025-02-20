@@ -60,7 +60,7 @@ function AuthorityManagement() {
   };
 
   return (
-    <div className="page-container" lang="ko">
+    <div className="page-container authorityManagement_total" lang="ko">
       <div className="navigation">
         <button>
           <img
