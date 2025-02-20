@@ -1012,3 +1012,35 @@
   width: 100%;
   padding: 0;
 }
+
+/* NoticeDetail.js */
+.notice_detail_total {
+  width: 100%;
+  height: auto;
+}
+.notice_detail_total .mid {
+  height: auto;
+  position: inherit;
+}
+.notice_detail_total .mid .review-mid {
+  width: 100%;
+  height: auto;
+  position: inherit;
+  margin-top: 72px;
+}
+
+/* CustomerManagementDetail.js */
+.customer_management_detail_total {
+  width: 100%;
+  height: auto;
+}
+.customer_management_detail_total .mid {
+  height: auto;
+  position: inherit;
+}
+.customer_management_detail_total .mid .review-mid {
+  width: 100%;
+  height: auto;
+  position: inherit;
+  margin-top: 72px;
+}
