@@ -21,6 +21,8 @@ const kakaoApiRoutes = require("./routes/kakaoApiRoutes");
 
 const BankDatabase = require("./models/BankDatabase"); // BankDatabase 함수 가져오기
 
+const masterRouter = require("./routes/master/loadDatas");
+
 const port = 3060;
 app.listen(port, () => {
   console.log(`http://localhost:${port} 에서 서버 실행중`);
@@ -100,9 +102,8 @@ app.use("/api", userRoutes);
 app.use("/api", reservationRoutes);
 app.use("/api", customerManagementRoutes);
 app.use("/api", kakaoApiRoutes);
+app.use("/master", masterRouter);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./build/index.html"));
 });
-
-

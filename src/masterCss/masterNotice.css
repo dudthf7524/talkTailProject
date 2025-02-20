@@ -1,0 +1,18 @@
+.master_notice .row p:nth-child(1) {
+  width: 5%;
+}
+.master_notice .row p:nth-child(2) {
+  width: 15%;
+}
+.master_notice .row p:nth-child(3) {
+  width: 20%;
+}
+.master_notice .row p:nth-child(4) {
+  width: 20%;
+}
+.master_notice .row p:nth-child(5) {
+  width: 20%;
+}
+.master_notice .row div:nth-child(6) {
+  width: 8%;
+}

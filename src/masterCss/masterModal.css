@@ -1,0 +1,30 @@
+.master_modal {
+  width: 50%;
+  height: 70%;
+  overflow-y: scroll;
+  border: 1px solid red;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(245, 245, 245);
+}
+.master_modal .delete_btn {
+  font-size: 40px;
+  position: absolute;
+  top: 0;
+  right: 20px;
+  cursor: pointer;
+}
+.master_modal {
+  display: flex;
+}
+.master_modal .box {
+  width: 50%;
+  height: auto;
+  text-align: center;
+  margin-top: 20px;
+}
+.master_modal .box p {
+  font-size: 14px;
+}

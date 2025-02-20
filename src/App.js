@@ -60,8 +60,9 @@ import Tos from "./Page/Home/tos";
 import Privacy from "./Page/Home/privacy";
 import CustomerManagementDetail from "./BusinessPage/management/customer/CustomerManagementDetail";
 import HomeGuideDetail from "./Page/Home/homeGuideDetail";
-import MasterLogin from "./master/Login";
 
+import MasterLogin from "./master/Login";
+import MasterMain from "./master/masterMain";
 function App() {
   const location = useLocation();
   const isMasterPage = location.pathname.startsWith("/master");
@@ -82,16 +83,13 @@ function App() {
   };
 
   return (
-
     <>
       {isMasterPage ? (
         // 마스터 페이지는 독립적인 구조로 렌더링
         <Routes>
-          <Route path="/master/login">
-            <Route path="" element={<MasterLogin />} />
+          <Route path="/master">
+            <Route path="main" element={<MasterMain />} />
           </Route>
-
-
         </Routes>
       ) : (
         <div className="App">
@@ -110,7 +108,10 @@ function App() {
                 />
                 <Route path="/designer/list" element={<PetDesigner />} />
                 <Route path="/select/date/:id" element={<SelectDatePage />} />
-                <Route path="/pet/registration" element={<PetRegistrationPage />} />
+                <Route
+                  path="/pet/registration"
+                  element={<PetRegistrationPage />}
+                />
                 <Route path="/my-page" element={<MyPage />} />
                 <Route path="/pet/list" element={<PetListPage />} />
                 <Route path="/pet-select/:id" element={<PetSelectPage />} />
@@ -125,7 +126,10 @@ function App() {
                 <Route path="/pet/detail/:id" element={<PetDetailPage />} />
                 <Route path="/pet-edit/:id" element={<PetEditPage />} />
                 <Route path="/user/information" element={<UserInformation />} />
-                <Route path="/selected/date/:id" element={<SelectedDatePage />} />
+                <Route
+                  path="/selected/date/:id"
+                  element={<SelectedDatePage />}
+                />
                 <Route path="/edit-address" element={<EditAddressPage />} />
                 <Route path="/user/edit" element={<UserEdit />} />
                 <Route path="/reservation" element={<Reservation />} />
@@ -149,12 +153,18 @@ function App() {
                     path="register/information"
                     element={<RegisterInformation />}
                   />
-                  <Route path="edit/information" element={<EditInformation />} />
+                  <Route
+                    path="edit/information"
+                    element={<EditInformation />}
+                  />
                   <Route
                     path="imgupload/:pathName/:imageType"
                     element={<ImgUpload setImageFiles={handleSetImageFiles} />}
                   />
-                  <Route path="register/desinger" element={<RegisterDesinger />} />
+                  <Route
+                    path="register/desinger"
+                    element={<RegisterDesinger />}
+                  />
                   <Route
                     path="authority/management"
                     element={<AuthorityManagement />}
@@ -190,7 +200,10 @@ function App() {
                     element={<AccountNumberList />}
                   />
                   <Route path="list/desinger" element={<DesingerList />} />
-                  <Route path="write/ClosedDays" element={<DesingerClosedDays />} />
+                  <Route
+                    path="write/ClosedDays"
+                    element={<DesingerClosedDays />}
+                  />
                   <Route path="reservation" element={<BusinessReservation />} />
                   <Route
                     path="reservation/desinger"
