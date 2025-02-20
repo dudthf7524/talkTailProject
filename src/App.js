@@ -62,6 +62,8 @@ import CustomerManagementDetail from "./BusinessPage/management/customer/Custome
 import HomeGuideDetail from "./Page/Home/homeGuideDetail";
 
 import MasterLogin from "./master/Login";
+
+
 import MasterMain from "./master/masterMain";
 function App() {
   const location = useLocation();
