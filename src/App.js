@@ -1,5 +1,5 @@
 import Join from "./BusinessPage/join/Join";
-import { Link, Route, Router, Routes } from "react-router-dom";
+import { Link, Route, Router, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import "./CSS/total.css";
 // import './BusinessCSS/page.css';
@@ -61,7 +61,11 @@ import Privacy from "./Page/Home/privacy";
 import CustomerManagementDetail from "./BusinessPage/management/customer/CustomerManagementDetail";
 import HomeGuideDetail from "./Page/Home/homeGuideDetail";
 import MasterLogin from "./master/Login";
+
 function App() {
+  const location = useLocation();
+  const isMasterPage = location.pathname.startsWith("/master");
+
   const [imageFiles, setImageFiles] = useState({
     main: [],
     sub: [],
@@ -69,6 +73,7 @@ function App() {
     review: [],
     pricing: [],
   });
+
   const handleSetImageFiles = (imageType, files) => {
     setImageFiles((prevFiles) => ({
       ...prevFiles,
@@ -77,114 +82,127 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <div className="Container">
-        <ImageProvider>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/aaa" element={<MasterLogin />} />
-            <Route path="/auth/*" element={<Redirection />} />
-            <Route path="/login/success" element={<LoginSuccess />} />
-            <Route path="/user/detail" element={<UserDetailPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/list/:id" element={<ListPage />} />
-            <Route
-              path="/business/detail/:id"
-              element={<BusinessDetailPage />}
-            />
-            <Route path="/designer/list" element={<PetDesigner />} />
-            <Route path="/select/date/:id" element={<SelectDatePage />} />
-            <Route path="/pet/registration" element={<PetRegistrationPage />} />
-            <Route path="/my-page" element={<MyPage />} />
-            <Route path="/pet/list" element={<PetListPage />} />
-            <Route path="/pet-select/:id" element={<PetSelectPage />} />
-            <Route
-              path="/reservation-request/:id"
-              element={<ReservationRequestPage />}
-            />
-            <Route
-              path="/reservation-confirm"
-              element={<ReservatinConfirm />}
-            />
-            <Route path="/pet/detail/:id" element={<PetDetailPage />} />
-            <Route path="/pet-edit/:id" element={<PetEditPage />} />
-            <Route path="/user/information" element={<UserInformation />} />
-            <Route path="/selected/date/:id" element={<SelectedDatePage />} />
-            <Route path="/edit-address" element={<EditAddressPage />} />
-            <Route path="/user/edit" element={<UserEdit />} />
-            <Route path="/reservation" element={<Reservation />} />
-            <Route path="/tos" element={<Tos />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/guide_detail" element={<HomeGuideDetail />} />
-            <Route
-              path="/reservation/detail/:id"
-              element={<ReservationDetail />}
-            />
 
-            <Route path="/notice" element={<Notice />} />
-            <Route path="/notice/:id" element={<NoticeDetail />} />
-            <Route path="/authority/management" element={<Authority />} />
+    <>
+      {isMasterPage ? (
+        // 마스터 페이지는 독립적인 구조로 렌더링
+        <Routes>
+          <Route path="/master/login">
+            <Route path="" element={<MasterLogin />} />
+          </Route>
 
-            <Route path="/business">
-              <Route path="login" element={<Login />} />
-              <Route path="menu" element={<BusinessMenu />} />
-              <Route path="register" element={<Join />} />
-              <Route
-                path="register/information"
-                element={<RegisterInformation />}
-              />
-              <Route path="edit/information" element={<EditInformation />} />
-              <Route
-                path="imgupload/:pathName/:imageType"
-                element={<ImgUpload setImageFiles={handleSetImageFiles} />}
-              />
-              <Route path="register/desinger" element={<RegisterDesinger />} />
-              <Route
-                path="authority/management"
-                element={<AuthorityManagement />}
-              />
-              <Route path="register/style" element={<RegisterStyle />} />
-              <Route
-                path="reservation/management"
-                element={<ReservationManagement />}
-              />
-              <Route
-                path="reservation/detail"
-                element={<BusinessReservationDetail />}
-              />
-              <Route
-                path="customer/management"
-                element={<CustomerManagement />}
-              />
-              <Route
-                path="customer/management/detail"
-                element={<CustomerManagementDetail />}
-              />
-              <Route path="write/notice" element={<WriteNotice />} />
-              <Route path="date/register" element={<DateRegister />} />
-              <Route path="date/edit" element={<DateEdit />} />
-              <Route path="day-on-off/edit" element={<DayOnOffEdit />} />
-              <Route
-                path="edit/option"
-                element={<BusinessBeautyEditOption />}
-              />
-              <Route path="account/number" element={<AccountNumber />} />
-              <Route
-                path="account/number/list"
-                element={<AccountNumberList />}
-              />
-              <Route path="list/desinger" element={<DesingerList />} />
-              <Route path="write/ClosedDays" element={<DesingerClosedDays />} />
-              <Route path="reservation" element={<BusinessReservation />} />
-              <Route
-                path="reservation/desinger"
-                element={<ReservationDesinger />}
-              />
-            </Route>
-          </Routes>
-        </ImageProvider>
-      </div>
-    </div>
+
+        </Routes>
+      ) : (
+        <div className="App">
+          <div className="Container">
+            <ImageProvider>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/auth/*" element={<Redirection />} />
+                <Route path="/login/success" element={<LoginSuccess />} />
+                <Route path="/user/detail" element={<UserDetailPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/list/:id" element={<ListPage />} />
+                <Route
+                  path="/business/detail/:id"
+                  element={<BusinessDetailPage />}
+                />
+                <Route path="/designer/list" element={<PetDesigner />} />
+                <Route path="/select/date/:id" element={<SelectDatePage />} />
+                <Route path="/pet/registration" element={<PetRegistrationPage />} />
+                <Route path="/my-page" element={<MyPage />} />
+                <Route path="/pet/list" element={<PetListPage />} />
+                <Route path="/pet-select/:id" element={<PetSelectPage />} />
+                <Route
+                  path="/reservation-request/:id"
+                  element={<ReservationRequestPage />}
+                />
+                <Route
+                  path="/reservation-confirm"
+                  element={<ReservatinConfirm />}
+                />
+                <Route path="/pet/detail/:id" element={<PetDetailPage />} />
+                <Route path="/pet-edit/:id" element={<PetEditPage />} />
+                <Route path="/user/information" element={<UserInformation />} />
+                <Route path="/selected/date/:id" element={<SelectedDatePage />} />
+                <Route path="/edit-address" element={<EditAddressPage />} />
+                <Route path="/user/edit" element={<UserEdit />} />
+                <Route path="/reservation" element={<Reservation />} />
+                <Route path="/tos" element={<Tos />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/guide_detail" element={<HomeGuideDetail />} />
+                <Route
+                  path="/reservation/detail/:id"
+                  element={<ReservationDetail />}
+                />
+
+                <Route path="/notice" element={<Notice />} />
+                <Route path="/notice/:id" element={<NoticeDetail />} />
+                <Route path="/authority/management" element={<Authority />} />
+
+                <Route path="/business">
+                  <Route path="login" element={<Login />} />
+                  <Route path="menu" element={<BusinessMenu />} />
+                  <Route path="register" element={<Join />} />
+                  <Route
+                    path="register/information"
+                    element={<RegisterInformation />}
+                  />
+                  <Route path="edit/information" element={<EditInformation />} />
+                  <Route
+                    path="imgupload/:pathName/:imageType"
+                    element={<ImgUpload setImageFiles={handleSetImageFiles} />}
+                  />
+                  <Route path="register/desinger" element={<RegisterDesinger />} />
+                  <Route
+                    path="authority/management"
+                    element={<AuthorityManagement />}
+                  />
+                  <Route path="register/style" element={<RegisterStyle />} />
+                  <Route
+                    path="reservation/management"
+                    element={<ReservationManagement />}
+                  />
+                  <Route
+                    path="reservation/detail"
+                    element={<BusinessReservationDetail />}
+                  />
+                  <Route
+                    path="customer/management"
+                    element={<CustomerManagement />}
+                  />
+                  <Route
+                    path="customer/management/detail"
+                    element={<CustomerManagementDetail />}
+                  />
+                  <Route path="write/notice" element={<WriteNotice />} />
+                  <Route path="date/register" element={<DateRegister />} />
+                  <Route path="date/edit" element={<DateEdit />} />
+                  <Route path="day-on-off/edit" element={<DayOnOffEdit />} />
+                  <Route
+                    path="edit/option"
+                    element={<BusinessBeautyEditOption />}
+                  />
+                  <Route path="account/number" element={<AccountNumber />} />
+                  <Route
+                    path="account/number/list"
+                    element={<AccountNumberList />}
+                  />
+                  <Route path="list/desinger" element={<DesingerList />} />
+                  <Route path="write/ClosedDays" element={<DesingerClosedDays />} />
+                  <Route path="reservation" element={<BusinessReservation />} />
+                  <Route
+                    path="reservation/desinger"
+                    element={<ReservationDesinger />}
+                  />
+                </Route>
+              </Routes>
+            </ImageProvider>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

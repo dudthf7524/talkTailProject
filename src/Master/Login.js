@@ -38,37 +38,7 @@ const MasterLogin = () => {
 
   return (
     <div className="master_login" lang="ko">
-      <div className="login-logo">
-        <img src={logoUrl} alt="logo img"></img>
-      </div>
-      <div className="login-text">관리자 로그인</div>
-
-      <form className="loginform" typeof="post" onSubmit={login}>
-        <div className="login-form">
-          <input type="text" id="username" name="username" placeholder="ID" />
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="PW"
-          />
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              login();
-            }}
-          >
-            로그인 하기
-          </button>
-        </div>
-      </form>
-      <div className="find-id-pw-text">
-        <Link to="/business/register">회원가입11</Link>
-      </div>
-      <div className="find-id-pw-text">
-        <Link to="/find-admin-account">아이디/비밀번호 찾기</Link>
-      </div>
+        ddddd
     </div>
   );
 };
