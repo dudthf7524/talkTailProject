@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../../modal";
+import api from "../../../Api";
 const NButtonContainer = () => {
   const navigate = useNavigate();
   const reservationUrl = `${process.env.PUBLIC_URL}/PageImage/community/reservation.svg`;
@@ -9,10 +10,32 @@ const NButtonContainer = () => {
   const homeUrl = `${process.env.PUBLIC_URL}/PageImage/community/home.svg`;
   const myPageUrl = `${process.env.PUBLIC_URL}/PageImage/community/myPage.svg`;
 
+  const [user, setUser] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [modalContent, setModalContent] = useState("");
   const modalTitle = "알림";
-  const modalContent = "해당 서비스는 준비 중입니다.";
 
+  const userLogin = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return;
+      }
+      const response = await api.get("/api/user/information", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUser(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error("로그인 인증 실패:", error);
+    }
+  };
+  useEffect(() => {
+    userLogin();
+  }, []);
+  console.log("nav 속 user : ", user);
   return (
     <div className="navigation-bar footer_total">
       <button
@@ -34,6 +57,7 @@ const NButtonContainer = () => {
       <button
         className="header-nickname-button"
         onClick={() => {
+          setModalContent("해당 서비스는 준비 중입니다.");
           setOpenModal(true);
         }}
       >
