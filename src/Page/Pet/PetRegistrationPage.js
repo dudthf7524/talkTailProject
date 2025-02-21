@@ -178,7 +178,7 @@ const PetRegistration = () => {
   };
   // 이미지 URL 및 상태 변수
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
-  const defaultPetImgUrl = `${process.env.PUBLIC_URL}/PageImage/pet/pet_img_L.png`;
+  const defaultPetImgUrl = `${process.env.PUBLIC_URL}/PageImage/pet/profileAnimal.png`;
   const photoUrl = `${process.env.PUBLIC_URL}/PageImage/pet/photo.svg`;
   const [petImgUrl, setPetImgUrl] = useState(defaultPetImgUrl); // 이미지 URL 상태
   const [selectedImageFile, setSelectedImageFile] = useState(null); // 선택된 이미지 파일
