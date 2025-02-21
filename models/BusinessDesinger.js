@@ -16,8 +16,18 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE', // 외래 키 업데이트 정책
         onDelete: 'CASCADE', // 외래 키 삭제 정책
       },
+      business_desinger_profile: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: '',
+      },
       business_desinger_name: {
         type: DataTypes.STRING(10),
+        allowNull: false,
+        defaultValue: '',
+      },
+      business_desinger_grade: {
+        type: DataTypes.STRING(100),
         allowNull: false,
         defaultValue: '',
       },

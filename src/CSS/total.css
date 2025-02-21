@@ -680,6 +680,20 @@
 }
 
 /* SelectedDatePage.js */
+.selectedDate_total {
+  height: auto;
+  position: inherit;
+}
+.selectedDate_total .main-mid {
+  position: inherit;
+  height: auto;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.selectedDate_total .main-mid::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
 .selectedDate_total .selected {
   border-radius: 4px;
 }

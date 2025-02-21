@@ -9,6 +9,7 @@ import "../../../CSS/reservationModal.css";
 import api from "../../../Api";
 import { addMinutes, format, isWithinInterval, parse } from "date-fns";
 import ReservationDetailModal from "../../Modal/ReservationDetailModal";
+import Modal from "../../../modal";
 
 const ReservationDetail = () => {
   const navigate = useNavigate();
@@ -30,18 +31,17 @@ const ReservationDetail = () => {
   const [formData, setFormData] = useState({
     beauty_price: 0,
   });
-  console.log(id);
-  console.log(date);
+  const [openAlertModal, setOpenAlertModal] = useState(false);
+  const modalTitle = "알림";
+  const [modalContent, setModalContent] = useState("");
   useEffect(() => {
     const fetchUser = async () => {
-      console.log(date);
       try {
         const response = await api.get(
           `/api/beauty/reservation/detail/${id}/${date}`,
           { withCredentials: true }
         );
 
-        console.log(response.data);
         setReservationManagementList(response.data[0]);
         setTimeLists(response.data[1]);
         setHourDay(response.data[2]);
@@ -54,13 +54,20 @@ const ReservationDetail = () => {
   }, []);
 
   const openModal = (type) => {
-    setActionType(type);
-    setModalOpen(true);
+    console.log("beautyPrice : ", beautyPrice);
+    if (!activeTime) {
+      setModalContent("완료시간을 선택해주세요.");
+      setOpenAlertModal(true);
+    } else if (beautyPrice == 0 || !beautyPrice) {
+      setModalContent("미용가격을 선택해주세요.");
+      setOpenAlertModal(true);
+    } else {
+      setActionType(type);
+      setModalOpen(true);
+    }
   };
 
   const closeModal = () => setModalOpen(false);
-
-  console.log(hourday);
 
   const handleConfirm = async () => {
     const beauty_price = beautyPrice;
@@ -72,7 +79,6 @@ const ReservationDetail = () => {
     const paid_price = reservationManagementList.paid_price;
 
     try {
-      console.log(reservationCompleteTime);
       const response = await api.put(
         `/api/beauty/reservation/setCompleteTime/${id}`,
         {
@@ -87,9 +93,7 @@ const ReservationDetail = () => {
         },
         { withCredentials: true }
       );
-      console.log("수락");
 
-      console.log(response.data);
       if (response.data === "success") {
         setCheckMessage("확정되었습니다.");
         setModalOpen(false);
@@ -118,8 +122,6 @@ const ReservationDetail = () => {
       setModalOpen(false);
       setCheckModalOpen(true);
 
-      console.log(response.data);
-
       setTimeout(() => {
         navigate("/business/reservation/management");
       }, 2000); // 2초 후 리다이렉트
@@ -135,7 +137,6 @@ const ReservationDetail = () => {
   const businessEndTime = hourday?.end_time || "18:00"; // 기본값 18:00
 
   const timeSlots = generateTimeSlots(businessStartTime, businessEndTime, 30);
-  console.log(timeSlots);
   function generateTimeSlots(start_time, end_time, intervalMinutes) {
     const start = parse(start_time, "HH:mm", new Date());
     const end = parse(end_time, "HH:mm", new Date());
@@ -168,7 +169,6 @@ const ReservationDetail = () => {
     allTimeSlots.forEach((time) => {
       const current = parse(time, "HH:mm", new Date());
 
-      // 예약된 시간 범위에 포함된 슬롯만 비활성화
       if (
         isWithinInterval(current, {
           start: new Date(start.getTime() + 1),
@@ -183,8 +183,6 @@ const ReservationDetail = () => {
   var filteredTimeSlots;
 
   const completeTimeProcess = () => {
-    console.log(reservationManagementList.date);
-
     if (reservationManagementList.date >= today) {
       filteredTimeSlots = timeSlots.filter((time) => {
         const current = parse(time, "HH:mm", new Date());
@@ -193,19 +191,15 @@ const ReservationDetail = () => {
 
         // 예약 날짜가 오늘 이전인 경우, 모든 시간을 포함
         if (reservationManagementList.date < today) {
-          console.log("11");
           return false;
         }
 
         // 예약 날짜가 오늘인 경우, 현재 시간 이후의 시간만 표시
         if (reservationManagementList.date === today) {
-          console.log("22");
           return current >= start && format(current, "HH:mm") >= currentTime;
         }
 
         // 예약 날짜가 미래인 경우, 기존 조건 적용
-        console.log("33");
-
         return current >= start;
       });
     }
@@ -240,8 +234,6 @@ const ReservationDetail = () => {
   //   }
   // };
 
-  console.log(timeList);
-
   const isDisabledForCompletion = (startTime) => {
     if (!startTime) return false; // 시작 시간이 없으면 패스
     const parsedStartTime = parse(startTime, "HH:mm", new Date());
@@ -250,17 +242,12 @@ const ReservationDetail = () => {
     return disabledTimes.includes(formattedStartPlus30);
   };
 
-  console.log(disabledTimes);
-  console.log(isDisabledForCompletion(reservationManagementList.start_time));
-
   if (isDisabledForCompletion(reservationManagementList.start_time)) {
   }
 
   var reservationNo = isDisabledForCompletion(
     reservationManagementList.start_time
   );
-
-  console.log(reservationNo);
 
   // 30분 단위로 순서대로 되어 있는지 확인하는 함수
   const isTimeSlotsInOrder = (timeSlots) => {
@@ -290,8 +277,6 @@ const ReservationDetail = () => {
   // disabledTimes가 30분 단위로 순서대로 되어 있는지 확인
   const isDisabledTimesValid = isTimeSlotsInOrder(disabledTimes);
 
-  console.log(isDisabledTimesValid); // true 또는 false 출력
-
   const uniqueAndSortDisabledTimes = (times) => {
     // Set을 사용해 중복 제거
     const uniqueTimes = [...new Set(times)];
@@ -309,8 +294,6 @@ const ReservationDetail = () => {
   // 중복을 제거하고 내림차순으로 정렬한 disabledTimes
   const sortedDisabledTimes = uniqueAndSortDisabledTimes(disabledTimes);
 
-  console.log(sortedDisabledTimes);
-
   const [modalData, setModalData] = useState(null);
   const [activeTime, setActiveTime] = useState(null);
 
@@ -318,20 +301,9 @@ const ReservationDetail = () => {
     return <div>로딩 중... </div>;
   }
   const handleButtonClick = (time) => {
-    console.log("time");
-    console.log(time);
-    console.log("time");
-
-    console.log("reservationCompleteTime");
     setReservationCompleteTime(time);
 
-    console.log(reservationCompleteTime);
-    console.log("reservationCompleteTime");
     setActiveTime(time);
-
-    console.log("activeTime");
-    console.log(activeTime);
-    console.log("activeTime");
   };
 
   const formatPrice = (price) => {
@@ -478,7 +450,7 @@ const ReservationDetail = () => {
         <div className="detail-form2">
           {reservationManagementList.reservation_state === "픽업완료" ? (
             <div className="detail-title">완료시간</div>
-          ) :reservationManagementList.reservation_state === "완료" ? (
+          ) : reservationManagementList.reservation_state === "완료" ? (
             <div className="detail-title">완료시간</div>
           ) : reservationManagementList.reservation_state === "대기" ? (
             <div className="detail-title">완료시간</div>
@@ -492,7 +464,7 @@ const ReservationDetail = () => {
             <div className="detail-info">
               {reservationManagementList.end_time}
             </div>
-          ) :reservationManagementList.reservation_state === "완료" ? (
+          ) : reservationManagementList.reservation_state === "완료" ? (
             <div className="detail-info">
               {reservationManagementList.end_time}
             </div>
@@ -541,7 +513,7 @@ const ReservationDetail = () => {
               {reservationManagementList.beauty_price.toLocaleString()} 원
             </div>
           </div>
-        ) :reservationManagementList.reservation_state === "완료" ? (
+        ) : reservationManagementList.reservation_state === "완료" ? (
           <div className="detail-form2">
             <div className="detail-title">미용금액</div>
             <div className="detail-info">
@@ -552,103 +524,107 @@ const ReservationDetail = () => {
           <div className="detail-form2">
             <div className="detail-title">미용가격</div>
 
-            <div className="detail-info">
-              <div className="price-title" style={priceStyle}>
-                {formatPrice(beautyPrice) || "가격을 설정해주세요"}
-              </div>{" "}
-              {/* 가격 표시 */}
-              <div className="price-selection">
-                <div
-                  className="price-box"
-                  onClick={() => priceSumButton(10000)}
-                >
-                  +1만
+            {filteredTimeSlots ? (
+              <div className="detail-info">
+                <div className="price-title" style={priceStyle}>
+                  {formatPrice(beautyPrice) || "가격을 설정해주세요"}
+                </div>{" "}
+                {/* 가격 표시 */}
+                <div className="price-selection">
+                  <div
+                    className="price-box"
+                    onClick={() => priceSumButton(10000)}
+                  >
+                    +1만
+                  </div>
+                  <div
+                    className="price-box"
+                    onClick={() => priceSumButton(50000)}
+                  >
+                    +5만
+                  </div>
+                  <div
+                    className="price-box"
+                    onClick={() => priceSumButton(100000)}
+                  >
+                    +10만
+                  </div>
                 </div>
-                <div
-                  className="price-box"
-                  onClick={() => priceSumButton(50000)}
-                >
-                  +5만
-                </div>
-                <div
-                  className="price-box"
-                  onClick={() => priceSumButton(100000)}
-                >
-                  +10만
+                <div className="number-selection">
+                  <div
+                    className="number-box"
+                    onClick={() => handleNumberClick("1")}
+                  >
+                    1
+                  </div>
+                  <div
+                    className="number-box"
+                    onClick={() => handleNumberClick("2")}
+                  >
+                    2
+                  </div>
+                  <div
+                    className="number-box"
+                    onClick={() => handleNumberClick("3")}
+                  >
+                    3
+                  </div>
+                  <div
+                    className="number-box"
+                    onClick={() => handleNumberClick("4")}
+                  >
+                    4
+                  </div>
+                  <div
+                    className="number-box"
+                    onClick={() => handleNumberClick("5")}
+                  >
+                    5
+                  </div>
+                  <div
+                    className="number-box"
+                    onClick={() => handleNumberClick("6")}
+                  >
+                    6
+                  </div>
+                  <div
+                    className="number-box"
+                    onClick={() => handleNumberClick("7")}
+                  >
+                    7
+                  </div>
+                  <div
+                    className="number-box"
+                    onClick={() => handleNumberClick("8")}
+                  >
+                    8
+                  </div>
+                  <div
+                    className="number-box"
+                    onClick={() => handleNumberClick("9")}
+                  >
+                    9
+                  </div>
+                  <div
+                    className="number-box"
+                    onClick={() => handleNumberClick("00")}
+                  >
+                    00
+                  </div>
+                  <div
+                    className="number-box"
+                    onClick={() => handleNumberClick("0")}
+                  >
+                    0
+                  </div>
+                  <div className="number-box" onClick={handleBackspace}>
+                    &larr;
+                  </div>
                 </div>
               </div>
-              <div className="number-selection">
-                <div
-                  className="number-box"
-                  onClick={() => handleNumberClick("1")}
-                >
-                  1
-                </div>
-                <div
-                  className="number-box"
-                  onClick={() => handleNumberClick("2")}
-                >
-                  2
-                </div>
-                <div
-                  className="number-box"
-                  onClick={() => handleNumberClick("3")}
-                >
-                  3
-                </div>
-                <div
-                  className="number-box"
-                  onClick={() => handleNumberClick("4")}
-                >
-                  4
-                </div>
-                <div
-                  className="number-box"
-                  onClick={() => handleNumberClick("5")}
-                >
-                  5
-                </div>
-                <div
-                  className="number-box"
-                  onClick={() => handleNumberClick("6")}
-                >
-                  6
-                </div>
-                <div
-                  className="number-box"
-                  onClick={() => handleNumberClick("7")}
-                >
-                  7
-                </div>
-                <div
-                  className="number-box"
-                  onClick={() => handleNumberClick("8")}
-                >
-                  8
-                </div>
-                <div
-                  className="number-box"
-                  onClick={() => handleNumberClick("9")}
-                >
-                  9
-                </div>
-                <div
-                  className="number-box"
-                  onClick={() => handleNumberClick("00")}
-                >
-                  00
-                </div>
-                <div
-                  className="number-box"
-                  onClick={() => handleNumberClick("0")}
-                >
-                  0
-                </div>
-                <div className="number-box" onClick={handleBackspace}>
-                  &larr;
-                </div>
-              </div>
-            </div>
+            ) : (
+              ""
+            )}
           </div>
         ) : (
           <div className="detail-info"></div>
@@ -657,25 +633,33 @@ const ReservationDetail = () => {
 
       {reservationManagementList.reservation_state === "픽업완료" ? (
         <div
-        className="footer-button"
-        style={{ color: "green", fontWeight: "bold" }}
-      >
-        예약이 완료되었습니다.
-      </div>
-      ) :reservationManagementList.reservation_state === "완료" ? (
+          className="footer-button"
+          style={{ color: "green", fontWeight: "bold" }}
+        >
+          예약이 완료되었습니다.
+        </div>
+      ) : reservationManagementList.reservation_state === "완료" ? (
         <div
-        className="footer-button"
-        style={{ color: "green", fontWeight: "bold" }}
-      >
-        예약이 완료되었습니다.
-      </div>
+          className="footer-button"
+          style={{ color: "green", fontWeight: "bold" }}
+        >
+          예약이 완료되었습니다.
+        </div>
       ) : reservationManagementList.reservation_state === "대기" ? (
         <div className="footer-button">
           <button className="reject-btn" onClick={() => openModal("reject")}>
             거절
           </button>
-          <button className="accept-btn" onClick={() => openModal("accept")}>
-            수락
+          <button
+            className="accept-btn"
+            onClick={() => {
+              if (filteredTimeSlots) {
+                openModal("accept");
+              }
+            }}
+            style={{ cursor: filteredTimeSlots ? "pointer" : "auto" }}
+          >
+            {filteredTimeSlots ? "수락" : "예약불가"}
           </button>
         </div>
       ) : reservationManagementList.reservation_state === "거절" ? (
@@ -716,6 +700,18 @@ const ReservationDetail = () => {
           }}
           petName={reservationManagementList.pet_name}
           userPhone={reservationManagementList.user_phone}
+        />
+      ) : (
+        ""
+      )}
+
+      {openAlertModal ? (
+        <Modal
+          openModal={() => {
+            setOpenAlertModal(false);
+          }}
+          title={modalTitle}
+          content={modalContent}
         />
       ) : (
         ""
