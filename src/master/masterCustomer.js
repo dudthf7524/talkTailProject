@@ -1,14 +1,14 @@
 import "../masterCss/masterCustomer.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import dayjs from "dayjs";
 const MasterCustomer = () => {
   const [customerLists, setCustomerLists] = useState([]);
   useEffect(() => {
     const loadDatas = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/master/loadNotice`
+          `${process.env.REACT_APP_API_BASE_URL}/master/loadCustomer`
         );
         setCustomerLists(response.data);
       } catch (e) {
@@ -18,15 +18,38 @@ const MasterCustomer = () => {
 
     loadDatas();
   }, []);
-  console.log("customerLists : ", customerLists);
   return (
     <div className="master_customer master_section">
-      <p>No</p>
-      <p>명</p>
-      <p>고객명/펫이름</p>
-      <p>예약일시</p>
-      <p>작성일시</p>
-      <div>내용보기</div>
+      <div className="row_head row">
+        <p>No</p>
+        <p>플랫폼</p>
+        <p>고객명</p>
+        <p>전화번호</p>
+        <p>가입일시</p>
+        {/* <div>내용보기</div> */}
+      </div>
+      {customerLists?.map((list, index) => {
+        return (
+          <div
+            className={`row_body row ${index % 2 === 1 ? "even" : ""}`}
+            key={index}
+          >
+            <p>{index + 1}</p>
+            <p>{list.platform}</p>
+            <p>{list.user_name}</p>
+            <p>{list.user_phone}</p>
+            <p>{dayjs(list.created_at).format("YYYY.MM.DD")}</p>
+            {/* <div
+              onClick={() => {
+                setNoticeId(list.platfor_id);
+                setOpenModal(true);
+              }}
+            >
+              내용보기
+            </div> */}
+          </div>
+        );
+      })}
     </div>
   );
 };
