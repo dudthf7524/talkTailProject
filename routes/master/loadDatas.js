@@ -28,6 +28,7 @@ router.get("/loadNotice", async (req, res, next) => {
               "business_registration_number",
               "platform_id",
               "pet_id",
+              "reservation_applicationTime",
               // "createdAt",
             ],
             raw: true,
@@ -63,6 +64,8 @@ router.get("/loadNotice", async (req, res, next) => {
             ...businessName,
             ...customerName,
             ...petName,
+            reservation_applicationTime:
+              reservationList.reservation_applicationTime,
           };
         } catch (e) {
           console.error(e);
@@ -138,14 +141,13 @@ router.get("/loadCustomer", async (req, res, next) => {
       userLists.map(async (list) => {
         try {
           const customerInfo = await UserInformation.findOne({
-            where: { platform_id: list.customer.platform_id },
+            where: { platform_id: list.platform_id },
             raw: true,
           });
 
-          if (customerInfo) {
+          if (!customerInfo) {
             return list;
           }
-
           return {
             ...list,
             ...customerInfo,
@@ -158,6 +160,18 @@ router.get("/loadCustomer", async (req, res, next) => {
     );
 
     res.status(200).json(customerLists);
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+router.get("/loadReservation", async (req, res, next) => {
+  try {
+    const reservationLists = await BeautyReservation.findAll({
+      raw: true,
+    });
+
+    res.status(200).json(reservationLists);
   } catch (e) {
     console.error(e);
   }
