@@ -1058,3 +1058,35 @@
   position: inherit;
   margin-top: 72px;
 }
+
+/* Join.js */
+.business_join_total {
+  height: auto;
+}
+.business_join_total .main-mid {
+  position: inherit;
+  height: auto;
+  overflow-y: scroll;
+  margin-top: 90px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.business_join_total .main-mid::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+/* Registerinformation.js */
+.register_information_total {
+  height: auto;
+}
+.register_information_total .main-mid {
+  position: inherit;
+  height: auto;
+  overflow-y: scroll;
+  margin-top: 90px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.register_information_total .main-mid::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}

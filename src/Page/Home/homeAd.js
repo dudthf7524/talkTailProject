@@ -7,7 +7,7 @@ const HomeAd = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImg((prev) => (prev + 1) % imageArr.length);
-    }, 2000);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, []);

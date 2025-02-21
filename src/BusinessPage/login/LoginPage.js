@@ -14,7 +14,7 @@ const Login = () => {
   const [openModal, setOpenModal] = useState(false);
   const modalTitle = "로그인 완료";
   const modalContent = "잠시 후 메뉴페이지로 이동합니다.";
-  console.log(business)
+  console.log(business);
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -33,8 +33,8 @@ const Login = () => {
     fetchUser();
   }, []);
   const menu = () => {
-    navigate('/business/menu')
-  }
+    navigate("/business/menu");
+  };
 
   const login = async () => {
     const form = document.querySelector(".loginform");
@@ -68,8 +68,8 @@ const Login = () => {
       const response = await axios.get(`${apiUrl}/api/business/logout`, {
         withCredentials: true,
       });
-      window.location.href = '/business/login';
-    } catch (error) { }
+      window.location.href = "/business/login";
+    } catch (error) {}
   };
 
   return (
@@ -78,66 +78,68 @@ const Login = () => {
         <img src={logoUrl} alt="logo img" style={{ width: "50%" }}></img>
       </div>
 
-
-      {
-        business ? (
-          <>
-            <div className="login-text">{business.business_owner_name}님 로그인 완료</div>
-            <div className="login-form">
-              <button type="button"  onClick={() => {
-                    menu();
-                  }}>
-                메뉴가기
-              </button>
-              <div className="find-id-pw-text">
-                <Link onClick={logout}>로그아웃</Link>
-              </div>
-            </div>
-            
-          </>
-        ) : (
-          <>
-            <div className="login-text">관리자 로그인</div>
-            <form className="loginform" typeof="post" onSubmit={login}>
-              <div className="login-form">
-                <input type="text" id="username" name="username" placeholder="ID" />
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="PW"
-                />
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    login();
-                  }}
-                >
-                  로그인 하기
-                </button>
-              </div>
-            </form>
-          </>
-        )
-      }
-
-      {
-        business ? (
-          <div className="find-id-pw-text">
-            
+      {business ? (
+        <>
+          <div className="login-text">
+            {business.business_owner_name}님 로그인 완료
           </div>
-        ) : (
-          <>
+          <div className="login-form">
+            <button
+              type="button"
+              onClick={() => {
+                menu();
+              }}
+            >
+              메뉴가기
+            </button>
             <div className="find-id-pw-text">
-              <Link to="/business/register">회원가입</Link>
+              <Link onClick={logout}>로그아웃</Link>
             </div>
-            <div className="find-id-pw-text">
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="login-text">관리자 로그인</div>
+          <form className="loginform" typeof="post" onSubmit={login}>
+            <div className="login-form">
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="ID"
+              />
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="PW"
+              />
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  login();
+                }}
+              >
+                로그인 하기
+              </button>
+            </div>
+          </form>
+        </>
+      )}
+
+      {business ? (
+        <div className="find-id-pw-text"></div>
+      ) : (
+        <>
+          <div className="find-id-pw-text">
+            <Link to="/business/register">회원가입</Link>
+          </div>
+          {/* <div className="find-id-pw-text">
               <Link to="/find-admin-account">아이디/비밀번호 찾기</Link>
-            </div>
-          </>
-        )
-      }
+            </div> */}
+        </>
+      )}
 
       {openModal ? (
         <LoginModal

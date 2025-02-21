@@ -1,7 +1,6 @@
-import React, { useEffect, useContext, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
+import React, { useEffect, useContext, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Join() {
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -20,7 +19,7 @@ function Join() {
     business_owner_phone1: "",
     business_owner_phone2: "",
     business_owner_phone3: "",
-    category: "beauty"
+    category: "beauty",
   });
 
   const handleInputChange = (e) => {
@@ -31,7 +30,7 @@ function Join() {
     });
   };
 
-  console.log(formData)
+  console.log(formData);
   const handleUploadClick = (imageType) => {
     navigate(`/imgupload/${imageType}`);
   };
@@ -52,13 +51,16 @@ function Join() {
   };
 
   async function checkLogin() {
-    if (!formData.login_id.trim()) { // 아이디 입력이 비어 있는지 확인
+    if (!formData.login_id.trim()) {
+      // 아이디 입력이 비어 있는지 확인
       setCheckMessage("아이디를 입력해주세요.");
       setIsIdValid(false);
       return;
     }
     try {
-      const response = await axios.post(`${apiUrl}/api/business/checkLogin`, { login_id: formData.login_id });
+      const response = await axios.post(`${apiUrl}/api/business/checkLogin`, {
+        login_id: formData.login_id,
+      });
 
       if (response.data === "1") {
         setCheckMessage("사용중인 아이디입니다.");
@@ -75,18 +77,25 @@ function Join() {
   }
 
   return (
-    <div className='mid' lang='ko'>
-
-      <div className='navigation'>
-
+    <div className="mid business_join_total" lang="ko">
+      <div className="navigation">
         <button>
-          <img src={arrowButtonUrl} alt='' onClick={() => navigate('/admin-menu')} />
+          <img
+            src={arrowButtonUrl}
+            alt=""
+            onClick={() => navigate("/business/login")}
+          />
         </button>
         회원가입
-        <div style={{cursor : "pointer"}} onClick={handleSave} disabled={!isIdValid}>저장</div>
+        <div
+          style={{ cursor: "pointer" }}
+          onClick={handleSave}
+          disabled={!isIdValid}
+        >
+          저장
+        </div>
       </div>
-      <div className='main-mid'>
-        회원가입
+      <div className="main-mid">
         <div className="input-container-id">
           <p>아이디</p>
           <input
@@ -109,36 +118,83 @@ function Join() {
             </p>
           )}
         </div>
-        <div className='input-container'>
+        <div className="input-container">
           <p>비밀번호</p>
-          <input type='password' name='login_password' value={formData.login_password} onChange={handleInputChange} placeholder='비밀번호를 입력해주세요' />
+          <input
+            type="password"
+            name="login_password"
+            value={formData.login_password}
+            onChange={handleInputChange}
+            placeholder="비밀번호를 입력해주세요"
+          />
         </div>
         사업자 정보
-        <div className='input-container'>
+        <div className="input-container">
           <p>사업자 등록명</p>
-          <input type='text' name='business_registration_name' value={formData.business_registration_name} onChange={handleInputChange} placeholder='사업자 등록명을 입력해주세요' />
+          <input
+            type="text"
+            name="business_registration_name"
+            value={formData.business_registration_name}
+            onChange={handleInputChange}
+            placeholder="사업자 등록명을 입력해주세요"
+          />
         </div>
-        <div className='input-container'>
+        <div className="input-container">
           <p>사업자 번호</p>
-          <input type='text' name='business_registration_number' value={formData.business_registration_number} onChange={handleInputChange} placeholder='000-00-00000' />
+          <input
+            type="text"
+            name="business_registration_number"
+            value={formData.business_registration_number}
+            onChange={handleInputChange}
+            placeholder="000-00-00000"
+          />
         </div>
-        <div className='input-container'>
+        <div className="input-container">
           <p>대표이름</p>
-          <input type='text' name='business_owner_name' value={formData.business_owner_name} onChange={handleInputChange} placeholder='대표이름' />
+          <input
+            type="text"
+            name="business_owner_name"
+            value={formData.business_owner_name}
+            onChange={handleInputChange}
+            placeholder="대표이름"
+          />
         </div>
-        <div className='input-container'>
+        <div className="input-container">
           <p>이메일</p>
-          <input type='text' name='business_owner_email' value={formData.business_owner_email} onChange={handleInputChange} placeholder='이메일' />
+          <input
+            type="text"
+            name="business_owner_email"
+            value={formData.business_owner_email}
+            onChange={handleInputChange}
+            placeholder="이메일"
+          />
         </div>
-        <div className='input-container-phone'>
+        <div className="input-container-phone">
           <p>대표번호</p>
-          <input type='text' name='business_owner_phone1' value={formData.business_owner_phone1} onChange={handleInputChange} placeholder='010' />
+          <input
+            type="text"
+            name="business_owner_phone1"
+            value={formData.business_owner_phone1}
+            onChange={handleInputChange}
+            placeholder="010"
+          />
           <span>-</span>
-          <input type='text' name='business_owner_phone2' value={formData.business_owner_phone2} onChange={handleInputChange} placeholder='0000' />
+          <input
+            type="text"
+            name="business_owner_phone2"
+            value={formData.business_owner_phone2}
+            onChange={handleInputChange}
+            placeholder="0000"
+          />
           <span>-</span>
-          <input type='text' name='business_owner_phone3' value={formData.business_owner_phone3} onChange={handleInputChange} placeholder='0000' />
+          <input
+            type="text"
+            name="business_owner_phone3"
+            value={formData.business_owner_phone3}
+            onChange={handleInputChange}
+            placeholder="0000"
+          />
         </div>
-
       </div>
     </div>
   );
