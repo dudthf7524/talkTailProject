@@ -320,7 +320,7 @@ const DesingerClosedDays = () => {
           <button>
             <img src={arrowButtonUrl} alt="" onClick={goBack} />
           </button>
-          수기관리
+          휴무일 관리
           <div style={{ cursor: "pointer" }} onClick={writeDesingerClosedDays}>등록</div>
         </div>
         <div className="main-mid">

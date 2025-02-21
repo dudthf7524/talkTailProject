@@ -12,6 +12,8 @@ function RegisterDesinger() {
   const defaultPetImgUrl = `${process.env.PUBLIC_URL}/PageImage/pet/pet_img_L.png`;
   const [petImgUrl, setPetImgUrl] = useState(defaultPetImgUrl);
 
+  const notice_analSac_option = ["desinger1.png", "desinger2.png", "desinger3.png", "desinger4.png"]
+
   useEffect(() => {
     const textarea = document.getElementById("greetingTextarea");
     const placeholderText = "간단한 소개글\n30자 이내";
@@ -21,10 +23,23 @@ function RegisterDesinger() {
 
   const [formData, setFormData] = useState({
     business_desinger_name: "",
+    business_desinger_grade: "",
     business_desinger_introduce: "",
   });
 
   console.log(formData);
+
+
+  const [selectedOptions, setSelectedOptions] = useState({
+    business_desinger_profile: "",
+  });
+
+  const handleCheckboxChange = (category, value) => {
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [category]: value,
+    }));
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -35,6 +50,7 @@ function RegisterDesinger() {
   };
 
   const handleSave = async () => {
+    formData.business_desinger_profile = selectedOptions.business_desinger_profile;
     try {
       // 서버로 FormData를 전송
       const response = await axios.post(
@@ -53,7 +69,8 @@ function RegisterDesinger() {
       // 오류 처리
     }
   };
-
+  console.log(selectedOptions)
+  
   return (
     <div className="mid" lang="ko">
       <div className="navigation">
@@ -66,15 +83,29 @@ function RegisterDesinger() {
         <div style={{ cursor: "pointer" }} onClick={handleSave}>저장</div>
       </div>
       <div className="main-mid">
-        <div className="upload-img" >
-          {/* 업로드된 이미지를 미리보기로 표시 */}
-          <label htmlFor="imageUpload">
-            <img src={`${process.env.PUBLIC_URL}/profile/desinger1.png`} alt="" tabIndex={0} style={{ cursor: "pointer" }} />
-
-            <img src={`${process.env.PUBLIC_URL}/PageImage/pet/pet_img_L.png`} alt="" tabIndex={0} style={{ cursor: "pointer" }} />
-            프로필 이미지 선택
-          </label>
+        <div className="desinger_profile">
+          <p>디자이너 프로필을 선택해주세요</p>
+          <div className="desinger_profile_box">
+          {notice_analSac_option.map((option) => (
+            <label
+              key={option}
+              style={{
+                color: selectedOptions.business_desinger_profile.includes(option) ? "black" : "#C4C4C4",
+              }}
+            >
+              <input
+                type="checkbox"
+                value={option}
+                checked={selectedOptions.business_desinger_profile.includes(option)}
+                onChange={() => handleCheckboxChange("business_desinger_profile", option)}
+              />
+              &nbsp;
+              <img src={`${process.env.PUBLIC_URL}/profile/${option}`} style={{ cursor: "pointer", width: "150px", height: "150px" }} />
+            </label>
+          ))}
+          </div>
         </div>
+
         <div className="input-container">
           <p>디자이너 이름</p>
           <input
@@ -82,9 +113,21 @@ function RegisterDesinger() {
             name="business_desinger_name"
             value={formData.business_desinger_name}
             onChange={handleInputChange}
-            placeholder="상호명을 입력해 주세요."
+            placeholder="디자이너 이름을 입력해 주세요."
           />
         </div>
+
+        <div className="input-container">
+          <p>디자이너 직함</p>
+          <input
+            type="text"
+            name="business_desinger_grade"
+            value={formData.business_desinger_grade}
+            onChange={handleInputChange}
+            placeholder="디자이너 직함을 입력해 주세요."
+          />
+        </div>
+
 
         <div className="input-container">
           <p>소개글</p>

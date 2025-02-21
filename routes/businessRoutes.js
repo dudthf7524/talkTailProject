@@ -191,7 +191,7 @@ router.get('/business/detail/:id', authMiddleware, async (req, res) => {
 })
 
 router.post('/business/register/desinger', authMiddlewareSession, async (req, res) => {
-
+  console.log(req.body)
   try {
 
 

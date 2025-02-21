@@ -16,10 +16,10 @@ const PetDesigner = () => {
 
   const business_registration_number = designerName.businessInfo.business_registration_number;
 
-  if(business_registration_number ===null){
+  if (business_registration_number === null) {
     navigate(-1)
   }
-  
+
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
   const arrowUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_fill_down.svg`;
@@ -36,12 +36,12 @@ const PetDesigner = () => {
   };
 
   const handleItemClick = (id) => {
-   
+
     navigate(`/list-map/${id}`);
   };
 
   const [designers, setDesigners] = useState({})
-  
+
   useEffect(() => {
     const fetchBusiness = async () => {
       try {
@@ -62,7 +62,7 @@ const PetDesigner = () => {
     };
     fetchBusiness();
   }, [id]);
-  
+
   console.log(designers)
   const handleClick = (id, name) => {
     console.log(id)
@@ -79,39 +79,33 @@ const PetDesigner = () => {
         디자이너 선택
         <div></div>
       </div>
-      {/* <div className={`list-header ${isDropdownOpen ? 'open' : ''}`}>
-        <div className='list-header-i'>
-          <div className='list-header-item' onClick={toggleDropdown}>
-            거리 순
-            <button>
-              <img src={arrowUrl} alt='arrow' />
-            </button>
-          </div>
-          <button>
-            <img src={mapUrl} alt='map' onClick={() => handleItemClick(id)} />
-          </button>
-        </div>
-        {isDropdownOpen && (
-          <div className='dropdown-menu'>
-            <div className='dropdown-item'>평점 오름차 순</div>
-            <div className='dropdown-item'>평점 내림차 순</div>
-            <div className='dropdown-item'>가격 오름차 순</div>
-            <div className='dropdown-item'>가격 내림차 순</div>
-            <div className='dropdown-item'>쌓인 후기 오름차 순</div>
-            <div className='dropdown-item'>쌓인 후기 내림차 순</div>
-          </div>
-        )}
-      </div> */}
-      <div className="list-mid-h">
+      <div className="pet_list_box">
         {
           Array.isArray(designers) && designers.map((designer, index) => (
             <div
-              key={index} 
-              className='list-list-container'
-              onClick={()=> handleClick(designer.business_desinger_id, designer.business_desinger_name)}
-              style={{ cursor: 'pointer' }}>
-              <div className='list-title'><h2>{designer.business_desinger_name}</h2></div>
-              <div className='list-content'>{designer.business_desinger_introduce}</div>
+              key={index}
+              className='pet_list'
+            >
+              <div className='desinger_ngi_img'>
+                <img style={{width: "100px", height: "100px" }} src={`${process.env.PUBLIC_URL}/profile/${designer.business_desinger_profile}`} ></img>
+                <div className='desinger_ngi'>
+                  <div className='desinger_ng'>
+                    <div className='desinger_name'>{designer.business_desinger_name}</div>
+                    <div className='desinger_g'>
+                      <div className='desinger_grade'>{designer.business_desinger_grade}</div>
+                    </div>
+
+                  </div>
+                  <div className='desinger_introduce'>{designer.business_desinger_introduce}</div>
+                </div>
+              </div>
+              <div className='pet_list_button'>
+                <button
+                  onClick={() => handleClick(designer.business_desinger_id, designer.business_desinger_name)}
+                >선택하기</button>
+              </div>
+
+
             </div>
           ))
         }

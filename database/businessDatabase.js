@@ -117,8 +117,10 @@ const createBusinessDesinger = async (businessInfo) => {
   try {
     const business = await BusinessDesinger.create({
       business_registration_number: businessInfo.business_registration_number,
-      business_desinger_introduce: businessInfo.business_desinger_introduce,
+      business_desinger_profile: businessInfo.business_desinger_profile,
       business_desinger_name: businessInfo.business_desinger_name,
+      business_desinger_grade: businessInfo.business_desinger_grade,
+      business_desinger_introduce: businessInfo.business_desinger_introduce,
       created_at: new Date(),
       updated_at: new Date(),
     });
