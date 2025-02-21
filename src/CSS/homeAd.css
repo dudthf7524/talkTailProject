@@ -2,6 +2,10 @@
   width: 430px;
   height: 129px;
 }
+.homeAd a {
+  width: 100%;
+  height: 100%;
+}
 .homeAd img {
   width: 100%;
   height: 100%;
