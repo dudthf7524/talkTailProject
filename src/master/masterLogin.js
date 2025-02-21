@@ -35,6 +35,7 @@ const Login = () => {
   const menu = () => {
     navigate("/master/main ");
   };
+  console.log(master)
 
   const login = async () => {
     const form = document.querySelector(".loginform");
