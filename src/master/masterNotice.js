@@ -13,6 +13,7 @@ const MasterNotice = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_API_BASE_URL}/master/loadNotice`
         );
+        console.log(response.data)
         setNoticeLists(response.data);
       } catch (e) {
         console.error(e);
