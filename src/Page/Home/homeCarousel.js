@@ -82,7 +82,7 @@ const HomeCarousel = () => {
           behavior: "smooth",
         });
       }
-    }, 2000);
+    }, 3500);
 
     return () => clearInterval(interval);
   }, [isPlaying]);
@@ -110,7 +110,7 @@ const HomeCarousel = () => {
   const handleDragStart = (e) => {
     e.preventDefault();
   };
-  
+
   return (
     <div className="home_carousel_section">
       <div className="carousel_container">
@@ -124,7 +124,6 @@ const HomeCarousel = () => {
                       src={image.imgUrl}
                       alt=""
                       onDragStart={handleDragStart}
-                     
                     />
                   </a>
                 </div>

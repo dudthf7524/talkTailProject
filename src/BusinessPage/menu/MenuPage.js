@@ -5,6 +5,7 @@ import api from "../../Api";
 import Tos from "../../Page/Home/tos";
 import Privacy from "../../Page/Home/privacy";
 import Footer from "../../Page/Home/footer";
+import Modal from "../../modal";
 const AdminMenu = () => {
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
   const reservationIcon = `${process.env.PUBLIC_URL}/BusinessPageImage/icon/reservationIcon.svg`;
@@ -21,6 +22,9 @@ const AdminMenu = () => {
   const [openTos, setOpenTos] = useState(false);
   const [openPrivacy, setOpenPrivacy] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const modalTitle = "알림";
+  const modalContent = "서비스 준비 중입니다.";
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -214,7 +218,10 @@ const AdminMenu = () => {
               </button>
               <button
                 className="menu-tbt-btn"
-                onClick={() => navigate("/calculation-management")}
+                // onClick={() => navigate("/calculation-management")}
+                onClick={() => {
+                  setOpenModal(true);
+                }}
               >
                 <img
                   src={calculateIcon}
@@ -289,6 +296,17 @@ const AdminMenu = () => {
           openModal={() => {
             setOpenPrivacy(false);
           }}
+        />
+      ) : (
+        ""
+      )}
+      {openModal ? (
+        <Modal
+          openModal={() => {
+            setOpenModal(false);
+          }}
+          title={modalTitle}
+          content={modalContent}
         />
       ) : (
         ""

@@ -178,7 +178,7 @@ function RegisterInformation() {
   }
 
   return (
-    <div className="mid" lang="ko">
+    <div className="mid register_information_total" lang="ko">
       <div className="navigation">
         <button>
           <img
@@ -188,7 +188,9 @@ function RegisterInformation() {
           />
         </button>
         등록자료 올리기
-        <div style={{cursor : "pointer"}} onClick={() => openModal("accept")}>저장</div>
+        <div style={{ cursor: "pointer" }} onClick={() => openModal("accept")}>
+          저장
+        </div>
       </div>
       <div className="main-mid">
         <div
