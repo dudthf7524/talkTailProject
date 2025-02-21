@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import MasterLoginModal from "./masterLoginModal.js";
 import api from "../Api";
+
 const Login = () => {
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -48,7 +49,7 @@ const Login = () => {
     try {
       // axios로 데이터 전송
       const response = await axios.post(
-        `${apiUrl}/api/masterAuth/masterLogin`,
+        `${apiUrl}/masterAuth/masterLogin`,
         data,
         {
           withCredentials: true,
