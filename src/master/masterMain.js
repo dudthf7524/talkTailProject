@@ -17,23 +17,23 @@ const MasterMain = () => {
   const [master, setMaster] = useState(false);
 
 
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const response = await api.get("/master/auth", {
-  //         withCredentials: true,
-  //       });
-  //       setMaster(response.data);
-  //       if (!response.data) {
-  //         navigate("/master"); // 로그인 페이지로 리디렉션
-  //       }
-  //     } catch (error) {
-  //       console.error("로그인 인증 실패:", error);
-  //       navigate("/master"); // 로그인 페이지로 리디렉션
-  //     }
-  //   };
-  //   fetchUser();
-  // }, []);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await api.get("/master/auth", {
+          withCredentials: true,
+        });
+        setMaster(response.data);
+        if (!response.data) {
+          navigate("/master"); // 로그인 페이지로 리디렉션
+        }
+      } catch (error) {
+        console.error("로그인 인증 실패:", error);
+        navigate("/master"); // 로그인 페이지로 리디렉션
+      }
+    };
+    fetchUser();
+  }, []);
 
   
   return (
