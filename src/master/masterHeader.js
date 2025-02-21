@@ -8,12 +8,12 @@ const MasterHeader = () => {
       <img src="/image/talkTail_logo.png" alt="" />
       <p
         onClick={() => {
-          navigate("/master/main");
+          navigate("/master");
         }}
       >
         Master Admin
       </p>
-      <p>로그아웃</p>
+      <p>권도혁(마스터)</p>
       <div className="btn_box">
         <div
           className="btn"

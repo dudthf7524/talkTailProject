@@ -6,6 +6,7 @@ const {
   BeautyReservation,
   UserInformation,
   Pet,
+  User,
 } = require("../../models");
 
 router.get("/loadNotice", async (req, res, next) => {
@@ -27,6 +28,7 @@ router.get("/loadNotice", async (req, res, next) => {
               "business_registration_number",
               "platform_id",
               "pet_id",
+              "reservation_applicationTime",
               // "createdAt",
             ],
             raw: true,
@@ -62,6 +64,8 @@ router.get("/loadNotice", async (req, res, next) => {
             ...businessName,
             ...customerName,
             ...petName,
+            reservation_applicationTime:
+              reservationList.reservation_applicationTime,
           };
         } catch (e) {
           console.error(e);
@@ -124,6 +128,52 @@ router.post("/loadBusinessDetail", async (req, res, next) => {
   } catch (e) {
     console.error(e);
     next(e);
+  }
+});
+
+router.get("/loadCustomer", async (req, res, next) => {
+  try {
+    const userLists = await User.findAll({
+      raw: true,
+    });
+
+    const customerLists = await Promise.all(
+      userLists.map(async (list) => {
+        try {
+          const customerInfo = await UserInformation.findOne({
+            where: { platform_id: list.platform_id },
+            raw: true,
+          });
+
+          if (!customerInfo) {
+            return list;
+          }
+          return {
+            ...list,
+            ...customerInfo,
+          };
+        } catch (e) {
+          console.error(e);
+          return list;
+        }
+      })
+    );
+
+    res.status(200).json(customerLists);
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+router.get("/loadReservation", async (req, res, next) => {
+  try {
+    const reservationLists = await BeautyReservation.findAll({
+      raw: true,
+    });
+
+    res.status(200).json(reservationLists);
+  } catch (e) {
+    console.error(e);
   }
 });
 

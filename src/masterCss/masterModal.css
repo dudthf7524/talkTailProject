@@ -10,10 +10,10 @@
   background-color: rgb(245, 245, 245);
 }
 .master_modal .delete_btn {
-  font-size: 40px;
+  font-size: 2.08vw;
   position: absolute;
   top: 0;
-  right: 20px;
+  right: 1.04vw;
   cursor: pointer;
 }
 .master_modal {
@@ -23,8 +23,8 @@
   width: 50%;
   height: auto;
   text-align: center;
-  margin-top: 20px;
+  margin-top: 1.04vw;
 }
 .master_modal .box p {
-  font-size: 14px;
+  font-size: 0.73vw;
 }

@@ -89,7 +89,8 @@ app.get("/business/auth", (req, res) => {
 });
 
 app.get("/master/auth", (req, res) => {
-  res.json(req.user);
+  console.log(req.session.user)
+  res.json(req.session.user);
 });
 
 app.get("/user/auth", authMiddleware, (req, res) => {

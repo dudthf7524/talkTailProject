@@ -1,14 +1,14 @@
 .master_section {
   width: 70%;
-  height: 500px;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
-  margin-top: 30px;
+  margin-top: 1.56vw;
 }
 .master_section p {
-  font-size: 50px;
+  font-size: 2.61vw;
 }
 .master_section .row {
   width: 100%;
@@ -18,27 +18,27 @@
 }
 .master_section .row p {
   height: auto;
-  font-size: 18px;
+  font-size: 0.94vw;
   text-align: center;
   margin: 0;
 }
 .master_section .row div {
-  font-size: 18px;
+  font-size: 0.94vw;
   height: auto;
   text-align: center;
 }
 .master_section .row_head {
-  height: 68px;
+  height: 3.54vw;
   border-bottom: 2px solid #f0663f;
 }
 .master_section .row_body {
-  height: 60px;
+  height: 3.13vw;
 }
 .master_section .even {
   background-color: rgb(241, 241, 241);
 }
 .master_section .row_body p {
-  font-size: 16px;
+  font-size: 0.83vw;
 }
 .master_section .row_body div {
   width: 20%;
@@ -47,6 +47,6 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 0.83vw;
   border: 1px solid #f0663f;
 }

@@ -14,7 +14,7 @@ const Login = () => {
   const [openModal, setOpenModal] = useState(false);
   const modalTitle = "로그인 완료";
   const modalContent = "잠시 후 메뉴페이지로 이동합니다.";
-  console.log("master : ", master);
+  
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -35,7 +35,6 @@ const Login = () => {
   const menu = () => {
     navigate("/master/main ");
   };
-  console.log(master)
 
   const login = async () => {
     const form = document.querySelector(".loginform");
@@ -45,7 +44,6 @@ const Login = () => {
       username: formData.get("username"),
       password: formData.get("password"),
     };
-    console.log(data);
 
     try {
       // axios로 데이터 전송
@@ -56,11 +54,17 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      if (response.status === 200) {
+      if (response.data === 'sucess') {
         setOpenModal(true);
         setTimeout(() => {
           navigate("/master/main");
         }, 1000);
+      }
+      if (response.data === '아이디') {
+        alert("아이디 불일치, 다시 시도하세요.");
+      }
+      if (response.data === '비밀번호') {
+        alert("비밀번호 불일치, 다시 시도하세요.");
       }
     } catch (error) {
       console.error("등록 실패:", error);
@@ -71,13 +75,13 @@ const Login = () => {
   const logout = async () => {
     try {
       const response = await axios.get(
-        `${apiUrl}/api/masterAuth/masterLogout`,
+        `${apiUrl}/masterAuth/masterLogout`,
         {
           withCredentials: true,
         }
       );
       window.location.href = "/master";
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
@@ -88,8 +92,16 @@ const Login = () => {
 
       {master ? (
         <>
-          <div className="login-text">마스터님 로그인 완료</div>
           <div className="login-form">
+            <div className="login-text">
+              {master.login_id === 'creamoff2021' ? (
+                <>권도혁 마스터 관리자</>
+              ) : (
+                <></>
+              )
+
+              }
+            </div>
             <button
               type="button"
               onClick={() => {
@@ -134,15 +146,7 @@ const Login = () => {
         </>
       )}
 
-      {master ? (
-        <div className="find-id-pw-text"></div>
-      ) : (
-        <>
-          <div className="find-id-pw-text">
-            <Link to="/master/register">회원가입</Link>
-          </div>
-        </>
-      )}
+     
 
       {openModal ? (
         <MasterLoginModal
