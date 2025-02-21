@@ -15,12 +15,6 @@ import Footer from "./footer";
 const MainPage = () => {
   const navigate = useNavigate();
   const categoryRef = useRef(null);
-  const locationUrl = `${process.env.PUBLIC_URL}/PageImage/home/location.svg`;
-  const arrowUrl = `${process.env.PUBLIC_URL}/PageImage/home/arrow.svg`;
-  const footArrowUrl = `${process.env.PUBLIC_URL}/PageImage/home/footArrow.svg`;
-  const trailingUrl = `${process.env.PUBLIC_URL}/PageImage/home/trailing.svg`;
-
-  // const logoUrl = `${process.env.PUBLIC_URL}/PageImage/home/logo.svg`;
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
 
   const b1Url = `${process.env.PUBLIC_URL}/PageImage/home/b1.svg`;
@@ -32,7 +26,6 @@ const MainPage = () => {
   const b7Url = `${process.env.PUBLIC_URL}/PageImage/home/b7.svg`;
   const b8Url = `${process.env.PUBLIC_URL}/PageImage/home/b8.svg`;
 
-  const imageNumbers = Array.from({ length: 9 }, (_, index) => index + 1);
   const containerRef = useRef(null);
   const containerRef2 = useRef(null);
   const containerRef3 = useRef(null);
