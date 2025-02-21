@@ -6,6 +6,7 @@ const {
   BeautyReservation,
   UserInformation,
   Pet,
+  User,
 } = require("../../models");
 
 router.get("/loadNotice", async (req, res, next) => {
@@ -124,6 +125,41 @@ router.post("/loadBusinessDetail", async (req, res, next) => {
   } catch (e) {
     console.error(e);
     next(e);
+  }
+});
+
+router.get("/loadCustomer", async (req, res, next) => {
+  try {
+    const userLists = await User.findAll({
+      raw: true,
+    });
+
+    const customerLists = await Promise.all(
+      userLists.map(async (list) => {
+        try {
+          const customerInfo = await UserInformation.findOne({
+            where: { platform_id: list.customer.platform_id },
+            raw: true,
+          });
+
+          if (customerInfo) {
+            return list;
+          }
+
+          return {
+            ...list,
+            ...customerInfo,
+          };
+        } catch (e) {
+          console.error(e);
+          return list;
+        }
+      })
+    );
+
+    res.status(200).json(customerLists);
+  } catch (e) {
+    console.error(e);
   }
 });
 

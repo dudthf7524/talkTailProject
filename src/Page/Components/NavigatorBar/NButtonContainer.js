@@ -35,22 +35,45 @@ const NButtonContainer = () => {
   useEffect(() => {
     userLogin();
   }, []);
-  console.log("nav 속 user : ", user);
   return (
     <div className="navigation-bar footer_total">
       <button
         className="header-nickname-button"
-        onClick={() => navigate("/reservation")}
+        onClick={() => {
+          if (!user) {
+            setModalContent("로그인 후 이용해주세요.");
+            setOpenModal(true);
+          } else {
+            navigate("/reservation");
+          }
+        }}
       >
         <img src={reservationUrl} alt="reservation" />
       </button>
       <button
         className="header-nickname-button"
-        onClick={() => navigate("/notice")}
+        onClick={() => {
+          if (!user) {
+            setModalContent("로그인 후 이용해주세요.");
+            setOpenModal(true);
+          } else {
+            navigate("/notice");
+          }
+        }}
       >
         <img src={noticeUrl} alt="notice" />
       </button>
-      <button className="header-nickname-button" onClick={() => navigate("/")}>
+      <button
+        className="header-nickname-button"
+        onClick={() => {
+          if (!user) {
+            setModalContent("로그인 후 이용해주세요.");
+            setOpenModal(true);
+          } else {
+            navigate("/");
+          }
+        }}
+      >
         <img src={homeUrl} alt="home" />
       </button>
       {/* <button className='header-nickname-button' onClick={() => navigate('/community')}> */}
@@ -65,7 +88,14 @@ const NButtonContainer = () => {
       </button>
       <button
         className="header-nickname-button"
-        onClick={() => navigate("/my-Page")}
+        onClick={() => {
+          if (!user) {
+            setModalContent("로그인 후 이용해주세요.");
+            setOpenModal(true);
+          } else {
+            navigate("/my-page");
+          }
+        }}
       >
         <img src={myPageUrl} alt="myPage" />
       </button>
