@@ -1,8 +1,14 @@
 .homeAd {
-  width: 100%;
-  height: 100px;
+  width: 430px;
+  height: 129px;
 }
 .homeAd img {
   width: 100%;
   height: 100%;
+}
+@media (max-width: 500px) {
+  .homeAd {
+    width: 100vw;
+    height: 30vw;
+  }
 }

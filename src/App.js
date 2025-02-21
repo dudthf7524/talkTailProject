@@ -61,8 +61,9 @@ import Privacy from "./Page/Home/privacy";
 import CustomerManagementDetail from "./BusinessPage/management/customer/CustomerManagementDetail";
 import HomeGuideDetail from "./Page/Home/homeGuideDetail";
 
-import MasterLogin from "./master/Login";
+import MasterLogin from "./master/masterLogin";
 import MasterMain from "./master/masterMain";
+import MasterJoin from "./master/masterJoin";
 function App() {
   const location = useLocation();
   const isMasterPage = location.pathname.startsWith("/master");
@@ -88,7 +89,9 @@ function App() {
         // 마스터 페이지는 독립적인 구조로 렌더링
         <Routes>
           <Route path="/master">
+            <Route path="" element={<MasterLogin />} />
             <Route path="main" element={<MasterMain />} />
+            <Route path="register" element={<Join />} />
           </Route>
         </Routes>
       ) : (

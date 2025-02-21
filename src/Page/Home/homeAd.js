@@ -3,11 +3,7 @@ import React, { useState, useEffect } from "react";
 
 const HomeAd = () => {
   const [currentImg, setCurrentImg] = useState(0);
-  const imageArr = [
-    "/image/cardnews_01.png",
-    "/image/cardnews_02.png",
-    "/image/cardnews_03.png",
-  ];
+  const imageArr = ["/image/ad_01.png", "/image/ad_02.png", "/image/ad_03.png"];
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImg((prev) => (prev + 1) % imageArr.length);
