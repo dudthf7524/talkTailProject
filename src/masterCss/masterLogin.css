@@ -1,0 +1,106 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.login-logo {
+  margin-top: 200px;
+}
+
+.login-text {
+  color: #f0663f;
+  font-size: 32px;
+  font-weight: bold;
+  margin-top: 2px;
+}
+
+.login-form {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 10%;
+}
+
+.login-form input {
+  box-sizing: border-box;
+  padding: 8px 24px;
+  margin-bottom: 8%;
+  border: 1px solid #f0663f;
+  border-radius: 200px;
+  font-size: 16px;
+  width: 338px;
+  height: 56px;
+}
+
+.login-form button {
+  box-sizing: border-box;
+  border: 1px solid #f0663f;
+  border-radius: 200px;
+  color: #ffffff;
+  background-color: #f0663f;
+  padding: 8px 24px;
+  font-size: 16px;
+  width: 338px;
+  height: 56px;
+  cursor: pointer;
+}
+
+.find-id-pw-text {
+  font-size: 12px;
+  margin-top: 16px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.find-id-pw-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 60%;
+}
+
+.customer-service-text {
+  color: #000000;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.service-number-text {
+  color: #f0663f;
+  font-size: 48px;
+  font-weight: bold;
+  margin-top: 2%;
+}
+
+.find-id-pw-form button {
+  box-sizing: border-box;
+  border: 1px solid #f0663f;
+  border-radius: 200px;
+  color: #ffffff;
+  background-color: #f0663f;
+  padding: 8px 24px;
+  font-size: 16px;
+  width: 402px;
+  height: 56px;
+  margin-top: 5%;
+  cursor: pointer;
+}
+.find-id-pw-form img {
+  width: 30%;
+  height: auto;
+  margin-top: 100%;
+  margin-bottom: 10%;
+}
+.master_login .login-logo {
+  width: 20%;
+  margin: 0 auto;
+  margin-top: 10vw;
+}
+.master_login .login-logo img {
+  width: 100%;
+}
+.master_login .login-text {
+  margin-bottom: 2vw;
+}

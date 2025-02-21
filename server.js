@@ -22,6 +22,7 @@ const kakaoApiRoutes = require("./routes/kakaoApiRoutes");
 const BankDatabase = require("./models/BankDatabase"); // BankDatabase 함수 가져오기
 
 const masterRouter = require("./routes/master/loadDatas");
+const masterAuthRouter = require("./routes/master/masterAuth");
 
 const port = 3060;
 app.listen(port, () => {
@@ -87,6 +88,10 @@ app.get("/business/auth", (req, res) => {
   res.json(req.user);
 });
 
+app.get("/master/auth", (req, res) => {
+  res.json(req.user);
+});
+
 app.get("/user/auth", authMiddleware, (req, res) => {
   res.json(req.user);
 });
@@ -103,6 +108,7 @@ app.use("/api", reservationRoutes);
 app.use("/api", customerManagementRoutes);
 app.use("/api", kakaoApiRoutes);
 app.use("/master", masterRouter);
+app.use("/masterAuth", masterAuthRouter);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./build/index.html"));

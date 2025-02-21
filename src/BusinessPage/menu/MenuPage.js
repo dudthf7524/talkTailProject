@@ -253,7 +253,7 @@ const AdminMenu = () => {
                 />
                 <span className="menu-text">
                   <br />
-                  애로사항 접수
+                  고객소리함
                 </span>
               </button>
             </div>
