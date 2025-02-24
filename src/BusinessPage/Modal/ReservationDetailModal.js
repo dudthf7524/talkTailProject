@@ -16,7 +16,7 @@ const ReservationDetailModal = ({ openModal, id, petName, userPhone }) => {
     try {
       const response = await api.post(
         `/api/reservation/picup`,
-        { id, userPhone, petName },
+        { id, userPhone, petName, selectMinute ,completeTime },
         { withCredentials: true }
       );
       window.location.href = "/business/reservation/management";
