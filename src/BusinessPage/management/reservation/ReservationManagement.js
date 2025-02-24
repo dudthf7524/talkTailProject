@@ -174,8 +174,8 @@ const ReservationManagement = () => {
             setOpenPickup(false);
           }}
           id={id}
-          petName={userPhone}
-          userPhone={petNmae}
+          petName={petNmae}
+          userPhone={userPhone}
         />
       ) : (
         ""
