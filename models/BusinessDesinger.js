@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: '',
       },
       business_desinger_grade: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.STRING(20),
         allowNull: false,
         defaultValue: '',
       },

@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const dayjs = require("dayjs");
+require("dayjs/locale/ko"); // ✅ 한국어 로케일 추가
+dayjs.locale("ko"); // ✅ 한국어 로케일 설정
 const authMiddleware = require("../middleware/authMiddleware");
 const reservationDatabase = require("../database/reservationDatabase");
 const { alimtalkSend } = require("../aligo_api/kakao");
@@ -9,6 +11,7 @@ const authMiddlewareSession = require("../middleware/authMiddlewareSession");
 const userDatabase = require("../database/userDatabase");
 const kakaoProcess = require("../aligo_api/kakaoProcess");
 const { format, parse, addMinutes } = require("date-fns");
+
 
 router.post("/beauty/reservation", authMiddleware, async (req, res) => {
   const currentDateTime = dayjs();
@@ -36,11 +39,16 @@ router.post("/beauty/reservation", authMiddleware, async (req, res) => {
     console.error("Error fetching userIformation:", error.message);
     res.status(500).json({ error: error.message });
   }
-
+  console.log(req.body);
+  
+  
+  const date = dayjs(req.body.date).format("MM월 DD일 ddd요일 ")
   const business_owner_phone = req.body.business_owner_phone;
   const beauty_style = req.body.beauty_style;
-  const star_time = req.body.startTime;
+  const start_time = date + req.body.startTime;
+  console.log(start_time)
 
+  
   try {
     const result = await reservationDatabase.beautyReservation(req.body);
   } catch (error) {
@@ -54,7 +62,7 @@ router.post("/beauty/reservation", authMiddleware, async (req, res) => {
     req.body.user_phone = user_information.user_phone;
     req.body.receiver_1 = business_owner_phone;
     req.body.beauty_style = beauty_style;
-    req.body.start_time = star_time;
+    req.body.start_time = start_time;
     console.log(req.body);
     const result = await kakaoProcess.reservationReception(req, res);
     console.log(result);
@@ -124,23 +132,10 @@ router.put("/beauty/reservation/setCompleteTime/:id", async (req, res) => {
   const date = req.body.date;
   const user_phone = req.body.user_phone;
   const paid_price = req.body.paid_price;
-  console.log(req.body);
-  console.log(id);
-  console.log(reservationCompleteTime);
-  console.log(beauty_price);
-  console.log(typeof beauty_price);
-  console.log(business_name);
-  console.log(business_phone);
-  console.log(start_time);
-  console.log(date);
-  console.log(user_phone);
-  console.log(paid_price);
-  console.log(typeof paid_price);
+
   req.body.reservationDate =
     date + " " + start_time + "~" + reservationCompleteTime;
   const paid_prices = paid_price + beauty_price;
-
-  console.log(paid_prices);
 
   try {
     const result = await reservationDatabase.setCompleteTime(
@@ -156,7 +151,7 @@ router.put("/beauty/reservation/setCompleteTime/:id", async (req, res) => {
 
   try {
     req.body.receiver_1 = user_phone;
-
+    req.body.beauty_price = paid_prices;
     console.log(req.body);
     const result = await kakaoProcess.reservationComplete(req, res);
     console.log(result);
@@ -323,18 +318,29 @@ router.get("/user/reservation/bookmark", authMiddleware, async (req, res) => {
   }
 });
 
-router.post('/reservation/picup', authMiddlewareSession,  async (req, res) => {
+router.post('/reservation/picup', authMiddlewareSession, async (req, res) => {
   const business_registration_number = req.user.business_registration_number;
   console.log(business_registration_number)
 
   console.log(req.body)
   const id = req.body.id;
+  const user_phone = req.body.userPhone;
   try {
     const result = await reservationDatabase.pickup(id);
-    res.json(result);
   } catch (error) {
     console.error('Failed to fetch authority request error: ', error);
     res.status(500).json({ message: 'Failed to fetch authority request.' });
+  }
+
+  try {
+    req.body.receiver_1 = user_phone;
+    console.log(req.body);
+    const result = await kakaoProcess.pickup(req, res);
+    console.log(result);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error("Error saving reservation to database:", error.message);
+    return res.status(500).json({ error: "Database save failed" });
   }
 })
 
