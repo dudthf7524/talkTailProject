@@ -46,6 +46,7 @@
   margin-right: 8.6px;
   cursor: pointer;
   user-select: none;
+  touch-action: none;
 }
 @media (max-width: 500px) {
   .home_carousel_section .carousel_container {
