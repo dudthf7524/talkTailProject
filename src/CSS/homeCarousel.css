@@ -4,6 +4,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 .home_carousel_section .carousel_container {
   width: 100%;
   height: auto;
@@ -15,6 +16,7 @@
   justify-content: center;
   z-index: 2;
 }
+
 .home_carousel_section .carousel_container .slide_wrapper {
   width: 100%;
   height: 100%;
@@ -31,10 +33,18 @@
   scroll-behavior: smooth;
   user-select: none;
   -webkit-overflow-scrolling: touch;
+  touch-action: none;
+  /* 터치 이벤트 방지 (스크롤 및 확대/축소 방지) */
+  -webkit-user-drag: none;
+  /* 드래그 방지 (Safari) */
+  pointer-events: auto;
 }
+
 .home_carousel_section .carousel_container .slide_container::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge, Opera용 */
+  display: none;
+  /* Chrome, Safari, Edge, Opera용 */
 }
+
 .home_carousel_section .carousel_container .slide_container .img_div {
   width: 387px;
   height: 100%;
@@ -46,48 +56,48 @@
   margin-right: 8.6px;
   cursor: pointer;
   user-select: none;
-  touch-action: none; /* 터치 이벤트 방지 (스크롤 및 확대/축소 방지) */
-  -webkit-user-drag: none; /* 드래그 방지 (Safari) */
-  pointer-events: auto;}
+  touch-action: none;
+  /* 터치 이벤트 방지 (스크롤 및 확대/축소 방지) */
+  -webkit-user-drag: none;
+  /* 드래그 방지 (Safari) */
+  pointer-events: auto;
+}
+
 @media (max-width: 500px) {
   .home_carousel_section .carousel_container {
     height: 112.5vw;
   }
+
   .home_carousel_section .carousel_container .slide_container .img_div {
     width: 90vw;
     margin-right: 2vw;
   }
-  .home_carousel_section
-    .carousel_container
-    .slide_container
-    .img_div:first-child {
+
+  .home_carousel_section .carousel_container .slide_container .img_div:first-child {
     margin-left: 4vw;
   }
-  .home_carousel_section
-    .carousel_container
-    .slide_container
-    .img_div:last-child {
+
+  .home_carousel_section .carousel_container .slide_container .img_div:last-child {
     margin-right: 4vw;
   }
 }
-.home_carousel_section
-  .carousel_container
-  .slide_container
-  .img_div:first-child {
+
+.home_carousel_section .carousel_container .slide_container .img_div:first-child {
   margin-left: 17.2px;
 }
-.home_carousel_section
-  .carousel_container
-  .slide_container
-  .img_div:last-child {
+
+.home_carousel_section .carousel_container .slide_container .img_div:last-child {
   margin-right: 17.2px;
 }
+
 .home_carousel_section .carousel_container .slide_container .img_div p {
   font-size: 40px;
 }
+
 .home_carousel_section .carousel_container .slide_container .img_div img {
   width: 100%;
 }
+
 .home_carousel_section .carousel_container .index_box {
   width: auto;
   height: auto;
@@ -97,6 +107,7 @@
   margin: 0 auto;
   color: #f0663f;
 }
+
 .home_carousel_section .circle_box {
   width: auto;
   height: 20px;
@@ -105,12 +116,14 @@
   display: flex;
   gap: 10px;
 }
+
 .home_carousel_section .circle_box .circle {
   width: 13px;
   height: 13px;
   border-radius: 50%;
   cursor: pointer;
 }
+
 .home_carousel_section .btn_box {
   width: 100%;
   height: 30px;
@@ -121,6 +134,7 @@
   margin-top: 20px;
   padding: 0;
 }
+
 .home_carousel_section .btn_box p {
   width: auto;
   height: 100%;
@@ -135,6 +149,7 @@
   gap: 10px;
   margin-top: 10px;
 }
+
 .home_carousel_section .btn_box p {
   cursor: pointer;
   font-size: 30px;
@@ -143,6 +158,7 @@
   border-radius: 5px;
   transition: 0.3s;
 }
+
 .btn_box p:hover {
   background-color: #f0663f;
 }
