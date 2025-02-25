@@ -46,8 +46,9 @@
   margin-right: 8.6px;
   cursor: pointer;
   user-select: none;
-  touch-action: none;
-}
+  touch-action: none; /* 터치 이벤트 방지 (스크롤 및 확대/축소 방지) */
+  -webkit-user-drag: none; /* 드래그 방지 (Safari) */
+  pointer-events: auto;}
 @media (max-width: 500px) {
   .home_carousel_section .carousel_container {
     height: 112.5vw;
