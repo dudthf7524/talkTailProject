@@ -198,7 +198,7 @@ function EditInformation() {
       );
 
       console.log("Upload successful:", response.data);
-
+      setModalOpen(false);
       // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
       navigate("/business/edit/information"); // 성공 페이지로 이동
     } catch (error) {
@@ -485,12 +485,15 @@ function EditInformation() {
         </div>
         <div className="input-container">
           <p>예약금</p>
-          <input
-            type="text"
-            name="business_no_show"
-            value={formData.business_no_show + " 원"}
-            onChange={handleInputChange}
-          />
+          <div className="input_box">
+            <input
+              type="text"
+              name="business_no_show"
+              value={formData.business_no_show}
+              onChange={handleInputChange}
+            />
+            <p>원</p>
+          </div>
         </div>
       </div>
 

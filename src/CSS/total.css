@@ -1015,7 +1015,20 @@
   width: 100%;
   padding: 0;
 }
-
+.business_information_total .input_box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.business_information_total .input_box input {
+  width: 70%;
+  height: 100%;
+}
+.business_information_total .input_box p {
+  font-size: 25px;
+}
 /* BusinessBeautyEditOption.js */
 .edit_option_total .main-mid {
   width: 83.33%;
