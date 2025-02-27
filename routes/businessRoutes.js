@@ -33,8 +33,41 @@ router.post('/businesses', async (req, res) => {
     console.error('Error creating business', error.message);
     res.status(500).json({ error: error.message });
   }
-
 })
+
+router.post('/business/check/password', authMiddlewareSession, async (req, res) => {
+
+
+  const registrationNumber = req.user.registrationNumber;
+
+  try {
+    const password = req.body.password;
+
+    const business = await businessDatabase.checkPassowrd(password, registrationNumber);
+
+    res.status(201).json(business);
+  } catch (error) {
+    console.error('Error creating business', error.message);
+    res.status(500).json({ error: error.message });
+  }
+})
+
+router.put('/business/check/password', authMiddlewareSession, async (req, res) => {
+
+  console.log(req.body)
+  const registrationNumber = req.user.registrationNumber;
+
+  try {
+    const new_password = await bcrypt.hash(req.body.new_password, 10);
+    const business = await businessDatabase.updatePassowrd(new_password, registrationNumber);
+
+    res.status(201).json(business);
+  } catch (error) {
+    console.error('Error creating business', error.message);
+    res.status(500).json({ error: error.message });
+  }
+})
+
 
 router.post('/business/checkLogin', async (req, res) => {
   console.log(req.body)
@@ -486,9 +519,9 @@ router.get('/business/account/number/list', authMiddlewareSession, async (req, r
 
 
   try {
-    const result = await businessDatabase.accountNumberList( business_registration_number);
+    const result = await businessDatabase.accountNumberList(business_registration_number);
 
-    res.status(201).json( result );
+    res.status(201).json(result);
   } catch (error) {
     console.error('Error creating business with images:', error);
     res.status(500).json({ error: error.message });
@@ -508,7 +541,7 @@ router.post('/business/style/accountNumberGet', async (req, res) => {
   }
 })
 
-router.get('/business/desinger/list',authMiddlewareSession, async (req, res) => {
+router.get('/business/desinger/list', authMiddlewareSession, async (req, res) => {
 
   console.log(req.user.registrationNumber)
 

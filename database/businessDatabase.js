@@ -40,6 +40,50 @@ const createBusiness = async (businessInfo) => {
   }
 };
 
+const checkPassowrd = async (password, registrationNumber) => {
+
+  try {
+    const business = await Business.findOne({
+      where: { business_registration_number: registrationNumber }, // login_id는 business_id에 해당
+      attributes: ["login_password"],
+      raw: true
+    });
+
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      business.login_password
+    );
+
+    if (isPasswordValid) {
+      return 1
+    } else {
+      return 0
+    }
+  } catch (error) {
+    console.error(error)
+    throw new Error("Failed to create business", error.message);
+  }
+};
+
+const updatePassowrd = async (new_password, registrationNumber) => {
+
+  try {
+    const business = await Business.update(
+      {
+        login_password: new_password
+      },
+      {
+        where: { business_registration_number: registrationNumber }// login_id는 business_id에 해당
+      },
+      { raw: true }
+
+    );
+  } catch (error) {
+    console.error(error)
+    throw new Error("Failed to create business", error.message);
+  }
+};
+
 const createBusinessInformation = async (businessInformationInfo) => {
 
   const business_phone =
@@ -738,6 +782,8 @@ const desingerList = async (business_registration_number) => {
 
 module.exports = {
   createBusiness,
+  checkPassowrd,
+  updatePassowrd,
   businessLogin,
   createBusinessInformation,
   getBusinesses,

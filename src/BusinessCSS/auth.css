@@ -4,6 +4,27 @@
     min-height: 100vh;
 }
 
+.password_chagne{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.password_chagne .admin-change-text {
+    width: 40%;
+    height: 100%;
+    margin: 0;
+    color: gray;
+    border: 1px solid gray;
+    border-radius: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .login-logo {
     margin-top: 200px;
 }
