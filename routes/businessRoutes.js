@@ -30,6 +30,124 @@ router.post("/businesses", async (req, res) => {
     console.error("Error creating business", error.message);
     res.status(500).json({ error: error.message });
   }
+<<<<<<< HEAD
+=======
+})
+
+router.post('/business/check/password', authMiddlewareSession, async (req, res) => {
+
+
+  const registrationNumber = req.user.registrationNumber;
+
+  try {
+    const password = req.body.password;
+
+    const business = await businessDatabase.checkPassowrd(password, registrationNumber);
+
+    res.status(201).json(business);
+  } catch (error) {
+    console.error('Error creating business', error.message);
+    res.status(500).json({ error: error.message });
+  }
+})
+
+router.put('/business/check/password', authMiddlewareSession, async (req, res) => {
+
+  console.log(req.body)
+  const registrationNumber = req.user.registrationNumber;
+
+  try {
+    const new_password = await bcrypt.hash(req.body.new_password, 10);
+    const business = await businessDatabase.updatePassowrd(new_password, registrationNumber);
+
+    res.status(201).json(business);
+  } catch (error) {
+    console.error('Error creating business', error.message);
+    res.status(500).json({ error: error.message });
+  }
+})
+
+
+router.post('/business/checkLogin', async (req, res) => {
+  console.log(req.body)
+  const login_id = req.body.login_id;
+
+  console.log(login_id)
+
+
+  try {
+
+    const business = await businessDatabase.checkLogin(login_id);
+    res.status(201).json(business);
+
+  } catch (error) {
+    console.error('Error creating business', error.message);
+    res.status(500).json({ error: error.message });
+  }
+
+})
+
+router.post('/business/register/information', upload.fields([
+  { name: 'main', maxCount: 1 },
+  { name: 'sub', maxCount: 50 },
+  { name: 'album', maxCount: 50 },
+  { name: 'review', maxCount: 50 },
+  { name: 'pricing', maxCount: 10 }
+]), async (req, res) => {
+
+  try {
+    const files = req.files; // 업로드된 파일들
+    const formData = req.body; // 폼 데이터
+    console.log(formData)
+
+    if (!files) {
+      throw new Error('No files uploaded.');
+    }
+
+    // 이미지 업로드 및 URL 가져오기
+    if (!files || Object.keys(files).length === 0) {
+      return res.status(400).send('No files uploaded.');
+    }
+
+    const fileArray = [];
+    Object.keys(files).forEach(key => {
+      fileArray.push(...files[key]);
+    });
+    const imageUploadResults = await imgNaverCloud.uploadMultipleImages(fileArray);
+    //const businessRegisterDesinger = await businessDatabase.createBusinessBeautySignificant(RegisterBeautySignificant);
+
+    console.log(imageUploadResults)
+    // 비즈니스 데이터 생성
+    const businessData = {
+      ...formData,
+
+    };
+
+    // imageUploadResults를 분류하여 businessData에 추가
+    const pricingImages = [];
+    imageUploadResults.forEach(result => {
+      if (result.image_type === 'main') {
+        businessData.business_main_image = result.url; // main 이미지는 business_main_image에 저장
+      } else if (result.image_type === 'pricing') {
+        pricingImages.push(result.url); // pricing 이미지는 배열에 저장
+      }
+    });
+
+    // pricing 이미지를 순서대로 business_price_image1, business_price_image2, ...에 저장
+    pricingImages.forEach((url, index) => {
+      businessData[`business_price_image${index + 1}`] = url;
+    });
+
+    console.log(businessData)
+    const business = await businessDatabase.createBusinessInformation(businessData);
+
+    res.status(201).json({ business, imageUploadResults });
+  } catch (error) {
+    console.error('Error creating business with images:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+
+>>>>>>> client
 });
 
 router.post("/business/checkLogin", async (req, res) => {
@@ -520,11 +638,24 @@ router.post(
         business_registration_number
       );
 
+<<<<<<< HEAD
       res.status(201).json({ result });
     } catch (error) {
       console.error("Error creating business with images:", error);
       res.status(500).json({ error: error.message });
     }
+=======
+  const business_registration_number = req.user.registrationNumber;
+
+
+  try {
+    const result = await businessDatabase.accountNumberList(business_registration_number);
+
+    res.status(201).json(result);
+  } catch (error) {
+    console.error('Error creating business with images:', error);
+    res.status(500).json({ error: error.message });
+>>>>>>> client
   }
 );
 
@@ -561,11 +692,15 @@ router.post("/business/style/accountNumberGet", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 router.get(
   "/business/desinger/list",
   authMiddlewareSession,
   async (req, res) => {
     console.log(req.user.registrationNumber);
+=======
+router.get('/business/desinger/list', authMiddlewareSession, async (req, res) => {
+>>>>>>> client
 
     const business_registration_number = req.user.registrationNumber;
     try {

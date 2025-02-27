@@ -26,6 +26,7 @@ const AdminMenu = () => {
   const modalTitle = "알림";
   const modalContent = "서비스 준비 중입니다.";
 
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -51,12 +52,21 @@ const AdminMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  const changePassword = () => {
+    navigate('/business/change/password')
+  }
+
   return (
     <div className="page-container menuPage_total">
       <div className="menu-form" lang="ko">
         <div className="greet-text">안녕하세요.🙂</div>
         <div className="greet-text">{user.business_owner_name} 님</div>
-        <div className="admin-menu-text">관리자 페이지</div>
+        
+        <div className="password_chagne">
+          <div className="admin-menu-text">관리자 페이지</div>
+          <p className="admin-change-text" onClick={changePassword}>비밀번호 변경</p>
+        </div>
+
         <p className="category_text">고객관리</p>
         <div className="menu-grid">
           <button
