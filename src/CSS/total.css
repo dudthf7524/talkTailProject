@@ -248,6 +248,7 @@
   align-items: flex-end;
 }
 .login_total .login-text {
+  font-size: 20px;
   width: auto;
   height: auto;
   color: black;
