@@ -70,7 +70,10 @@ const InformationModal = ({
             {registerInformation.business_phone3}
           </span>
           <p>인삿말</p>
-          <span> {registerInformation.business_comment}</span>
+          {/* <span> {registerInformation.business_comment}</span> */}
+          <pre style={{ paddingLeft: "20px" }}>
+            {registerInformation.business_comment}
+          </pre>
           <p>노쇼 금액</p>
           <span> {registerInformation.business_no_show}</span>
         </div>

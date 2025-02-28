@@ -237,6 +237,7 @@ const EventDetailPage = () => {
       });
     }
   };
+  console.log("business.business_comment : ", business.business_comment);
   return (
     <div lang="ko" className="detailPage_total">
       <div className="mid">
@@ -247,7 +248,7 @@ const EventDetailPage = () => {
           가게정보
           <div></div>
         </div>
-        <div className="event-text-box">{business.business_comment}</div>
+        <pre className="event-text-box">{business.business_comment}</pre>
 
         <div className="event-img">
           {business.business_main_image ? (
@@ -372,7 +373,7 @@ const EventDetailPage = () => {
         <div className="writing-div">
           <div className="writing">
             <div>예약금 :</div>
-            <div>{business.business_no_show} 원</div>
+            <div>{business.business_no_show?.toLocaleString()} 원</div>
           </div>
         </div>
       </div>

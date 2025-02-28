@@ -1107,3 +1107,10 @@
 .register_information_total .main-mid::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
 }
+
+/* changePassword.js */
+.changePassword_total {
+  height: auto;
+  overflow-y: scroll;
+  position: inherit;
+}
