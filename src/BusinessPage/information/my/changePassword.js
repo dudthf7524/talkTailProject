@@ -52,7 +52,6 @@ function RegisterStyle() {
         navigate("/business/login");
       }
       setPassword(response.data);
-      console.log("Upload successful:", response.data);
     } catch (error) {
       console.error("Error during upload:", error);
       // 오류 처리

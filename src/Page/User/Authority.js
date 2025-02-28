@@ -24,7 +24,6 @@ function AuthorityManagement() {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(result.data);
         setLists(result.data);
       } catch (error) {
         console.error("권한 조회 실패:", error);

@@ -2,7 +2,6 @@ import "../../CSS/userEditDeleteModal.css";
 import React from "react";
 
 const UserEditDeleteModal = ({ openModal, userInformationId }) => {
-  console.log("userInformationId : ", userInformationId);
   const deleteAccount = () => {};
   return (
     <>

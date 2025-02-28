@@ -35,7 +35,6 @@ const ReservationDetail = () => {
           withCredentials: true,
         });
         setReservationManagementList(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("예약관리 상세보기 실패", error);
       }
@@ -60,12 +59,6 @@ const ReservationDetail = () => {
   const closeModal = () => setModalOpen(false);
 
   const handleConfirm = async () => {
-    console.log(reservationManagementList.business_name);
-    console.log(reservationManagementList.business_phone);
-    console.log(formData.business_no_show);
-    console.log("reservationCompleteTime");
-    console.log(reservationCompleteTime);
-    console.log("reservationCompleteTime");
     const beauty_price = formData.beauty_price;
     const business_name = reservationManagementList.business_name;
     const business_phone = reservationManagementList.business_phone;
@@ -74,7 +67,6 @@ const ReservationDetail = () => {
     const user_phone = reservationManagementList.user_phone;
     const paid_price = reservationManagementList.paid_price;
     try {
-      console.log(reservationCompleteTime);
       const response = await api.put(
         `/api/beauty/reservation/setCompleteTime/${id}`,
         {
@@ -89,9 +81,7 @@ const ReservationDetail = () => {
         },
         { withCredentials: true }
       );
-      console.log("수락");
 
-      console.log(response.data);
       if (response.data === "success") {
         setCheckMessage("확정되었습니다.");
         setModalOpen(false);
@@ -106,8 +96,6 @@ const ReservationDetail = () => {
   };
 
   const handleReject = async (rejectComment) => {
-    console.log("거절:", rejectComment); // 거절 사유 확인
-    console.log("거절:", rejectComment); // 거절 사유 확인
     const business_name = reservationManagementList.business_name;
     const business_phone = reservationManagementList.business_phone;
     const user_phone = reservationManagementList.user_phone;
@@ -118,12 +106,10 @@ const ReservationDetail = () => {
         { rejectComment, business_name, business_phone, user_phone },
         { withCredentials: true }
       );
-      console.log("수락");
+
       setCheckMessage("확정되었습니다.");
       setModalOpen(false);
       setCheckModalOpen(true);
-
-      console.log(response.data);
 
       setTimeout(() => {
         navigate("/business/reservation/management");
@@ -249,7 +235,7 @@ const ReservationDetail = () => {
         <div className="detail-form2">
           {reservationManagementList.reservation_state === "픽업완료" ? (
             <div className="detail-title">완료시간</div>
-          ) :reservationManagementList.reservation_state === "완료" ? (
+          ) : reservationManagementList.reservation_state === "완료" ? (
             <div className="detail-title">완료시간</div>
           ) : reservationManagementList.reservation_state === "대기" ? (
             <div className="detail-title">완료시간</div>
@@ -263,7 +249,7 @@ const ReservationDetail = () => {
             <div className="detail-info">
               {reservationManagementList.end_time}
             </div>
-          ) :reservationManagementList.reservation_state === "완료" ? (
+          ) : reservationManagementList.reservation_state === "완료" ? (
             <div className="detail-info">
               {reservationManagementList.end_time}
             </div>

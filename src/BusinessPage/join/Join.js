@@ -30,7 +30,6 @@ function Join() {
     });
   };
 
-  console.log(formData);
   const handleUploadClick = (imageType) => {
     navigate(`/imgupload/${imageType}`);
   };
@@ -43,7 +42,6 @@ function Join() {
 
     try {
       const response = await axios.post(`${apiUrl}/api/businesses`, formData);
-      console.log("Upload successful:", response.data);
       navigate("/business/login");
     } catch (error) {
       console.error("Error during upload:", error);

@@ -146,7 +146,6 @@ const HomeCarousel = () => {
                   currentIndex === index + 1 ? "#f0663f" : "gray",
               }}
               onClick={() => {
-                console.log("index : ", index);
                 moveCircle(index);
               }}
             ></div>

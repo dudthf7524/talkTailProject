@@ -25,7 +25,6 @@ const Reservation = () => {
           },
         });
         setReservationtList(response.data.reservation);
-        console.log(response.data);
       } catch (error) {
         console.error("로그인 인증 실패:", error);
       }
@@ -54,16 +53,14 @@ const Reservation = () => {
         <div className="horizontal-line"></div>
         {reservationtList.map((reservation, index) => (
           <div key={index} className="reservation-row">
-            <div className="reservation-item">
-              {reservation.pet_name}
-            </div>
+            <div className="reservation-item">{reservation.pet_name}</div>
             <div className="reservation-item">
               {dayjs(reservation.date).format("YYYY년 M월DD일 (ddd)")}
               {reservation.start_time}
             </div>
             {reservation.reservation_state === "픽업완료" ? (
               <div style={{ fontWeight: "bold", color: "green" }}>예약완료</div>
-            ) :reservation.reservation_state === "완료" ? (
+            ) : reservation.reservation_state === "완료" ? (
               <div style={{ fontWeight: "bold", color: "green" }}>예약완료</div>
             ) : reservation.reservation_state === "대기" ? (
               <div style={{ fontWeight: "bold", color: "orange" }}>

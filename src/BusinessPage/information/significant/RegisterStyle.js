@@ -28,8 +28,6 @@ function RegisterStyle() {
     });
   };
 
-  console.log(formData);
-
   const handleSave = async () => {
     const dataToSend = {
       ...formData,
@@ -42,8 +40,6 @@ function RegisterStyle() {
         `${apiUrl}/api/business/beauty/significant`,
         dataToSend
       );
-
-      console.log("Upload successful:", response.data);
 
       // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
       alert("수정이 완료되었습니다.");

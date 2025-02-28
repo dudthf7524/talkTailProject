@@ -30,7 +30,6 @@ function MasterJoin() {
 
     try {
       const response = await axios.post(`${apiUrl}/api/businesses`, formData);
-      console.log("Upload successful:", response.data);
       navigate("/business/login");
     } catch (error) {
       console.error("Error during upload:", error);

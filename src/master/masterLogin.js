@@ -9,12 +9,11 @@ const Login = () => {
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [master, setMaster] = useState(false);
-  console.log(apiUrl);
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const modalTitle = "로그인 완료";
   const modalContent = "잠시 후 메뉴페이지로 이동합니다.";
-  
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -54,16 +53,16 @@ const Login = () => {
           withCredentials: true,
         }
       );
-      if (response.data === 'sucess') {
+      if (response.data === "sucess") {
         setOpenModal(true);
         setTimeout(() => {
           navigate("/master/main");
         }, 1000);
       }
-      if (response.data === '아이디') {
+      if (response.data === "아이디") {
         alert("아이디 불일치, 다시 시도하세요.");
       }
-      if (response.data === '비밀번호') {
+      if (response.data === "비밀번호") {
         alert("비밀번호 불일치, 다시 시도하세요.");
       }
     } catch (error) {
@@ -74,14 +73,11 @@ const Login = () => {
 
   const logout = async () => {
     try {
-      const response = await axios.get(
-        `${apiUrl}/masterAuth/masterLogout`,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get(`${apiUrl}/masterAuth/masterLogout`, {
+        withCredentials: true,
+      });
       window.location.href = "/master";
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (
@@ -94,13 +90,11 @@ const Login = () => {
         <>
           <div className="login-form">
             <div className="login-text">
-              {master.login_id === 'creamoff2021' ? (
+              {master.login_id === "creamoff2021" ? (
                 <>권도혁 마스터 관리자</>
               ) : (
                 <></>
-              )
-
-              }
+              )}
             </div>
             <button
               type="button"
@@ -145,8 +139,6 @@ const Login = () => {
           </form>
         </>
       )}
-
-     
 
       {openModal ? (
         <MasterLoginModal

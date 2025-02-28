@@ -16,7 +16,6 @@ function DesingerList() {
           withCredentials: true,
         });
         setLists(response.data);
-        console.log(response.data);
 
         if (response.data == "common") {
           navigate("/business/login");

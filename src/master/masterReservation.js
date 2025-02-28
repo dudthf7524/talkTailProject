@@ -18,7 +18,6 @@ const MasterReservation = () => {
 
     loadDatas();
   }, []);
-  console.log("reservationLists : ", reservationLists);
   return (
     <div className="master_reservation master_section">
       {/* <div className="row_head row">

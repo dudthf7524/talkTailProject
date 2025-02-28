@@ -43,7 +43,6 @@ const PetEditPage = () => {
 
   useEffect(() => {
     if (petData) {
-      console.log(petData);
       const petAge = petData.pet_birth.split("-");
 
       const year = petAge[0];
@@ -134,15 +133,14 @@ const PetEditPage = () => {
     });
   };
 
-  const [name, setName] = useState('');
-  const [image, setImage] = useState('');
-  const [birthDate, setBirthDate] = useState('');
-  const [breed, setBreed] = useState('');
-  const [weight, setWeight] = useState('');
-  const [gender, setGender] = useState('');
-  const [neuter, setNeuter] = useState('');
-  const [etc, setEtc] = useState('');
-
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [breed, setBreed] = useState("");
+  const [weight, setWeight] = useState("");
+  const [gender, setGender] = useState("");
+  const [neuter, setNeuter] = useState("");
+  const [etc, setEtc] = useState("");
 
   const nameRef = useRef(null);
   const imageRef = useRef(null);
@@ -157,111 +155,115 @@ const PetEditPage = () => {
 
   const validateForm = () => {
     const koreanRegex = /^[\uAC00-\uD7A3]+$/; // 한글 완성형 검사
-    const koreanEnglishNumberMaxFiveCharRegex = /^[\uAC00-\uD7A3a-zA-Z0-9]{1,5}$/;
-    const dateRegex = /^(19[0-9]{2}|20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
+    const koreanEnglishNumberMaxFiveCharRegex =
+      /^[\uAC00-\uD7A3a-zA-Z0-9]{1,5}$/;
+    const dateRegex =
+      /^(19[0-9]{2}|20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
     const weightRegex = /^\d+(\.\d{1})?$/;
-    const etcRegex = /^[\uAC00-\uD7A3]{1,20}$/
+    const etcRegex = /^[\uAC00-\uD7A3]{1,20}$/;
     const yearRegex = /^\d{4}$/;
     const monthRegex = /^(0[1-9]|1[0-2])$/;
     const dayRegex = /^(0[1-9]|[12][0-9]|3[01])$/;
 
-    setName('');
-    setImage('');
-    setBirthDate('');
-    setBreed('');
-    setWeight('');
-    setGender('');
-    setNeuter('');
-    setEtc('');
+    setName("");
+    setImage("");
+    setBirthDate("");
+    setBreed("");
+    setWeight("");
+    setGender("");
+    setNeuter("");
+    setEtc("");
 
-    console.log('aaaaaa')
     if (!formData.name.trim()) {
-      console.log('a')
-      setName('이름을 입력해주세요.');
+      setName("이름을 입력해주세요.");
       nameRef.current.focus();
 
       return;
     }
     if (!koreanEnglishNumberMaxFiveCharRegex.test(formData.name)) {
-      setName('이름은 한글, 영문, 숫자 조합 5글자 이하만 입력 가능합니다.');
+      setName("이름은 한글, 영문, 숫자 조합 5글자 이하만 입력 가능합니다.");
       nameRef.current.focus();
       return;
     }
     if (!formData.breed.trim()) {
-      setBreed('품종을 선택해주세요');
+      setBreed("품종을 선택해주세요");
       breedRef.current.focus();
       return;
     }
     if (!formData.year.trim()) {
-      setBirthDate('태어난 년도를 입력해주세요');
+      setBirthDate("태어난 년도를 입력해주세요");
       yearRef.current.focus();
       return;
     }
 
     if (!yearRegex.test(formData.year)) {
-      setBirthDate('유효하지 않은 날짜입니다. 정확한 년, 월, 일을 입력해 주세요.');
+      setBirthDate(
+        "유효하지 않은 날짜입니다. 정확한 년, 월, 일을 입력해 주세요."
+      );
       yearRef.current.focus();
       return;
     }
 
     if (!formData.month.trim()) {
-      setBirthDate('태어난 월을 입력해주세요');
+      setBirthDate("태어난 월을 입력해주세요");
       montheRef.current.focus();
       return;
     }
     if (!monthRegex.test(formData.month)) {
-      setBirthDate('유효하지 않은 날짜입니다. 정확한 년, 월, 일을 입력해 주세요.');
+      setBirthDate(
+        "유효하지 않은 날짜입니다. 정확한 년, 월, 일을 입력해 주세요."
+      );
       montheRef.current.focus();
       return;
     }
 
     if (!formData.day.trim()) {
-      setBirthDate('태어난 일을 입력해주세요');
+      setBirthDate("태어난 일을 입력해주세요");
       dayRef.current.focus();
       return;
     }
     if (!dayRegex.test(formData.day)) {
-      setBirthDate('유효하지 않은 날짜입니다. 정확한 년, 월, 일을 입력해 주세요.');
+      setBirthDate(
+        "유효하지 않은 날짜입니다. 정확한 년, 월, 일을 입력해 주세요."
+      );
       dayRef.current.focus();
       return;
     }
-    if (typeof formData.weight === 'number') {
+    if (typeof formData.weight === "number") {
       formData.weight = formData.weight.toString(); // 숫자를 문자열로 변환
     }
     if (!formData.weight.trim()) {
-      setWeight('몸무게를 입력해주세요');
+      setWeight("몸무게를 입력해주세요");
       weightRef.current.focus();
       return;
     }
     if (!weightRegex.test(formData.weight)) {
-      setWeight('몸무게를 정확히 입력해주세요(소수점 첫 번째 자리)');
+      setWeight("몸무게를 정확히 입력해주세요(소수점 첫 번째 자리)");
       weightRef.current.focus();
       return;
     }
     if (!formData.gender.trim()) {
-      setGender('성별을 선택해주세요');
+      setGender("성별을 선택해주세요");
       genderRef.current.focus();
       return;
     }
     if (!formData.neuter.trim()) {
-      setNeuter('중성화 여부를 선택해주세요');
+      setNeuter("중성화 여부를 선택해주세요");
       neuterRef.current.focus();
       return;
     }
     if (!formData.etc.trim()) {
-      setEtc('기타 추가 사항을 입력해주세요');
+      setEtc("기타 추가 사항을 입력해주세요");
       etcRef.current.focus();
       return;
     }
     if (!etcRegex.test(formData.etc)) {
-      setEtc('한글만 20자 이내 입력해주세요');
+      setEtc("한글만 20자 이내 입력해주세요");
       etcRef.current.focus();
       return;
     }
     return true;
   };
-
-
 
   // 이미지 업로드 처리
   const handleImageUpload = (e) => {
@@ -293,10 +295,6 @@ const PetEditPage = () => {
     petUpdateData.append("month", formData.month);
     petUpdateData.append("day", formData.day);
 
-
-    console.log("petUpdateData");
-    console.log(petUpdateData);
-
     if (selectedImageFile) {
       petUpdateData.append("image", selectedImageFile); // 이미지 파일 추가
     }
@@ -310,10 +308,6 @@ const PetEditPage = () => {
     });
 
     // FormData 내용 확인
-    for (let pair of petUpdateData.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`);
-    }
-
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -325,7 +319,6 @@ const PetEditPage = () => {
           "Content-Type": "multipart/form-data", // multipart/form-data 형식으로 전송
         },
       });
-      console.log("Upload successful", response.data);
       navigate(`/pet/detail/${id}`);
     } catch (error) {
       console.error("펫 정보 저장 에러: ", error);
@@ -343,7 +336,12 @@ const PetEditPage = () => {
           <div></div>
         </div>
         <div className="re-mid">
-          <div className="PetRegistration-img-container" ref={imageRef} tabIndex={0} style={{ cursor: "pointer" }}>
+          <div
+            className="PetRegistration-img-container"
+            ref={imageRef}
+            tabIndex={0}
+            style={{ cursor: "pointer" }}
+          >
             <div className="PetRegistration-content">
               <div className="upload-img">
                 {/* 업로드된 이미지를 미리보기로 표시 */}
@@ -364,7 +362,9 @@ const PetEditPage = () => {
                 </label>
               </div>
             </div>
-            {image && <div className="pet-registration-page-error-box">{image}</div>}
+            {image && (
+              <div className="pet-registration-page-error-box">{image}</div>
+            )}
           </div>
           <div className="PetRegistration-container">
             <input
@@ -376,7 +376,9 @@ const PetEditPage = () => {
               ref={nameRef}
               onChange={handleInputChange}
             />
-            {name && <div className="pet-registration-page-error-box">{name}</div>}
+            {name && (
+              <div className="pet-registration-page-error-box">{name}</div>
+            )}
           </div>
           <div className="PetRegistration-container2">
             <p>종</p>
@@ -407,7 +409,11 @@ const PetEditPage = () => {
                 className="textbox-gray"
                 onClick={() => setIsDropdownVisible(!isDropdownVisible)}
               >
-                {selectedOption || searchQuery || <div ref={breedRef} tabIndex={0}>품종을 선택해주세요</div>}
+                {selectedOption || searchQuery || (
+                  <div ref={breedRef} tabIndex={0}>
+                    품종을 선택해주세요
+                  </div>
+                )}
               </div>
 
               {/* 드롭다운 */}
@@ -447,7 +453,6 @@ const PetEditPage = () => {
                       >
                         {selectedSpecies} 품종 목록
                       </li>
-
                     </>
 
                     {/* TOP1 옵션 */}
@@ -505,12 +510,17 @@ const PetEditPage = () => {
                   </ul>
                 </div>
               )}
-              {breed && <div className="pet-registration-page-error-box">{breed}</div>}
+              {breed && (
+                <div className="pet-registration-page-error-box">{breed}</div>
+              )}
             </div>
           </div>
           <div className="PetRegistration-container2">
             <p>태어난 날</p>
-            <span style={{ textAlign: "left" }}>(태어난 날짜를 모르시는 경우에는 추정 나이를 기준으로 입력해 주세요.)</span>
+            <span style={{ textAlign: "left" }}>
+              (태어난 날짜를 모르시는 경우에는 추정 나이를 기준으로 입력해
+              주세요.)
+            </span>
             <div className="birth-box">
               <input
                 type="text"
@@ -544,7 +554,9 @@ const PetEditPage = () => {
               />
             </div>
 
-            {birthDate && <div className="pet-registration-page-error-box">{birthDate}</div>}
+            {birthDate && (
+              <div className="pet-registration-page-error-box">{birthDate}</div>
+            )}
           </div>
           <div className="PetRegistration-container2">
             <p>몸무게(kg)</p>
@@ -558,7 +570,9 @@ const PetEditPage = () => {
                 value={formData.weight}
                 onChange={handleInputChange}
               />
-              {weight && <div className="pet-registration-page-error-box">{weight}</div>}
+              {weight && (
+                <div className="pet-registration-page-error-box">{weight}</div>
+              )}
             </div>
           </div>
           <div>
@@ -566,8 +580,14 @@ const PetEditPage = () => {
               <p>성별</p>
               <RadioButton
                 options={[
-                  { label: <img style={{ width: "17%" }} src={male}></img>, value: "남자" },
-                  { label: <img style={{ width: "17%" }} src={female}></img>, value: "여자" },
+                  {
+                    label: <img style={{ width: "17%" }} src={male}></img>,
+                    value: "남자",
+                  },
+                  {
+                    label: <img style={{ width: "17%" }} src={female}></img>,
+                    value: "여자",
+                  },
                 ]}
                 selectedOption={formData.gender}
                 onSelect={(value) => handleRadioSelect("gender", value)}
@@ -611,8 +631,9 @@ const PetEditPage = () => {
                 value={formData.etc}
                 onChange={handleInputChange}
               />
-              {etc && <div className="pet-registration-page-error-box">{etc}</div>}
-
+              {etc && (
+                <div className="pet-registration-page-error-box">{etc}</div>
+              )}
             </div>
           </div>
           <div

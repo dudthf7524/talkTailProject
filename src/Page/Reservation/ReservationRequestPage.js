@@ -20,7 +20,6 @@ const ReservationRequestPage = () => {
   const modalTitle = "예약오류";
   const [modalContent, setModalContent] = useState("");
   const { selectedPet } = location.state || {};
-  // console.log(selectedPet);
   const [style, setStyle] = useState("");
   const [reviewText, setReviewText] = useState(""); // 리뷰 텍스트 상태 관리
   const textareaRef = useRef(null); // textarea 참조를 위한 ref
@@ -28,18 +27,6 @@ const ReservationRequestPage = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false); // 예약 성공 모달 상태
 
   const reservationData = useSelector((state) => state.reservationData); // Redux 상태 가져오기
-  console.log(reservationData.acceptTime);
-  console.log(reservationData.acceptOldTime);
-
-  // console.log(
-  //   "Selected Designer Name:",
-  //   reservationData.businessInfo.business_no_show
-  // ); // 리덕스 상태 출력
-  // console.log("Selected 사업자 번호 : ", reservationData.businessInfo); // 리덕스 상태 출력
-  // console.log("Selected 사업자 번호:", reservationData);
-  // if (!reservationData.acceptTime || !reservationData.acceptOldTime) {
-  //   navigate('/list/beauty');
-  // }
 
   useEffect(() => {
     if (
@@ -86,7 +73,6 @@ const ReservationRequestPage = () => {
     const aaa = async () => {
       if (reservationData.businessInfo.business_registration_number) {
         const styleSignificant = async () => {
-          // console.log("styleSignificant");
           try {
             const response = await api.post(
               "/api/business/style/accountNumberGet",
@@ -95,7 +81,6 @@ const ReservationRequestPage = () => {
                   reservationData.businessInfo.business_registration_number,
               }
             );
-            console.log("User authority data:", response.data);
             setLists(response.data);
           } catch (error) {
             console.error("권한 조회 실패:", error.message);
@@ -103,7 +88,6 @@ const ReservationRequestPage = () => {
         };
         styleSignificant();
       } else {
-        console.log("데이터가 아직 준비되지 않았습니다.");
         navigate("/list/beauty");
         return false;
       }
@@ -169,8 +153,6 @@ const ReservationRequestPage = () => {
         ? [...prevState.significantIssues, name] // 체크되면 배열에 추가
         : prevState.significantIssues.filter((item) => item !== name); // 체크 해제되면 배열에서 제거
 
-      console.log("Updated significantIssues:", updatedIssues); // 체크박스 상태를 콘솔에 출력
-
       return { ...prevState, significantIssues: updatedIssues };
     });
   };
@@ -213,8 +195,6 @@ const ReservationRequestPage = () => {
   };
 
   const sendKakaoMessage = async (userPhoneNumber, messageTemplate) => {
-    // console.log(userPhoneNumber);
-    // console.log(messageTemplate);
     const apiUrl = "https://kakaoapi.example.com/v1/messages"; // 카카오 메시지 API 엔드포인트
     const apiToken = "44c334c2957d5bc80dab7c6deb6d1207"; // 카카오 Admin 키
 
@@ -236,8 +216,6 @@ const ReservationRequestPage = () => {
           },
         }
       );
-
-      console.log("카카오톡 메시지 전송 성공:", response.data);
     } catch (error) {
       console.error(
         "카카오톡 메시지 전송 실패:",
@@ -261,7 +239,6 @@ const ReservationRequestPage = () => {
     acceptTime: reservationData.acceptTime || "",
     acceptOldTime: reservationData.acceptOldTime || "",
   });
-  console.log("reservationData : ", reservationData);
   const dispatch = useDispatch();
 
   const reservationSave = async () => {
@@ -284,7 +261,6 @@ const ReservationRequestPage = () => {
       acceptTime: formData.acceptTime || "",
       acceptOldTime: formData.acceptOldTime || "",
     };
-    console.log(dataToSend);
 
     try {
       const token = localStorage.getItem("token");
@@ -299,9 +275,6 @@ const ReservationRequestPage = () => {
         JSON.stringify(dataToSend),
         { headers }
       );
-
-      console.log("Reservation saved:", reservationResponse.data);
-      console.log("Reservation saved:", reservationResponse.status);
 
       if (
         reservationResponse.data === "success" &&
@@ -452,10 +425,6 @@ const ReservationRequestPage = () => {
         <div
           className="Nbutton"
           onClick={() => {
-            console.log("style : ", style);
-            console.log("reviewText : ", reviewText);
-            console.log("formData : ", formData);
-            console.log("significantIssues : ", formData.significantIssues);
             if (!style) {
               setModalContent("스타일을 입력해주세요.");
               setOpenModal(true);

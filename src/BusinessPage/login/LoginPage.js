@@ -9,12 +9,10 @@ const Login = () => {
   const logoUrl = `${process.env.PUBLIC_URL}/image/talkTail_logo.png`;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [business, setBusiness] = useState(false);
-  console.log(apiUrl);
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
   const modalTitle = "로그인 완료";
   const modalContent = "잠시 후 메뉴페이지로 이동합니다.";
-  console.log(business);
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -44,7 +42,6 @@ const Login = () => {
       username: formData.get("username"),
       password: formData.get("password"),
     };
-    console.log(data);
 
     try {
       // axios로 데이터 전송

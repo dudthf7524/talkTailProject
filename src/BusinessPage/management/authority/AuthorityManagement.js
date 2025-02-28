@@ -18,7 +18,6 @@ function AuthorityManagement() {
         if (result.data === "common") {
           navigate("/business/login");
         }
-        console.log(result.data);
         setLists(result.data);
       } catch (error) {
         console.error("권한 조회 실패:", error);
@@ -55,7 +54,7 @@ function AuthorityManagement() {
         window.location.href = "/business/authority/management";
       }
     } catch (error) {
-      console.log("요청 수락 에러", error.message);
+      console.error("요청 수락 에러", error.message);
     }
   };
 

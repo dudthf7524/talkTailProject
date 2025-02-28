@@ -176,7 +176,6 @@ const HomeCarousel = () => {
                   currentIndex === index + 1 ? "#f0663f" : "gray",
               }}
               onClick={() => {
-                console.log("index : ", index);
                 moveCircle(index);
               }}
             ></div>
@@ -187,7 +186,6 @@ const HomeCarousel = () => {
         <p
           onClick={() => {
             if (currentIndex !== 1) {
-              console.log("currentIndex : ", currentIndex);
               handleSlide("left");
             }
           }}
@@ -218,7 +216,6 @@ const HomeCarousel = () => {
         <p
           onClick={() => {
             if (currentIndex !== imageArray.length) {
-              console.log("BB");
               handleSlide("right");
             }
           }}

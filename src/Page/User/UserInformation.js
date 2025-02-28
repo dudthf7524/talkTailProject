@@ -21,7 +21,6 @@ function UserInformation() {
           },
         })
         .then((response) => {
-          console.log(response.data); // 서버에서 전달하는 사용자 정보 출력
           setUser(response.data);
         })
         .catch((error) => {
@@ -47,7 +46,6 @@ function UserInformation() {
     });
   };
 
-  console.log(formData);
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSave();
@@ -121,8 +119,6 @@ function UserInformation() {
   const handleSave = async () => {
     if (!validateForm()) return;
 
-    console.log(user.id);
-    console.log(formData);
     if (!user) {
       console.error("사용자 정보가 없습니다.");
       return;
@@ -133,7 +129,6 @@ function UserInformation() {
       ...formData,
       platform_id: user.id, // user.id를 formData에 추가
     };
-    console.log(userInforMationData);
     try {
       // 서버로 FormData를 전송
       const response = await axios.post(
@@ -141,8 +136,6 @@ function UserInformation() {
         userInforMationData,
         {}
       );
-
-      console.log("Upload successful:", response.data);
 
       // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
       navigate("/"); // 성공 페이지로 이동

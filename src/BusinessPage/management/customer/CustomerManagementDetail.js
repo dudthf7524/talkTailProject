@@ -8,7 +8,6 @@ const CustomerManagementDetail = () => {
   const [list, setList] = useState();
   const location = useLocation();
   const id = location.state?.id;
-  console.log(id);
 
   useEffect(() => {
     const noticeDetail = async () => {
@@ -17,7 +16,6 @@ const CustomerManagementDetail = () => {
           `/api/customer/business/notice/detail/${id}`,
           { withCredentials: true }
         );
-        console.log(response.data);
         if (response.data === "common") {
           navigate("/business/login");
         }

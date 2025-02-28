@@ -63,9 +63,6 @@ function RegisterInformation() {
   const navigate = useNavigate();
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
   const keyButtonUrl = `${process.env.PUBLIC_URL}/BusinessImage/icon/keyboard_return.svg`;
-  console.log("imageFiles");
-  console.log(imageFiles);
-  console.log("imageFiles");
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -73,7 +70,6 @@ function RegisterInformation() {
           withCredentials: true,
         });
         setUser(response.data);
-        console.log(response.data);
         if (!response.data) {
           navigate("/business/login"); // 로그인 페이지로 리디렉션
         }
@@ -117,8 +113,6 @@ function RegisterInformation() {
     });
   };
 
-  console.log(formData);
-
   const handleSave = async () => {
     try {
       const data = new FormData();
@@ -126,16 +120,12 @@ function RegisterInformation() {
       Object.keys(formData).forEach((key) => {
         data.append(key, formData[key]);
       });
-      console.log("aaa");
-      console.log(data);
       if (user?.business_registration_number) {
         data.append(
           "business_registration_number",
           user.business_registration_number
         );
       }
-
-      console.log(data);
 
       // FormData에 이미지 파일 추가
       Object.keys(imageFiles).forEach((key) => {
@@ -153,8 +143,6 @@ function RegisterInformation() {
           },
         }
       );
-
-      console.log("Upload successful:", response.data);
 
       // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
       navigate("/business/menu"); // 성공 페이지로 이동

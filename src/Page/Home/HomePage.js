@@ -55,7 +55,6 @@ const MainPage = () => {
         },
       });
       setUser(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("로그인 인증 실패:", error);
     }
@@ -73,7 +72,6 @@ const MainPage = () => {
         },
       });
       setUserPet(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("로그인 인증 실패:", error);
     }
@@ -90,7 +88,6 @@ const MainPage = () => {
         },
       });
       setReservationtList(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("로그인 인증 실패:", error);
     }
@@ -168,7 +165,6 @@ const MainPage = () => {
   const [modalContent, setModalContent] =
     useState("해당 서비스는 준비 중입니다.");
 
-  console.log("user : ", user);
   const serviceModal = () => {
     setModalTitle("알림");
     setModalContent("해당 서비스는 준비 중입니다.");

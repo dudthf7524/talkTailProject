@@ -14,8 +14,6 @@ const PetSelectPage = () => {
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
   const dispatch = useDispatch();
   const designerName = useSelector((state) => state.reservationData); // Redux 상태 가져오기
-  // console.log("Selected Designer Name:", designerName); // 리덕스 상태 출력
-  // console.log(designerName.startTime);
 
   useEffect(() => {
     if (designerName.startTime == null) {
@@ -30,7 +28,6 @@ const PetSelectPage = () => {
 
   const handleSelectPet = (pet) => {
     setSelectedPet(pet);
-    console.log(pet.pet_id);
     const petId = pet.pet_id;
     dispatch(setPetId(petId));
     setShowWarning(false); // 펫을 선택할 때 경고 메시지 숨김
@@ -38,7 +35,6 @@ const PetSelectPage = () => {
 
   const handleNext = (id) => {
     if (selectedPet) {
-      console.log("Selected Designer Name:", designerName); // 리덕스 상태 출력
       navigate(`/reservation-request/${id}`, { state: { selectedPet } });
     } else {
       setShowWarning(true); // 선택된 펫이 없으면 경고 메시지 표시
@@ -82,8 +78,7 @@ const PetSelectPage = () => {
       <div
         className="Nbutton"
         onClick={() => {
-        
-          if(!selectedPet){
+          if (!selectedPet) {
             setShowWarning(true);
             setTimeout(() => {
               setShowWarning(false);
@@ -92,14 +87,12 @@ const PetSelectPage = () => {
           }
 
           const petAge = calculateAge(selectedPet.pet_birth);
-          console.log("petAge : ", typeof petAge);
           if (!selectedPet) {
             setShowWarning(true);
             setTimeout(() => {
               setShowWarning(false);
             }, 1000);
           } else if (petAge < 7) {
-            console.log("id : ", id);
             handleNext(id);
           } else {
             setOpenModal(true);

@@ -12,7 +12,12 @@ function RegisterDesinger() {
   const defaultPetImgUrl = `${process.env.PUBLIC_URL}/PageImage/pet/pet_img_L.png`;
   const [petImgUrl, setPetImgUrl] = useState(defaultPetImgUrl);
 
-  const notice_analSac_option = ["desinger1.png", "desinger2.png", "desinger3.png", "desinger4.png"]
+  const notice_analSac_option = [
+    "desinger1.png",
+    "desinger2.png",
+    "desinger3.png",
+    "desinger4.png",
+  ];
 
   useEffect(() => {
     const textarea = document.getElementById("greetingTextarea");
@@ -26,9 +31,6 @@ function RegisterDesinger() {
     business_desinger_grade: "",
     business_desinger_introduce: "",
   });
-
-  console.log(formData);
-
 
   const [selectedOptions, setSelectedOptions] = useState({
     business_desinger_profile: "",
@@ -50,7 +52,8 @@ function RegisterDesinger() {
   };
 
   const handleSave = async () => {
-    formData.business_desinger_profile = selectedOptions.business_desinger_profile;
+    formData.business_desinger_profile =
+      selectedOptions.business_desinger_profile;
     try {
       // 서버로 FormData를 전송
       const response = await axios.post(
@@ -58,10 +61,9 @@ function RegisterDesinger() {
         formData,
         { withCredentials: true }
       );
-      if (response.data === 'common') {
-        navigate('/business/login')
+      if (response.data === "common") {
+        navigate("/business/login");
       }
-      console.log("Upload successful:", response.data);
       // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
       navigate("/business/list/desinger"); // 성공 페이지로 이동
     } catch (error) {
@@ -69,40 +71,53 @@ function RegisterDesinger() {
       // 오류 처리
     }
   };
-  console.log(selectedOptions)
-  
+
   return (
     <div className="mid" lang="ko">
       <div className="navigation">
-        <img style={{ cursor: "pointer" }}
+        <img
+          style={{ cursor: "pointer" }}
           src={arrowButtonUrl}
           alt=""
           onClick={() => navigate("/business/list/desinger")}
         />
         디자이너 등록
-        <div style={{ cursor: "pointer" }} onClick={handleSave}>저장</div>
+        <div style={{ cursor: "pointer" }} onClick={handleSave}>
+          저장
+        </div>
       </div>
       <div className="main-mid">
         <div className="desinger_profile">
           <p>디자이너 프로필을 선택해주세요</p>
           <div className="desinger_profile_box">
-          {notice_analSac_option.map((option) => (
-            <label
-              key={option}
-              style={{
-                color: selectedOptions.business_desinger_profile.includes(option) ? "black" : "#C4C4C4",
-              }}
-            >
-              <input
-                type="checkbox"
-                value={option}
-                checked={selectedOptions.business_desinger_profile.includes(option)}
-                onChange={() => handleCheckboxChange("business_desinger_profile", option)}
-              />
-              &nbsp;
-              <img src={`${process.env.PUBLIC_URL}/profile/${option}`} style={{ cursor: "pointer", width: "150px", height: "150px" }} />
-            </label>
-          ))}
+            {notice_analSac_option.map((option) => (
+              <label
+                key={option}
+                style={{
+                  color: selectedOptions.business_desinger_profile.includes(
+                    option
+                  )
+                    ? "black"
+                    : "#C4C4C4",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  value={option}
+                  checked={selectedOptions.business_desinger_profile.includes(
+                    option
+                  )}
+                  onChange={() =>
+                    handleCheckboxChange("business_desinger_profile", option)
+                  }
+                />
+                &nbsp;
+                <img
+                  src={`${process.env.PUBLIC_URL}/profile/${option}`}
+                  style={{ cursor: "pointer", width: "150px", height: "150px" }}
+                />
+              </label>
+            ))}
           </div>
         </div>
 
@@ -127,7 +142,6 @@ function RegisterDesinger() {
             placeholder="디자이너 직함을 입력해 주세요."
           />
         </div>
-
 
         <div className="input-container">
           <p>소개글</p>

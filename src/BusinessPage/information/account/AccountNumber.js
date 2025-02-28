@@ -53,8 +53,6 @@ function AccountNumber() {
       return;
     }
 
-    console.log("Submitted account details:", formData);
-
     try {
       const response = await api.post(
         `/api/business/account/number`,

@@ -22,10 +22,6 @@ function EditInformation() {
   const keyButtonUrl = `${process.env.PUBLIC_URL}/BusinessImage/icon/keyboard_return.svg`;
   const defaultImage = `${process.env.PUBLIC_URL}/PageImage/pet/pet_img_L.png`;
 
-  console.log(imageFiles.main.length);
-  console.log(imageFiles);
-  console.log(list.business_main_image);
-
   const [formData, setFormData] = useState({
     business_name: "",
     address_postcode: "",
@@ -55,8 +51,6 @@ function EditInformation() {
           return;
         }
         setLists(data); // 여기에서 list 상태를 업데이트
-        console.log(Object.keys(data));
-        console.log(Object.keys(data).length);
         const [phone1 = "", phone2 = "", phone3 = ""] = data.business_phone
           ? data.business_phone.split("-")
           : [];
@@ -65,9 +59,6 @@ function EditInformation() {
             ? formatNumber(data.business_no_show)
             : "";
 
-        console.log(typeof data.business_no_show);
-        console.log(typeof businessNoShow);
-        console.log(businessNoShow);
         setFormData({
           business_name: data.business_name || "",
           address_postcode: data.address_postcode || "",
@@ -197,7 +188,6 @@ function EditInformation() {
         }
       );
 
-      console.log("Upload successful:", response.data);
       setModalOpen(false);
       // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
       navigate("/business/edit/information"); // 성공 페이지로 이동

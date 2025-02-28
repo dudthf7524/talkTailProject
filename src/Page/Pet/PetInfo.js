@@ -11,7 +11,6 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
 
   const [myPet, setMyPet] = useState([]);
 
-  console.log(myPet);
   const navigate = useNavigate(); // useNavigate 훅을 사용하여 navigate 함수 생성
 
   const [openModal, setOpenModal] = useState(false);
@@ -30,7 +29,6 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("내 펫 데이터:", response.data);
         setMyPet(response.data);
       } catch (error) {
         console.error("데이터 가져오기 에러:", error);
@@ -77,8 +75,6 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
 
   const handlePetSelect = (pet) => {
     if (isSelectable) {
-      console.log(pet.pet_id);
-
       setSelectedPetId(pet.pet_id);
       onSelectPet(pet);
     } else {
@@ -103,7 +99,6 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
           },
         }
       );
-      console.log("petDelete successful", response.data);
       navigate(`/pet/list/`);
     } catch (error) {
       console.error("데이터 가져오기 에러:", error);

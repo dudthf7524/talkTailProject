@@ -30,7 +30,6 @@ function DayOnOffEdit() {
           withCredentials: true,
         });
         setDateLists(response.data);
-        console.log(response.data);
         if (response.data == "common") {
           navigate("/business/login");
         } else if (!response.data) {
@@ -57,17 +56,12 @@ function DayOnOffEdit() {
           },
         },
       };
-      console.log(
-        `Updated isOperatingDay for ${dayNames[dayIndex]}:`,
-        updatedDateList.hours[dayIndex].isOperatingDay
-      );
       return updatedDateList;
     });
   };
 
   // 저장 핸들러
   const handleSave = async () => {
-    console.log("Saving updated times:", dateList); // 저장된 전체 시간 출력
     try {
       await api.put("/api/business/day-on-off/edit", dateList, {
         withCredentials: true,

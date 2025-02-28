@@ -54,7 +54,6 @@ const ReservationDetail = () => {
   }, []);
 
   const openModal = (type) => {
-    console.log("beautyPrice : ", beautyPrice);
     if (!activeTime) {
       setModalContent("완료시간을 선택해주세요.");
       setOpenAlertModal(true);
@@ -263,10 +262,6 @@ const ReservationDetail = () => {
       const timeDiff = (currentTime - prevTime) / (1000 * 60); // 차이 (분 단위)
 
       if (timeDiff !== 30) {
-        console.log(
-          `Error at index ${i}: ${timeSlots[i - 1]} -> ${timeSlots[i]}`
-        );
-
         return false; // 30분 단위가 아니면 false 반환
       }
     }

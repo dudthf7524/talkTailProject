@@ -24,18 +24,9 @@ const LoginPage = () => {
   const google_client_id = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const redirect_uri_google = process.env.REACT_APP_GOOGLE_REDIRECT_URI;
 
-  console.log(redirect_uri_kakao);
-  console.log(redirect_uri_naver);
-  console.log(redirect_uri_google);
-
   const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakao_key}&redirect_uri=${redirect_uri_kakao}&response_type=code`;
   const naverURL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${naver_key}&redirect_uri=${redirect_uri_naver}&state=STATE_STRING`;
   const googleURL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${google_client_id}&redirect_uri=${redirect_uri_google}&response_type=code&scope=profile%20email`;
-
-  console.log(kakaoURL);
-  console.log(naverURL);
-  console.log(googleURL);
-
   const handleKakao = () => {
     window.location.href = kakaoURL;
   };
