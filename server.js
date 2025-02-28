@@ -18,6 +18,7 @@ const aligoapi = require("aligoapi");
 const router = express.Router();
 const customerManagementRoutes = require("./routes/customerManagementRoutes");
 const kakaoApiRoutes = require("./routes/kakaoApiRoutes");
+const dotenv = require('dotenv');
 
 const BankDatabase = require("./models/BankDatabase"); // BankDatabase 함수 가져오기
 
@@ -43,7 +44,7 @@ sequelize
   });
 
 passportConfig();
-
+dotenv.config();
 app.use(
   cors({
     origin: ["http://localhost:3000", "http://www.talktail.store"], // 리액트 앱의 URL 배열로 설정
