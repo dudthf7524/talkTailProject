@@ -1088,6 +1088,9 @@
 .business_join_total .main-mid::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
 }
+.business_join_total .input-container {
+  padding: 0;
+}
 
 /* Registerinformation.js */
 .register_information_total {
