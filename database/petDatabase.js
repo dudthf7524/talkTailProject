@@ -9,13 +9,11 @@ const registerPet = async (petData) => {
 
   try {
     // 생일 파싱 - YY/MM/DD 형식으로 가정
-    
-    const birth = petData.year+"-"+petData.month+"-"+petData.day;
-    
-    console.log(birth)
-   
-   
-  
+
+    const birth = petData.year + "-" + petData.month + "-" + petData.day;
+
+    console.log(birth);
+
     // 이미지 처리
     let petImg = null;
     if (petData.image) {

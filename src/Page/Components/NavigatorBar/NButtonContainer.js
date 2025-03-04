@@ -27,7 +27,6 @@ const NButtonContainer = () => {
         },
       });
       setUser(response.data);
-      console.log(response.data);
     } catch (error) {
       console.error("로그인 인증 실패:", error);
     }

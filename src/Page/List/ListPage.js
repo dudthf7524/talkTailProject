@@ -35,20 +35,15 @@ const ListPage = () => {
     business_registration_number,
     business_owner_phone
   ) => {
-    console.log(business_registration_number);
-    console.log(business_owner_phone);
     setSelectedBusiness({
       business_registration_number: business_registration_number,
       business_owner_phone: business_owner_phone,
     }); // 선택된 비즈니스 등록 번호 저장
-    console.log(selectedBusiness);
     setModalMessage("권한 요청을 하시겠습니까?"); // 모달 메시지 설정
     setShowModal(true); // 모달 띄우기
   };
 
   const handleConfirmAuthorityRequest = () => {
-    console.log(selectedBusiness);
-
     if (selectedBusiness) {
       userAuthorityRequestButton(selectedBusiness); // 권한 요청 함수 호출
     }
@@ -73,7 +68,6 @@ const ListPage = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("User authority data:", response.data);
         setAuthorityData(response.data);
       } catch (authorityError) {
         console.error("권한 조회 실패:", authorityError);
@@ -92,9 +86,6 @@ const ListPage = () => {
     business_name,
     business_owner_phone
   ) => {
-    console.log(business_registration_number);
-    console.log(business_name);
-    console.log(business_owner_phone);
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -110,10 +101,6 @@ const ListPage = () => {
           },
         }
       );
-
-      console.log("response.data");
-      console.log(response.data);
-      console.log("response.data");
       setModalTitle("알림");
       if (response.data == null) {
         setSelectBusinessName(business_name);
@@ -137,12 +124,11 @@ const ListPage = () => {
         navigate(`/business/detail/${id}`);
       }
     } catch (error) {
-      console.log("권한 방어 에러", error);
+      console.error("권한 방어 에러", error);
       return;
     }
   };
 
-  console.log(listData);
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value); // 검색어 상태 업데이트
@@ -160,7 +146,6 @@ const ListPage = () => {
   );
 
   useEffect(() => {
-    console.log("dispatching fetchBeautyList...");
     dispatch(fetchBeautyList());
   }, [dispatch]);
 
@@ -171,15 +156,12 @@ const ListPage = () => {
   }, [beautyListData]);
 
   const fetchBusinessAuthority = async (business_registration_number) => {
-    console.log("Fetching authority for:", business_registration_number);
-
     try {
       const response = await api.get("/api/user/authority", {
         headers: {
           "Business-Registration-Number": business_registration_number,
         },
       });
-      console.log("User authority data:", response.data);
       // 데이터 처리 추가
     } catch (authorityError) {
       console.error("권한 조회 실패:", authorityError);
@@ -191,7 +173,6 @@ const ListPage = () => {
   };
 
   const userAuthorityRequestButton = async (selectedBusiness) => {
-    console.log(selectedBusiness);
     const business_registration_number =
       selectedBusiness.business_registration_number;
     const business_owner_phone = selectedBusiness.business_owner_phone;
@@ -201,7 +182,6 @@ const ListPage = () => {
       if (!token) {
         throw new Error("No token found.");
       }
-      console.log(business_owner_phone);
       const response = await api.post(
         "/api/user/authority/request",
         {
@@ -214,7 +194,6 @@ const ListPage = () => {
           },
         }
       );
-      console.log("Upload successful", response.data);
       window.location.href = "/authority/management";
     } catch (error) {
       console.error("Error occurred:", error);
@@ -225,7 +204,6 @@ const ListPage = () => {
       (item) =>
         item.business_registration_number === business_registration_number
     );
-    console.log(authority);
 
     return authority ? authority.authority_state : null;
   };

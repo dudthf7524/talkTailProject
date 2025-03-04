@@ -36,8 +36,6 @@ const Reservation = () => {
 
   const location = useLocation();
   const id = location.state?.id; // state로 받은 값
-  console.log(id);
-  //   const [lists, setLists] = useState([]);
 
   const navigate = useNavigate();
   const [hours, setHours] = useState([]);
@@ -77,25 +75,6 @@ const Reservation = () => {
     };
     fetchUser();
   }, []);
-  if (reservationDesinger) {
-    console.log("reservationDesinger");
-    console.log(reservationDesinger);
-  }
-
-  //   useEffect(() => {
-  //     console.log(id)
-  //     const list = async () => {
-  //       try {
-  //         const response = await api.get(`/api/desinger/day/list/${id}`, { id: id }, { withCredentials: true });
-  //         setLists(response.data);
-  //         console.log(response.data)
-
-  //       } catch (e) {
-  //         console.error('휴무일 리스트 오류:', e);
-  //       }
-  //     };
-  //     list();
-  //   }, []);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
@@ -130,25 +109,6 @@ const Reservation = () => {
   const goBack = () => {
     navigate(-1);
   };
-
-  //   function createDate(year, month, day) {
-  //     // JavaScript에서 월은 0부터 시작하므로, 입력값에서 1을 빼서 월을 설정합니다.
-  //     return new Date(year, month - 1, day);
-  //   }
-  //   for(let i =0; i<lists.length; i++){
-  //     console.log(lists[i].desinger_close_day)
-  //   }
-
-  //   // const disabledDates = [
-  //   //   createDate(2025, 2, 25), // 12월 31일
-
-  //   // ];
-
-  //   const disabledDates = lists.map(item => createDate(
-  //     parseInt(item.desinger_close_day.split('-')[0]), // 년도
-  //     parseInt(item.desinger_close_day.split('-')[1]), // 월
-  //     parseInt(item.desinger_close_day.split('-')[2]) // 일
-  //   ));
 
   const dateLabels = {
     "2024-12-25": "크리스마스",
@@ -209,9 +169,7 @@ const Reservation = () => {
     const formattedDate = format(selectedDate, "yyyy-MM-dd");
     const reservations =
       reservationDesinger?.filter((item) => item.date === formattedDate) || [];
-    console.log(reservations);
     const disabledTimes = [];
-    console.log(disabledTimes);
 
     reservations.forEach(({ start_time, end_time }) => {
       const start = parse(start_time, "HH:mm", new Date());
@@ -219,7 +177,6 @@ const Reservation = () => {
 
       // 현재 날짜의 모든 가능한 시간 슬롯을 생성하고 예약된 시간만 비활성화합니다.
       const timeSlots = generateTimeSlots(st, dt, 30);
-      console.log(timeSlots);
 
       timeSlots.forEach((time) => {
         const current = parse(time, "HH:mm", new Date());
@@ -235,8 +192,6 @@ const Reservation = () => {
       });
     });
 
-    console.log(disabledTimes);
-
     return disabledTimes;
   };
 
@@ -250,13 +205,8 @@ const Reservation = () => {
     setSelectDate(formatDate);
 
     if (date) {
-      console.log(date);
       const day = getDay(date);
       const dayHours = hours[day];
-
-      console.log(day);
-      console.log("dayHours");
-      console.log(dayHours);
 
       if (dayHours?.isOperatingDay) {
         const timeSlots = generateTimeSlots(
@@ -264,8 +214,6 @@ const Reservation = () => {
           dayHours.end_time,
           30
         );
-        console.log("timeSlots");
-        console.log(timeSlots);
 
         const disabledTimesForDate = getDisabledTimesByDate(
           date,
@@ -273,21 +221,15 @@ const Reservation = () => {
           dayHours.end_time
         );
 
-        console.log("disabledTimesForDate");
-        console.log(disabledTimesForDate);
-
         // 오늘 날짜 처리
         if (format(date, "yyyy-MM-dd") === format(new Date(), "yyyy-MM-dd")) {
           const now = new Date();
-          console.log(now);
 
           const filteredTimeSlots = timeSlots.filter((time) => {
             const timeObj = parse(time, "HH:mm", new Date());
-            console.log(timeObj);
             return timeObj >= now;
           });
 
-          console.log(filteredTimeSlots);
           setModalData({
             date: format(date, "yyyy-MM-dd"),
             disabledTimes: disabledTimesForDate,
@@ -304,18 +246,6 @@ const Reservation = () => {
       }
     }
   };
-  console.log(modalData);
-
-  // const handleDateChange = (date) => {
-  //   setStartDate(date);
-  //   if (date) {
-  //     const disabledTimesForDate = getDisabledTimesByDate(date);
-  //     console.log(disabledTimesForDate)
-  //     console.log("Disabled Times:", disabledTimesForDate);
-  //     setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate });
-  //     setIsModalOpen(true);
-  //   }
-  // };
   const disabledTimes = modalData?.disabledTimes || [];
 
   //   const dispatch = useDispatch();
@@ -338,8 +268,6 @@ const Reservation = () => {
           window.location.href = "/business/menu";
         }, 1000);
       }
-
-      console.log("User authority data:", response.data);
     } catch (error) {
       console.error("권한 조회 실패:", error.message);
     }

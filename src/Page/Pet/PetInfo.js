@@ -11,7 +11,6 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
 
   const [myPet, setMyPet] = useState([]);
 
-  console.log(myPet);
   const navigate = useNavigate(); // useNavigate 훅을 사용하여 navigate 함수 생성
 
   const [openModal, setOpenModal] = useState(false);
@@ -30,7 +29,6 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("내 펫 데이터:", response.data);
         setMyPet(response.data);
       } catch (error) {
         console.error("데이터 가져오기 에러:", error);
@@ -77,8 +75,6 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
 
   const handlePetSelect = (pet) => {
     if (isSelectable) {
-      console.log(pet.pet_id)
-      
       setSelectedPetId(pet.pet_id);
       onSelectPet(pet);
     } else {
@@ -103,7 +99,6 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
           },
         }
       );
-      console.log("petDelete successful", response.data);
       navigate(`/pet/list/`);
     } catch (error) {
       console.error("데이터 가져오기 에러:", error);
@@ -121,46 +116,68 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
         <div className="pet-accordion-content">
           {dogPets.map((pet) => (
             <div
-              className={`pet-contents ${selectedPetId === pet.pet_id ? "selected" : ""
-                }`}
-            
+              className={`pet-contents ${
+                selectedPetId === pet.pet_id ? "selected" : ""
+              }`}
               key={pet.pet_id}
             >
               <div className="pet-contents-img">
                 <img src={pet.petimage || petUrl} alt="" />
               </div>
               <div className="infoBox">
-                <div
-                  className="pet-contents-info"
-                >
+                <div className="pet-contents-info">
                   <p>
-
-                    <h1>{pet.pet_name}<span style={{ fontSize: "20px" }}>({pet.pet_breed}){pet.pet_gender ? <img style={{ width: "6%" }} src={male}></img> : <img style={{ width: "8%" }} src={female}></img>}</span></h1>
+                    <h1>
+                      {pet.pet_name}
+                      <span style={{ fontSize: "20px" }}>
+                        ({pet.pet_breed})
+                        {pet.pet_gender ? (
+                          <img style={{ width: "6%" }} src={male}></img>
+                        ) : (
+                          <img style={{ width: "8%" }} src={female}></img>
+                        )}
+                      </span>
+                    </h1>
                     <span></span>
                   </p>
                 </div>
-                <div className="pet-contents-info">
-                </div>
+                <div className="pet-contents-info"></div>
                 <div className="pet-contents-info">
                   <p>
                     나이 : {calculateAge(pet.pet_birth)}살<br></br>
                     몸무게 : {pet.pet_weight}kg<br></br>
-                    중성화 여부  : {pet.pet_neuter}
+                    중성화 여부 : {pet.pet_neuter}
                   </p>
-                  <button onClick={() => {
-                    handlePetSelect(pet);
-                  }} style={{ width: "50%", height: "50px", color: "white", backgroundColor: "#f0663f" }}>선택하기</button>
+                  <button
+                    onClick={() => {
+                      handlePetSelect(pet);
+                    }}
+                    style={{
+                      width: "50%",
+                      height: "50px",
+                      color: "white",
+                      backgroundColor: "#f0663f",
+                    }}
+                  >
+                    수정하기
+                  </button>
                 </div>
               </div>
 
               {fileName === "list" ? (
-                <div className="pet-accordion-content deleteBtn" onClick={(e) => {
-                  setOpenModal(true);
-                  setPetId(pet.pet_id);
-                  setPetImage(pet.petimage);
-                  e.stopPropagation();
-                }}>
-                  <img style={{ width: "30%", height: "30%" }} src={deletePet}></img>
+                <div
+                  className="pet-accordion-content deleteBtn"
+                  onClick={(e) => {
+                    setOpenModal(true);
+                    setPetId(pet.pet_id);
+                    setPetImage(pet.petimage);
+                    e.stopPropagation();
+                  }}
+                >
+                  <img
+                    style={{ width: "30%", height: "30%" }}
+                    src={deletePet}
+                  ></img>
                 </div>
               ) : (
                 <></>
@@ -170,7 +187,6 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
         </div>
       </>
 
-
       <div className="event-accordion" onClick={() => toggleAccordion("cat")}>
         고양이
       </div>
@@ -179,8 +195,9 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
       <div className="pet-accordion-content">
         {catPets.map((pet) => (
           <div
-            className={`pet-contents ${selectedPetId === pet.pet_id ? "selected" : ""
-              }`}
+            className={`pet-contents ${
+              selectedPetId === pet.pet_id ? "selected" : ""
+            }`}
             key={pet.pet_id}
             onClick={() => handlePetSelect(pet)}
           >
@@ -189,8 +206,9 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
             </div>
             <div className="pet-contents-info">
               <p>{pet.pet_name}</p>
-              <p>{`${pet.breedName}/${pet.pet_weight}kg/${pet.pet_gender ? "남" : "여"
-                }/${calculateAge(pet.pet_birth)}살`}</p>
+              <p>{`${pet.breedName}/${pet.pet_weight}kg/${
+                pet.pet_gender ? "남" : "여"
+              }/${calculateAge(pet.pet_birth)}살`}</p>
             </div>
           </div>
         ))}
@@ -206,7 +224,6 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
       ) : (
         ""
       )}
-
     </div>
   );
 };

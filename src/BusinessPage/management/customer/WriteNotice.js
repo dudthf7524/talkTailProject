@@ -19,22 +19,29 @@ const WriteNotice = () => {
     notice_style: "",
     notice_etc: "",
     notice_pet_weight: "",
-    notice_hairTangling: ""
+    notice_hairTangling: "",
   });
   const [selectedOptions, setSelectedOptions] = useState({
     notice_analSac: "",
     notice_hairTangling_tf: null,
   });
 
-  console.log(selectedOptions)
-
-  const notice_skin_option = ["좋음", "건조", "민감", "붉음", "탈모", "딱지", "종기", "각질"]
-  const notice_ear_option = ["깨끗함", "노란귀지", "갈색귀지", "귓턻많음"]
-  const notice_eye_option = ["깨끗함", "눈꼽", "충혈"]
-  const notice_sole_option = ["좋음", "습진", "건조"]
-  const notice_claw_option = ["적당함", "짧음", "관리필요"]
-  const notice_analSac_option = ["많음", "적당", "안나옴"]
-  const notice_hairTangling_option = ["유", "무"]
+  const notice_skin_option = [
+    "좋음",
+    "건조",
+    "민감",
+    "붉음",
+    "탈모",
+    "딱지",
+    "종기",
+    "각질",
+  ];
+  const notice_ear_option = ["깨끗함", "노란귀지", "갈색귀지", "귓턻많음"];
+  const notice_eye_option = ["깨끗함", "눈꼽", "충혈"];
+  const notice_sole_option = ["좋음", "습진", "건조"];
+  const notice_claw_option = ["적당함", "짧음", "관리필요"];
+  const notice_analSac_option = ["많음", "적당", "안나옴"];
+  const notice_hairTangling_option = ["유", "무"];
 
   const [selectedMultipleOptions, setSelectedMultipleOptions] = useState({
     notice_skin: [], // 여러 개 선택 가능하도록 배열 사용
@@ -50,7 +57,10 @@ const WriteNotice = () => {
 
       if (currentValues.includes(value)) {
         // 이미 선택된 경우 -> 제거
-        return { ...prev, [category]: currentValues.filter((v) => v !== value) };
+        return {
+          ...prev,
+          [category]: currentValues.filter((v) => v !== value),
+        };
       } else {
         // 새로 선택된 경우 -> 추가
         return { ...prev, [category]: [...currentValues, value] };
@@ -68,7 +78,8 @@ const WriteNotice = () => {
   const handleTrueFalseChange = () => {
     setSelectedOptions((prev) => ({
       ...prev,
-      notice_hairTangling_tf: prev.notice_hairTangling_tf === true ? false : true, 
+      notice_hairTangling_tf:
+        prev.notice_hairTangling_tf === true ? false : true,
     }));
   };
 
@@ -81,7 +92,6 @@ const WriteNotice = () => {
   };
 
   const handleConfirm = async () => {
-    
     try {
       const response = await api.post(
         `/api/customer/notice/write/${id}`,
@@ -93,14 +103,13 @@ const WriteNotice = () => {
         { withCredentials: true }
       );
 
-      console.log("보내기 작업 수행");
       closeModal();
 
       setTimeout(() => {
         navigate("/business/customer/management");
       }, 2000); // 2초 후 리다이렉트
     } catch (error) {
-      console.log("알림장 작성 실패", error);
+      console.error("알림장 작성 실패", error);
     }
   };
 
@@ -152,14 +161,18 @@ const WriteNotice = () => {
               <label
                 key={option}
                 style={{
-                  color: selectedMultipleOptions.notice_skin.includes(option) ? "black" : "#C4C4C4",
+                  color: selectedMultipleOptions.notice_skin.includes(option)
+                    ? "black"
+                    : "#C4C4C4",
                 }}
               >
                 <input
                   type="checkbox"
                   value={option}
                   checked={selectedMultipleOptions.notice_skin.includes(option)}
-                  onChange={() => handleCheckboxMultipleChange("notice_skin", option)}
+                  onChange={() =>
+                    handleCheckboxMultipleChange("notice_skin", option)
+                  }
                 />
                 &nbsp;
                 {option}
@@ -176,14 +189,18 @@ const WriteNotice = () => {
               <label
                 key={option}
                 style={{
-                  color: selectedMultipleOptions.notice_ear.includes(option) ? "black" : "#C4C4C4",
+                  color: selectedMultipleOptions.notice_ear.includes(option)
+                    ? "black"
+                    : "#C4C4C4",
                 }}
               >
                 <input
                   type="checkbox"
                   value={option}
                   checked={selectedMultipleOptions.notice_ear.includes(option)}
-                  onChange={() => handleCheckboxMultipleChange("notice_ear", option)}
+                  onChange={() =>
+                    handleCheckboxMultipleChange("notice_ear", option)
+                  }
                 />
                 &nbsp;
                 {option}
@@ -200,14 +217,18 @@ const WriteNotice = () => {
               <label
                 key={option}
                 style={{
-                  color: selectedMultipleOptions.notice_eye.includes(option) ? "black" : "#C4C4C4",
+                  color: selectedMultipleOptions.notice_eye.includes(option)
+                    ? "black"
+                    : "#C4C4C4",
                 }}
               >
                 <input
                   type="checkbox"
                   value={option}
                   checked={selectedMultipleOptions.notice_eye.includes(option)}
-                  onChange={() => handleCheckboxMultipleChange("notice_eye", option)}
+                  onChange={() =>
+                    handleCheckboxMultipleChange("notice_eye", option)
+                  }
                 />
                 &nbsp;
                 {option}
@@ -224,14 +245,18 @@ const WriteNotice = () => {
               <label
                 key={option}
                 style={{
-                  color: selectedMultipleOptions.notice_sole.includes(option) ? "black" : "#C4C4C4",
+                  color: selectedMultipleOptions.notice_sole.includes(option)
+                    ? "black"
+                    : "#C4C4C4",
                 }}
               >
                 <input
                   type="checkbox"
                   value={option}
                   checked={selectedMultipleOptions.notice_sole.includes(option)}
-                  onChange={() => handleCheckboxMultipleChange("notice_sole", option)}
+                  onChange={() =>
+                    handleCheckboxMultipleChange("notice_sole", option)
+                  }
                 />
                 &nbsp;
                 {option}
@@ -248,14 +273,18 @@ const WriteNotice = () => {
               <label
                 key={option}
                 style={{
-                  color: selectedMultipleOptions.notice_claw.includes(option) ? "black" : "#C4C4C4",
+                  color: selectedMultipleOptions.notice_claw.includes(option)
+                    ? "black"
+                    : "#C4C4C4",
                 }}
               >
                 <input
                   type="checkbox"
                   value={option}
                   checked={selectedMultipleOptions.notice_claw.includes(option)}
-                  onChange={() => handleCheckboxMultipleChange("notice_claw", option)}
+                  onChange={() =>
+                    handleCheckboxMultipleChange("notice_claw", option)
+                  }
                 />
                 &nbsp;
                 {option}
@@ -272,14 +301,18 @@ const WriteNotice = () => {
               <label
                 key={option}
                 style={{
-                  color: selectedOptions.notice_analSac.includes(option) ? "black" : "#C4C4C4",
+                  color: selectedOptions.notice_analSac.includes(option)
+                    ? "black"
+                    : "#C4C4C4",
                 }}
               >
                 <input
                   type="checkbox"
                   value={option}
                   checked={selectedOptions.notice_analSac.includes(option)}
-                  onChange={() => handleCheckboxChange("notice_analSac", option)}
+                  onChange={() =>
+                    handleCheckboxChange("notice_analSac", option)
+                  }
                 />
                 &nbsp;
                 {option}
@@ -296,16 +329,24 @@ const WriteNotice = () => {
               <label
                 key={option}
                 style={{
-                  color: (selectedOptions.notice_hairTangling_tf === true && option === "유") ||
-                    (selectedOptions.notice_hairTangling_tf === false && option === "무")
-                    ? "black" : "#C4C4C4",
+                  color:
+                    (selectedOptions.notice_hairTangling_tf === true &&
+                      option === "유") ||
+                    (selectedOptions.notice_hairTangling_tf === false &&
+                      option === "무")
+                      ? "black"
+                      : "#C4C4C4",
                 }}
               >
                 <input
                   type="checkbox"
                   value={option}
-                  checked={(selectedOptions.notice_hairTangling_tf === true && option === "유") ||
-                    (selectedOptions.notice_hairTangling_tf === false && option === "무")}
+                  checked={
+                    (selectedOptions.notice_hairTangling_tf === true &&
+                      option === "유") ||
+                    (selectedOptions.notice_hairTangling_tf === false &&
+                      option === "무")
+                  }
                   onChange={handleTrueFalseChange}
                 />
                 &nbsp;
@@ -316,23 +357,21 @@ const WriteNotice = () => {
         </div>
 
         {/* 털엉킴 부위 */}
-        {
-          selectedOptions.notice_hairTangling_tf ? (
-            <div className="notice-row">
-              <div className="notice-title">털엉킴 부위</div>
-              <input
-                className="notice-textbox"
-                type="text"
-                name="notice_hairTangling"
-                value={formData.notice_hairTangling}
-                onChange={handleInputChange}
-                placeholder="털엉킴 부위를 입력해 주세요."
-              />
-            </div>
-          ) : (
-            <></>
-          )
-        }
+        {selectedOptions.notice_hairTangling_tf ? (
+          <div className="notice-row">
+            <div className="notice-title">털엉킴 부위</div>
+            <input
+              className="notice-textbox"
+              type="text"
+              name="notice_hairTangling"
+              value={formData.notice_hairTangling}
+              onChange={handleInputChange}
+              placeholder="털엉킴 부위를 입력해 주세요."
+            />
+          </div>
+        ) : (
+          <></>
+        )}
 
         <div className="notice-row">
           <div className="notice-title2">기타사항</div>

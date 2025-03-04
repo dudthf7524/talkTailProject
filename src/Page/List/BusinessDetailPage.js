@@ -8,7 +8,6 @@ import { setHour } from "../../redux/reservationData";
 import AcceptModal from "./AcceptModal";
 const EventDetailPage = () => {
   const { id } = useParams();
-  console.log(id);
   const navigate = useNavigate();
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/PageImage/list/arrow_left.svg`;
   const locationUrl = `${process.env.PUBLIC_URL}/PageImage/list/location.svg`;
@@ -18,12 +17,10 @@ const EventDetailPage = () => {
   const noteUrl = `${process.env.PUBLIC_URL}/PageImage/list/note.svg`;
 
   const [isButtonClicked, setIsButtonClicked] = useState(false);
-  console.log(isButtonClicked);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [showAllImages, setShowAllImages] = useState(false); // 이미지 상태 추가
   const [business, setBusiness] = useState({});
   const [hours, setHours] = useState({});
-  console.log(business);
   const accordionRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -123,25 +120,18 @@ const EventDetailPage = () => {
           },
         }
       );
-
-      console.log("Saved:", id);
     } catch (error) {
-      console.log("Error occurred during save operation.");
+      console.error("Error occurred during save operation.");
       // 에러가 발생해도 사용자에게 표시하지 않고 로그로만 남김
     }
   };
   const designerName = useSelector((state) => state.reservationData); // Redux 상태 가져오기
-  console.log("Selected Designer Name:", designerName);
   // 뒤로 가기
   const goBack = () => {
     navigate(-1);
   };
 
   const handleItemClick = (business) => {
-    // console.log(business.business_name);
-    // console.log(business.business_registration_number);
-    // console.log(business.business_no_show);
-    // console.log(hours);
     dispatch(
       setBusinessInfo({
         business_name: business.business_name,
@@ -167,15 +157,12 @@ const EventDetailPage = () => {
         });
         setBusiness(response.data);
         setHours(response.data.hours);
-        console.log("Business fetched:", response.data);
       } catch (error) {
         console.error("Error fetching business:", error);
       }
     };
     fetchBusiness();
   }, [id]);
-
-  console.log(business);
 
   const imageArray = [];
 
@@ -204,7 +191,6 @@ const EventDetailPage = () => {
     (day) => day.isOperatingDay === true
   );
 
-  console.log(operatingDays);
   if (!business) {
     return <p>로딩 중...</p>; // 로딩 중일 때 처리
   }
@@ -247,7 +233,7 @@ const EventDetailPage = () => {
           가게정보
           <div></div>
         </div>
-        <div className="event-text-box">{business.business_comment}</div>
+        <pre className="event-text-box">{business.business_comment}</pre>
 
         <div className="event-img">
           {business.business_main_image ? (
@@ -337,7 +323,6 @@ const EventDetailPage = () => {
                       currentIndex === index + 1 ? "#f0663f" : "gray",
                   }}
                   onClick={() => {
-                    console.log("index : ", index);
                     moveCircle(index);
                   }}
                 ></div>
@@ -372,7 +357,7 @@ const EventDetailPage = () => {
         <div className="writing-div">
           <div className="writing">
             <div>예약금 :</div>
-            <div>{business.business_no_show} 원</div>
+            <div>{business.business_no_show?.toLocaleString()} 원</div>
           </div>
         </div>
       </div>

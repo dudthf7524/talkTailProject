@@ -36,7 +36,6 @@ function UserEdit() {
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log(response.data.user);
       setUserInformation(response.data);
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -44,9 +43,7 @@ function UserEdit() {
     }
   };
   if (userInformation) {
-    
   }
-  console.log()
   const [formData, setFormData] = useState({
     user_name: "",
     user_phone1: "",
@@ -85,14 +82,8 @@ function UserEdit() {
       ...formData,
       user_information_id: userInformation.user_information_id, // user.id를 formData에 추가
     };
-    // console.log("userInforMationData : ", userInforMationData);
     setUserInforMationData(userInforMationData);
     try {
-      // 서버로 FormData를 전송
-      // const response = await api.put("/api/user/edit", userInforMationData, {});
-      // console.log("Upload successful:", response.data);
-      // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
-      // navigate("/user/edit"); // 성공 페이지로 이동
     } catch (error) {
       console.error("Error during upload:", error);
       // 오류 처리
@@ -127,10 +118,8 @@ function UserEdit() {
       ...formData,
       user_information_id: userInformation.user_information_id, // user.id를 formData에 추가
     };
-    // console.log("userInforMationData : ", userInforMationData);
     setUserInforMationData(userInforMationData);
     setAlertTitle("입력을 확인하세요.");
-    console.log(formData.user_name);
     if (!formData.user_name.trim()) {
       setAlertContent("이름을 입력해주세요.");
       setOpenAlert(true);

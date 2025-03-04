@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchBeautyList } from '../../redux/beautyList';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBeautyList } from "../../redux/beautyList";
 
 const useFetchBusinesses = (categoryId) => {
   const [listEvents, setListEvents] = useState([]);
@@ -9,22 +9,22 @@ const useFetchBusinesses = (categoryId) => {
   // const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
-  const { beautyListData, loading , error  } = useSelector((state) => state.beautyList || {});
-  
+  const { beautyListData, loading, error } = useSelector(
+    (state) => state.beautyList || {}
+  );
+
   useEffect(() => {
-    console.log('dispatching fetchBeautyList...');
     dispatch(fetchBeautyList());
   }, [dispatch]);
 
   const [formData, setFormData] = useState({
-      // 초기값 설정
+    // 초기값 설정
   });
- 
+
   useEffect(() => {
-      if (beautyListData) {
-        console.log('beautyListData:', beautyListData);
-        setListEvents(beautyListData)
-      }
+    if (beautyListData) {
+      setListEvents(beautyListData);
+    }
   }, [beautyListData]);
 
   // useEffect(() => {
@@ -44,7 +44,7 @@ const useFetchBusinesses = (categoryId) => {
   //       });
 
   //       setListEvents(response.data); // 가져온 데이터를 상태에 저장
-        
+
   //     } catch (err) {
   //       setError(err.message);
   //     } finally {

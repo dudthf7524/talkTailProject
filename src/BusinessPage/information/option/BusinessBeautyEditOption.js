@@ -47,8 +47,6 @@ function BusinessBeautyEditOption() {
     });
   };
 
-  console.log(formData);
-
   const handleSave = async () => {
     const dataToSend = {
       ...formData,
@@ -61,10 +59,6 @@ function BusinessBeautyEditOption() {
         dataToSend,
         { withCredentials: true }
       );
-
-      console.log("Upload successful:", response.data);
-
-      // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
 
       window.location = "/business/edit/option";
     } catch (error) {

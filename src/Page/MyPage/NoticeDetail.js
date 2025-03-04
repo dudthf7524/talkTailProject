@@ -14,8 +14,6 @@ const NoticeDetail = () => {
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
   const [list, setList] = useState();
 
-  console.log(id);
-
   const notice_skin_option = [
     "좋음",
     "건조",
@@ -39,7 +37,6 @@ const NoticeDetail = () => {
     notice_sole: [],
     notice_claw: [],
   });
-  console.log(selectedMultipleOptions);
 
   const handleCheckboxMultipleChange = (category, value) => {
     setSelectedMultipleOptions((prev) => {
@@ -87,17 +84,13 @@ const NoticeDetail = () => {
           }));
         }
 
-        console.log(response.data);
         setList(response.data);
-        // console.log(response.data)
       } catch (error) {
         console.error(error);
       }
     };
     noticeDetail();
   }, []);
-
-  console.log(list);
 
   const [selectedOptions, setSelectedOptions] = useState({
     notice_skin: "", // list가 없으면 기본값으로 빈 문자열

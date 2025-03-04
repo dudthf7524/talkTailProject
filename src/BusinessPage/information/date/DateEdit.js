@@ -68,10 +68,6 @@ function DateEdit() {
           },
         },
       };
-      console.log(
-        `Updated time for ${dayNames[dayIndex]} - ${type}:`,
-        updatedDateList.hours[dayIndex]
-      );
       return updatedDateList;
     });
   };

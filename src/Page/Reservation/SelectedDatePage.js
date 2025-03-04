@@ -42,9 +42,6 @@ const SelectedDatePage = () => {
   const navigate = useNavigate();
 
   const hours = useSelector((state) => state.reservationData.hour); // Redux 상태 가져오기
-  // console.log(hours);
-
-  // console.log("Selected Designer Name:", hours); // 리덕스 상태 출력
   if (hours === null) {
     navigate("list/beauty");
   }
@@ -66,13 +63,8 @@ const SelectedDatePage = () => {
     };
     fetchUser();
   }, []);
-  if (reservationDesinger) {
-    // console.log("reservationDesinger")
-    // console.log(reservationDesinger)
-  }
 
   useEffect(() => {
-    console.log(id);
     const list = async () => {
       try {
         const response = await api.get(
@@ -81,7 +73,6 @@ const SelectedDatePage = () => {
           { withCredentials: true }
         );
         setLists(response.data);
-        // console.log(response.data);
       } catch (e) {
         console.error("휴무일 리스트 오류:", e);
       }
@@ -95,18 +86,14 @@ const SelectedDatePage = () => {
   const [activeTime, setActiveTime] = useState(null);
 
   const filterDisabledDays = (date) => {
-    // console.log(date);
-    // console.log(hours);
     if (hours === null) {
       navigate("/list/beauty"); // hours가 null일 때 이동
       return false; // 이후 로직은 처리하지 않음
     }
     const day = getDay(date);
-    // console.log(day);
-    // console.log(hours[day]?.isOperatingDay);
+
     return hours[day]?.isOperatingDay;
   };
-  // console.log(filterDisabledDays);
 
   const handleButtonClick = (time) => {
     setActiveTime(time);
@@ -126,14 +113,7 @@ const SelectedDatePage = () => {
     // JavaScript에서 월은 0부터 시작하므로, 입력값에서 1을 빼서 월을 설정합니다.
     return new Date(year, month - 1, day);
   }
-  for (let i = 0; i < lists.length; i++) {
-    // console.log(lists[i].desinger_close_day);
-  }
-
-  // const disabledDates = [
-  //   createDate(2025, 2, 25), // 12월 31일
-
-  // ];
+  for (let i = 0; i < lists.length; i++) {}
 
   const disabledDates = lists.map((item) =>
     createDate(
@@ -143,12 +123,7 @@ const SelectedDatePage = () => {
     )
   );
 
-  const dateLabels = {
-    "2025-02-28": "크리스마스",
-    "2024-12-31": "연말",
-    "2025-01-01": "새해 첫날",
-    "2025-03-14": "화이트데이",
-  };
+  const dateLabels = {};
 
   const monthsAhead = 3;
   const maxDate = addMonths(new Date(), monthsAhead);
@@ -208,9 +183,7 @@ const SelectedDatePage = () => {
     const formattedDate = format(selectedDate, "yyyy-MM-dd");
     const reservations =
       reservationDesinger?.filter((item) => item.date === formattedDate) || [];
-    // console.log(reservations);
     const disabledTimes = [];
-    // console.log(disabledTimes);
 
     reservations.forEach(({ start_time, end_time }) => {
       const start = parse(start_time, "HH:mm", new Date());
@@ -218,7 +191,6 @@ const SelectedDatePage = () => {
 
       // 현재 날짜의 모든 가능한 시간 슬롯을 생성하고 예약된 시간만 비활성화합니다.
       const timeSlots = generateTimeSlots(st, dt, 30);
-      // console.log(timeSlots);
 
       timeSlots.forEach((time) => {
         const current = parse(time, "HH:mm", new Date());
@@ -230,8 +202,6 @@ const SelectedDatePage = () => {
         }
       });
     });
-
-    // console.log(disabledTimes);
 
     return disabledTimes;
   };
@@ -248,13 +218,8 @@ const SelectedDatePage = () => {
     const dayIndex = getDay(date);
     setSelectDay(daysOfWeek[dayIndex]);
     if (date) {
-      // console.log(date);
       const day = getDay(date);
       const dayHours = hours[day];
-
-      // console.log(day);
-      // console.log("dayHours");
-      // console.log(dayHours);
 
       if (dayHours?.isOperatingDay) {
         const timeSlots = generateTimeSlots(
@@ -262,8 +227,6 @@ const SelectedDatePage = () => {
           dayHours.end_time,
           30
         );
-        // console.log("timeSlots");
-        // console.log(timeSlots);
 
         const disabledTimesForDate = getDisabledTimesByDate(
           date,
@@ -271,21 +234,15 @@ const SelectedDatePage = () => {
           dayHours.end_time
         );
 
-        // console.log("disabledTimesForDate");
-        // console.log(disabledTimesForDate);
-
         // 오늘 날짜 처리
         if (format(date, "yyyy-MM-dd") === format(new Date(), "yyyy-MM-dd")) {
           const now = new Date();
-          // console.log(now);
 
           const filteredTimeSlots = timeSlots.filter((time) => {
             const timeObj = parse(time, "HH:mm", new Date());
-            // console.log(timeObj);
             return timeObj >= now;
           });
 
-          // console.log(filteredTimeSlots);
           setModalData({
             date: format(date, "yyyy-MM-dd"),
             disabledTimes: disabledTimesForDate,
@@ -303,41 +260,13 @@ const SelectedDatePage = () => {
     }
   };
 
-  // const handleDateChange = (date) => {
-  //   setStartDate(date);
-  //   if (date) {
-  //     const disabledTimesForDate = getDisabledTimesByDate(date);
-  //     console.log(disabledTimesForDate)
-  //     console.log("Disabled Times:", disabledTimesForDate);
-  //     setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate });
-  //     setIsModalOpen(true);
-  //   }
-  // };
   const disabledTimes = modalData?.disabledTimes || [];
 
   const dispatch = useDispatch();
 
   const handleItemClick = async () => {
-    console.log("selecteDate : ", selectDate);
-    console.log("activeTime : ", activeTime);
     const selectedDateObject = new Date(selectDate);
     const dayOfWeek = selectedDateObject.getDay(); // 0: 일요일, 1: 월요일, ..., 6: 토요일
-    // console.log("선택한 날짜의 요일(숫자):", dayOfWeek);
-
-    // dispatch(setDate(selectDate));
-    // dispatch(setStartTime(activeTime));
-
-    //   try {
-    //     const response = await api.post('/api/beauty/reservation/timeCheck', {
-    //       activeTime: activeTime,
-    //     });
-    //     console.log('User authority data:', response.data);
-
-    // } catch (error) {
-    //     console.error('권한 조회 실패:', error.message);
-    // }
-
-    // navigate(`/pet-select/1`);
   };
 
   return (
@@ -365,7 +294,7 @@ const SelectedDatePage = () => {
                 maxDate={maxDate}
                 className="large-datepicker"
                 renderDayContents={renderDayContents}
-                 dateFormatCalendar="yyyy년 MM월"
+                dateFormatCalendar="yyyy년 MM월"
               />
               <style>
                 {`
@@ -509,8 +438,6 @@ const SelectedDatePage = () => {
         // onClick={handleItemClick}
         onClick={() => {
           setModalTitle("예약오류");
-          console.log("selectDate : ", selectDate);
-          console.log("activeTime : ", activeTime);
           if (!selectDate) {
             setModalContent("예약날짜를 선택해주세요.");
             setOpenAlertModal(true);

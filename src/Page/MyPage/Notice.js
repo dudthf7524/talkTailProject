@@ -30,7 +30,6 @@ const NoticePage = () => {
           },
         });
         setLists(response.data);
-        // console.log(response.data)
       } catch (error) {
         console.error("로그인 인증 실패:", error);
       }
@@ -38,7 +37,6 @@ const NoticePage = () => {
     noticeList();
   }, []);
 
-  console.log(lists);
   const arrowButtonUrl = `${process.env.PUBLIC_URL}/BusinessPageImage/button/arrow_left.svg`;
   return (
     <div className="notice_total">

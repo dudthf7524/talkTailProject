@@ -20,7 +20,6 @@ const PetInfoModal = ({ openModal, pet_id, pet_image }) => {
           },
         }
       );
-      console.log("petDelete successful", response.data);
       navigate(`/pet/list/`);
       window.location.href = "/pet/list/";
     } catch (error) {

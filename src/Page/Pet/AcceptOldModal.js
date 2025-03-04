@@ -73,10 +73,7 @@ const AcceptOldModal = ({ openModal, id, selectedPet }) => {
               onClick={() => {
                 if (accept) {
                   const acceptOldTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
-                  console.log("accpetOldTime : ", acceptOldTime);
-                  dispatch(
-                    setAcceptOldTime(acceptOldTime)
-                  )
+                  dispatch(setAcceptOldTime(acceptOldTime));
                   navigate(`/reservation-request/${id}`, {
                     state: { selectedPet },
                   });

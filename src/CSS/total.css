@@ -248,6 +248,7 @@
   align-items: flex-end;
 }
 .login_total .login-text {
+  font-size: 20px;
   width: auto;
   height: auto;
   color: black;
@@ -662,6 +663,16 @@
     left: 0;
   }
 }
+.detailPage_total .event-img {
+  width: 11.2vw;
+  height: 11.2vw;
+}
+@media (max-width: 500px) {
+  .detailPage_total .event-img {
+    width: 50vw;
+    height: 50vw;
+  }
+}
 .Nbutton {
   margin: 0 auto;
   position: fixed;
@@ -1014,7 +1025,20 @@
   width: 100%;
   padding: 0;
 }
-
+.business_information_total .input_box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.business_information_total .input_box input {
+  width: 70%;
+  height: 100%;
+}
+.business_information_total .input_box p {
+  font-size: 25px;
+}
 /* BusinessBeautyEditOption.js */
 .edit_option_total .main-mid {
   width: 83.33%;
@@ -1074,6 +1098,9 @@
 .business_join_total .main-mid::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
 }
+.business_join_total .input-container {
+  padding: 0;
+}
 
 /* Registerinformation.js */
 .register_information_total {
@@ -1089,4 +1116,11 @@
 }
 .register_information_total .main-mid::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
+}
+
+/* changePassword.js */
+.changePassword_total {
+  height: auto;
+  overflow-y: scroll;
+  position: inherit;
 }

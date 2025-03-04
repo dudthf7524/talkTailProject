@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/locale";
-import {format, addMonths, getDay} from "date-fns";
+import { format, addMonths, getDay } from "date-fns";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "../../../CSS/calender.css";
 import api from "../../../Api";
 import LoginModal from "../../Modal/LoginModal.js";
 import DesingerRemoveModal from "../../Modal/DesingerRemoveModal.js";
 import DesingerCheckModal from "../../Modal/DesingerCheckModal.js";
-
-
 
 const DesingerClosedDays = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -24,11 +22,10 @@ const DesingerClosedDays = () => {
   const checkContent = "날짜를 선택해주세요";
   const location = useLocation();
   const id = location.state?.id; // state로 받은 값
-  console.log(id);
   const [lists, setLists] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
   const [closeId, setCloseId] = useState(null);
-  
+
   const navigate = useNavigate();
   const [hours, setHours] = useState([]);
 
@@ -69,7 +66,6 @@ const DesingerClosedDays = () => {
   }, []);
 
   useEffect(() => {
-    console.log(id);
     const list = async () => {
       try {
         const response = await api.get(
@@ -78,28 +74,12 @@ const DesingerClosedDays = () => {
           { withCredentials: true }
         );
         setLists(response.data);
-        console.log(response.data);
       } catch (e) {
         console.error("휴무일 리스트 오류:", e);
       }
     };
     list();
   }, []);
-
-  //   useEffect(() => {
-  //     console.log(id)
-  //     const list = async () => {
-  //       try {
-  //         const response = await api.get(`/api/desinger/day/list/${id}`, { id: id }, { withCredentials: true });
-  //         setLists(response.data);
-  //         console.log(response.data)
-
-  //       } catch (e) {
-  //         console.error('휴무일 리스트 오류:', e);
-  //       }
-  //     };
-  //     list();
-  //   }, []);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
@@ -139,20 +119,14 @@ const DesingerClosedDays = () => {
     // JavaScript에서 월은 0부터 시작하므로, 입력값에서 1을 빼서 월을 설정합니다.
     return new Date(year, month - 1, day);
   }
-  for (let i = 0; i < lists.length; i++) {
-    console.log(lists[i].desinger_close_day)
-  }
 
-  // const disabledDates = [
-  //   createDate(2025, 2, 26), // 12월 31일
-
-  // ];
-
-  const disabledDates = lists.map(item => createDate(
-    parseInt(item.desinger_close_day.split('-')[0]), // 년도
-    parseInt(item.desinger_close_day.split('-')[1]), // 월
-    parseInt(item.desinger_close_day.split('-')[2]) // 일
-  ));
+  const disabledDates = lists.map((item) =>
+    createDate(
+      parseInt(item.desinger_close_day.split("-")[0]), // 년도
+      parseInt(item.desinger_close_day.split("-")[1]), // 월
+      parseInt(item.desinger_close_day.split("-")[2]) // 일
+    )
+  );
 
   const dateLabels = {
     "2025-01-01": "새해",
@@ -166,7 +140,8 @@ const DesingerClosedDays = () => {
     const label = dateLabels[formattedDate]; // 특정 기념일 라벨
     const dayIndex = getDay(date);
     const isOperatingDay = hours?.[dayIndex]?.isOperatingDay;
-    const isSelected = startDate && format(startDate, "yyyy-MM-dd") === formattedDate;
+    const isSelected =
+      startDate && format(startDate, "yyyy-MM-dd") === formattedDate;
     const isDisabledDate = disabledDates.some(
       (disabledDate) => format(disabledDate, "yyyy-MM-dd") === formattedDate
     ); // 휴무일 체크
@@ -174,14 +149,13 @@ const DesingerClosedDays = () => {
     const displayLabel = isOperatingDay ? label : "휴무";
     const disabledLabel = isDisabledDate ? "휴무일" : null;
 
-  
     const handleRemove = () => {
       // Find the relevant desinger_close_day_id from the lists
       const dayToRemove = lists.find(
         (item) => format(date, "yyyy-MM-dd") === item.desinger_close_day
       );
       if (dayToRemove) {
-        // handleRemove(dayToRemove.desinger_close_day_id); 
+        // handleRemove(dayToRemove.desinger_close_day_id);
         setCloseId(dayToRemove.desinger_close_day_id);
       }
       setOpenRemoveModal(true);
@@ -189,8 +163,9 @@ const DesingerClosedDays = () => {
 
     return (
       <div
-        className={`day-content ${!isOperatingDay ? "closed" : ""} ${isSelected ? "selected" : ""
-          }`}
+        className={`day-content ${!isOperatingDay ? "closed" : ""} ${
+          isSelected ? "selected" : ""
+        }`}
         style={{
           border: "1px solid #ccc", // 칸막이 효과
           borderRadius: "0", // 모서리 둥글기 제거 (표처럼 보이게 하기 위해)
@@ -240,37 +215,33 @@ const DesingerClosedDays = () => {
     const formattedDate = format(selectedDate, "yyyy-MM-dd");
     const reservations =
       reservationDesinger?.filter((item) => item.date === formattedDate) || [];
-    console.log(reservations);
-
 
     return disabledTimes;
   };
 
   const [startDate, setStartDate] = useState("");
 
-
   const handleDateChange = (date) => {
     const formatDate = format(date, "yyyy-MM-dd");
     setStartDate(formatDate);
 
-    setSelectedDate(formatDate)
+    setSelectedDate(formatDate);
     if (date) {
       const disabledTimesForDate = getDisabledTimesByDate(date);
-      console.log(disabledTimesForDate)
-      console.log("Disabled Times:", disabledTimesForDate);
-      setModalData({ date: format(date, 'yyyy-MM-dd'), disabledTimes: disabledTimesForDate });
+      setModalData({
+        date: format(date, "yyyy-MM-dd"),
+        disabledTimes: disabledTimesForDate,
+      });
       setIsModalOpen(true);
     }
   };
   const disabledTimes = modalData?.disabledTimes || [];
 
-
   const writeDesingerClosedDays = async () => {
     if (!selectedDate) {
-      setOpenCheckModal(true)
+      setOpenCheckModal(true);
       return;
     }
-    console.log("선택한 날짜는 : ", selectedDate);
     try {
       const response = await api.post(
         "/api/designer/day",
@@ -291,8 +262,7 @@ const DesingerClosedDays = () => {
   };
 
   const removeDay = async () => {
-    console.log(closeId)
-    if(!closeId){
+    if (!closeId) {
       return;
     }
     try {
@@ -304,14 +274,10 @@ const DesingerClosedDays = () => {
         }
       );
       if (response) {
-          window.location.reload();
+        window.location.reload();
       }
-    } catch (error) {
-
-    }
-   
-  }
- 
+    } catch (error) {}
+  };
 
   return (
     <>
@@ -321,7 +287,9 @@ const DesingerClosedDays = () => {
             <img src={arrowButtonUrl} alt="" onClick={goBack} />
           </button>
           휴무일 관리
-          <div style={{ cursor: "pointer" }} onClick={writeDesingerClosedDays}>등록</div>
+          <div style={{ cursor: "pointer" }} onClick={writeDesingerClosedDays}>
+            등록
+          </div>
         </div>
         <div className="main-mid">
           <div>
@@ -489,7 +457,6 @@ const DesingerClosedDays = () => {
           title={checkTitle}
           content={checkContent}
           onClose={() => setOpenCheckModal(false)}
-          
         />
       ) : (
         ""

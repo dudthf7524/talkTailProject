@@ -43,7 +43,6 @@ const MyPage = () => {
       });
 
       const userData = response.data;
-      console.log(userData);
       setNickname(userData.user_nickname);
     } catch (error) {
       console.error("Error fetching user data:", error);

@@ -15,8 +15,6 @@ const UserEditOpenModal = ({
       // 서버로 FormData를 전송
       const response = await api.put("/api/user/edit", userInforMationData, {});
 
-      console.log("Upload successful:", response.data);
-
       // 성공적으로 업로드된 후 페이지를 이동하거나 추가 작업 수행
       navigate("/user/edit"); // 성공 페이지로 이동
     } catch (error) {
