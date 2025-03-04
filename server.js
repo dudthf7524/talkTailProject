@@ -46,7 +46,7 @@ passportConfig();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://www.talktail.store"], // 리액트 앱의 URL 배열로 설정
+    origin: ["http://localhost:3000", "https://www.talktail.store"], // 리액트 앱의 URL 배열로 설정
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: [
       "Content-Type",
