@@ -65,7 +65,6 @@ import MasterLogin from "./master/masterLogin";
 import MasterMain from "./master/masterMain";
 
 import ChangePassword from "./BusinessPage/information/my/changePassword";
-import G2 from "./Page/g2";
 
 
 function App() {
@@ -103,7 +102,6 @@ function App() {
           <div className="Container">
             <ImageProvider>
               <Routes>
-                <Route path="/g2" element={<G2 />} />
                 <Route path="/" element={<HomePage />} />
                 <Route path="/auth/*" element={<Redirection />} />
                 <Route path="/login/success" element={<LoginSuccess />} />
