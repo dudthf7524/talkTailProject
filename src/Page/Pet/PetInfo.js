@@ -159,7 +159,7 @@ const PetListSection = ({ isSelectable, onSelectPet, fileName }) => {
                       backgroundColor: "#f0663f",
                     }}
                   >
-                    선택하기
+                    {fileName === "list" ? "수정하기" : "선택하기"}
                   </button>
                 </div>
               </div>
