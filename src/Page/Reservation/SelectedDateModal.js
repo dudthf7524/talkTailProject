@@ -27,9 +27,10 @@ const SelectedDateModal = ({
         <img onClick={openModal} src="/PageImage/components/X.svg" alt="" />
         <p className="title">예약하기</p>
         <p className="content">
-          아래 내용이 맞는지 확인해주세요<br />
-          일정 : {dayjs(selectDate).format("MM월 DD일")}({selectDay}) {activeTime}시
-        
+          아래 내용이 맞는지 확인해주세요.
+          <br />
+          일정 : {dayjs(selectDate).format("MM월 DD일")}({selectDay}){" "}
+          {activeTime}
         </p>
         <div className="btn_box">
           <div className="btn" onClick={openModal}>

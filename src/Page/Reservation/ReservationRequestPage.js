@@ -418,7 +418,21 @@ const ReservationRequestPage = () => {
       </div>
 
       {reservationData.businessInfo.business_no_show ? (
-        <div className="Nbutton" onClick={openPaymentModal}>
+        // <div className="Nbutton" onClick={openPaymentModal}>
+        //   예약하기
+        // </div>
+        <div
+          className="Nbutton"
+          onClick={() => {
+            if (!style) {
+              setModalContent("스타일을 입력해주세요.");
+              setOpenModal(true);
+            } else {
+              reservationSave();
+            }
+          }}
+          style={{ cursor: "pointer" }}
+        >
           예약하기
         </div>
       ) : (
