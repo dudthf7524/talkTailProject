@@ -12,6 +12,7 @@ const banks = [
   { name: "카카오뱅크", code: "090" },
   { name: "토스뱅크", code: "092" },
   { name: "케이뱅크", code: "089" },
+  { name: "iM뱅크(대구은행)", code: "031" },
 ];
 
 const BankDatabase = async () => {
