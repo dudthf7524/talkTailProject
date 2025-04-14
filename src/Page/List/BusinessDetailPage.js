@@ -387,6 +387,7 @@ const EventDetailPage = () => {
           openModal={() => {
             setOpenAcceptModal(false);
           }}
+          businessName={business.business_name}
         />
       ) : (
         ""
