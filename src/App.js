@@ -67,7 +67,6 @@ import MasterMain from "./master/masterMain";
 import ChangePassword from "./BusinessPage/information/my/changePassword";
 
 
-
 function App() {
   const location = useLocation();
   const isMasterPage = location.pathname.startsWith("/master");
@@ -216,7 +215,7 @@ function App() {
                     path="reservation/desinger"
                     element={<ReservationDesinger />}
                   />
-                   <Route path="change/password" element={<ChangePassword />} />
+                  <Route path="change/password" element={<ChangePassword />} />
                 </Route>
               </Routes>
             </ImageProvider>

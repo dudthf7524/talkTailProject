@@ -1,15 +1,15 @@
 const { sequelize, BeautyNotice, BeautyReservation } = require("../models");
-const {Pet} = require("../models")
+const { Pet } = require("../models")
 
 const customerManagementGet = async (business_registration_number) => {
-  
+
   // try {
   //     const results = await BeautyReservation.findAll({
   //       where: { 
   //         business_registration_number, 
   //         reservation_state : "완료",
   //       },
-        
+
   //       attributes: ["beauty_reservation_id",],
   //       include: [
   //         {
@@ -20,7 +20,7 @@ const customerManagementGet = async (business_registration_number) => {
   //       ],
   //       logging: console.log, 
   //     });
-  
+
   //     console.log(results);
   //     return results;
   //   } catch (error) {
@@ -38,8 +38,8 @@ const customerManagementGet = async (business_registration_number) => {
     sql += "on br.pet_id = pi.pet_id ";
     sql += "join user_information ui ";
     sql += "on br.platform_id = ui.platform_id ";
-    sql +=
-      "where br.business_registration_number = :business_registration_number and br.reservation_state ='완료' or br.reservation_state ='픽업완료'  ";
+    sql += "where br.business_registration_number = :business_registration_number ";
+    sql += "and (br.reservation_state ='완료' or br.reservation_state ='픽업완료') ";
 
     const [results, metadata] = await sequelize.query(
       sql,
@@ -58,7 +58,7 @@ const customerManagementGet = async (business_registration_number) => {
 };
 
 const customerNoticeWrite = async (id, data) => {
- 
+
   const style = data.formData;
   const selectedOptions = data.selectedOptions;
   const selectedMultipleOptions = data.selectedMultipleOptions;
@@ -175,7 +175,7 @@ const customerNoticeDetail = async (id) => {
     sql += "join pet p  ";
     sql += "on br.pet_id = p.pet_id ";
     sql += "where bn.beauty_notice_id = :id ";
-  
+
     const [results, metadata] = await sequelize.query(
       sql,
 
